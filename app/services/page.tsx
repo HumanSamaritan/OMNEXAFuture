@@ -1,101 +1,154 @@
 import Link from "next/link";
-import { pillars, services } from "@/lib/site-data";
+import Image from "next/image";
 
 export const metadata = {
-  title: "Services | OMNeXa - Consultancy Services",
-  description: "Explore OMNeXa's comprehensive services across 6 integrated pillars"
+  title: "Services | OMNeXa",
+  description: "OMNeXa's comprehensive consulting services"
 };
+
+const services = [
+  {
+    id: "compliance",
+    title: "Risk & Compliance",
+    description: "Fractional AML/KYC, sanctions, governance and regulatory readiness",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+    offerings: [
+      "AML/KYC and sanctions advisory",
+      "Compliance remediation support",
+      "Regulatory exam readiness",
+      "Control design and governance frameworks"
+    ]
+  },
+  {
+    id: "ai",
+    title: "AI & Responsible Innovation",
+    description: "AI readiness, governance frameworks and responsible implementation",
+    image: "https://images.unsplash.com/photo-1677442d019cecf8d5dfa34bec0f5a8c?w=600&h=400&fit=crop",
+    offerings: [
+      "AI readiness workshops",
+      "Governance framework design",
+      "Workforce preparation programs",
+      "Use case identification and piloting"
+    ]
+  },
+  {
+    id: "sustainability",
+    title: "Sustainability & ESG",
+    description: "Employee engagement, ESG alignment and sustainable transformation",
+    image: "https://images.unsplash.com/photo-1559027615-cd2628902d4a?w=600&h=400&fit=crop",
+    offerings: [
+      "ESG culture activation",
+      "Sustainability alignment",
+      "Employee engagement programs",
+      "Impact measurement and dashboards"
+    ]
+  },
+  {
+    id: "wellbeing",
+    title: "Well-being & Leadership",
+    description: "Conscious leadership development and sustainable performance",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+    offerings: [
+      "Leadership circle programs",
+      "Well-being workshops",
+      "Resilience training",
+      "Organizational health assessments"
+    ]
+  },
+  {
+    id: "education",
+    title: "Career & Education",
+    description: "Student guidance, career pathways and future-skills readiness",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+    offerings: [
+      "Career counselling",
+      "Future-skills assessment",
+      "Global pathway discussions",
+      "Professional transition support"
+    ]
+  }
+];
 
 export default function ServicesPage() {
   return (
     <main>
-      <div className="page-hero section-shell">
-        <div>
-          <p className="eyebrow">Our Expertise</p>
-          <h1>Six Integrated Pillars, One Implementation Mindset</h1>
-          <p className="hero-copy">
-            Each pillar can stand alone. The strongest value comes when OMNeXa integrates them into
-            an ecosystem collaboration model for companies, institutions and communities.
+      {/* Page Hero */}
+      <section className="page-hero">
+        <div className="section-shell">
+          <h1>Our Services</h1>
+          <p>
+            Integrated consulting across compliance, AI, sustainability, well-being and education. 
+            Each service stands alone. The strongest value comes when integrated.
           </p>
         </div>
-      </div>
-
-      <section className="section-shell" id="pillars">
-        <div className="pillar-grid">
-          {pillars.map((pillar, index) => (
-            <article className="pillar-card" key={pillar.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.description}</p>
-            </article>
-          ))}
-        </div>
       </section>
 
-      <section className="section-shell services-details">
-        <div className="section-heading centered">
-          <p className="eyebrow">Service Offerings</p>
-          <h2>Tailored Solutions for Every Need</h2>
-        </div>
-
-        <div className="service-stack">
+      {/* Services Grid */}
+      <section className="services-section section-shell">
+        <div className="services-grid">
           {services.map((service) => (
-            <article className="service-card" key={service.title}>
-              <p className="eyebrow">{service.eyebrow}</p>
-              <h3>{service.title}</h3>
-              <ul>
-                {service.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            </article>
+            <div key={service.id} className="service-item">
+              <div className="service-image">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  width={500}
+                  height={300}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+              <div className="service-content">
+                <h3>{service.title}</h3>
+                <p className="service-description">{service.description}</p>
+                <ul className="offerings-list">
+                  {service.offerings.map((offering) => (
+                    <li key={offering}>{offering}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="future-panel">
-        <div className="section-shell future-grid">
-          <div>
-            <p className="eyebrow">Human + AI Future Readiness</p>
-            <h2>Technology should amplify human values, not replace human purpose.</h2>
-            <p>
-              OMNeXa helps partners identify responsible AI use cases, design governance-aware pilots,
-              prepare workforces for intelligent systems, and build narratives where humans and machines
-              collaborate for education, sustainability, inclusion, health and productivity.
-            </p>
-          </div>
-
-          <div className="principle-list">
-            <div>
-              <strong>Responsible intelligence</strong>
-              <span>AI adoption with risk, ethics and accountability built in.</span>
+      {/* Engagement Model */}
+      <section className="engagement-model">
+        <div className="section-shell">
+          <h2>Our Engagement Model</h2>
+          <p className="subtitle">Start small, prove value, then scale</p>
+          
+          <div className="model-steps">
+            <div className="step">
+              <div className="step-number">1</div>
+              <h4>Discover</h4>
+              <p>Understand your priorities, challenges and success metrics</p>
             </div>
-            <div>
-              <strong>Human capability</strong>
-              <span>Coaching, mentoring and proof-of-work pathways for people.</span>
+            <div className="step">
+              <div className="step-number">2</div>
+              <h4>Design</h4>
+              <p>Co-create a tailored advisory, workshop or pilot approach</p>
             </div>
-            <div>
-              <strong>Measurable sustainability</strong>
-              <span>Culture, behavior and impact metrics beyond awareness.</span>
+            <div className="step">
+              <div className="step-number">3</div>
+              <h4>Implement</h4>
+              <p>Execute with embedded stakeholder alignment and learning</p>
+            </div>
+            <div className="step">
+              <div className="step-number">4</div>
+              <h4>Scale</h4>
+              <p>Transform into repeatable programs and organizational capability</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="cta-section section-shell">
-        <div className="cta-box">
-          <h2>Interested in our services?</h2>
-          <p>Get in touch to discuss how OMNeXa can help your organization.</p>
-          <Link href="/contact" className="button primary">
-            Start a Conversation
-          </Link>
-        </div>
+      {/* CTA */}
+      <section className="final-cta section-shell">
+        <h2>Ready to get started?</h2>
+        <Link href="/contact" className="btn btn-primary">
+          Schedule a Consultation
+        </Link>
       </section>
-
-      <footer>
-        <p>© {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
-        <p>Where Consciousness Meets Intelligence</p>
-      </footer>
     </main>
   );
 }
