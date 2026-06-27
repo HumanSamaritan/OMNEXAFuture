@@ -31,7 +31,7 @@ export default function ContactForm() {
       }
 
       setState("success");
-      setMessage("Thank you. Your enquiry has been sent to OMNeXa.");
+      setMessage(result?.warning || "Thank you. Your enquiry has been sent to OMNeXa.");
       form.reset();
     } catch (error) {
       setState("error");

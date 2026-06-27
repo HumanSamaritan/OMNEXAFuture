@@ -26,6 +26,26 @@ function plainText(value: string): string {
   return value.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
+function getErrorMessage(error: unknown): string {
+  if (!error) {
+    return "Unknown email provider error.";
+  }
+
+  if (typeof error === "string") {
+    return error;
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (typeof error === "object" && "message" in error) {
+    return String((error as { message?: unknown }).message || "Unknown email provider error.");
+  }
+
+  return "Unknown email provider error.";
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -108,9 +128,16 @@ export async function POST(request: Request) {
     });
 
     if (ownerResult.error) {
-      console.error("Resend owner email error", ownerResult.error);
+      const providerMessage = getErrorMessage(ownerResult.error);
+      console.error("Resend owner email error", {
+        error: ownerResult.error,
+        fromEmail,
+        toEmail
+      });
       return NextResponse.json(
-        { error: "Unable to send enquiry right now. Please email dhiraj.kumar@omnexagoc.com directly." },
+        {
+          error: `Email provider rejected the enquiry email: ${providerMessage}. Please check RESEND_API_KEY, CONTACT_FROM_EMAIL, and Resend domain verification in Vercel.`
+        },
         { status: 502 }
       );
     }
@@ -124,14 +151,16 @@ export async function POST(request: Request) {
     });
 
     if (confirmationResult.error) {
-      console.error("Resend confirmation email error", confirmationResult.error);
-      return NextResponse.json(
-        {
-          error:
-            "Your enquiry was sent to OMNeXa, but the confirmation email could not be sent. Please check your email address or contact dhiraj.kumar@omnexagoc.com directly."
-        },
-        { status: 502 }
-      );
+      console.error("Resend confirmation email error", {
+        error: confirmationResult.error,
+        fromEmail,
+        confirmationTo: email
+      });
+      return NextResponse.json({
+        ok: true,
+        warning:
+          "Your enquiry was sent to OMNeXa, but the confirmation email could not be delivered to your inbox."
+      });
     }
 
     return NextResponse.json({ ok: true });
