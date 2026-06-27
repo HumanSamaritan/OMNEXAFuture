@@ -2,6 +2,7 @@
     "name":  "omnexa-vercel-site",
     "version":  "1.0.0",
     "private":  true,
+    "packageManager":  "pnpm@11.7.0",
     "scripts":  {
                     "dev":  "next dev",
                     "build":  "next build",
@@ -9,16 +10,18 @@
                     "lint":  "next lint"
                 },
     "dependencies":  {
-                         "@types/node":  "^20.19.0",
-                         "@types/react":  "^18.3.23",
-                         "@types/react-dom":  "^18.3.7",
-                         "next":  "^15.3.4",
-                         "react":  "^18.3.1",
-                         "react-dom":  "^18.3.1",
-                         "resend":  "^4.6.0",
-                         "typescript":  "^5.8.3"
+                         "next":  "15.5.19",
+                         "react":  "18.3.1",
+                         "react-dom":  "18.3.1",
+                         "resend":  "4.8.0"
                      },
     "devDependencies":  {
-
-                        }
+                            "@types/node":  "20.19.43",
+                            "@types/react":  "18.3.31",
+                            "@types/react-dom":  "18.3.7",
+                            "typescript":  "5.9.3"
+                        },
+    "engines":  {
+                    "node":  "\u003e=20 \u003c25"
+                }
 }
