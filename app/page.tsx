@@ -1,33 +1,27 @@
-﻿import Image from "next/image";
 import { audienceRoutes, pillars, services, stats, testimonials } from "@/lib/site-data";
 
 export default function Home() {
   return (
     <main>
-      <section className="hero hero-with-image">
-        <div className="hero-image-stage" aria-label="OMNeXa driver visual">
-          <Image
-            src="/omnexa-driver-home.jpg"
-            alt="OMNeXa driver visual: evolution, technology, consciousness and intelligent progress"
-            fill
-            className="hero-driver-image"
-            priority
-            sizes="100vw"
-          />
-          <div className="hero-image-overlay" />
-        </div>
-        <div className="section-shell hero-copy-layer">
-          <div className="hero-content glass-copy">
-            <p className="eyebrow">Singapore-based future readiness consultancy</p>
-            <h1>Navigate human transformation in an AI-enabled world.</h1>
-            <p className="hero-copy">
-              OMNeXa helps people, institutions and organizations connect compliance, sustainability,
-              AI readiness, education and well-being into practical programs that can be implemented.
-            </p>
-            <div className="hero-actions">
-              <a className="button primary" href="/contact">Start a conversation</a>
-              <a className="button secondary" href="/services">Explore services</a>
-            </div>
+      <section className="driver-home" aria-label="OMNeXa driver image">
+        <img
+          src="/omnexa-driver-home.jpg"
+          alt="OMNeXa driver visual showing evolution from instinct to humanoids with consciousness and intelligence"
+          className="driver-home-image"
+        />
+      </section>
+
+      <section className="section-shell intro-section">
+        <div className="intro-copy">
+          <p className="eyebrow">Singapore-based future readiness consultancy</p>
+          <h1>Navigate human transformation in an AI-enabled world.</h1>
+          <p className="hero-copy">
+            OMNeXa helps people, institutions and organizations connect compliance, sustainability,
+            AI readiness, education and well-being into practical programs that can be implemented.
+          </p>
+          <div className="hero-actions">
+            <a className="button primary" href="/contact">Start a conversation</a>
+            <a className="button secondary" href="/services">Explore services</a>
           </div>
         </div>
       </section>
@@ -41,7 +35,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="section-shell split-section">
+      <section className="section-shell split-section aligned-section">
         <div>
           <p className="eyebrow">Why OMNeXa</p>
           <h2>The ecosystem is converging.</h2>
@@ -59,7 +53,7 @@ export default function Home() {
       </section>
 
       <section className="band">
-        <div className="section-shell">
+        <div className="section-shell aligned-section">
           <div className="section-heading">
             <p className="eyebrow">Who it helps</p>
             <h2>Clear entry points for different audiences.</h2>
@@ -70,8 +64,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell">
-        <div className="section-heading centered">
+      <section className="section-shell aligned-section">
+        <div className="section-heading">
           <p className="eyebrow">Pillars</p>
           <h2>Six pillars, one implementation mindset.</h2>
         </div>
@@ -86,8 +80,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell preview-section">
-        <div className="section-heading centered">
+      <section className="section-shell preview-section aligned-section">
+        <div className="section-heading">
           <p className="eyebrow">Services</p>
           <h2>Advisory, workshops and programs that can start small and scale.</h2>
         </div>
@@ -100,14 +94,14 @@ export default function Home() {
             </article>
           ))}
         </div>
-        <div className="center-actions">
+        <div className="hero-actions">
           <a className="button primary" href="/services">View all services</a>
         </div>
       </section>
 
-      <section className="section-shell testimonials-section">
-        <div className="section-heading centered">
-          <p className="eyebrow">Client feedback</p>
+      <section className="section-shell testimonials-section aligned-section">
+        <div className="section-heading">
+          <p className="eyebrow">Testimonials</p>
           <h2>Practical guidance, future-focused outcomes.</h2>
         </div>
         <div className="testimonial-grid">

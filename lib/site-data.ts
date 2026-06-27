@@ -142,16 +142,129 @@ export const proofPoints = [
 
 export const testimonials = [
   {
-    quote: "Clear career guidance helped me map my future expectations and connect passion with purpose in a practical way.",
-    author: "Student guidance participant"
+    quote: "Outstanding AML, KYC, and sanctions leader with strategic thinking, practical risk-based solutions and the ability to lead diverse teams.",
+    author: "Subasri Vasudevan, Senior Vice President at Citi"
   },
   {
-    quote: "The future-readiness discussion gave our team a structured view of skills, AI disruption and leadership priorities.",
-    author: "Corporate learning stakeholder"
+    quote: "A genuine desire to support country teams, challenge the norm and add great value across AML/KYC programs.",
+    author: "Tyler Boyle, Financial Crimes, Risk and Control"
   },
   {
-    quote: "Excellent futuristic requirement mapping with key skill identification. The discussion was practical, not theoretical.",
-    author: "Institutional collaboration partner"
+    quote: "Resourceful and highly focused, with the ability to find solutions to complex business problems and work creatively around them.",
+    author: "Vaibhav Nagpal, Global Head of Regulatory Technology Compliance"
+  }
+];
+
+export const linkedinRecommendations = [
+  {
+    theme: "Financial crime leadership",
+    quote: "Outstanding AML, KYC, and sanctions leader with exceptional expertise in financial crime compliance and regulatory risk management.",
+    author: "Subasri Vasudevan",
+    role: "Senior Vice President at Citi"
+  },
+  {
+    theme: "Program delivery",
+    quote: "Strong expertise of front-end banking systems and integration methods, with a genuine desire to support teams and challenge BAU.",
+    author: "Tyler Boyle",
+    role: "Financial Crimes, Risk and Control"
+  },
+  {
+    theme: "Problem solving",
+    quote: "He is resourceful and highly focused, finds solutions to complex business problems, and looks for ways to creatively handle them.",
+    author: "Vaibhav Nagpal",
+    role: "Global Head of Regulatory Technology Compliance"
+  },
+  {
+    theme: "Team leadership",
+    quote: "He can make diverse team members work together and get the best out of them. His capability to build teams is one of his major strengths.",
+    author: "Prabhaakar Pansare",
+    role: "Wealth Management and Private Banking"
+  },
+  {
+    theme: "Empowerment and execution",
+    quote: "An extremely supportive manager who encouraged empowerment, drove the team by example, and ensured every individual performed.",
+    author: "Sunil Gupta",
+    role: "Vice President, Delivery at Xebia"
+  },
+  {
+    theme: "Reliability",
+    quote: "Dependable, knowledgeable, and able to bring new team members up to speed quickly while ensuring everyone has the information needed.",
+    author: "Gary Friel",
+    role: "Founder / Product Lead"
+  }
+];
+
+export const trackRecord = [
+  { value: "14+", label: "years at Citi across AML/KYC, sanctions, onboarding and compliance technology" },
+  { value: "20+", label: "years across financial crime, risk, technology and transformation programs" },
+  { value: "50+", label: "resources led on global project delivery and complex implementation programs" },
+  { value: "APAC", label: "regional rollout, country-team support and stakeholder alignment exposure" }
+];
+
+export const coreCompetencies = [
+  "AML/KYC and sanctions advisory",
+  "Client lifecycle management and onboarding",
+  "Compliance technology transformation",
+  "Regulatory remediation and controls",
+  "Program delivery and stakeholder management",
+  "Market analysis and executive communication",
+  "Team leadership and mentoring",
+  "Sustainability, self-care and conscious leadership"
+];
+
+export const experienceTimeline = [
+  {
+    period: "2020 - Present",
+    title: "SVP",
+    company: "Citi",
+    description: "Senior leadership across market analysis, communication, AML/KYC, sanctions, compliance transformation and regional stakeholder execution."
+  },
+  {
+    period: "2015 - 2020",
+    title: "Vice President",
+    company: "Citi",
+    description: "Business architect for onboarding and compliance applications, linking business, operations, compliance and technology teams."
+  },
+  {
+    period: "2012 - 2015",
+    title: "Assistant Vice President",
+    company: "Citi",
+    description: "Regional rollout of compliance technology, control design, stakeholder alignment and implementation governance."
+  },
+  {
+    period: "2008 - 2012",
+    title: "Manager - Projects",
+    company: "Cognizant Technology Solutions",
+    description: "Program management for a global KYC/AML project and SME support for private banking client onboarding KYC/EDD implementation."
+  },
+  {
+    period: "2009 - 2010",
+    title: "Manager / IT Consultant",
+    company: "Credit Suisse",
+    description: "Consulting and delivery support across banking technology, problem solving and implementation coordination."
+  },
+  {
+    period: "2005 - 2008",
+    title: "Project Lead, EAI and BPM practice",
+    company: "Infosys Technologies Ltd",
+    description: "Vendor pre-sales, scoping and delivery work for KYC and risk management projects across banks, pharma and healthcare clients."
+  },
+  {
+    period: "2007 - 2008",
+    title: "Engagement Lead for BRMS implementation",
+    company: "Fortis Bank Global Clearing NV, Brussels",
+    description: "SME for KYC/AML IT implementation for an investment bank, combining problem solving, negotiation and delivery ownership."
+  }
+];
+
+export const educationCredentials = [
+  {
+    title: "Massachusetts Institute of Technology",
+    detail: "Executive sustainability and future-readiness learning foundation"
+  },
+  {
+    title: "National Institute of Technology Rourkela",
+    detail: "BE, Civil"
   }
 ];
 
