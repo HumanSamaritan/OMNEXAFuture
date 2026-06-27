@@ -1,113 +1,41 @@
-import Link from "next/link";
-import Image from "next/image";
-
-export const metadata = {
-  title: "About | OMNeXa",
-  description: "Learn about OMNeXa and our founder Dhiraj Kumar"
-};
+import { proofPoints } from "@/lib/site-data";
 
 export default function AboutPage() {
   return (
     <main>
-      {/* Page Hero */}
-      <section className="page-hero">
-        <div className="section-shell">
-          <h1>About OMNeXa</h1>
+      <section className="page-hero section-shell">
+        <p className="eyebrow">Founder profile</p>
+        <h1>About Dhiraj Kumar and OMNeXa.</h1>
+        <p>
+          Dhiraj Kumar is Founder / Advisor at OMNeXa Pte. Ltd., bringing together financial-crime
+          execution depth, sustainability thinking, AI-era readiness and human-centered leadership.
+        </p>
+      </section>
+
+      <section className="section-shell about-layout">
+        <div className="founder-badge">DK</div>
+        <div className="copy-stack">
+          <h2>Experience across risk, technology, education and conscious leadership.</h2>
           <p>
-            We prepare people, institutions and organizations for a future shaped by AI, 
-            sustainability, regulatory pressure and human resilience.
+            His experience spans AML/KYC, sanctions, governance, control design, remediation,
+            regulatory exam support, technology and workflow transformation, ESG engagement,
+            education mentoring and ecosystem collaboration.
+          </p>
+          <p>
+            OMNeXa exists to turn that cross-domain experience into practical guidance for people and
+            organizations preparing for a more intelligent, regulated, sustainability-aware future.
           </p>
         </div>
       </section>
 
-      {/* Founder Section */}
-      <section className="founder-full section-shell">
-        <div className="founder-layout">
-          <div className="founder-image">
-            <div className="founder-badge-large">DK</div>
-          </div>
-          <div className="founder-bio">
-            <h2>Dhiraj Kumar</h2>
-            <p className="role">Founder & Principal Advisor</p>
-            
-            <p>
-              Dhiraj Kumar is Founder / Advisor at OMNeXa Pte. Ltd., bringing together financial-crime 
-              execution depth, sustainability thinking, AI-era readiness and human-centered leadership.
-            </p>
-            
-            <p>
-              His experience spans AML/KYC, sanctions, governance, control design, remediation, 
-              regulatory exam support, technology and workflow transformation, ESG engagement, 
-              education mentoring and ecosystem collaboration.
-            </p>
-            
-            <p>
-              With over 20 years in risk and compliance across APAC and EMEA, Dhiraj has worked with 
-              banks, fintechs, regulators and institutional partners to build practical transformation 
-              programs that balance risk intelligence, sustainability intelligence, and human resilience.
-            </p>
-          </div>
+      <section className="section-shell proof-section">
+        <div className="section-heading centered">
+          <p className="eyebrow">What anchors the work</p>
+          <h2>Execution depth with a human-centered lens.</h2>
         </div>
-      </section>
-
-      {/* Mission, Vision, Values */}
-      <section className="mvv-section">
-        <div className="section-shell">
-          <div className="mvv-grid">
-            <div className="mvv-card">
-              <h3>Our Mission</h3>
-              <p>
-                To prepare people, institutions and organizations for a future shaped by AI, 
-                sustainability, regulatory pressure and human resilience through practical, 
-                integrated transformation programs.
-              </p>
-            </div>
-            <div className="mvv-card">
-              <h3>Our Vision</h3>
-              <p>
-                A world where technology amplifies human values, organizations operate sustainably 
-                and ethically, and people are equipped for meaningful careers in an AI-enabled economy.
-              </p>
-            </div>
-            <div className="mvv-card">
-              <h3>Our Values</h3>
-              <p>
-                Practical wisdom over theory • Integrity in partnerships • Human-centered innovation • 
-                Measurable impact • Conscious leadership
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="stats-section section-shell">
-        <div className="stats-grid">
-          <div className="stat">
-            <div className="stat-value">20+</div>
-            <p>Years in Risk & Compliance</p>
-          </div>
-          <div className="stat">
-            <div className="stat-value">6</div>
-            <p>Integrated Service Pillars</p>
-          </div>
-          <div className="stat">
-            <div className="stat-value">50+</div>
-            <p>Organizations Transformed</p>
-          </div>
-          <div className="stat">
-            <div className="stat-value">APAC + EMEA</div>
-            <p>Regional Presence</p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="final-cta section-shell">
-        <h2>Let's build future-ready ecosystems together</h2>
-        <Link href="/contact" className="btn btn-primary">
-          Get in Touch
-        </Link>
+        <ul className="proof-grid">
+          {proofPoints.map((point) => <li key={point}>{point}</li>)}
+        </ul>
       </section>
     </main>
   );
