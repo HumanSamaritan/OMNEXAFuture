@@ -1,20 +1,40 @@
-import { engagementFormats, engagementSteps, partnerTypes, services } from "@/lib/site-data";
+import {
+  educationMarketFocus,
+  engagementFormats,
+  engagementSteps,
+  partnerTypes,
+  serviceVisuals,
+  services,
+  targetMarkets
+} from "@/lib/site-data";
 
 export default function ServicesPage() {
   return (
     <main>
       <section className="page-hero section-shell">
         <p className="eyebrow">Services</p>
-        <h1>Focused pages for work that should not be cramped.</h1>
+        <h1>Practical services for education, risk, sustainability and AI-era readiness.</h1>
         <p>
           OMNeXa offers modular advisory, facilitation and implementation support across career,
           risk, sustainability, AI readiness and conscious leadership priorities.
         </p>
       </section>
 
+      <section className="section-shell service-visual-grid">
+        {serviceVisuals.map((visual) => (
+          <article className="service-visual-card tilt-card" key={visual.title}>
+            <img src={visual.image} alt="" />
+            <div>
+              <h2>{visual.title}</h2>
+              <p>{visual.description}</p>
+            </div>
+          </article>
+        ))}
+      </section>
+
       <section className="section-shell service-stack-page">
         {services.map((service, index) => (
-          <article className="service-row" key={service.title}>
+          <article className="service-row tilt-card" key={service.title}>
             <div className="service-number">{String(index + 1).padStart(2, "0")}</div>
             <div>
               <p className="eyebrow">{service.eyebrow}</p>
@@ -40,6 +60,33 @@ export default function ServicesPage() {
               <p>{partner.description}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="band market-band">
+        <div className="section-shell aligned-section">
+          <div className="section-heading">
+            <p className="eyebrow">Education markets</p>
+            <h2>Education guidance designed for priority regional markets.</h2>
+            <p>
+              OMNeXa plans to support education and career-readiness conversations across Singapore,
+              India, China, Thailand, Philippines, Vietnam, Malaysia and Dubai, making guidance easier
+              to manage across market contexts.
+            </p>
+          </div>
+          <div className="market-list">
+            {targetMarkets.map((market) => (
+              <span className="tilt-card" key={market}>{market}</span>
+            ))}
+          </div>
+          <div className="education-focus-grid">
+            {educationMarketFocus.map((item) => (
+              <article className="tilt-card" key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

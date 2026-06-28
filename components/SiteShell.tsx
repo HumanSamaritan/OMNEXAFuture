@@ -1,6 +1,7 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { navItems } from "@/lib/site-data";
+import TiltCards from "./TiltCards";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   return (
@@ -32,6 +33,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </nav>
       </header>
 
+      <TiltCards />
       {children}
 
       <footer className="site-footer">

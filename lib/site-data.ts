@@ -268,6 +268,53 @@ export const educationCredentials = [
   }
 ];
 
+export const targetMarkets = [
+  "Singapore",
+  "India",
+  "China",
+  "Thailand",
+  "Philippines",
+  "Vietnam",
+  "Malaysia",
+  "Dubai"
+];
+
+export const educationMarketFocus = [
+  {
+    title: "Market-aware education guidance",
+    description:
+      "Support education and career decisions across Singapore, India, China, Thailand, Philippines, Vietnam, Malaysia and Dubai with local context and future-skills awareness."
+  },
+  {
+    title: "Cross-border pathway clarity",
+    description:
+      "Help students and parents compare pathways, readiness expectations, emerging career directions and practical next steps across priority markets."
+  },
+  {
+    title: "Institution and ecosystem collaboration",
+    description:
+      "Work with schools, universities, HR teams, education platforms and community partners to make guidance easier to manage across markets."
+  }
+];
+
+export const serviceVisuals = [
+  {
+    title: "Education pathways",
+    description: "Student, parent and institution guidance across priority Asian and Middle East markets.",
+    image: "/omnexa-driver-home.jpg"
+  },
+  {
+    title: "Risk and compliance",
+    description: "Financial-crime, AML/KYC, sanctions, governance and control transformation.",
+    image: "/omnexa-logo.png"
+  },
+  {
+    title: "Responsible innovation",
+    description: "Human-centered AI readiness, ecosystem pilots and technology-for-good narratives.",
+    image: "/omnexa-driver-home.jpg"
+  }
+];
+
 export const partnerTypes = [
   {
     title: "Corporates & HR teams",

@@ -434,3 +434,228 @@ textarea { resize: vertical; }
   font-weight: 700;
   line-height: 1.45;
 }
+
+/* Final typography and interaction pass */
+h1 {
+  font-size: clamp(2.35rem, 5.2vw, 4.9rem);
+  line-height: 0.98;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.1vw, 3rem);
+  line-height: 1.04;
+}
+
+h3 {
+  font-size: 1.12rem;
+  line-height: 1.18;
+}
+
+.hero-copy,
+.page-hero p,
+.copy-stack p,
+.section-heading p,
+.service-card p,
+.service-row p,
+.principle-card p,
+.contact-copy p,
+.pillar-card p,
+.experience-timeline p:not(.role-period),
+.education-grid p,
+.recommendation-grid blockquote {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.page-hero {
+  padding: 76px 0 44px;
+}
+
+.intro-section {
+  padding: clamp(48px, 7vw, 88px) 0 34px;
+}
+
+.split-section {
+  padding: 64px 0;
+}
+
+.band {
+  margin: 58px 0;
+  padding: 64px 0;
+}
+
+.tilt-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glow-x: 50%;
+  --glow-y: 50%;
+  position: relative;
+  overflow: hidden;
+  transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.tilt-card::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(247, 198, 107, 0.18), transparent 34%);
+  content: "";
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.tilt-card:hover {
+  border-color: rgba(31, 143, 133, 0.34);
+  box-shadow: 0 22px 60px rgba(18, 24, 38, 0.14);
+}
+
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+.founder-photo-wrap {
+  width: min(100%, 310px);
+  aspect-ratio: 1;
+  margin-bottom: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: #0b1020;
+  box-shadow: 12px 12px 0 rgba(247, 198, 107, 0.2);
+}
+
+.founder-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.service-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.service-visual-card {
+  min-height: 360px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--charcoal);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.service-visual-card img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.service-visual-card div {
+  padding: 24px;
+}
+
+.service-visual-card h2 {
+  color: #fff;
+  font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+}
+
+.service-visual-card p {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+}
+
+.market-band {
+  background:
+    linear-gradient(135deg, rgba(18, 24, 38, 0.92), rgba(14, 48, 56, 0.88)),
+    var(--charcoal);
+  color: #fff;
+}
+
+.market-band h2,
+.market-band p {
+  color: #fff;
+}
+
+.market-band .section-heading p {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.market-list {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.market-list span {
+  display: grid;
+  min-height: 72px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f7c66b;
+  font-weight: 900;
+  text-align: center;
+}
+
+.education-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.education-focus-grid article {
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.education-focus-grid p {
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.62;
+}
+
+@media (max-width: 1000px) {
+  .service-visual-grid,
+  .education-focus-grid,
+  .recommendation-grid,
+  .track-record-grid,
+  .competency-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .market-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  h1 {
+    font-size: 2.65rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .service-visual-grid,
+  .education-focus-grid,
+  .recommendation-grid,
+  .track-record-grid,
+  .competency-grid,
+  .market-list {
+    grid-template-columns: 1fr;
+  }
+
+  .service-visual-card {
+    min-height: auto;
+  }
+}

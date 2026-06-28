@@ -31,7 +31,9 @@ export default function AboutPage() {
 
       <section className="section-shell about-profile-grid aligned-section">
         <div className="profile-card">
-          <div className="founder-badge">DK</div>
+          <div className="founder-photo-wrap tilt-card">
+            <img src="/dhiraj-founder.png" alt="Dhiraj Kumar, Founder and Advisor at OMNeXa" className="founder-photo" />
+          </div>
           <p className="eyebrow">OMNeXa founder</p>
           <h2>Risk discipline. Technology fluency. Human progress.</h2>
         </div>
