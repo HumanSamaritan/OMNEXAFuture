@@ -4,6 +4,7 @@ import { Resend } from "resend";
 const toEmail = process.env.CONTACT_TO_EMAIL || "dhiraj.kumar@omnexagoc.com";
 const fromEmail = process.env.CONTACT_FROM_EMAIL || "OMNeXa Website <onboarding@resend.dev>";
 const replyEmail = process.env.CONTACT_REPLY_EMAIL || toEmail;
+const sendConfirmationEmail = process.env.CONTACT_SEND_CONFIRMATION === "true";
 
 function clean(value: unknown): string {
   return String(value || "").trim();
@@ -142,25 +143,22 @@ export async function POST(request: Request) {
       );
     }
 
-    const confirmationResult = await resend.emails.send({
-      from: fromEmail,
-      to: [email],
-      replyTo: replyEmail,
-      subject: "We received your OMNeXa enquiry",
-      html: confirmationHtml
-    });
+    if (sendConfirmationEmail) {
+      const confirmationResult = await resend.emails.send({
+        from: fromEmail,
+        to: [email],
+        replyTo: replyEmail,
+        subject: "We received your OMNeXa enquiry",
+        html: confirmationHtml
+      });
 
-    if (confirmationResult.error) {
-      console.error("Resend confirmation email error", {
-        error: confirmationResult.error,
-        fromEmail,
-        confirmationTo: email
-      });
-      return NextResponse.json({
-        ok: true,
-        warning:
-          "Your enquiry was sent to OMNeXa, but the confirmation email could not be delivered to your inbox."
-      });
+      if (confirmationResult.error) {
+        console.error("Resend confirmation email error", {
+          error: confirmationResult.error,
+          fromEmail,
+          confirmationTo: email
+        });
+      }
     }
 
     return NextResponse.json({ ok: true });
