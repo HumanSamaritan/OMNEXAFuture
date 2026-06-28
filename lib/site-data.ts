@@ -300,17 +300,17 @@ export const educationMarketFocus = [
 export const serviceVisuals = [
   {
     title: "Education pathways",
-    description: "Student, parent and institution guidance across priority Asian and Middle East markets.",
+    description: "Student, parent and institution guidance across priority markets.",
     image: "/omnexa-driver-home.jpg"
   },
   {
     title: "Risk and compliance",
-    description: "Financial-crime, AML/KYC, sanctions, governance and control transformation.",
+    description: "AML/KYC, sanctions, governance and control transformation.",
     image: "/omnexa-logo.png"
   },
   {
     title: "Responsible innovation",
-    description: "Human-centered AI readiness, ecosystem pilots and technology-for-good narratives.",
+    description: "AI readiness, ecosystem pilots and technology-for-good narratives.",
     image: "/omnexa-driver-home.jpg"
   }
 ];

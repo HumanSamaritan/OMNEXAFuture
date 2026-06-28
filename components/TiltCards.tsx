@@ -18,7 +18,12 @@ export default function TiltCards() {
           ".recommendation-grid figure",
           ".format-grid article",
           ".timeline div",
-          ".proof-grid li"
+          ".proof-grid li",
+          ".stats-strip div",
+          ".route-list span",
+          ".market-list span",
+          ".education-focus-grid article",
+          ".service-visual-card"
         ].join(",")
       )
     );
