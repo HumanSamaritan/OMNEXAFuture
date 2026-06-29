@@ -7,10 +7,10 @@ export const navItems = [
 ];
 
 export const stats = [
-  { value: "20+", label: "years in AML/KYC, sanctions, governance and controls" },
-  { value: "6", label: "integrated future-readiness pillars" },
-  { value: "APAC + EMEA", label: "regional and global delivery exposure" },
-  { value: "Human + AI", label: "practical transformation philosophy" }
+  { value: "New Venture", label: "early-stage consultancy with practical transformation focus" },
+  { value: "Clear Use Cases", label: "education, compliance, sustainability and well-being programs" },
+  { value: "Human + AI + Robotics", label: "building synergies between people, intelligence and automation" },
+  { value: "Human-in-the-Loop, Humans Building the Loop", label: "Integral Humanism in practice: technology should amplify people, communities and local capability — production by masses, not mass production" }
 ];
 
 export const pillars = [
