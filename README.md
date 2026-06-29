@@ -1,78 +1,37 @@
-# OMNeXa Professional Vercel Website
+# OMNeXa Vercel Website
 
-A polished Next.js website for OMNeXa Pte. Ltd. designed for Vercel deployment.
+A premium multi-page consulting website for OMNeXa Pte. Ltd. built with Next.js App Router and ready for Vercel deployment.
 
-## What this version improves
+## What is included
 
-- More premium consultancy-style visual design with dark, gold and blue brand system.
-- Presentation-based OMNeXa logo and AI / sustainability / wellbeing visual assets.
-- Clear service flow using service cards and detail pages.
-- Topmate-style service entry points: Discovery Call, Advisory Sprint, Workshop / Keynote, Fractional Advisory.
-- Contact form captures name, email, contact number, organisation, service interest and message.
-- Contact form sends email to `dhiraj.kumar@omnexagoc.com` through Resend.
-- Root-level project structure, so Vercel can find the `app/` directory.
+- Multi-page responsive website inspired by the structure of Crossroads Navigator
+- Dedicated pages for Services, AI Readiness, About and Contact
+- Updated OMX brand mark in the header and SVG asset
+- Services and six OMNeXa pillars
+- Human + AI future-readiness content
+- Founder / About section
+- Client feedback, FAQs and contact form
+- Server-side contact form email route using Resend
 
 ## Local setup
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
-```
-
-Open http://localhost:3000
-
-## Vercel deployment settings
-
-Use these settings in Vercel:
-
-```text
-Framework Preset: Next.js
-Build Command: npm run build
-Install Command: npm install
-Output Directory: leave blank
-Root Directory: leave blank
 ```
 
 ## Environment variables
 
-Add these in Vercel > Project > Settings > Environment Variables:
-
 ```bash
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxx
+RESEND_API_KEY=your_resend_api_key
 CONTACT_TO_EMAIL=dhiraj.kumar@omnexagoc.com
-CONTACT_FROM_EMAIL=OMNeXa Website <noreply@omnexagoc.com>
-NEXT_PUBLIC_TOPMATE_URL=https://topmate.io/dhiraj_kumar007
+CONTACT_FROM_EMAIL=OMNeXa <onboarding@resend.dev>
 ```
 
-## Email configuration
+## Deploy to Vercel
 
-The project uses Resend for transactional email. To avoid delivery issues:
-
-1. Create a Resend account.
-2. Verify your domain, ideally `omnexagoc.com`.
-3. Create an API key.
-4. Add the environment variables above in Vercel.
-5. Redeploy the project.
-
-## Folder structure
-
-```text
-app/
-  api/contact/route.ts
-  services/[slug]/page.tsx
-  globals.css
-  layout.tsx
-  page.tsx
-components/
-  ContactForm.tsx
-lib/
-  site-data.ts
-public/
-  brand/
-  images/
-package.json
-```
-
-## Important
-
-Upload the contents of this folder directly to the GitHub repository root. Do not wrap it inside another parent folder unless you set Vercel's Root Directory to that folder.
+1. Push this project to a Git repository.
+2. Import the repository in Vercel.
+3. Add the environment variables above.
+4. Deploy.
