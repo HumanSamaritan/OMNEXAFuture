@@ -6,18 +6,25 @@ export default function Home() {
       <section className="driver-home" aria-label="OMNeXa driver image">
         <img
           src="/omnexa-driver-home.jpg"
-          alt="OMNeXa driver visual showing evolution from instinct to humanoids with consciousness and intelligence"
+          alt="OMNeXa visual showing the evolution of human capability, artificial intelligence and robotics guided by human values"
           className="driver-home-image"
         />
       </section>
 
       <section className="section-shell intro-section">
         <div className="intro-copy">
-          <p className="eyebrow">Singapore-based future readiness consultancy</p>
-          <h1>Navigate human transformation in an AI-enabled world.</h1>
+          <p className="eyebrow">Singapore-based transformation and innovation ecosystem</p>
+          <h1>Where Consciousness Meets Intelligence.</h1>
           <p className="hero-copy">
-            OMNeXa helps people, institutions and organizations connect compliance, sustainability,
-            AI readiness, education and well-being into practical programs that can be implemented.
+            OMNeXa Pte. Ltd., founded by Dhiraj Kumar, helps people, institutions and organizations
+            connect responsible AI, risk and governance, education, sustainability, well-being and
+            human-machine collaboration into practical transformation programs.
+          </p>
+          <p className="hero-copy">
+            Our principle goes beyond Human-in-the-Loop: humans should define the loop — the purpose,
+            boundaries, accountability and values within which AI and robotics operate. We explore
+            robotics with human values and how consciousness, judgement and responsibility can remain
+            explicit as intelligent systems scale.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="/contact">Start a conversation</a>
@@ -47,7 +54,8 @@ export default function Home() {
           </p>
           <p>
             OMNeXa helps partners integrate capability, governance, sustainability and human progress
-            into one practical roadmap.
+            into one practical roadmap — with risk, control, privacy and human accountability considered
+            from the beginning rather than added after implementation.
           </p>
         </div>
       </section>
