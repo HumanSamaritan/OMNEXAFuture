@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   coreCompetencies,
   educationCredentials,
@@ -7,16 +8,86 @@ import {
   trackRecord
 } from "@/lib/site-data";
 
+const siteUrl = "https://www.omnexagoc.com";
+
+export const metadata: Metadata = {
+  title: "Dhiraj Kumar | Founder & CEO",
+  description:
+    "Dhiraj Kumar is Founder & CEO of OMNeXa Pte. Ltd., Singapore. His work spans responsible AI, human-defined automation, robotics with human values, risk and governance, AML/KYC, sustainability, education and transformation.",
+  alternates: {
+    canonical: "/about"
+  },
+  openGraph: {
+    title: "Dhiraj Kumar | Founder & CEO, OMNeXa Pte. Ltd.",
+    description:
+      "Founder of OMNeXa Pte. Ltd., connecting responsible AI, human-defined automation, governance, risk, education, sustainability and human-machine collaboration.",
+    url: `${siteUrl}/about`,
+    type: "profile",
+    images: [
+      {
+        url: "/dhiraj-founder.png",
+        alt: "Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd."
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dhiraj Kumar | Founder & CEO, OMNeXa Pte. Ltd.",
+    description:
+      "Responsible AI, humans defining the loop, robotics with human values, risk and governance, education and transformation.",
+    images: ["/dhiraj-founder.png"]
+  }
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${siteUrl}/about#dhiraj-kumar`,
+  name: "Dhiraj Kumar",
+  url: `${siteUrl}/about`,
+  image: `${siteUrl}/dhiraj-founder.png`,
+  jobTitle: "Founder & CEO",
+  worksFor: {
+    "@type": "Organization",
+    "@id": `${siteUrl}/#organization`,
+    name: "OMNeXa Pte. Ltd.",
+    url: siteUrl
+  },
+  sameAs: ["https://sg.linkedin.com/in/dhiraj-kumar-a9763616"],
+  knowsAbout: [
+    "Responsible AI",
+    "Human-in-the-Loop AI",
+    "Humans Defining the Loop",
+    "Robotics with Human Values",
+    "Human-machine collaboration",
+    "AI governance",
+    "Risk and controls",
+    "AML/KYC and sanctions",
+    "Compliance technology transformation",
+    "Sustainability and ESG",
+    "Education and employability"
+  ],
+  description:
+    "Founder and CEO of OMNeXa Pte. Ltd., focused on responsible AI, human-defined automation, risk and governance, robotics with human values, education, sustainability and practical transformation."
+};
+
 export default function AboutPage() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+
       <section className="page-hero section-shell about-hero aligned-section">
         <p className="eyebrow">Founder profile</p>
-        <h1>Dhiraj Kumar brings compliance depth into human-centered transformation.</h1>
+        <h1>Dhiraj Kumar — Founder & CEO of OMNeXa Pte. Ltd.</h1>
         <p>
-          Founder / Advisor at OMNeXa Pte. Ltd., Dhiraj connects financial-crime execution,
-          compliance technology, sustainability thinking, responsible AI readiness and conscious
-          leadership into practical programs for people and organizations.
+          Based in Singapore, Dhiraj connects financial-crime execution, compliance technology,
+          sustainability thinking, responsible AI readiness and conscious leadership into practical
+          programs for people and organizations. His approach to AI is grounded in a simple principle:
+          keep humans in the loop, and more importantly, keep humans defining the loop — the purpose,
+          boundaries, accountability and values within which intelligent systems operate.
         </p>
       </section>
 
@@ -32,7 +103,7 @@ export default function AboutPage() {
       <section className="section-shell about-profile-grid aligned-section">
         <div className="profile-card">
           <div className="founder-photo-wrap tilt-card">
-            <img src="/dhiraj-founder.png" alt="Dhiraj Kumar, Founder and Advisor at OMNeXa" className="founder-photo" />
+            <img src="/dhiraj-founder.png" alt="Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd." className="founder-photo" />
           </div>
           <p className="eyebrow">OMNeXa founder</p>
           <h2>Risk discipline. Technology fluency. Human progress.</h2>
@@ -47,6 +118,12 @@ export default function AboutPage() {
             OMNeXa builds from that foundation. The work is designed for implementation: diagnose the
             challenge, align stakeholders, build capability, strengthen governance and turn future-ready
             ideas into repeatable programs.
+          </p>
+          <p>
+            Across AI and robotics, the direction is equally clear: technology should be designed around
+            human purpose and human values. OMNeXa explores how consciousness, judgement, governance and
+            accountability can shape intelligent systems from the beginning rather than being added after
+            deployment.
           </p>
         </div>
       </section>
