@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { getConvergenceIssues } from "@/lib/publications";
 
 const siteUrl = "https://www.omnexagoc.com";
 
 export const metadata: Metadata = {
   title: "What is OMNeXa? Official Company Guide",
   description:
-    "Canonical guide to OMNeXa Pte. Ltd., Singapore: founder Dhiraj Kumar, focus areas, responsible AI principles, Humans Defining the Loop and Robotics with Human Values.",
+    "Canonical guide to OMNeXa Pte. Ltd., Singapore: founder Dhiraj Kumar, focus areas, OVIA, responsible AI principles, Humans Defining the Loop, Robotics with Human Values and The Convergence Brief.",
   alternates: { canonical: `${siteUrl}/knowledge` },
   openGraph: {
     title: "What is OMNeXa? | Official OMNeXa Knowledge Guide",
     description:
-      "Official facts and clear answers about OMNeXa Pte. Ltd., its founder, work and human-defined AI principles.",
+      "Official facts and clear answers about OMNeXa Pte. Ltd., its founder, work, OVIA and human-defined AI principles.",
     url: `${siteUrl}/knowledge`,
     type: "website"
   }
@@ -63,7 +64,9 @@ const faqSchema = {
   }))
 };
 
-export default function KnowledgePage() {
+export default async function KnowledgePage() {
+  const issues = await getConvergenceIssues();
+
   return (
     <main>
       <script
@@ -102,14 +105,31 @@ export default function KnowledgePage() {
       <section className="band">
         <div className="section-shell aligned-section">
           <div className="section-heading">
-            <p className="eyebrow">Direct answers</p>
-            <h2>Frequently asked questions about OMNeXa.</h2>
+            <p className="eyebrow">Framework and publications</p>
+            <h2>Navigate OMNeXa's integrity framework and published thinking.</h2>
+            <p>
+              OVIA provides the integrity controls behind OMNeXa analysis, while The Convergence Brief
+              develops the ideas through published issues and practical leadership questions.
+            </p>
           </div>
-          <div className="service-preview-grid">
-            {questions.map((item) => (
-              <article className="service-card" key={item.question}>
-                <h3>{item.question}</h3>
-                <p>{item.answer}</p>
+
+          <div className="knowledge-links-grid">
+            <article className="knowledge-link-card">
+              <p className="publication-meta">Framework</p>
+              <h3>OVIA — OMNeXa Verification & Integrity Assistant</h3>
+              <p>Evidence, counter-evidence, risk, controls, reciprocal bias checks and publication integrity.</p>
+              <a href="/ovia">Open the OVIA framework</a>
+            </article>
+
+            {issues.slice(0, 2).map((issue) => (
+              <article className="knowledge-link-card" key={issue.slug}>
+                <p className="publication-meta">{issue.issue}</p>
+                <h3>{issue.title}</h3>
+                <p>{issue.summary}</p>
+                <a href={`/convergence-brief#${issue.slug}`}>Open issue overview</a>
+                {issue.linkedinUrl ? (
+                  <a href={issue.linkedinUrl} target="_blank" rel="noreferrer">Open LinkedIn articles</a>
+                ) : null}
               </article>
             ))}
           </div>
@@ -118,8 +138,23 @@ export default function KnowledgePage() {
 
       <section className="section-shell aligned-section">
         <div className="section-heading">
+          <p className="eyebrow">Direct answers</p>
+          <h2>Frequently asked questions about OMNeXa.</h2>
+        </div>
+        <div className="service-preview-grid">
+          {questions.map((item) => (
+            <article className="service-card" key={item.question}>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell aligned-section preview-section">
+        <div className="section-heading">
           <p className="eyebrow">Explore OMNeXa concepts</p>
-          <h2>From human-in-the-loop to humans defining the loop.</h2>
+          <h2>From Human-in-the-Loop to Humans Defining the Loop.</h2>
         </div>
         <div className="pillar-grid">
           <article className="pillar-card">
