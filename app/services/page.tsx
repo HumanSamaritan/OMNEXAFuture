@@ -3,36 +3,47 @@ import {
   engagementFormats,
   engagementSteps,
   partnerTypes,
-  serviceVisuals,
   services,
   targetMarkets
 } from "@/lib/site-data";
 
+const serviceLenses = [
+  {
+    title: "People & institutions",
+    description: "Education, employability, leadership and capability-building designed for a workforce being reshaped by AI."
+  },
+  {
+    title: "Banks & regulated enterprises",
+    description: "Technology and functional banking transformation across payments, onboarding, financial crime, risk, controls and reporting."
+  },
+  {
+    title: "AI & transformation leaders",
+    description: "Responsible AI, governance, cybersecurity, human-defined automation and operating-model design for practical adoption."
+  }
+];
+
 export default function ServicesPage() {
   return (
     <main>
-      <section className="page-hero section-shell">
+      <section className="page-hero section-shell aligned-section">
         <p className="eyebrow">Services</p>
-        <h1>Practical services for education, risk, sustainability and AI-era readiness.</h1>
+        <h1>Transformation services built around practical outcomes.</h1>
         <p>
-          OMNeXa offers modular advisory, facilitation and implementation support across career,
-          risk, sustainability, AI readiness and conscious leadership priorities.
+          OMNeXa combines advisory, leadership facilitation and implementation support across technology,
+          functional banking, risk and controls, AI readiness, education, sustainability and human capability.
         </p>
       </section>
 
-      <section className="section-shell service-visual-grid">
-        {serviceVisuals.map((visual) => (
-          <article className="service-visual-card tilt-card" key={visual.title}>
-            <img src={visual.image} alt="" />
-            <div>
-              <h2>{visual.title}</h2>
-              <p>{visual.description}</p>
-            </div>
+      <section className="section-shell service-lead-grid" aria-label="OMNeXa service lenses">
+        {serviceLenses.map((lens) => (
+          <article key={lens.title}>
+            <h3>{lens.title}</h3>
+            <p>{lens.description}</p>
           </article>
         ))}
       </section>
 
-      <section className="section-shell service-stack-page">
+      <section className="section-shell service-stack-page aligned-section">
         {services.map((service, index) => (
           <article className="service-row tilt-card" key={service.title}>
             <div className="service-number">{String(index + 1).padStart(2, "0")}</div>
@@ -48,10 +59,10 @@ export default function ServicesPage() {
         ))}
       </section>
 
-      <section className="section-shell preview-section">
-        <div className="section-heading centered">
+      <section className="section-shell preview-section aligned-section">
+        <div className="section-heading">
           <p className="eyebrow">Partner types</p>
-          <h2>Ecosystem collaboration shaped around each partner.</h2>
+          <h2>Collaboration shaped around the problem, not a fixed package.</h2>
         </div>
         <div className="service-preview-grid">
           {partnerTypes.map((partner) => (
@@ -66,12 +77,11 @@ export default function ServicesPage() {
       <section className="band market-band">
         <div className="section-shell aligned-section">
           <div className="section-heading">
-            <p className="eyebrow">Education markets</p>
-            <h2>Education guidance designed for priority regional markets.</h2>
+            <p className="eyebrow">Global education pathways</p>
+            <h2>Market-aware guidance with a global perspective.</h2>
             <p>
-              OMNeXa plans to support education and career-readiness conversations across Singapore,
-              India, China, Thailand, Philippines, Vietnam, Malaysia and Dubai, making guidance easier
-              to manage across market contexts.
+              OMNeXa supports education and career-readiness conversations across multiple markets,
+              helping students, parents and institutions compare pathways with local context and future-skills awareness.
             </p>
           </div>
           <div className="market-list">
@@ -91,10 +101,10 @@ export default function ServicesPage() {
       </section>
 
       <section className="band">
-        <div className="section-shell">
-          <div className="section-heading centered">
+        <div className="section-shell aligned-section">
+          <div className="section-heading">
             <p className="eyebrow">Engagement model</p>
-            <h2>Start small, prove value, then scale.</h2>
+            <h2>Start focused, prove value, then scale.</h2>
           </div>
           <div className="format-grid">
             {engagementFormats.map((format, index) => (
@@ -106,7 +116,7 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          <div className="section-heading centered compact-heading">
+          <div className="section-heading compact-heading">
             <p className="eyebrow">Roadmap</p>
             <h2>Discovery to scale.</h2>
           </div>
