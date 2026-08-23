@@ -121,7 +121,9 @@ export default function DhirajKumarPage() {
       <section className="page-hero section-shell about-hero about-hero-grid aligned-section">
         <div className="about-hero-copy">
           <p className="eyebrow">Official founder profile</p>
-          <h1>Dhiraj Kumar — Founder & CEO of OMNeXa Pte. Ltd.</h1>
+          <h1>
+            Dhiraj Kumar — <span className="founder-role-nowrap">Founder &amp; CEO</span> of OMNeXa Pte. Ltd.
+          </h1>
           <p>
             Based in Singapore, Dhiraj brings together technology leadership, functional banking leadership,
             risk and governance expertise, and human-centred AI thinking. His experience spans payments,

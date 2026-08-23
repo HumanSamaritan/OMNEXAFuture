@@ -275,6 +275,23 @@ h3 {
   text-align: right;
 }
 
+.founder-role-nowrap {
+  white-space: nowrap;
+}
+
+.founder-portrait-panel {
+  width: min(100%, 360px);
+  margin: 0;
+}
+
+.founder-portrait-panel img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  object-position: center;
+}
+
 .entity-facts-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
