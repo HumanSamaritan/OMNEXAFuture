@@ -19,7 +19,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
             />
           </span>
           <span className="brand-text">
-            <strong>OMNeXa</strong>
+            <strong>OMNeXa™</strong>
             <small>Where Consciousness Meets Intelligence</small>
           </span>
         </a>
@@ -30,6 +30,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
               {item.label}
             </a>
           ))}
+          <a href="/knowledge">Knowledge</a>
         </nav>
       </header>
 
@@ -38,7 +39,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
-        <p>Where Consciousness Meets Intelligence</p>
+        <p>OMNeXa™ — Where Consciousness Meets Intelligence</p>
       </footer>
     </>
   );

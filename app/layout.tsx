@@ -50,37 +50,89 @@ export const metadata: Metadata = {
   }
 };
 
-const organizationSchema = {
+const entityGraph = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${siteUrl}/#organization`,
-  name: "OMNeXa Pte. Ltd.",
-  alternateName: "OMNeXa",
-  url: siteUrl,
-  logo: `${siteUrl}/omnexa-logo.png`,
-  slogan: "Where Consciousness Meets Intelligence",
-  description:
-    "Singapore-based transformation and innovation ecosystem focused on responsible AI, human-defined automation, robotics with human values, risk and governance, education, sustainability and well-being.",
-  founder: {
-    "@type": "Person",
-    "@id": `${siteUrl}/about#dhiraj-kumar`,
-    name: "Dhiraj Kumar",
-    jobTitle: "Founder & CEO",
-    url: `${siteUrl}/about`,
-    image: `${siteUrl}/dhiraj-founder.png`,
-    sameAs: ["https://sg.linkedin.com/in/dhiraj-kumar-a9763616"]
-  },
-  knowsAbout: [
-    "Responsible AI",
-    "Human-in-the-Loop AI",
-    "Humans Defining the Loop",
-    "Robotics with Human Values",
-    "AI governance",
-    "Risk and controls",
-    "AML/KYC and sanctions",
-    "Education and employability",
-    "Sustainability and ESG",
-    "Human-machine collaboration"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "OMNeXa Pte. Ltd.",
+      legalName: "OMNeXa Pte. Ltd.",
+      alternateName: ["OMNeXa"],
+      url: siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        "@id": `${siteUrl}/#logo`,
+        url: `${siteUrl}/omnexa-logo.png`,
+        contentUrl: `${siteUrl}/omnexa-logo.png`,
+        caption: "OMNeXa — Where Consciousness Meets Intelligence"
+      },
+      brand: { "@id": `${siteUrl}/#brand` },
+      founder: { "@id": `${siteUrl}/about#dhiraj-kumar` },
+      slogan: "Where Consciousness Meets Intelligence",
+      description:
+        "Singapore-based transformation and innovation ecosystem focused on responsible AI, human-defined automation, robotics with human values, risk and governance, education, sustainability and well-being.",
+      email: "dhiraj.kumar@omnexagoc.com",
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "business enquiries",
+        email: "dhiraj.kumar@omnexagoc.com",
+        availableLanguage: ["English"]
+      },
+      knowsAbout: [
+        "Responsible AI",
+        "Human-in-the-Loop AI",
+        "Humans Defining the Loop",
+        "Robotics with Human Values",
+        "AI governance",
+        "Risk and controls",
+        "AML/KYC and sanctions",
+        "Education and employability",
+        "Sustainability and ESG",
+        "Human-machine collaboration"
+      ]
+    },
+    {
+      "@type": "Brand",
+      "@id": `${siteUrl}/#brand`,
+      name: "OMNeXa",
+      url: siteUrl,
+      logo: `${siteUrl}/omnexa-logo.png`,
+      slogan: "Where Consciousness Meets Intelligence",
+      description:
+        "OMNeXa is the brand of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation ecosystem."
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
+      name: "OMNeXa",
+      alternateName: "OMNeXa Pte. Ltd.",
+      description:
+        "Official website of OMNeXa Pte. Ltd., Singapore — Where Consciousness Meets Intelligence.",
+      inLanguage: "en-SG",
+      publisher: { "@id": `${siteUrl}/#organization` },
+      about: { "@id": `${siteUrl}/#organization` }
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/about#dhiraj-kumar`,
+      name: "Dhiraj Kumar",
+      jobTitle: "Founder & CEO",
+      url: `${siteUrl}/about`,
+      image: `${siteUrl}/dhiraj-founder.png`,
+      worksFor: { "@id": `${siteUrl}/#organization` },
+      sameAs: ["https://sg.linkedin.com/in/dhiraj-kumar-a9763616"],
+      knowsAbout: [
+        "Responsible AI",
+        "Human-defined automation",
+        "AI governance",
+        "Risk and controls",
+        "AML/KYC and sanctions",
+        "Human-machine collaboration",
+        "Sustainability and ESG"
+      ]
+    }
   ]
 };
 
@@ -90,7 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(entityGraph) }}
         />
         <SiteShell>{children}</SiteShell>
       </body>

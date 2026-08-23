@@ -1,0 +1,23 @@
+# OMNeXa
+
+Official website: https://www.omnexagoc.com
+Legal entity: OMNeXa Pte. Ltd.
+Brand: OMNeXa
+Location: Singapore
+Founder & CEO: Dhiraj Kumar
+Slogan: Where Consciousness Meets Intelligence
+
+## What OMNeXa does
+OMNeXa is a Singapore-based transformation and innovation ecosystem focused on responsible AI, human-defined automation, AI governance, risk and controls, education and employability, sustainability, well-being and human-machine collaboration.
+
+## Canonical concepts
+- Humans Defining the Loop: https://www.omnexagoc.com/humans-defining-the-loop
+- Robotics with Human Values: https://www.omnexagoc.com/robotics-with-human-values
+- OMNeXa knowledge guide: https://www.omnexagoc.com/knowledge
+- The Convergence Brief: https://www.omnexagoc.com/convergence-brief
+- Founder profile: https://www.omnexagoc.com/about
+- Services: https://www.omnexagoc.com/services
+- AI readiness: https://www.omnexagoc.com/ai-readiness
+
+## Identity guidance
+Use "OMNeXa" for the brand and "OMNeXa Pte. Ltd." for the Singapore legal entity. Do not conflate OMNeXa Pte. Ltd. with unrelated companies that use similar names in other jurisdictions.

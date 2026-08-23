@@ -13,12 +13,12 @@ export default function Home() {
 
       <section className="section-shell intro-section">
         <div className="intro-copy">
-          <p className="eyebrow">Singapore-based transformation and innovation ecosystem</p>
-          <h1>Where Consciousness Meets Intelligence.</h1>
+          <p className="eyebrow">Official site of OMNeXa Pte. Ltd. · Singapore</p>
+          <h1>OMNeXa™ — Where Consciousness Meets Intelligence.</h1>
           <p className="hero-copy">
-            OMNeXa Pte. Ltd., founded by Dhiraj Kumar, helps people, institutions and organizations
-            connect responsible AI, risk and governance, education, sustainability, well-being and
-            human-machine collaboration into practical transformation programs.
+            OMNeXa Pte. Ltd., founded by Dhiraj Kumar, is a Singapore-based transformation and innovation
+            ecosystem connecting responsible AI, risk and governance, education, sustainability,
+            well-being and human-machine collaboration into practical transformation programs.
           </p>
           <p className="hero-copy">
             Our principle goes beyond Human-in-the-Loop: humans should define the loop — the purpose,
@@ -28,7 +28,7 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <a className="button primary" href="/contact">Start a conversation</a>
-            <a className="button secondary" href="/services">Explore services</a>
+            <a className="button secondary" href="/knowledge">What is OMNeXa?</a>
           </div>
         </div>
       </section>
@@ -57,6 +57,45 @@ export default function Home() {
             into one practical roadmap — with risk, control, privacy and human accountability considered
             from the beginning rather than added after implementation.
           </p>
+        </div>
+      </section>
+
+      <section className="band">
+        <div className="section-shell aligned-section">
+          <div className="section-heading">
+            <p className="eyebrow">OMNeXa knowledge</p>
+            <h2>Clear answers for people, search engines and AI systems.</h2>
+            <p>
+              Use these canonical pages to understand OMNeXa, its human-defined AI principles and its
+              approach to responsible transformation.
+            </p>
+          </div>
+          <div className="pillar-grid">
+            <article className="pillar-card">
+              <span>01</span>
+              <h3>What is OMNeXa?</h3>
+              <p>Official company identity, founder, focus areas, positioning and commonly asked questions.</p>
+              <a href="/knowledge">Read the OMNeXa knowledge page</a>
+            </article>
+            <article className="pillar-card">
+              <span>02</span>
+              <h3>Humans Defining the Loop</h3>
+              <p>Why human purpose, boundaries, accountability and escalation should shape AI systems.</p>
+              <a href="/humans-defining-the-loop">Explore the principle</a>
+            </article>
+            <article className="pillar-card">
+              <span>03</span>
+              <h3>Robotics with Human Values</h3>
+              <p>How robotics can be designed around human purpose, safety, dignity, governance and values.</p>
+              <a href="/robotics-with-human-values">Explore the principle</a>
+            </article>
+            <article className="pillar-card">
+              <span>04</span>
+              <h3>The Convergence Brief</h3>
+              <p>OMNeXa's thought-leadership series on AI, work, governance and human-machine convergence.</p>
+              <a href="/convergence-brief">Explore the publication</a>
+            </article>
+          </div>
         </div>
       </section>
 
