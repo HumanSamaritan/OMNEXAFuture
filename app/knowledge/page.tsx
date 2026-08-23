@@ -92,7 +92,9 @@ export default async function KnowledgePage() {
         <div className="copy-stack">
           <p><strong>Brand:</strong> OMNeXa™</p>
           <p><strong>Legal entity:</strong> OMNeXa Pte. Ltd.</p>
-          <p><strong>Founder & CEO:</strong> Dhiraj Kumar</p>
+          <p><strong>Singapore UEN:</strong> 202628055R</p>
+          <p><strong>Incorporated:</strong> 22 June 2026</p>
+          <p><strong>Founder & CEO:</strong> <a href="/dhiraj-kumar">Dhiraj Kumar</a></p>
           <p><strong>Positioning:</strong> Where Consciousness Meets Intelligence</p>
           <p>
             <strong>Core themes:</strong> Responsible AI, human-defined automation, AI governance,
@@ -126,7 +128,7 @@ export default async function KnowledgePage() {
                 <p className="publication-meta">{issue.issue}</p>
                 <h3>{issue.title}</h3>
                 <p>{issue.summary}</p>
-                <a href={`/convergence-brief#${issue.slug}`}>Open issue overview</a>
+                <a href={`/convergence-brief/${issue.slug}`}>Open official issue overview</a>
                 {issue.linkedinUrl ? (
                   <a href={issue.linkedinUrl} target="_blank" rel="noreferrer">Open LinkedIn articles</a>
                 ) : null}

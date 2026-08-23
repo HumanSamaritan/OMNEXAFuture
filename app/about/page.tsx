@@ -1,243 +1,199 @@
 import type { Metadata } from "next";
-import {
-  coreCompetencies,
-  educationCredentials,
-  experienceTimeline,
-  linkedinRecommendations,
-  proofPoints,
-  trackRecord
-} from "@/lib/site-data";
+import Image from "next/image";
 
 const siteUrl = "https://www.omnexagoc.com";
 
 export const metadata: Metadata = {
-  title: "Dhiraj Kumar | Founder & CEO",
+  title: "About OMNeXa",
   description:
-    "Dhiraj Kumar is Founder & CEO of OMNeXa Pte. Ltd., Singapore. His work spans technology and banking transformation, responsible AI, risk and governance, controls, payments, client onboarding, sustainability, education and leadership.",
-  alternates: {
-    canonical: "/about"
-  },
+    "Official company profile of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation company founded by Dhiraj Kumar, focused on human-centred AI, banking transformation, risk, governance and sustainable human capability.",
+  alternates: { canonical: "/about" },
   openGraph: {
-    title: "Dhiraj Kumar | Founder & CEO, OMNeXa Pte. Ltd.",
+    title: "About OMNeXa Pte. Ltd. | Singapore",
     description:
-      "Founder of OMNeXa Pte. Ltd., connecting technology leadership, banking transformation, responsible AI, governance, risk, human capability and sustainable progress.",
+      "Official identity, founder, purpose and focus areas of OMNeXa Pte. Ltd. — Where Consciousness Meets Intelligence.",
     url: `${siteUrl}/about`,
-    type: "profile",
+    type: "website",
     images: [
       {
-        url: "/dhiraj-founder.png",
-        alt: "Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd."
+        url: "/omnexa-driver-home.jpg",
+        width: 1254,
+        height: 1254,
+        alt: "OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhiraj Kumar | Founder & CEO, OMNeXa Pte. Ltd.",
+    title: "About OMNeXa Pte. Ltd. | Singapore",
     description:
-      "Technology and banking transformation, responsible AI, humans defining the loop, risk, governance and global leadership.",
-    images: ["/dhiraj-founder.png"]
+      "Human-centred AI, risk-aware transformation and leadership for what comes next.",
+    images: ["/omnexa-driver-home.jpg"]
   }
 };
 
-const personSchema = {
+const aboutSchema = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": `${siteUrl}/about#dhiraj-kumar`,
-  name: "Dhiraj Kumar",
-  url: `${siteUrl}/about`,
-  image: `${siteUrl}/dhiraj-founder.png`,
-  jobTitle: "Founder & CEO",
-  worksFor: {
-    "@type": "Organization",
-    "@id": `${siteUrl}/#organization`,
-    name: "OMNeXa Pte. Ltd.",
-    url: siteUrl
-  },
-  sameAs: ["https://sg.linkedin.com/in/dhiraj-kumar-a9763616"],
-  knowsAbout: [
-    "Technology transformation",
-    "Banking transformation",
-    "Payments and client onboarding",
-    "Responsible AI",
-    "Human-in-the-Loop AI",
-    "Humans Defining the Loop",
-    "Robotics with Human Values",
-    "AI governance",
-    "Cybersecurity, risk and controls",
-    "AML/KYC and sanctions",
-    "Risk and compliance reporting",
-    "Sustainability and ESG",
-    "Leadership and capability building"
-  ],
-  description:
-    "Founder and CEO of OMNeXa Pte. Ltd., connecting technology leadership, banking-functional transformation, responsible AI, governance, risk, human capability and sustainable progress."
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${siteUrl}/about#webpage`,
+      url: `${siteUrl}/about`,
+      name: "About OMNeXa Pte. Ltd.",
+      description:
+        "Official company profile of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation company.",
+      mainEntity: { "@id": `${siteUrl}/#organization` },
+      primaryImageOfPage: { "@id": `${siteUrl}/#primary-image` },
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      inLanguage: "en-SG",
+      dateModified: "2026-08-23"
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${siteUrl}/`
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About OMNeXa",
+          item: `${siteUrl}/about`
+        }
+      ]
+    }
+  ]
 };
+
+const focusAreas = [
+  {
+    title: "Human-centred AI and transformation",
+    description:
+      "Responsible AI, human-defined automation and enterprise transformation designed with governance, security, privacy and accountability from the beginning."
+  },
+  {
+    title: "Banking, risk and controls",
+    description:
+      "Practical experience across payments, client onboarding, financial crime, compliance technology, risk, controls, reporting and multi-market change."
+  },
+  {
+    title: "Education and future of work",
+    description:
+      "Career pathways, employability, capability-building and AI-era readiness intended to help people participate in technological change."
+  },
+  {
+    title: "Sustainability and well-being",
+    description:
+      "Sustainability activation, conscious leadership and human well-being connected to measurable, responsible progress."
+  }
+];
 
 export default function AboutPage() {
   return (
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
       />
 
       <section className="page-hero section-shell about-hero about-hero-grid aligned-section">
         <div className="about-hero-copy">
-          <p className="eyebrow">Founder profile</p>
-          <h1>Dhiraj Kumar — Founder & CEO of OMNeXa Pte. Ltd.</h1>
+          <p className="eyebrow">Official company profile</p>
+          <h1>OMNeXa Pte. Ltd. — a Singapore-based transformation and innovation company.</h1>
           <p>
-            Based in Singapore, Dhiraj brings together technology leadership, functional banking leadership,
-            risk and governance expertise, and human-centred AI thinking. His experience spans payments,
-            client onboarding, financial crime, compliance technology, risk and controls, reporting and
-            complex multi-market transformation.
+            OMNeXa brings together human-centred AI, technology and banking transformation, risk and
+            governance, education, sustainability and human capability. The company is designed around
+            one principle: technology should strengthen human judgement, dignity and opportunity.
           </p>
-          <p>
-            His leadership approach combines execution discipline with empathy — setting the right tone from
-            the top, strengthening accountability and helping teams navigate change responsibly. Through
-            OMNeXa, he focuses on future-ready ecosystems where technology strengthens human judgement,
-            capability and sustainable progress.
-          </p>
-        </div>
-
-        <aside className="founder-portrait-panel" aria-label="Dhiraj Kumar profile photograph">
-          <img src="/dhiraj-founder.png" alt="Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd." />
-          <p>Founder & CEO · OMNeXa Pte. Ltd. · Singapore</p>
-        </aside>
-      </section>
-
-      <section className="section-shell track-record-grid" aria-label="Dhiraj Kumar leadership track record">
-        {trackRecord.map((item) => (
-          <article key={item.value}>
-            <strong>{item.value}</strong>
-            <span>{item.label}</span>
-          </article>
-        ))}
-      </section>
-
-      <section className="section-shell leadership-profile aligned-section">
-        <div>
-          <p className="eyebrow">Leadership profile</p>
-          <h2>Technology fluency. Banking depth. Governance-first execution.</h2>
-          <div className="copy-stack">
-            <p>
-              Dhiraj's work has required technology and business teams to move together — translating complex
-              regulatory, operational and customer requirements into practical delivery across banking systems,
-              payments, onboarding, financial crime, controls and reporting.
-            </p>
-            <p>
-              OMNeXa builds from that operating experience. The focus is not technology for its own sake, but
-              using AI and digital capability to improve decisions, remove repetitive work, strengthen controls,
-              develop people and create measurable outcomes.
-            </p>
-            <p>
-              The human principle remains explicit: keep humans in the loop where judgement is required, and
-              more importantly keep humans defining the loop — its purpose, boundaries, decision rights,
-              accountability and escalation.
-            </p>
+          <div className="hero-actions">
+            <a className="button primary" href="/dhiraj-kumar">Meet the founder</a>
+            <a className="button secondary" href="/media">Official media assets</a>
           </div>
         </div>
 
-        <div className="leadership-signature" aria-label="Leadership approach">
-          <article>
-            <strong>Lead with empathy</strong>
-            <span>Build capability, create clarity and help diverse teams perform through change.</span>
-          </article>
-          <article>
-            <strong>Set the tone from the top</strong>
-            <span>Make compliance, accountability and responsible execution visible leadership expectations.</span>
-          </article>
-          <article>
-            <strong>Connect business and technology</strong>
-            <span>Translate functional banking needs into scalable technology and operating-model change.</span>
-          </article>
-          <article>
-            <strong>Design controls early</strong>
-            <span>Risk, security, privacy and governance should be built into transformation rather than added later.</span>
-          </article>
+        <figure className="entity-visual-panel">
+          <Image
+            src="/omnexa-driver-home.jpg"
+            alt="OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
+            width={1254}
+            height={1254}
+            sizes="(max-width: 1000px) 100vw, 34vw"
+            priority
+          />
+          <figcaption>OMNeXa™ · Where Consciousness Meets Intelligence</figcaption>
+        </figure>
+      </section>
+
+      <section className="section-shell entity-facts-grid" aria-label="OMNeXa company facts">
+        <article><span>Legal name</span><strong>OMNeXa Pte. Ltd.</strong></article>
+        <article><span>Singapore UEN</span><strong>202628055R</strong></article>
+        <article><span>Incorporated</span><strong>22 June 2026</strong></article>
+        <article><span>Founder & CEO</span><strong><a href="/dhiraj-kumar">Dhiraj Kumar</a></strong></article>
+      </section>
+
+      <section className="section-shell split-section aligned-section">
+        <div>
+          <p className="eyebrow">Why OMNeXa exists</p>
+          <h2>Design transformation around accountable outcomes.</h2>
+        </div>
+        <div className="copy-stack">
+          <p>
+            AI, regulatory pressure, workforce transition and sustainability are converging. Treating
+            them as separate programs can create duplicated effort, fragmented ownership and weak
+            accountability.
+          </p>
+          <p>
+            OMNeXa connects technology decisions with business outcomes, risk and controls, people,
+            operating models and long-term human value. The work is grounded in practical execution and
+            governance-first leadership.
+          </p>
         </div>
       </section>
 
-      <section className="band about-band">
+      <section className="band">
         <div className="section-shell aligned-section">
           <div className="section-heading">
-            <p className="eyebrow">Core strengths</p>
-            <h2>The operating range behind OMNeXa.</h2>
+            <p className="eyebrow">Focus areas</p>
+            <h2>One philosophy across connected transformation themes.</h2>
           </div>
-          <div className="competency-grid">
-            {coreCompetencies.map((competency) => (
-              <span key={competency}>{competency}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-shell experience-section aligned-section">
-        <div className="section-heading">
-          <p className="eyebrow">Experience</p>
-          <h2>Built across banking, technology, consulting and global delivery.</h2>
-        </div>
-        <div className="experience-timeline">
-          {experienceTimeline.map((role) => (
-            <article key={`${role.company}-${role.title}-${role.period}`}>
-              <div className="timeline-dot" />
-              <div>
-                <p className="role-period">{role.period}</p>
-                <h3>{role.title}</h3>
-                <strong>{role.company}</strong>
-                <p>{role.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell proof-section aligned-section">
-        <div className="section-heading">
-          <p className="eyebrow">What anchors the work</p>
-          <h2>Execution depth with a human-centred leadership lens.</h2>
-        </div>
-        <ul className="proof-grid">
-          {proofPoints.map((point) => <li key={point}>{point}</li>)}
-        </ul>
-      </section>
-
-      <section className="band about-band">
-        <div className="section-shell aligned-section education-layout">
-          <div>
-            <p className="eyebrow">Education</p>
-            <h2>Learning foundation.</h2>
-          </div>
-          <div className="education-grid">
-            {educationCredentials.map((item) => (
-              <article key={item.title}>
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
+          <div className="about-focus-grid">
+            {focusAreas.map((area) => (
+              <article key={area.title}>
+                <h3>{area.title}</h3>
+                <p>{area.description}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-shell testimonials-section aligned-section">
+      <section className="section-shell aligned-section preview-section">
         <div className="section-heading">
-          <p className="eyebrow">LinkedIn recommendations</p>
-          <h2>Selected signals from colleagues, clients and leaders.</h2>
-          <p>
-            A concise selection focused on leadership, delivery, team building, problem solving,
-            compliance depth and trust.
-          </p>
+          <p className="eyebrow">Official sources</p>
+          <h2>Explore OMNeXa’s people, principles and published work.</h2>
         </div>
-        <div className="recommendation-grid">
-          {linkedinRecommendations.map((recommendation) => (
-            <figure key={`${recommendation.author}-${recommendation.theme}`}>
-              <p className="recommendation-theme">{recommendation.theme}</p>
-              <blockquote>"{recommendation.quote}"</blockquote>
-              <figcaption>
-                <strong>{recommendation.author}</strong>
-                <span>{recommendation.role}</span>
-              </figcaption>
-            </figure>
-          ))}
+        <div className="pillar-grid">
+          <article className="pillar-card">
+            <span>01</span>
+            <h3>Dhiraj Kumar</h3>
+            <p>Founder profile, leadership background, experience and areas of expertise.</p>
+            <a href="/dhiraj-kumar">Open founder profile</a>
+          </article>
+          <article className="pillar-card">
+            <span>02</span>
+            <h3>OMNeXa knowledge guide</h3>
+            <p>Canonical answers about the company, its principles and its human-defined approach to AI.</p>
+            <a href="/knowledge">Open knowledge guide</a>
+          </article>
+          <article className="pillar-card">
+            <span>03</span>
+            <h3>The Convergence Brief</h3>
+            <p>OMNeXa’s thought-leadership series on AI, work, governance and human capability.</p>
+            <a href="/convergence-brief">Explore the publication</a>
+          </article>
         </div>
       </section>
     </main>

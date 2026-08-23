@@ -23,7 +23,7 @@ const articleSchema = {
   headline: "Humans Defining the Loop",
   description:
     "OMNeXa's principle that humans should define the purpose, boundaries, accountability and escalation rules within which AI and autonomous systems operate.",
-  author: { "@id": `${siteUrl}/about#dhiraj-kumar` },
+  author: { "@id": `${siteUrl}/dhiraj-kumar#person` },
   publisher: { "@id": `${siteUrl}/#organization` },
   mainEntityOfPage: `${siteUrl}/humans-defining-the-loop`,
   inLanguage: "en-SG"

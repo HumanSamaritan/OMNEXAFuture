@@ -2,7 +2,8 @@ export const navItems = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "AI Readiness", href: "/ai-readiness" },
-  { label: "About", href: "/about" },
+  { label: "About OMNeXa", href: "/about" },
+  { label: "Founder", href: "/dhiraj-kumar" },
   { label: "Contact", href: "/contact" }
 ];
 

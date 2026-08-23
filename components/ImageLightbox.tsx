@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -34,7 +35,14 @@ export default function ImageLightbox({ src, alt }: Props) {
         aria-label="Enlarge OMNeXa visual"
         onClick={() => setOpen(true)}
       >
-        <img src={src} alt={alt} />
+        <Image
+          src={src}
+          alt={alt}
+          width={1254}
+          height={1254}
+          sizes="(max-width: 1000px) 100vw, 44vw"
+          priority
+        />
         <span>Click to enlarge</span>
       </button>
 
@@ -55,7 +63,13 @@ export default function ImageLightbox({ src, alt }: Props) {
             >
               ×
             </button>
-            <img src={src} alt={alt} />
+            <Image
+              src={src}
+              alt={alt}
+              width={1254}
+              height={1254}
+              sizes="96vw"
+            />
           </div>
         </div>
       ) : null}

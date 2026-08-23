@@ -91,8 +91,11 @@ export default async function ConvergenceBriefPage() {
                 <p className="publication-meta">{issue.issue}</p>
                 <h3>{issue.title}</h3>
                 <p>{issue.summary}</p>
+                <a href={`/convergence-brief/${issue.slug}`}>Read the official issue overview</a>
                 {issue.linkedinUrl ? (
-                  <a href={issue.linkedinUrl} target="_blank" rel="noreferrer">Open LinkedIn articles</a>
+                  <a className="secondary-publication-link" href={issue.linkedinUrl} target="_blank" rel="noreferrer">
+                    Read on LinkedIn
+                  </a>
                 ) : null}
               </article>
             ))}

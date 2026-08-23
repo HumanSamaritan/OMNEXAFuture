@@ -1,143 +1,145 @@
-import Link from "next/link";
-import Image from "next/image";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Portfolio | OMNeXa",
-  description: "OMNeXa case studies and client transformations"
+const siteUrl = "https://www.omnexagoc.com";
+
+export const metadata: Metadata = {
+  title: "Initiatives & Products",
+  description:
+    "Explore OMNeXa initiatives being developed across responsible AI, education, action management, human development, community support and sustainability.",
+  alternates: { canonical: "/portfolio" },
+  openGraph: {
+    title: "OMNeXa Initiatives & Products",
+    description:
+      "A factual overview of OMNeXa initiatives being developed across education, human capability, action management, community support and sustainability.",
+    url: `${siteUrl}/portfolio`,
+    type: "website",
+    images: [
+      {
+        url: "/omnexa-driver-home.jpg",
+        width: 1254,
+        height: 1254,
+        alt: "OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
+      }
+    ]
+  }
 };
 
-const cases = [
+const initiatives = [
   {
-    id: 1,
-    title: "AI-Readiness for Regional Bank",
-    category: "AI & Governance",
-    challenge: "Build governance frameworks for responsible AI adoption",
-    solution: "Comprehensive workshops, use case mapping, pilot roadmap",
-    outcome: "3 AI pilots with embedded risk management, 40% faster decisions",
-    image: "https://images.unsplash.com/photo-1677442d019cecf8d5dfa34bec0f5a8c?w=600&h=400&fit=crop"
+    name: "OMNeXa EduCareer",
+    category: "Education, skills and employability",
+    description:
+      "A career and education pathway platform being developed to connect education choices, skills, jobs and practical next steps for students and professionals.",
+    url: "https://educareer.omnexagoc.com"
   },
   {
-    id: 2,
-    title: "ESG Activation in Multinational",
-    category: "Sustainability",
-    challenge: "Engage employees in ESG commitments",
-    solution: "Integrated activation program with dashboards and green champions",
-    outcome: "50% employee participation increase, measurable carbon reduction",
-    image: "https://images.unsplash.com/photo-1559027615-cd2628902d4a?w=600&h=400&fit=crop"
+    name: "Human-Machine Sadhana",
+    category: "Human capability and responsible technology",
+    description:
+      "A human-development initiative exploring how technology can support reflection, consistency, positive habits and accountable personal progress.",
+    url: "https://humanmachinesadhana.omnexagoc.com"
   },
   {
-    id: 3,
-    title: "Career Pathways for 500+ Students",
-    category: "Education",
-    challenge: "Guide students on future-ready career paths",
-    solution: "Structured guidance with industry exposure and mentoring",
-    outcome: "85% gained clarity, 30% secured internships",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
+    name: "ActionLoop",
+    category: "Action and follow-up management",
+    description:
+      "A practical action-management application being developed to connect tasks, follow-ups, status changes and calendar coordination across devices.",
+    url: "https://actionloop.omnexagoc.com"
   },
   {
-    id: 4,
-    title: "AML/KYC Remediation for Fintech",
-    category: "Compliance",
-    challenge: "Achieve regulatory compliance with tech integration",
-    solution: "Control design, workflow optimization, technology advisory",
-    outcome: "Full compliance in 6 months, 60% false positive reduction, $500K savings",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
+    name: "Sahaay-Setu",
+    category: "Community and household support",
+    description:
+      "A service-coordination concept intended to make support for seniors, families and households easier to discover, request and manage.",
+    url: "https://sahaay-setu.omnexagoc.com"
   },
   {
-    id: 5,
-    title: "Well-being Program for Tech Startup",
-    category: "Well-being",
-    challenge: "Address burnout and build conscious leadership",
-    solution: "Leadership circles, well-being workshops, performance frameworks",
-    outcome: "30% attrition reduction, improved team morale",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
+    name: "Lotus Karmic Balance",
+    category: "Sustainability and participation",
+    description:
+      "A sustainability-engagement concept connecting positive participation, simple recognition and community-oriented environmental action.",
+    url: "https://lotusbalance.omnexagoc.com"
   },
   {
-    id: 6,
-    title: "EdTech Ecosystem Collaboration",
-    category: "Partnership",
-    challenge: "Build multi-sector partnerships for education innovation",
-    solution: "Stakeholder mapping, collaboration framework, alignment workshops",
-    outcome: "15+ partners, 10,000+ students reached",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
+    name: "Future Plus pathways",
+    category: "Education ecosystem collaboration",
+    description:
+      "An education-pathway and counsellor collaboration delivered with Future Plus Educom LLP to support structured student onboarding and guidance.",
+    url: "https://futureplus.omnexagoc.com"
   }
 ];
+
+const portfolioSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${siteUrl}/portfolio#collection`,
+  url: `${siteUrl}/portfolio`,
+  name: "OMNeXa Initiatives & Products",
+  description:
+    "A factual overview of initiatives being developed across education, human capability, action management, community support and sustainability.",
+  about: { "@id": `${siteUrl}/#organization` },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: initiatives.map((initiative, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: initiative.name,
+        description: initiative.description,
+        url: initiative.url,
+        creator: { "@id": `${siteUrl}/#organization` }
+      }
+    }))
+  },
+  inLanguage: "en-SG"
+};
 
 export default function PortfolioPage() {
   return (
     <main>
-      {/* Page Hero */}
-      <section className="page-hero">
-        <div className="section-shell">
-          <h1>Case Studies</h1>
-          <p>Real-world transformations across compliance, AI, sustainability, education and well-being</p>
-        </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioSchema) }}
+      />
+
+      <section className="page-hero section-shell aligned-section">
+        <p className="eyebrow">Initiatives in development</p>
+        <h1>From principles to practical platforms.</h1>
+        <p>
+          OMNeXa is developing and supporting a connected set of initiatives across education, human
+          capability, action management, community support and sustainability. This page describes the
+          current purpose and development direction of each initiative.
+        </p>
       </section>
 
-      {/* Case Studies Grid */}
-      <section className="portfolio-section section-shell">
-        <div className="cases-grid">
-          {cases.map((caseStudy) => (
-            <div key={caseStudy.id} className="case-card">
-              <div className="case-image">
-                <Image
-                  src={caseStudy.image}
-                  alt={caseStudy.title}
-                  width={500}
-                  height={300}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-              <div className="case-body">
-                <span className="case-category">{caseStudy.category}</span>
-                <h3>{caseStudy.title}</h3>
-                
-                <div className="case-item">
-                  <strong>Challenge</strong>
-                  <p>{caseStudy.challenge}</p>
-                </div>
-                
-                <div className="case-item">
-                  <strong>Outcome</strong>
-                  <p>{caseStudy.outcome}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <section className="section-shell initiative-grid aligned-section">
+        {initiatives.map((initiative, index) => (
+          <article key={initiative.name}>
+            <span className="initiative-index">{String(index + 1).padStart(2, "0")}</span>
+            <p className="publication-meta">{initiative.category}</p>
+            <h2>{initiative.name}</h2>
+            <p>{initiative.description}</p>
+            <a href={initiative.url} target="_blank" rel="noreferrer">Visit initiative</a>
+          </article>
+        ))}
       </section>
 
-      {/* Impact Stats */}
-      <section className="impact-section">
-        <div className="section-shell">
-          <h2>Our Impact</h2>
-          <div className="impact-grid">
-            <div className="impact-stat">
-              <div className="impact-number">50+</div>
-              <p>Organizations Transformed</p>
-            </div>
-            <div className="impact-stat">
-              <div className="impact-number">20K+</div>
-              <p>Individuals Impacted</p>
-            </div>
-            <div className="impact-stat">
-              <div className="impact-number">$50M+</div>
-              <p>Value Created</p>
-            </div>
-            <div className="impact-stat">
-              <div className="impact-number">85%+</div>
-              <p>Client Satisfaction</p>
-            </div>
+      <section className="band">
+        <div className="section-shell split-section aligned-section compact-band-content">
+          <div>
+            <p className="eyebrow">Evidence discipline</p>
+            <h2>Progress will be communicated with clear status and evidence.</h2>
+          </div>
+          <div className="copy-stack">
+            <p>
+              OMNeXa distinguishes initiatives being developed from completed client engagements and
+              measured outcomes. Quantitative results will be published only when the supporting evidence
+              and measurement basis are available.
+            </p>
+            <a href="/ovia">Explore the OVIA integrity framework</a>
           </div>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="final-cta section-shell">
-        <h2>Your transformation starts here</h2>
-        <Link href="/contact" className="btn btn-primary">
-          Schedule a Consultation
-        </Link>
       </section>
     </main>
   );

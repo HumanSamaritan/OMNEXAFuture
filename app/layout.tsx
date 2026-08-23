@@ -27,8 +27,10 @@ export const metadata: Metadata = {
     locale: "en_SG",
     images: [
       {
-        url: "/omnexa-logo.png",
-        alt: "OMNeXa Pte. Ltd. — Where Consciousness Meets Intelligence"
+        url: "/omnexa-driver-home.jpg",
+        width: 1254,
+        height: 1254,
+        alt: "OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
       }
     ]
   },
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
     title: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
     description:
       "Human-defined AI, robotics with human values, risk and governance, education, sustainability and conscious transformation.",
-    images: ["/omnexa-logo.png"]
+    images: ["/omnexa-driver-home.jpg"]
   },
   robots: {
     index: true,
@@ -67,10 +69,33 @@ const entityGraph = {
         "@id": `${siteUrl}/#logo`,
         url: `${siteUrl}/omnexa-logo.png`,
         contentUrl: `${siteUrl}/omnexa-logo.png`,
-        caption: "OMNeXa — Where Consciousness Meets Intelligence"
+        width: 1522,
+        height: 852,
+        caption: "OMNeXa Pte. Ltd. — Where Consciousness Meets Intelligence"
+      },
+      image: {
+        "@type": "ImageObject",
+        "@id": `${siteUrl}/#primary-image`,
+        url: `${siteUrl}/omnexa-driver-home.jpg`,
+        contentUrl: `${siteUrl}/omnexa-driver-home.jpg`,
+        width: 1254,
+        height: 1254,
+        caption:
+          "OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
       },
       brand: { "@id": `${siteUrl}/#brand` },
-      founder: { "@id": `${siteUrl}/about#dhiraj-kumar` },
+      founder: { "@id": `${siteUrl}/dhiraj-kumar#person` },
+      foundingDate: "2026-06-22",
+      identifier: {
+        "@type": "PropertyValue",
+        propertyID: "Singapore UEN",
+        value: "202628055R"
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Singapore",
+        addressCountry: "SG"
+      },
       slogan: "Where Consciousness Meets Intelligence",
       description:
         "Singapore-based transformation and innovation ecosystem focused on responsible AI, human-defined automation, robotics with human values, risk and governance, education, sustainability and well-being.",
@@ -92,7 +117,8 @@ const entityGraph = {
         "Education and employability",
         "Sustainability and ESG",
         "Human-machine collaboration"
-      ]
+      ],
+      areaServed: "Global"
     },
     {
       "@type": "Brand",
@@ -115,25 +141,6 @@ const entityGraph = {
       inLanguage: "en-SG",
       publisher: { "@id": `${siteUrl}/#organization` },
       about: { "@id": `${siteUrl}/#organization` }
-    },
-    {
-      "@type": "Person",
-      "@id": `${siteUrl}/about#dhiraj-kumar`,
-      name: "Dhiraj Kumar",
-      jobTitle: "Founder & CEO",
-      url: `${siteUrl}/about`,
-      image: `${siteUrl}/dhiraj-founder.png`,
-      worksFor: { "@id": `${siteUrl}/#organization` },
-      sameAs: ["https://sg.linkedin.com/in/dhiraj-kumar-a9763616"],
-      knowsAbout: [
-        "Responsible AI",
-        "Human-defined automation",
-        "AI governance",
-        "Risk and controls",
-        "AML/KYC and sanctions",
-        "Human-machine collaboration",
-        "Sustainability and ESG"
-      ]
     }
   ]
 };

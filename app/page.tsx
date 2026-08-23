@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import ImageLightbox from "@/components/ImageLightbox";
 import { services, testimonials } from "@/lib/site-data";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" }
+};
 
 const focusAreas = [
   {
@@ -22,9 +28,28 @@ const focusAreas = [
   }
 ];
 
+const homePageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://www.omnexagoc.com/#webpage",
+  url: "https://www.omnexagoc.com/",
+  name: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
+  description:
+    "Official website of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation company founded by Dhiraj Kumar.",
+  isPartOf: { "@id": "https://www.omnexagoc.com/#website" },
+  about: { "@id": "https://www.omnexagoc.com/#organization" },
+  primaryImageOfPage: { "@id": "https://www.omnexagoc.com/#primary-image" },
+  inLanguage: "en-SG",
+  dateModified: "2026-08-23"
+};
+
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
+      />
       <section className="section-shell home-hero">
         <div className="home-hero-copy">
           <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
@@ -88,6 +113,27 @@ export default function Home() {
             OMNeXa approaches transformation with risk, control, privacy, cybersecurity, leadership and
             human adoption considered from the beginning — while keeping the operating model practical enough to execute.
           </p>
+        </div>
+      </section>
+
+      <section className="section-shell company-founder-callout aligned-section">
+        <figure>
+          <Image
+            src="/dhiraj-founder.png"
+            alt="Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd. in Singapore"
+            width={1254}
+            height={1254}
+            sizes="(max-width: 760px) 42vw, 190px"
+          />
+        </figure>
+        <div>
+          <p className="eyebrow">Founder-led transformation</p>
+          <h2>Dhiraj Kumar connects banking depth, technology leadership and governance-first AI.</h2>
+          <p>
+            OMNeXa is founded and led by Dhiraj Kumar, whose experience spans global banking technology,
+            payments, client onboarding, financial crime, risk, controls and complex multi-market change.
+          </p>
+          <a href="/dhiraj-kumar">View the official founder profile</a>
         </div>
       </section>
 

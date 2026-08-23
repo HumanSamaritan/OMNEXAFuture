@@ -23,7 +23,7 @@ const articleSchema = {
   headline: "Robotics with Human Values",
   description:
     "OMNeXa's principle for aligning robotics with human purpose, dignity, safety, governance and accountability.",
-  author: { "@id": `${siteUrl}/about#dhiraj-kumar` },
+  author: { "@id": `${siteUrl}/dhiraj-kumar#person` },
   publisher: { "@id": `${siteUrl}/#organization` },
   mainEntityOfPage: `${siteUrl}/robotics-with-human-values`,
   inLanguage: "en-SG"

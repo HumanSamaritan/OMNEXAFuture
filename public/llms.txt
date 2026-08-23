@@ -4,6 +4,8 @@ Official website: https://www.omnexagoc.com
 Legal entity: OMNeXa Pte. Ltd.
 Brand: OMNeXa
 Location: Singapore
+Singapore UEN: 202628055R
+Incorporated: 22 June 2026
 Founder & CEO: Dhiraj Kumar
 Slogan: Where Consciousness Meets Intelligence
 
@@ -15,7 +17,9 @@ OMNeXa is a Singapore-based transformation and innovation ecosystem focused on r
 - Robotics with Human Values: https://www.omnexagoc.com/robotics-with-human-values
 - OMNeXa knowledge guide: https://www.omnexagoc.com/knowledge
 - The Convergence Brief: https://www.omnexagoc.com/convergence-brief
-- Founder profile: https://www.omnexagoc.com/about
+- About OMNeXa: https://www.omnexagoc.com/about
+- Founder profile: https://www.omnexagoc.com/dhiraj-kumar
+- Media and official brand assets: https://www.omnexagoc.com/media
 - Services: https://www.omnexagoc.com/services
 - AI readiness: https://www.omnexagoc.com/ai-readiness
 

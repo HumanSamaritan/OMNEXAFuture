@@ -41,7 +41,9 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
-        <p>OMNeXa™ — Where Consciousness Meets Intelligence</p>
+        <p>
+          OMNeXa™ — Where Consciousness Meets Intelligence · <a href="/media">Media & brand assets</a>
+        </p>
       </footer>
     </>
   );
