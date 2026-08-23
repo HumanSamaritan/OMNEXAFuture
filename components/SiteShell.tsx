@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { navItems } from "@/lib/site-data";
 import TiltCards from "./TiltCards";
+import WhatsAppLead from "./WhatsAppLead";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   return (
@@ -36,6 +37,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
       <TiltCards />
       {children}
+      <WhatsAppLead />
 
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
