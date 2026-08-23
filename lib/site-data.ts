@@ -24,7 +24,7 @@ export const pillars = [
   },
   {
     title: "Risk & Compliance",
-    description: "Fractional AML/KYC, sanctions, governance, controls, regulatory readiness, remediation and client lifecycle management support."
+    description: "Fractional risk and compliance advisory spanning AML/KYC, sanctions, governance, controls, payments, onboarding, reporting, regulatory readiness and remediation."
   },
   {
     title: "Sustainability & ESG",
@@ -54,13 +54,13 @@ export const services = [
   },
   {
     eyebrow: "Banks, fintechs & regulated firms",
-    title: "Risk, governance and financial crime advisory",
-    summary: "Execution-focused support for teams navigating AML/KYC, sanctions, client lifecycle management, audit pressure and regulatory change.",
+    title: "Banking transformation, risk and control advisory",
+    summary: "Execution-focused support across payments, client onboarding, financial crime, compliance technology, risk and control transformation, reporting and regulatory change.",
     bullets: [
-      "Fractional AML/KYC and sanctions advisory",
-      "CLM, onboarding, periodic review and remediation support",
-      "Screening, escalation, control design and risk-based operating models",
-      "Regulatory exam readiness, audit response and governance packs"
+      "Payments, client onboarding and lifecycle transformation",
+      "AML/KYC, sanctions, screening and remediation advisory",
+      "Risk, controls, governance and compliance reporting",
+      "Regulatory readiness, audit response and operating-model transformation"
     ]
   },
   {
@@ -76,13 +76,13 @@ export const services = [
   },
   {
     eyebrow: "Innovators, institutions & ecosystem builders",
-    title: "AI, robotics and responsible innovation",
-    summary: "Responsible AI readiness, human-defined automation and pilot design for organizations that want innovation with trust, governance and human values built in.",
+    title: "AI, technology and responsible innovation",
+    summary: "Responsible AI readiness, human-defined automation and pilot design for organizations that want innovation with trust, cybersecurity, governance and human values built in.",
     bullets: [
       "Responsible AI readiness workshops and use-case framing",
       "Human-in-the-Loop and Humans Defining the Loop operating models",
       "Robotics with human values and technology-for-good narratives",
-      "Workforce readiness, governance and human-machine collaboration"
+      "Workforce readiness, governance, controls and human-machine collaboration"
     ]
   },
   {
@@ -121,7 +121,7 @@ export const aiPrinciples = [
   },
   {
     title: "Responsible intelligence",
-    description: "Use cases are framed with ethics, security, privacy, governance and controls from the beginning rather than added after deployment."
+    description: "Use cases are framed with ethics, cybersecurity, privacy, governance and controls from the beginning rather than added after deployment."
   },
   {
     title: "Human capability",
@@ -134,10 +134,10 @@ export const aiPrinciples = [
 ];
 
 export const proofPoints = [
-  "Financial-crime transformation depth across onboarding, periodic review, screening and remediation",
-  "Human-centered mentoring for students, professionals and teams moving through uncertainty",
-  "Sustainability and ESG storytelling translated into practical employee activation",
-  "AI-era readiness programs that connect governance, productivity, education and social impact"
+  "Technology and functional banking transformation across payments, client onboarding, financial crime, controls and reporting",
+  "Global multi-market leadership connecting business, operations, technology, risk and compliance stakeholders",
+  "Leadership with empathy, accountability and the right tone from the top for compliance and responsible execution",
+  "AI-era readiness that connects governance, cybersecurity, productivity, workforce capability and measurable outcomes"
 ];
 
 export const testimonials = [
@@ -195,22 +195,22 @@ export const linkedinRecommendations = [
 ];
 
 export const trackRecord = [
-  { value: "14+", label: "years at Citi across AML/KYC, sanctions, onboarding and compliance technology" },
-  { value: "20+", label: "years across financial crime, risk, technology and transformation programs" },
-  { value: "50+", label: "resources led on global project delivery and complex implementation programs" },
-  { value: "APAC", label: "regional rollout, country-team support and stakeholder alignment exposure" }
+  { value: "25+", label: "Years in banking, risk, technology and transformation leadership" },
+  { value: "100+", label: "Professionals led, mentored, or managed across delivery, controls, and transformation programs" },
+  { value: "Global", label: "Cross-border exposure across multi-market programs, stakeholder alignment, and transformation initiatives" },
+  { value: "Leadership", label: "Empathy-led execution, strong tone from the top, and governance-first transformation" }
 ];
 
 export const coreCompetencies = [
+  "Technology leadership and enterprise transformation",
+  "Functional banking leadership — payments and client onboarding",
+  "Risk, controls and compliance reporting",
   "Responsible AI and human-defined automation",
-  "AI governance, risk, controls and privacy",
-  "Human-machine collaboration and robotics with human values",
-  "AML/KYC and sanctions advisory",
+  "AI governance, cybersecurity, privacy and controls",
+  "AML/KYC, sanctions and financial crime transformation",
   "Client lifecycle management and onboarding",
-  "Compliance technology transformation",
-  "Regulatory remediation and controls",
-  "Program delivery and stakeholder management",
-  "Team leadership and mentoring",
+  "Program delivery and global stakeholder management",
+  "People leadership, mentoring and capability building",
   "Sustainability and conscious leadership"
 ];
 
@@ -219,43 +219,43 @@ export const experienceTimeline = [
     period: "2026 - Present",
     title: "Founder & CEO",
     company: "OMNeXa Pte. Ltd.",
-    description: "Building a Singapore-based transformation and innovation ecosystem spanning responsible AI, human-defined automation, risk and governance, education, sustainability, well-being and human-machine collaboration."
+    description: "Building a Singapore-based transformation and innovation ecosystem spanning responsible AI, technology transformation, risk and governance, education, sustainability, well-being and human-machine collaboration."
   },
   {
     period: "2020 - Mar 2026",
     title: "Senior Vice President",
     company: "Citi",
-    description: "Senior leadership across AML/KYC, sanctions, compliance transformation, risk and controls, regulatory remediation and regional stakeholder execution."
+    description: "Senior leadership across financial crime, risk and controls, compliance technology, payments-related change, regulatory remediation, reporting and multi-market stakeholder execution."
   },
   {
     period: "2015 - 2020",
     title: "Vice President",
     company: "Citi",
-    description: "Business architect for onboarding and compliance applications, linking business, operations, compliance and technology teams."
+    description: "Business and technology leadership for client onboarding and compliance applications, connecting business, operations, risk, compliance and technology teams."
   },
   {
     period: "2012 - 2015",
     title: "Assistant Vice President",
     company: "Citi",
-    description: "Regional rollout of compliance technology, control design, stakeholder alignment and implementation governance."
+    description: "Regional rollout of banking and compliance technology, control design, stakeholder alignment and implementation governance."
   },
   {
     period: "2008 - 2012",
     title: "Manager - Projects",
     company: "Cognizant Technology Solutions",
-    description: "Program management for global KYC/AML and client-onboarding technology work, including delivery across international banking environments."
+    description: "Program management for global banking technology, KYC/AML and client-onboarding work, including delivery across international banking environments."
   },
   {
     period: "2005 - 2008",
     title: "Project Lead, EAI and BPM practice",
     company: "Infosys Technologies Ltd",
-    description: "Vendor pre-sales, scoping and delivery work for KYC and risk management projects across banks, pharma and healthcare clients."
+    description: "Technology pre-sales, scoping and delivery across banking, risk-management and integration programs for international clients."
   },
   {
     period: "2007 - 2008",
     title: "Engagement Lead for BRMS implementation",
     company: "Fortis Bank Global Clearing NV, Brussels",
-    description: "SME for KYC/AML IT implementation for an investment bank, combining problem solving, negotiation and delivery ownership."
+    description: "Engagement leadership for a banking rules-management and KYC/AML technology implementation, combining domain problem solving, negotiation and delivery ownership."
   }
 ];
 
@@ -285,12 +285,12 @@ export const educationMarketFocus = [
   {
     title: "Market-aware education guidance",
     description:
-      "Support education and career decisions across Singapore, India, China, Thailand, Philippines, Vietnam, Malaysia and Dubai with local context and future-skills awareness."
+      "Support education and career decisions across multiple global markets with local context, pathway awareness and future-skills readiness."
   },
   {
     title: "Cross-border pathway clarity",
     description:
-      "Help students and parents compare pathways, readiness expectations, emerging career directions and practical next steps across priority markets."
+      "Help students and parents compare pathways, readiness expectations, emerging career directions and practical next steps across markets."
   },
   {
     title: "Institution and ecosystem collaboration",
@@ -324,7 +324,7 @@ export const partnerTypes = [
   },
   {
     title: "Banks, fintechs & regulated firms",
-    description: "Fractional FCC advisory, risk controls, regulatory readiness, CLM and remediation support."
+    description: "Banking transformation, fractional advisory, risk controls, regulatory readiness, client lifecycle and remediation support."
   },
   {
     title: "Schools, universities & education platforms",
@@ -355,10 +355,10 @@ export const faqs = [
   },
   {
     question: "Which geographies does OMNeXa work with?",
-    answer: "OMNeXa is Singapore-based with APAC and EMEA exposure, and can support remote or hybrid collaboration depending on the engagement."
+    answer: "OMNeXa is Singapore-based with global cross-border experience and can support in-person, remote or hybrid collaboration depending on the engagement."
   },
   {
     question: "Is the work more advisory or implementation-focused?",
-    answer: "Both. The approach starts with practical diagnosis and moves toward tools, workshops, governance packs, pilots and repeatable operating routines."
+    answer: "Both. The approach starts with practical diagnosis and moves toward tools, workshops, governance packs, pilots, operating-model change and repeatable execution routines."
   }
 ];
