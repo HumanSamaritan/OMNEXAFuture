@@ -1,0 +1,644 @@
+/* Executive visual refinement for OMNeXa preview */
+
+:root {
+  --executive-radius: 12px;
+  --executive-shadow: 0 12px 34px rgba(18, 24, 38, 0.08);
+  --executive-shadow-strong: 0 18px 48px rgba(18, 24, 38, 0.12);
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.site-header {
+  min-height: 68px;
+  padding: 9px clamp(18px, 4.5vw, 64px);
+  gap: 20px;
+}
+
+.brand {
+  gap: 11px;
+}
+
+.brand-logo-wrap {
+  width: 62px;
+  height: 40px;
+  border-radius: 9px;
+  box-shadow: none;
+}
+
+.brand strong {
+  font-size: 0.96rem;
+  letter-spacing: 0.075em;
+}
+
+.brand small {
+  margin-top: 1px;
+  font-size: 0.68rem;
+}
+
+nav {
+  gap: 3px;
+}
+
+nav a {
+  padding: 8px 10px;
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.section-shell {
+  width: min(1180px, calc(100% - 48px));
+}
+
+main,
+.section-shell,
+.page-hero,
+.section-heading,
+.split-section,
+.band,
+.service-row,
+.service-card,
+.pillar-card,
+.principle-card,
+.contact-grid,
+.contact-form,
+.contact-copy,
+.faq-list,
+.track-record-grid,
+.about-profile-grid,
+.education-layout,
+.experience-section,
+.recommendation-grid {
+  text-align: left;
+}
+
+h1 {
+  max-width: 900px;
+  margin-bottom: 18px;
+  font-size: clamp(2.45rem, 4.5vw, 4.3rem);
+  line-height: 1.01;
+  letter-spacing: -0.035em;
+}
+
+h2 {
+  margin-bottom: 14px;
+  font-size: clamp(1.65rem, 2.8vw, 2.65rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  margin-bottom: 9px;
+  font-size: 1.16rem;
+  line-height: 1.25;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+.hero-copy,
+.page-hero p,
+.copy-stack p,
+.section-heading p,
+.service-card p,
+.service-row p,
+.principle-card p,
+.contact-copy p,
+.pillar-card p,
+.experience-timeline p:not(.role-period),
+.education-grid p,
+.recommendation-grid blockquote {
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.page-hero {
+  max-width: 920px;
+  padding: 54px 0 32px;
+}
+
+.intro-section {
+  padding: 50px 0 30px;
+}
+
+.split-section {
+  padding: 54px 0;
+}
+
+.band {
+  margin: 50px 0;
+  padding: 54px 0;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.preview-section,
+.testimonials-section,
+.proof-section {
+  padding-top: 58px;
+}
+
+.pillar-grid,
+.service-preview-grid,
+.ai-grid,
+.testimonial-grid,
+.proof-grid {
+  gap: 14px;
+}
+
+.pillar-card,
+.service-card,
+.principle-card,
+figure,
+.contact-form,
+.contact-card,
+.faq-list article,
+.education-grid article,
+.competency-grid span,
+.track-record-grid article {
+  border-radius: var(--executive-radius);
+  box-shadow: var(--executive-shadow);
+}
+
+.pillar-card,
+.service-card,
+.principle-card,
+figure,
+.faq-list article {
+  padding: 22px;
+}
+
+.pillar-card span,
+.timeline span,
+.format-grid span,
+.service-number {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 17px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+/* Compact, high-impact home */
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(360px, 0.94fr);
+  gap: clamp(30px, 5vw, 68px);
+  align-items: center;
+  padding: 54px 0 30px;
+}
+
+.home-hero-copy {
+  max-width: 720px;
+}
+
+.home-hero h1 {
+  max-width: 760px;
+  font-size: clamp(2.7rem, 5vw, 4.45rem);
+}
+
+.home-hero .hero-copy {
+  max-width: 700px;
+  margin-bottom: 14px;
+}
+
+.home-hero-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 330px;
+  border: 1px solid rgba(18, 24, 38, 0.14);
+  border-radius: 18px;
+  background: #07101d;
+  box-shadow: var(--executive-shadow-strong);
+}
+
+.home-hero-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 330px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.home-hero-visual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(5, 8, 22, 0.48));
+  content: "";
+  pointer-events: none;
+}
+
+.home-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 46px;
+}
+
+.home-trust-strip article {
+  min-height: 112px;
+  padding: 18px 19px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(18, 24, 38, 0.055);
+}
+
+.home-trust-strip strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--ink);
+  font-size: 1.25rem;
+}
+
+.home-trust-strip span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.home-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.home-focus-grid article {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: var(--executive-shadow);
+}
+
+.home-focus-grid p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.home-focus-grid .focus-index {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--teal);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+/* About / executive profile */
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: clamp(34px, 6vw, 72px);
+  align-items: center;
+  max-width: none;
+}
+
+.about-hero-copy {
+  max-width: 780px;
+}
+
+.founder-portrait-panel {
+  justify-self: end;
+  width: min(100%, 330px);
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: var(--executive-shadow-strong);
+}
+
+.founder-portrait-panel img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 11px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.founder-portrait-panel p {
+  margin: 12px 4px 2px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.track-record-grid {
+  gap: 10px;
+  margin-bottom: 54px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.track-record-grid article {
+  min-height: 128px;
+  padding: 20px;
+  border: 1px solid var(--line);
+}
+
+.track-record-grid strong {
+  margin-bottom: 7px;
+  color: var(--ink);
+  font-size: 1.55rem;
+}
+
+.track-record-grid span {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.leadership-profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: clamp(34px, 6vw, 72px);
+  align-items: start;
+  padding: 30px 0 20px;
+}
+
+.leadership-signature {
+  display: grid;
+  gap: 10px;
+}
+
+.leadership-signature article {
+  padding: 18px 20px;
+  border-left: 3px solid var(--teal);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.leadership-signature strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.96rem;
+}
+
+.leadership-signature span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* Services: reduce repeated hero artwork */
+.service-lead-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.service-lead-grid article {
+  min-height: 160px;
+  padding: 23px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: var(--executive-shadow);
+}
+
+.service-lead-grid p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.58;
+}
+
+.service-row {
+  grid-template-columns: 54px minmax(0, 0.95fr) minmax(280px, 1.05fr);
+  gap: 22px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(18, 24, 38, 0.055);
+}
+
+.service-row h2 {
+  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+}
+
+.market-band {
+  margin-top: 56px;
+}
+
+/* Contact */
+.contact-grid {
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: 28px;
+  padding-bottom: 66px;
+}
+
+.contact-form {
+  gap: 14px;
+  padding: 24px;
+}
+
+.contact-card,
+.faq-list article {
+  padding: 20px;
+}
+
+/* WhatsApp lead intake */
+.whatsapp-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #176b4a;
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(18, 24, 38, 0.22);
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.whatsapp-fab svg {
+  width: 21px;
+  height: 21px;
+}
+
+.whatsapp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(7, 13, 28, 0.62);
+  backdrop-filter: blur(8px);
+}
+
+.whatsapp-modal {
+  width: min(640px, 100%);
+  max-height: min(760px, calc(100vh - 44px));
+  overflow: auto;
+  padding: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: 0 28px 90px rgba(7, 13, 28, 0.34);
+}
+
+.whatsapp-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.whatsapp-modal-header h2 {
+  margin-bottom: 6px;
+  font-size: 1.55rem;
+}
+
+.whatsapp-modal-header p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.whatsapp-close {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.whatsapp-form {
+  display: grid;
+  gap: 14px;
+}
+
+.whatsapp-consent {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.whatsapp-consent input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.whatsapp-submit {
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: #176b4a;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 850;
+}
+
+@media (max-width: 1000px) {
+  .home-hero,
+  .about-hero-grid,
+  .leadership-profile {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-visual {
+    min-height: 280px;
+  }
+
+  .home-hero-visual img {
+    min-height: 280px;
+  }
+
+  .founder-portrait-panel {
+    justify-self: start;
+  }
+
+  .home-trust-strip,
+  .home-focus-grid,
+  .service-lead-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    min-height: auto;
+    padding: 10px 14px;
+  }
+
+  .brand-logo-wrap {
+    width: 54px;
+    height: 36px;
+  }
+
+  .section-shell {
+    width: min(100% - 28px, 1180px);
+  }
+
+  h1,
+  .home-hero h1 {
+    font-size: 2.35rem;
+  }
+
+  h2 {
+    font-size: 1.65rem;
+  }
+
+  .page-hero,
+  .home-hero {
+    padding-top: 38px;
+  }
+
+  .home-trust-strip,
+  .home-focus-grid,
+  .service-lead-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-visual,
+  .home-hero-visual img {
+    min-height: 220px;
+  }
+
+  .whatsapp-fab {
+    right: 14px;
+    bottom: 14px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .whatsapp-fab span {
+    display: none;
+  }
+
+  .whatsapp-modal {
+    padding: 20px;
+  }
+}
