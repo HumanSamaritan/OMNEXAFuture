@@ -15,9 +15,6 @@ export const metadata: Metadata = {
   applicationName: "OMNeXa Pte. Ltd.",
   creator: "OMNeXa Pte. Ltd.",
   publisher: "OMNeXa Pte. Ltd.",
-  alternates: {
-    canonical: "/"
-  },
   openGraph: {
     title: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
     description:
