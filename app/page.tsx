@@ -1,4 +1,5 @@
-import { services, testimonials, trackRecord } from "@/lib/site-data";
+import ImageLightbox from "@/components/ImageLightbox";
+import { services, testimonials } from "@/lib/site-data";
 
 const focusAreas = [
   {
@@ -29,12 +30,14 @@ export default function Home() {
           <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
           <h1>Human-centred AI. Risk-aware transformation. Leadership for what comes next.</h1>
           <p className="hero-copy">
-            OMNeXa™ connects technology, banking-functional expertise, governance and human capability
-            to help leaders, institutions and ecosystems move from AI ambition to responsible execution.
+            OMNeXa™ brings together enterprise technology, banking and risk leadership, responsible AI,
+            and human capability to help organisations turn transformation ideas into governed,
+            executable outcomes.
           </p>
           <p className="hero-copy">
-            Our principle goes beyond Human-in-the-Loop: humans should define the loop — its purpose,
-            boundaries, accountability, escalation and values — while technology amplifies capability at scale.
+            We focus on the choices around AI: what should be automated, what should remain human-led,
+            how accountability is retained, and how released capacity is redirected into higher-value work.
+            This is the progression from Human-in-the-Loop to Humans Defining the Loop.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="/knowledge">Explore OMNeXa</a>
@@ -43,23 +46,14 @@ export default function Home() {
         </div>
 
         <div className="home-hero-visual" aria-label="OMNeXa brand visual">
-          <img
+          <ImageLightbox
             src="/omnexa-driver-home.jpg"
             alt="OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
           />
         </div>
       </section>
 
-      <section className="section-shell home-trust-strip" aria-label="Leadership highlights">
-        {trackRecord.map((item) => (
-          <article key={item.value}>
-            <strong>{item.value}</strong>
-            <span>{item.label}</span>
-          </article>
-        ))}
-      </section>
-
-      <section className="section-shell aligned-section">
+      <section className="section-shell aligned-section home-first-section">
         <div className="section-heading">
           <p className="eyebrow">What OMNeXa brings together</p>
           <h2>Three lenses. One transformation mindset.</h2>
