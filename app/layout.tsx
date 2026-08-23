@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteShell from "@/components/SiteShell";
 import "./globals.css";
+import "./professional.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 
