@@ -7,7 +7,7 @@ const siteUrl = "https://www.omnexagoc.com";
 export const metadata: Metadata = {
   title: "Official Media & Brand Assets",
   description:
-    "Official OMNeXa Pte. Ltd. logo, brand mark, founder photograph, visual identity and Convergence Brief editorial images with accurate captions and attribution guidance.",
+    "Official OMNeXa Pte. Ltd. logo, founder photograph, brand assets, publication visuals and education-focused media coverage featuring founder Dhiraj Kumar.",
   alternates: { canonical: "/media" },
   openGraph: {
     title: "Official OMNeXa Media & Brand Assets",
@@ -67,6 +67,25 @@ const brandAssets = [
   }
 ];
 
+const educationVideos = [
+  {
+    id: "AAXIhhUcIXw",
+    title: "Future Plus Education festival — media coverage",
+    sourceTitle: "ଫ୍ୟୁଚର ପ୍ଲସ ଏଜୁକେଶନ ର ଶିକ୍ଷା ମହୋତ୍ସବ",
+    description:
+      "Odia media coverage of the Future Plus Education festival and its focus on education, career awareness and community participation in Rourkela.",
+    youtubeUrl: "https://www.youtube.com/watch?v=AAXIhhUcIXw"
+  },
+  {
+    id: "4zQucrg7mc4",
+    title: "Future Plus career-guidance event in Rourkela",
+    sourceTitle: "राउरकेला में फ्यूचर प्लस एजुकेशन का भव्य करियर गाइडेंस इवेंट",
+    description:
+      "Hindi media coverage of the Future Plus Education career-guidance event in Rourkela, including Dhiraj Kumar’s participation and education-focused outreach.",
+    youtubeUrl: "https://www.youtube.com/watch?v=4zQucrg7mc4"
+  }
+];
+
 const imageObjects = [
   ...brandAssets.map((asset) => ({
     "@type": "ImageObject",
@@ -95,7 +114,7 @@ const mediaSchema = {
   url: `${siteUrl}/media`,
   name: "Official OMNeXa Media & Brand Assets",
   description:
-    "Official images and identity guidance for OMNeXa Pte. Ltd. and founder Dhiraj Kumar.",
+    "Official images, video coverage and identity guidance for OMNeXa Pte. Ltd. and founder Dhiraj Kumar.",
   isPartOf: { "@id": `${siteUrl}/#website` },
   about: { "@id": `${siteUrl}/#organization` },
   primaryImageOfPage: { "@id": `${siteUrl}/#primary-image` },
@@ -196,6 +215,48 @@ export default function MediaPage() {
               </figure>
             );
           })}
+        </div>
+      </section>
+
+      <section className="band education-media-section">
+        <div className="section-shell aligned-section">
+          <div className="section-heading education-media-heading">
+            <p className="eyebrow">Education and community media</p>
+            <h2>Future Plus event highlights.</h2>
+            <p>
+              Dhiraj Kumar, Founder &amp; CEO of OMNeXa Pte. Ltd., participated in Future Plus Education’s
+              outreach in Rourkela and spoke with media about education, career guidance and related social
+              challenges. OMNeXa supported the campaign strategy, marketing and digital communications
+              surrounding the event.
+            </p>
+            <p className="education-media-credit">
+              Future Plus community moments and event communications — created, marketed and powered by OMNeXa.
+            </p>
+          </div>
+
+          <div className="video-media-grid">
+            {educationVideos.map((video) => (
+              <article className="video-media-card" key={video.id}>
+                <div className="video-frame">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                    title={video.title}
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="video-media-copy">
+                  <p className="publication-meta">Independent media coverage</p>
+                  <h3>{video.title}</h3>
+                  <p>{video.description}</p>
+                  <span>{video.sourceTitle}</span>
+                  <a href={video.youtubeUrl} target="_blank" rel="noreferrer">Watch on YouTube</a>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
