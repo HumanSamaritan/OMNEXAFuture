@@ -7,10 +7,10 @@ export const navItems = [
 ];
 
 export const stats = [
-  { value: "New Venture", label: "early-stage consultancy with practical transformation focus" },
-  { value: "Clear Use Cases", label: "education, compliance, sustainability and well-being programs" },
+  { value: "New Venture", label: "early-stage transformation and innovation ecosystem with practical implementation focus" },
+  { value: "Clear Use Cases", label: "education, compliance, sustainability, well-being and responsible AI programs" },
   { value: "Human + AI + Robotics", label: "building synergies between people, intelligence and automation" },
-  { value: "Human-in-the-Loop, Humans Building the Loop", label: "Integral Humanism in practice: technology should amplify people, communities and local capability — production by masses, not mass production" }
+  { value: "Humans Defining the Loop", label: "human purpose, boundaries, accountability and values should shape how AI and robotics operate" }
 ];
 
 export const pillars = [
@@ -32,7 +32,7 @@ export const pillars = [
   },
   {
     title: "AI & Robotics",
-    description: "Responsible AI awareness, ecosystem partnerships, technology-for-good pilots, workforce readiness and governance framing."
+    description: "Responsible AI, human-defined automation, robotics with human values, workforce readiness, ecosystem partnerships and governance-aware pilots."
   },
   {
     title: "Well-being & Leadership",
@@ -77,12 +77,12 @@ export const services = [
   {
     eyebrow: "Innovators, institutions & ecosystem builders",
     title: "AI, robotics and responsible innovation",
-    summary: "Responsible AI readiness, technology-for-good narratives and pilot design for organizations that want innovation with trust built in.",
+    summary: "Responsible AI readiness, human-defined automation and pilot design for organizations that want innovation with trust, governance and human values built in.",
     bullets: [
       "Responsible AI readiness workshops and use-case framing",
-      "Technology-for-good narratives for education, sustainability and health",
-      "Partner scouting, stakeholder mapping and pilot design",
-      "Workforce readiness and human-machine collaboration models"
+      "Human-in-the-Loop and Humans Defining the Loop operating models",
+      "Robotics with human values and technology-for-good narratives",
+      "Workforce readiness, governance and human-machine collaboration"
     ]
   },
   {
@@ -102,7 +102,7 @@ export const audienceRoutes = [
   "Career pathway clarity for students and parents",
   "Regulatory and operating model support for risk teams",
   "Sustainability activation for companies and communities",
-  "Responsible AI readiness for leaders and institutions",
+  "Responsible and human-defined AI readiness for leaders and institutions",
   "Well-being and conscious leadership for teams"
 ];
 
@@ -116,20 +116,20 @@ export const engagementSteps = [
 
 export const aiPrinciples = [
   {
+    title: "Humans define the loop",
+    description: "Human purpose, boundaries, accountability, risk ownership and escalation are designed before intelligent systems are allowed to act."
+  },
+  {
     title: "Responsible intelligence",
-    description: "Use cases are framed with ethics, risk ownership, governance and accountability from the beginning."
+    description: "Use cases are framed with ethics, security, privacy, governance and controls from the beginning rather than added after deployment."
   },
   {
     title: "Human capability",
-    description: "People learn how to work with intelligent systems through mentoring, workshops and proof-of-work pathways."
+    description: "Automation should create a pathway to redesign work and build capability, not assume that removing a task means removing the person."
   },
   {
-    title: "Measurable sustainability",
-    description: "Technology adoption is connected to credible impact metrics, behavior change and practical ESG outcomes."
-  },
-  {
-    title: "Ecosystem collaboration",
-    description: "OMNeXa links institutions, firms and innovators so pilots can move from idea to useful implementation."
+    title: "Robotics with human values",
+    description: "As intelligence moves into agents and physical systems, human values, judgement, traceability and accountability should remain explicit design requirements."
   }
 ];
 
@@ -202,22 +202,30 @@ export const trackRecord = [
 ];
 
 export const coreCompetencies = [
+  "Responsible AI and human-defined automation",
+  "AI governance, risk, controls and privacy",
+  "Human-machine collaboration and robotics with human values",
   "AML/KYC and sanctions advisory",
   "Client lifecycle management and onboarding",
   "Compliance technology transformation",
   "Regulatory remediation and controls",
   "Program delivery and stakeholder management",
-  "Market analysis and executive communication",
   "Team leadership and mentoring",
-  "Sustainability, self-care and conscious leadership"
+  "Sustainability and conscious leadership"
 ];
 
 export const experienceTimeline = [
   {
-    period: "2020 - Present",
-    title: "SVP",
+    period: "2026 - Present",
+    title: "Founder & CEO",
+    company: "OMNeXa Pte. Ltd.",
+    description: "Building a Singapore-based transformation and innovation ecosystem spanning responsible AI, human-defined automation, risk and governance, education, sustainability, well-being and human-machine collaboration."
+  },
+  {
+    period: "2020 - Mar 2026",
+    title: "Senior Vice President",
     company: "Citi",
-    description: "Senior leadership across market analysis, communication, AML/KYC, sanctions, compliance transformation and regional stakeholder execution."
+    description: "Senior leadership across AML/KYC, sanctions, compliance transformation, risk and controls, regulatory remediation and regional stakeholder execution."
   },
   {
     period: "2015 - 2020",
@@ -235,13 +243,7 @@ export const experienceTimeline = [
     period: "2008 - 2012",
     title: "Manager - Projects",
     company: "Cognizant Technology Solutions",
-    description: "Program management for a global KYC/AML project and SME support for private banking client onboarding KYC/EDD implementation."
-  },
-  {
-    period: "2009 - 2010",
-    title: "Manager / IT Consultant",
-    company: "Credit Suisse",
-    description: "Consulting and delivery support across banking technology, problem solving and implementation coordination."
+    description: "Program management for global KYC/AML and client-onboarding technology work, including delivery across international banking environments."
   },
   {
     period: "2005 - 2008",
@@ -260,7 +262,7 @@ export const experienceTimeline = [
 export const educationCredentials = [
   {
     title: "Massachusetts Institute of Technology",
-    detail: "Executive sustainability and future-readiness learning foundation"
+    detail: "Chief Sustainability Officer Professional Certificate — sustainability, natural capital, circular economy, life-cycle thinking and adaptable infrastructure"
   },
   {
     title: "National Institute of Technology Rourkela",
@@ -330,7 +332,7 @@ export const partnerTypes = [
   },
   {
     title: "Technology & robotics companies",
-    description: "Responsible AI narratives, ecosystem partnerships, use-case framing and technology-for-good pilots."
+    description: "Responsible AI, humans defining the loop, robotics with human values, ecosystem partnerships and governance-aware pilots."
   },
   {
     title: "Public bodies, NGOs & foundations",
