@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description:
     "ClearLoop is OMNeXa's privacy-first, local-device companion for understanding vaping, managing cravings, tracking progress and building healthier routines without creating a personal cloud profile.",
   alternates: { canonical: `${siteUrl}/clearloop` },
+  manifest: "/clearloop/manifest.webmanifest",
+  themeColor: "#176b52",
   openGraph: {
     title: "ClearLoop | OMNeXa",
     description:
