@@ -13,14 +13,27 @@ export const metadata: Metadata = {
     template: "%s | OMNeXa Pte. Ltd."
   },
   description:
-    "OMNeXa Pte. Ltd. is a Singapore-based transformation and innovation ecosystem founded by Dhiraj Kumar, focused on responsible AI, human-defined automation, robotics with human values, risk and governance, education, sustainability and well-being.",
+    "OMNeXa Pte. Ltd. is a Singapore-based transformation and innovation ecosystem founded by Dhiraj Kumar, focused on responsible and agentic AI, AI testing and assurance, quality engineering, defect prevention, human-defined automation, risk and governance, education, sustainability and well-being.",
+  keywords: [
+    "OMNeXa",
+    "agentic AI",
+    "responsible AI",
+    "AI testing",
+    "AI assurance",
+    "quality engineering",
+    "defect prevention",
+    "requirement traceability",
+    "human-agent traceability",
+    "AI governance",
+    "human-machine collaboration"
+  ],
   applicationName: "OMNeXa Pte. Ltd.",
   creator: "OMNeXa Pte. Ltd.",
   publisher: "OMNeXa Pte. Ltd.",
   openGraph: {
     title: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
     description:
-      "Human-defined AI, robotics with human values, risk and governance, education, sustainability and conscious transformation.",
+      "Human-defined and agentic AI, AI testing and assurance, quality engineering, risk and governance, education, sustainability and conscious transformation.",
     url: siteUrl,
     siteName: "OMNeXa Pte. Ltd.",
     type: "website",
@@ -38,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
     description:
-      "Human-defined AI, robotics with human values, risk and governance, education, sustainability and conscious transformation.",
+      "Human-defined and agentic AI, AI testing and assurance, quality engineering, risk and governance, education and conscious transformation.",
     images: ["/omnexa-driver-home.jpg"]
   },
   robots: {
@@ -98,7 +111,7 @@ const entityGraph = {
       },
       slogan: "Where Consciousness Meets Intelligence",
       description:
-        "Singapore-based transformation and innovation ecosystem focused on responsible AI, human-defined automation, robotics with human values, risk and governance, education, sustainability and well-being.",
+        "Singapore-based transformation and innovation ecosystem focused on responsible and agentic AI, AI testing and assurance, quality engineering, defect prevention, human-defined automation, risk and governance, education, sustainability and well-being.",
       email: "dhiraj.kumar@omnexagoc.com",
       contactPoint: {
         "@type": "ContactPoint",
@@ -108,6 +121,16 @@ const entityGraph = {
       },
       knowsAbout: [
         "Responsible AI",
+        "Agentic AI",
+        "AI testing",
+        "Testing AI agents",
+        "AI assurance",
+        "Quality Engineering",
+        "Defect prevention",
+        "Requirement traceability",
+        "Human-agent traceability",
+        "Agent-to-agent hand-offs",
+        "AI quality and controls",
         "Human-in-the-Loop AI",
         "Humans Defining the Loop",
         "Robotics with Human Values",
