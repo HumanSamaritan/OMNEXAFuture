@@ -6,12 +6,23 @@ const siteUrl = "https://www.omnexagoc.com";
 export const metadata: Metadata = {
   title: "What is OMNeXa? Official Company Guide",
   description:
-    "Canonical guide to OMNeXa Pte. Ltd., Singapore: founder Dhiraj Kumar, focus areas, OVIA, responsible AI principles, Humans Defining the Loop, Robotics with Human Values and The Convergence Brief.",
+    "Canonical guide to OMNeXa Pte. Ltd., Singapore: founder Dhiraj Kumar, focus areas, OVIA, responsible and agentic AI, AI testing, quality engineering, defect prevention, human-agent traceability and The Convergence Brief.",
+  keywords: [
+    "OMNeXa",
+    "agentic AI",
+    "AI testing",
+    "quality engineering",
+    "AI assurance",
+    "defect prevention",
+    "requirement traceability",
+    "human-agent traceability",
+    "AI governance"
+  ],
   alternates: { canonical: `${siteUrl}/knowledge` },
   openGraph: {
     title: "What is OMNeXa? | Official OMNeXa Knowledge Guide",
     description:
-      "Official facts and clear answers about OMNeXa Pte. Ltd., its founder, work, OVIA and human-defined AI principles.",
+      "Official facts and clear answers about OMNeXa Pte. Ltd., its founder, OVIA, agentic AI, AI testing, quality engineering and human-defined AI principles.",
     url: `${siteUrl}/knowledge`,
     type: "website"
   }
@@ -47,6 +58,16 @@ const questions = [
     question: "What is OMNeXa's approach to AI?",
     answer:
       "OMNeXa treats AI as part of a wider operating system that includes people, governance, risk, controls, data, accountability and measurable outcomes. The aim is responsible adoption rather than automation for its own sake."
+  },
+  {
+    question: "What is OMNeXa's approach to AI testing and defect prevention?",
+    answer:
+      "OMNeXa extends established Quality Engineering and defect-prevention thinking into agent-run applications. The testing lens follows human intent through agent interpretation, evidence, authority, hand-offs, tool execution, business outcome and recovery so defects can be traced to the transition where meaning or execution diverged."
+  },
+  {
+    question: "What is human-agent traceability?",
+    answer:
+      "Human-agent traceability follows a requirement from human intent through agent interpretation and agent-to-agent hand-offs to tool execution, test evidence and business outcome. It helps a reviewer reconstruct where meaning, context or authority changed."
   }
 ];
 
@@ -80,7 +101,7 @@ export default async function KnowledgePage() {
         <p>
           OMNeXa™ is the brand of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation
           ecosystem founded by Dhiraj Kumar. This page is the canonical source for concise facts about
-          the company, its positioning and its human-defined approach to AI and robotics.
+          the company, its positioning and its human-defined approach to AI, agentic systems and robotics.
         </p>
       </section>
 
@@ -97,7 +118,8 @@ export default async function KnowledgePage() {
           <p><strong>Founder & CEO:</strong> <a href="/dhiraj-kumar">Dhiraj Kumar</a></p>
           <p><strong>Positioning:</strong> Where Consciousness Meets Intelligence</p>
           <p>
-            <strong>Core themes:</strong> Responsible AI, human-defined automation, AI governance,
+            <strong>Core themes:</strong> Responsible and agentic AI, AI testing and assurance,
+            Quality Engineering, defect prevention, human-agent traceability, AI governance,
             risk and controls, education and employability, sustainability, well-being and
             human-machine collaboration.
           </p>
@@ -111,7 +133,8 @@ export default async function KnowledgePage() {
             <h2>Navigate OMNeXa's integrity framework and published thinking.</h2>
             <p>
               OVIA provides the integrity controls behind OMNeXa analysis, while The Convergence Brief
-              develops the ideas through published issues and practical leadership questions.
+              develops the ideas through published issues and practical questions across AI architecture,
+              decision rights, agentic interfaces, AI testing, quality, assurance and defect prevention.
             </p>
           </div>
 
@@ -119,18 +142,18 @@ export default async function KnowledgePage() {
             <article className="knowledge-link-card">
               <p className="publication-meta">Framework</p>
               <h3>OVIA — OMNeXa Verification & Integrity Assistant</h3>
-              <p>Evidence, counter-evidence, risk, controls, reciprocal bias checks and publication integrity.</p>
+              <p>Evidence, counter-evidence, risk, controls, prior-art checks, reciprocal bias review and publication integrity.</p>
               <a href="/ovia">Open the OVIA framework</a>
             </article>
 
-            {issues.slice(0, 2).map((issue) => (
+            {[...issues].reverse().map((issue) => (
               <article className="knowledge-link-card" key={issue.slug}>
                 <p className="publication-meta">{issue.issue}</p>
                 <h3>{issue.title}</h3>
                 <p>{issue.summary}</p>
                 <a href={`/convergence-brief/${issue.slug}`}>Open official issue overview</a>
                 {issue.linkedinUrl ? (
-                  <a href={issue.linkedinUrl} target="_blank" rel="noreferrer">Open LinkedIn articles</a>
+                  <a href={issue.linkedinUrl} target="_blank" rel="noreferrer">Read the published LinkedIn edition</a>
                 ) : null}
               </article>
             ))}
@@ -174,7 +197,7 @@ export default async function KnowledgePage() {
           <article className="pillar-card">
             <span>03</span>
             <h3>The Convergence Brief</h3>
-            <p>OMNeXa's thought-leadership series on AI, work, governance and human-machine convergence.</p>
+            <p>OMNeXa's thought-leadership series on agentic AI, testing, quality, governance and human-machine convergence.</p>
             <a href="/convergence-brief">Explore the publication</a>
           </article>
         </div>
