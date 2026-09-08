@@ -31,6 +31,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
               {item.label}
             </a>
           ))}
+          <a href="/convergence-brief">Convergence Brief</a>
           <a href="/knowledge">Knowledge</a>
         </nav>
       </header>
