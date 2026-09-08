@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       path: "/knowledge",
       priority: 1.0,
-      changeFrequency: "monthly" as const,
+      changeFrequency: "weekly" as const,
       images: [`${siteUrl}/omnexa-driver-home.jpg`]
     },
     { path: "/ovia", priority: 0.95, changeFrequency: "monthly" as const, images: [] },
@@ -47,25 +47,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/ai-readiness", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/humans-defining-the-loop", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/robotics-with-human-values", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
-    { path: "/convergence-brief", priority: 0.9, changeFrequency: "weekly" as const, images: [] },
+    { path: "/convergence-brief", priority: 0.95, changeFrequency: "weekly" as const, images: [] },
     { path: "/services", priority: 0.8, changeFrequency: "monthly" as const, images: [] },
     { path: "/portfolio", priority: 0.7, changeFrequency: "monthly" as const, images: [] },
     { path: "/contact", priority: 0.6, changeFrequency: "monthly" as const, images: [] }
   ];
 
-  const lastModified = new Date("2026-08-23T00:00:00Z");
+  const siteLastModified = new Date("2026-09-08T00:00:00Z");
 
   const issuePages = canonicalIssues.map((issue) => ({
     url: `${siteUrl}/convergence-brief/${issue.slug}`,
-    lastModified,
+    lastModified: issue.publishedAt ? new Date(`${issue.publishedAt}T00:00:00Z`) : siteLastModified,
     changeFrequency: "monthly" as const,
-    priority: 0.85,
+    priority: issue.slug === "issue-04" ? 0.95 : issue.slug === "issue-03" ? 0.9 : 0.85,
     images: [`${siteUrl}/convergence-brief/${issue.slug}/opengraph-image`]
   }));
 
   return [...pages.map((page) => ({
     url: `${siteUrl}${page.path}`,
-    lastModified,
+    lastModified: siteLastModified,
     changeFrequency: page.changeFrequency,
     priority: page.priority,
     images: page.images
