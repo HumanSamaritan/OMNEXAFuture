@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${issue.issue}: ${issue.title}`,
     description: issue.summary,
+    keywords: issue.seoKeywords || issue.themes,
     alternates: { canonical: pageUrl },
     authors: [{ name: "Dhiraj Kumar", url: `${siteUrl}/dhiraj-kumar` }],
     openGraph: {
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: issue.publishedAt,
       authors: [`${siteUrl}/dhiraj-kumar`],
+      tags: issue.themes,
       images: [
         {
           url: imageUrl,
@@ -67,7 +69,7 @@ export default async function ConvergenceIssuePage({ params }: Props) {
         "@type": "Article",
         "@id": `${pageUrl}#article`,
         headline: issue.title,
-        alternativeHeadline: `${issue.issue} of The Convergence Brief`,
+        ...(issue.subtitle ? { alternativeHeadline: issue.subtitle } : { alternativeHeadline: `${issue.issue} of The Convergence Brief` }),
         description: issue.summary,
         url: pageUrl,
         mainEntityOfPage: pageUrl,
@@ -79,11 +81,13 @@ export default async function ConvergenceIssuePage({ params }: Props) {
           height: 630,
           caption: `${issue.title} — ${issue.issue} of The Convergence Brief by OMNeXa`
         },
-        ...(issue.publishedAt ? { datePublished: issue.publishedAt } : {}),
-        dateModified: "2026-08-23",
+        ...(issue.publishedAt ? { datePublished: issue.publishedAt, dateModified: issue.publishedAt } : {}),
         author: { "@id": `${siteUrl}/dhiraj-kumar#person` },
         publisher: { "@id": `${siteUrl}/#organization` },
+        isPartOf: { "@id": `${siteUrl}/convergence-brief#collection` },
         about: issue.themes,
+        keywords: issue.seoKeywords,
+        ...(issue.linkedinUrl ? { sameAs: [issue.linkedinUrl] } : {}),
         isAccessibleForFree: true,
         inLanguage: "en-SG"
       },
@@ -99,7 +103,23 @@ export default async function ConvergenceIssuePage({ params }: Props) {
           },
           { "@type": "ListItem", position: 3, name: issue.issue, item: pageUrl }
         ]
-      }
+      },
+      ...(issue.questions?.length
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${pageUrl}#faq`,
+              mainEntity: issue.questions.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: item.answer
+                }
+              }))
+            }
+          ]
+        : [])
     ]
   };
 
@@ -114,6 +134,7 @@ export default async function ConvergenceIssuePage({ params }: Props) {
         <header className="page-hero section-shell aligned-section issue-header">
           <p className="eyebrow">The Convergence Brief · {issue.issue}</p>
           <h1>{issue.title}</h1>
+          {issue.subtitle ? <p><strong>{issue.subtitle}</strong></p> : null}
           <p>{issue.summary}</p>
           <p className="issue-byline">
             By <a href="/dhiraj-kumar">Dhiraj Kumar</a> · Founder & CEO, OMNeXa Pte. Ltd.
@@ -155,25 +176,54 @@ export default async function ConvergenceIssuePage({ params }: Props) {
             </ul>
             {issue.linkedinUrl ? (
               <a className="button primary" href={issue.linkedinUrl} target="_blank" rel="noreferrer">
-                Read on LinkedIn
+                Read the published LinkedIn edition
               </a>
             ) : null}
+            <a className="button secondary" href="/convergence-brief">
+              Explore all Convergence Brief issues
+            </a>
           </aside>
         </section>
 
-        <section className="band">
-          <div className="section-shell split-section aligned-section compact-band-content">
-            <div>
-              <p className="eyebrow">Publication integrity</p>
-              <h2>Evidence, uncertainty and accountability remain visible.</h2>
+        {issue.questions?.length ? (
+          <section className="band">
+            <div className="section-shell aligned-section">
+              <div className="section-heading">
+                <p className="eyebrow">Direct answers</p>
+                <h2>Questions this issue answers.</h2>
+                <p>
+                  Concise answers are included for readers and machine systems looking for clear context
+                  on the topic before exploring the full issue.
+                </p>
+              </div>
+              <div className="service-preview-grid">
+                {issue.questions.map((item) => (
+                  <article className="service-card" key={item.question}>
+                    <h3>{item.question}</h3>
+                    <p>{item.answer}</p>
+                  </article>
+                ))}
+              </div>
             </div>
-            <div className="copy-stack">
-              <p>
-                The Convergence Brief follows the OVIA integrity framework for evidence checks,
-                counter-evidence, risk and controls, reciprocal bias review and accountable human decisions.
-              </p>
-              <a href="/ovia">Explore the OVIA framework</a>
-            </div>
+          </section>
+        ) : null}
+
+        <section className="section-shell split-section aligned-section compact-band-content">
+          <div>
+            <p className="eyebrow">Publication integrity</p>
+            <h2>Evidence, uncertainty and accountability remain visible.</h2>
+          </div>
+          <div className="copy-stack">
+            <p>
+              The Convergence Brief follows the OVIA integrity framework for evidence checks,
+              counter-evidence, risk and controls, reciprocal bias review, market-convergence and
+              prior-art checks, and accountable human decisions.
+            </p>
+            <p>
+              OMNeXa treats these issue frameworks as practitioner working models. They are intended to
+              be tested against implementation evidence and improved through counter-cases and practitioner feedback.
+            </p>
+            <a href="/ovia">Explore the OVIA framework</a>
           </div>
         </section>
       </article>
