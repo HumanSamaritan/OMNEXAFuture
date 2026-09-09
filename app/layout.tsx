@@ -3,6 +3,7 @@ import SiteShell from "@/components/SiteShell";
 import "./globals.css";
 import "./professional.css";
 import "./refinement.css";
+import "./work.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 
@@ -25,7 +26,11 @@ export const metadata: Metadata = {
     "requirement traceability",
     "human-agent traceability",
     "AI governance",
-    "human-machine collaboration"
+    "human-machine collaboration",
+    "HumanMachineSadhana",
+    "NeXaKriya",
+    "NeXaVirama",
+    "OMNeXa EduCareer"
   ],
   applicationName: "OMNeXa Pte. Ltd.",
   creator: "OMNeXa Pte. Ltd.",
@@ -139,7 +144,15 @@ const entityGraph = {
         "AML/KYC and sanctions",
         "Education and employability",
         "Sustainability and ESG",
-        "Human-machine collaboration"
+        "Human-machine collaboration",
+        "HumanMachineSadhana",
+        "Human Machine Sadhana",
+        "NeXaKriya",
+        "NeXaVirama",
+        "OMNeXa EduCareer",
+        "Sahaay-Setu",
+        "SwayamITR",
+        "Lotus Karmic Balance"
       ],
       areaServed: "Global"
     },
