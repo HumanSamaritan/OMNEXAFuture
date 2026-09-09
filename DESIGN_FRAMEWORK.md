@@ -9,6 +9,7 @@ Text must never collide with an adjacent visual, card, button or navigation elem
 - Every grid/flex child that contains text must allow shrinking with `min-width: 0`.
 - Product and brand names must use responsive `clamp()` sizing rather than inheriting the site-wide hero size.
 - Long unbroken names must be tested explicitly; headings should not use `white-space: nowrap`.
+- Long product names must not leave a single orphan character on a new line. Reduce the type scale or rebalance the column before accepting an awkward final-character wrap.
 - Layouts must stack **before** the available text column becomes unsafe. Do not wait until overlap appears.
 - No horizontal clipping or hidden text is acceptable as a layout solution.
 - **Do not remove a strong product visual merely to solve a text collision.** First reduce the heading scale, introduce a deliberate line break where appropriate, rebalance the grid, or stack the layout earlier.
@@ -32,6 +33,7 @@ OMNeXa typography should feel calm, premium and readable rather than oversized o
 
 - Product-detail H1: maximum around 4rem; responsive via `clamp()`.
 - Long product names may use a smaller maximum size or a deliberate two-line treatment.
+- Avoid line breaks that create orphan letters or visually unbalanced fragments.
 - H1/H2 weight: generally 750–800, not ultra-black unless a specific campaign treatment requires it.
 - Body copy: comfortable line height of roughly 1.55–1.75.
 - Eyebrows and labels: restrained size and letter-spacing; use them for hierarchy, not decoration.
@@ -84,6 +86,12 @@ Product pages should follow a stable pattern:
 
 The visual hierarchy must remain readable even if a product name is substantially longer than current examples.
 
+Hero actions should follow one consistent rule:
+
+- On laptop and desktop, development status and the primary work-in-progress action should sit on the same baseline/row when space permits.
+- Status and action controls should have matched visual height and balanced spacing.
+- They may wrap or stack only at responsive widths where keeping them on one line would create compression or overflow.
+
 ## 7. Content and design integrity
 
 - “Currently under construction” must remain visible for work-in-progress products.
@@ -99,8 +107,10 @@ Before a design branch is promoted:
 - [ ] No clipped headings or buttons
 - [ ] No unexpected horizontal scrolling
 - [ ] Longest product name tested
+- [ ] No orphan final letter/character in product titles
 - [ ] Mobile stacking occurs before compression becomes uncomfortable
 - [ ] Heading sizes remain subordinate to available width
+- [ ] Hero status + primary action are aligned on one row at desktop widths where space permits
 - [ ] Product hero concept visual preserved unless there is a content/design reason to remove it
 - [ ] No unnecessary boxes or nested cards
 - [ ] Colour palette is restrained and category-consistent
