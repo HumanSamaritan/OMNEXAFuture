@@ -144,24 +144,34 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="section-shell aligned-section work-service-map" aria-label="OMNeXa service segments and product counts">
+      <section className="section-shell aligned-section work-service-map" aria-label="OMNeXa service segments and related products">
         <div className="section-heading compact-heading">
           <p className="eyebrow">One ecosystem</p>
-          <h2>Products aligned to the work they are meant to advance.</h2>
+          <h2>Browse OMNeXa work by service area.</h2>
           <p>
-            The categories are not marketing buckets. They show the primary human or organisational outcome
-            each product is designed to support.
+            Each service area links directly to the products or advisory work associated with it, so visitors
+            can move from the capability they care about to the relevant OMNeXa work without interpreting product counts.
           </p>
         </div>
         <div className="work-segment-grid">
-          {serviceSegments.map((segment) => {
-            const count = products.filter((product) => product.serviceSlug === segment.slug).length;
+          {serviceSegments.map((segment, segmentIndex) => {
+            const relatedProducts = products.filter((product) => product.serviceSlug === segment.slug);
             return (
-              <a className="work-segment-card" href={segment.href} key={segment.slug}>
-                <span>{String(count).padStart(2, "0")}</span>
-                <h3>{segment.shortTitle}</h3>
-                <p>{count === 0 ? "Advisory-led work; no public product listed yet." : `${count} product${count === 1 ? "" : "s"} in this segment.`}</p>
-              </a>
+              <article className="work-segment-card" key={segment.slug}>
+                <span>{String(segmentIndex + 1).padStart(2, "0")}</span>
+                <h3><a href={segment.href}>{segment.shortTitle}</a></h3>
+                {relatedProducts.length > 0 ? (
+                  <div className="work-card-links">
+                    {relatedProducts.map((product) => (
+                      <a href={`/work/${product.slug}`} key={product.slug}>{product.name} →</a>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="work-card-links">
+                    <a href={segment.href}>Explore advisory services →</a>
+                  </div>
+                )}
+              </article>
             );
           })}
         </div>
