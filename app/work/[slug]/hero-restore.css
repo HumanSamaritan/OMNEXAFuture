@@ -12,14 +12,44 @@
   min-width: 0;
 }
 
-/* Long product names must remain inside their column. */
+/* Long product names must remain inside their column without orphaning the final character. */
 .product-detail-page .product-detail-grid h1 {
   max-width: 100%;
-  font-size: clamp(2.45rem, 3.15vw, 3.55rem);
+  font-size: clamp(2.25rem, 2.75vw, 3.15rem);
   line-height: 1.02;
-  letter-spacing: -0.04em;
-  overflow-wrap: anywhere;
+  letter-spacing: -0.045em;
+  overflow-wrap: normal;
   word-break: normal;
+  hyphens: none;
+}
+
+/* Keep status and WIP action as one balanced desktop row. */
+.product-detail-page .product-detail-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.product-detail-page .product-detail-actions .work-status.large,
+.product-detail-page .product-detail-actions .button.secondary {
+  min-height: 48px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.product-detail-page .product-detail-actions .work-status.large {
+  padding: 10px 14px;
+  font-size: 0.72rem;
+}
+
+.product-detail-page .product-detail-actions .button.secondary {
+  padding: 12px 18px;
+  font-size: 0.82rem;
+  line-height: 1;
 }
 
 /* Restore the original premium concept-image treatment. */
@@ -116,12 +146,20 @@
   .product-detail-page .product-detail-visual {
     max-width: 860px;
   }
+
+  .product-detail-page .product-detail-grid h1 {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+  }
 }
 
 @media (max-width: 720px) {
   .product-detail-page .product-detail-grid h1 {
-    font-size: clamp(2.15rem, 10.5vw, 3rem);
-    line-height: 1.02;
+    font-size: clamp(2.05rem, 9.6vw, 2.85rem);
+    line-height: 1.03;
+  }
+
+  .product-detail-page .product-detail-actions {
+    flex-wrap: wrap;
   }
 
   .product-detail-page .product-detail-visual {
@@ -131,5 +169,18 @@
 
   .product-detail-page .product-detail-visual > strong {
     font-size: clamp(1.85rem, 9vw, 2.7rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .product-detail-page .product-detail-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-detail-page .product-detail-actions .work-status.large,
+  .product-detail-page .product-detail-actions .button.secondary {
+    width: auto;
+    min-height: 46px;
   }
 }
