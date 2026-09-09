@@ -101,11 +101,11 @@
 }
 
 /* One category colour everywhere: service browser, portfolio card and service link. */
-.segment-career-education-purpose-led-growth { --segment-color: #b98222; }
-.segment-banking-transformation-risk-control { --segment-color: #4b5567; }
-.segment-sustainability-esg-corporate-alignment { --segment-color: #2d876f; }
-.segment-ai-technology-responsible-innovation { --segment-color: #3d6fa8; }
-.segment-well-being-conscious-leadership { --segment-color: #a94f63; }
+.segment-career-education-purpose-led-growth { --segment-color: #b98222; --segment-soft: #fff7e8; --segment-soft-2: #f4e5bf; --segment-ink: #3a2b13; }
+.segment-banking-transformation-risk-control { --segment-color: #4b5567; --segment-soft: #f3f5f7; --segment-soft-2: #e1e6ec; --segment-ink: #25303d; }
+.segment-sustainability-esg-corporate-alignment { --segment-color: #2d876f; --segment-soft: #eff8f4; --segment-soft-2: #dbeee6; --segment-ink: #183b31; }
+.segment-ai-technology-responsible-innovation { --segment-color: #3d6fa8; --segment-soft: #eff5fb; --segment-soft-2: #dce9f6; --segment-ink: #1e3957; }
+.segment-well-being-conscious-leadership { --segment-color: #a94f63; --segment-soft: #fff2f5; --segment-soft-2: #f3dde3; --segment-ink: #45232c; }
 
 .work-card.segment-career-education-purpose-led-growth .work-card-visual,
 .work-card.segment-banking-transformation-risk-control .work-card-visual,
@@ -113,22 +113,44 @@
 .work-card.segment-ai-technology-responsible-innovation .work-card-visual,
 .work-card.segment-well-being-conscious-leadership .work-card-visual {
   border-top: 5px solid var(--segment-color);
+  background: linear-gradient(145deg, var(--segment-soft), var(--segment-soft-2)) !important;
+  color: var(--segment-ink) !important;
 }
 
-.work-card.segment-career-education-purpose-led-growth .work-card-meta > a,
-.work-card.segment-banking-transformation-risk-control .work-card-meta > a,
-.work-card.segment-sustainability-esg-corporate-alignment .work-card-meta > a,
-.work-card.segment-ai-technology-responsible-innovation .work-card-meta > a,
-.work-card.segment-well-being-conscious-leadership .work-card-meta > a {
-  color: var(--segment-color);
+.work-card.segment-career-education-purpose-led-growth .work-card-visual strong,
+.work-card.segment-banking-transformation-risk-control .work-card-visual strong,
+.work-card.segment-sustainability-esg-corporate-alignment .work-card-visual strong,
+.work-card.segment-ai-technology-responsible-innovation .work-card-visual strong,
+.work-card.segment-well-being-conscious-leadership .work-card-visual strong,
+.work-card.segment-career-education-purpose-led-growth .work-visual-topline span,
+.work-card.segment-banking-transformation-risk-control .work-visual-topline span,
+.work-card.segment-sustainability-esg-corporate-alignment .work-visual-topline span,
+.work-card.segment-ai-technology-responsible-innovation .work-visual-topline span,
+.work-card.segment-well-being-conscious-leadership .work-visual-topline span {
+  color: var(--segment-ink) !important;
 }
 
 .work-card.segment-career-education-purpose-led-growth .work-visual-topline span:first-child,
 .work-card.segment-banking-transformation-risk-control .work-visual-topline span:first-child,
 .work-card.segment-sustainability-esg-corporate-alignment .work-visual-topline span:first-child,
 .work-card.segment-ai-technology-responsible-innovation .work-visual-topline span:first-child,
-.work-card.segment-well-being-conscious-leadership .work-visual-topline span:first-child {
-  color: var(--segment-color);
+.work-card.segment-well-being-conscious-leadership .work-visual-topline span:first-child,
+.work-card.segment-career-education-purpose-led-growth .work-card-meta > a,
+.work-card.segment-banking-transformation-risk-control .work-card-meta > a,
+.work-card.segment-sustainability-esg-corporate-alignment .work-card-meta > a,
+.work-card.segment-ai-technology-responsible-innovation .work-card-meta > a,
+.work-card.segment-well-being-conscious-leadership .work-card-meta > a {
+  color: var(--segment-color) !important;
+}
+
+.work-card.segment-career-education-purpose-led-growth .work-visual-pills span,
+.work-card.segment-banking-transformation-risk-control .work-visual-pills span,
+.work-card.segment-sustainability-esg-corporate-alignment .work-visual-pills span,
+.work-card.segment-ai-technology-responsible-innovation .work-visual-pills span,
+.work-card.segment-well-being-conscious-leadership .work-visual-pills span {
+  border-color: color-mix(in srgb, var(--segment-color) 24%, transparent) !important;
+  background: rgba(255, 255, 255, 0.62) !important;
+  color: var(--segment-ink) !important;
 }
 
 @media (max-width: 980px) {
