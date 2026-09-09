@@ -26,7 +26,13 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </a>
 
         <nav aria-label="Main navigation">
-          {navItems.map((item) => (
+          {navItems.slice(0, 2).map((item) => (
+            <a key={item.href} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+          <a href="/work">Our Work</a>
+          {navItems.slice(2).map((item) => (
             <a key={item.href} href={item.href}>
               {item.label}
             </a>
@@ -42,7 +48,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
         <p>
-          OMNeXa™ — Where Consciousness Meets Intelligence · <a href="/media">Media & brand assets</a>
+          OMNeXa™ — Where Consciousness Meets Intelligence · <a href="/work">Our Work</a> · <a href="/media">Media & brand assets</a>
         </p>
       </footer>
     </>
