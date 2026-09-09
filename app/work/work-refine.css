@@ -1,0 +1,155 @@
+/* Our Work preview refinement: logical service navigation and consistent category colours */
+
+.work-service-map {
+  padding-top: 10px;
+  padding-bottom: 58px;
+}
+
+.work-service-map .section-heading {
+  margin-bottom: 28px;
+}
+
+.work-segment-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.work-segment-card {
+  --segment-color: var(--teal);
+  position: relative;
+  grid-column: span 2;
+  display: flex;
+  min-height: 228px;
+  flex-direction: column;
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  box-shadow: 0 16px 42px rgba(18, 24, 38, 0.07);
+}
+
+.work-segment-card:nth-child(4),
+.work-segment-card:nth-child(5) {
+  grid-column: span 3;
+}
+
+.work-segment-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: var(--segment-color);
+  content: "";
+}
+
+.work-segment-index {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border: 1px solid color-mix(in srgb, var(--segment-color) 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--segment-color) 9%, white);
+  color: var(--segment-color);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.work-segment-card h3 {
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+  line-height: 1.28;
+}
+
+.work-segment-card h3 a:hover {
+  color: var(--segment-color);
+}
+
+.work-segment-products {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.work-segment-products a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.work-segment-products a::after {
+  color: var(--segment-color);
+  content: "→";
+  font-weight: 900;
+}
+
+.work-segment-products a:hover {
+  color: var(--segment-color);
+}
+
+/* One category colour everywhere: service browser, portfolio card and service link. */
+.segment-career-education-purpose-led-growth { --segment-color: #b98222; }
+.segment-banking-transformation-risk-control { --segment-color: #4b5567; }
+.segment-sustainability-esg-corporate-alignment { --segment-color: #2d876f; }
+.segment-ai-technology-responsible-innovation { --segment-color: #3d6fa8; }
+.segment-well-being-conscious-leadership { --segment-color: #a94f63; }
+
+.work-card.segment-career-education-purpose-led-growth .work-card-visual,
+.work-card.segment-banking-transformation-risk-control .work-card-visual,
+.work-card.segment-sustainability-esg-corporate-alignment .work-card-visual,
+.work-card.segment-ai-technology-responsible-innovation .work-card-visual,
+.work-card.segment-well-being-conscious-leadership .work-card-visual {
+  border-top: 5px solid var(--segment-color);
+}
+
+.work-card.segment-career-education-purpose-led-growth .work-card-meta > a,
+.work-card.segment-banking-transformation-risk-control .work-card-meta > a,
+.work-card.segment-sustainability-esg-corporate-alignment .work-card-meta > a,
+.work-card.segment-ai-technology-responsible-innovation .work-card-meta > a,
+.work-card.segment-well-being-conscious-leadership .work-card-meta > a {
+  color: var(--segment-color);
+}
+
+.work-card.segment-career-education-purpose-led-growth .work-visual-topline span:first-child,
+.work-card.segment-banking-transformation-risk-control .work-visual-topline span:first-child,
+.work-card.segment-sustainability-esg-corporate-alignment .work-visual-topline span:first-child,
+.work-card.segment-ai-technology-responsible-innovation .work-visual-topline span:first-child,
+.work-card.segment-well-being-conscious-leadership .work-visual-topline span:first-child {
+  color: var(--segment-color);
+}
+
+@media (max-width: 980px) {
+  .work-segment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .work-segment-card,
+  .work-segment-card:nth-child(4),
+  .work-segment-card:nth-child(5) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .work-segment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-segment-card {
+    min-height: 0;
+    padding: 22px;
+  }
+}
