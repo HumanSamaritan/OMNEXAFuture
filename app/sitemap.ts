@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { canonicalIssues } from "@/lib/publications";
+import { products } from "@/lib/product-data";
 
 const siteUrl = "https://www.omnexagoc.com";
 
@@ -48,12 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/humans-defining-the-loop", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/robotics-with-human-values", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/convergence-brief", priority: 0.95, changeFrequency: "weekly" as const, images: [] },
-    { path: "/services", priority: 0.8, changeFrequency: "monthly" as const, images: [] },
-    { path: "/portfolio", priority: 0.7, changeFrequency: "monthly" as const, images: [] },
+    { path: "/services", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
+    { path: "/work", priority: 0.95, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-driver-home.jpg`] },
     { path: "/contact", priority: 0.6, changeFrequency: "monthly" as const, images: [] }
   ];
 
-  const siteLastModified = new Date("2026-09-08T00:00:00Z");
+  const siteLastModified = new Date("2026-09-09T00:00:00Z");
 
   const issuePages = canonicalIssues.map((issue) => ({
     url: `${siteUrl}/convergence-brief/${issue.slug}`,
@@ -63,11 +64,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${siteUrl}/convergence-brief/${issue.slug}/opengraph-image`]
   }));
 
-  return [...pages.map((page) => ({
-    url: `${siteUrl}${page.path}`,
+  const productPages = products.map((product) => ({
+    url: `${siteUrl}/work/${product.slug}`,
     lastModified: siteLastModified,
-    changeFrequency: page.changeFrequency,
-    priority: page.priority,
-    images: page.images
-  })), ...issuePages];
+    changeFrequency: "weekly" as const,
+    priority: product.slug === "human-machine-sadhana" ? 0.95 : 0.85,
+    images: [`${siteUrl}/omnexa-driver-home.jpg`]
+  }));
+
+  return [
+    ...pages.map((page) => ({
+      url: `${siteUrl}${page.path}`,
+      lastModified: siteLastModified,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+      images: page.images
+    })),
+    ...issuePages,
+    ...productPages
+  ];
 }
