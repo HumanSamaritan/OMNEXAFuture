@@ -11,6 +11,7 @@ Text must never collide with an adjacent visual, card, button or navigation elem
 - Long unbroken names must be tested explicitly; headings should not use `white-space: nowrap`.
 - Layouts must stack **before** the available text column becomes unsafe. Do not wait until overlap appears.
 - No horizontal clipping or hidden text is acceptable as a layout solution.
+- **Do not remove a strong product visual merely to solve a text collision.** First reduce the heading scale, introduce a deliberate line break where appropriate, rebalance the grid, or stack the layout earlier.
 
 ## 2. Responsive QA breakpoints
 
@@ -30,6 +31,7 @@ Checks must include long product names, multi-line headings, buttons, breadcrumb
 OMNeXa typography should feel calm, premium and readable rather than oversized or overly heavy.
 
 - Product-detail H1: maximum around 4rem; responsive via `clamp()`.
+- Long product names may use a smaller maximum size or a deliberate two-line treatment.
 - H1/H2 weight: generally 750–800, not ultra-black unless a specific campaign treatment requires it.
 - Body copy: comfortable line height of roughly 1.55–1.75.
 - Eyebrows and labels: restrained size and letter-spacing; use them for hierarchy, not decoration.
@@ -50,6 +52,8 @@ Default preference:
 
 Use cards when the item is genuinely independent, interactive or comparable. Do not put every paragraph, capability, FAQ and visual inside a rounded container.
 
+**Product concept visuals are an intentional exception:** one strong, premium visual panel in the product hero is allowed when it communicates the product idea, hook or interaction model. It should not be removed simply to make the adjacent title fit.
+
 ## 5. Colour discipline
 
 Colour communicates meaning, not decoration.
@@ -59,6 +63,7 @@ Colour communicates meaning, not decoration.
 - Avoid cycling colours merely because items have different sequence numbers.
 - Do not place low-contrast gold/yellow copy on beige backgrounds.
 - Gradients should be rare and purposeful.
+- Dark product concept visuals must maintain strong text contrast; primary statement text should remain near-white rather than inheriting a dark category colour.
 - Body text and important labels should maintain WCAG AA-level readable contrast where practical.
 
 ## 6. Product-detail pattern
@@ -69,7 +74,7 @@ Product pages should follow a stable pattern:
 2. Service category
 3. Product name and one-line definition
 4. Development status and work-in-progress link
-5. Open concept statement / product hook
+5. Strong concept visual / product hook
 6. Problem and direction
 7. Capabilities shown as an open numbered list, not boxed tiles
 8. Service-category rationale
@@ -96,6 +101,7 @@ Before a design branch is promoted:
 - [ ] Longest product name tested
 - [ ] Mobile stacking occurs before compression becomes uncomfortable
 - [ ] Heading sizes remain subordinate to available width
+- [ ] Product hero concept visual preserved unless there is a content/design reason to remove it
 - [ ] No unnecessary boxes or nested cards
 - [ ] Colour palette is restrained and category-consistent
 - [ ] Text/background contrast is readable
