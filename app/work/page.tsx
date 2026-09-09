@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { products, serviceSegments } from "@/lib/product-data";
+import "./work-refine.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 
@@ -149,26 +150,27 @@ export default function WorkPage() {
           <p className="eyebrow">One ecosystem</p>
           <h2>Browse OMNeXa work by service area.</h2>
           <p>
-            Each service area links directly to the products or advisory work associated with it, so visitors
-            can move from the capability they care about to the relevant OMNeXa work without interpreting product counts.
+            Each service area takes visitors directly to the relevant product or advisory work. The numbering
+            follows the same service order used across OMNeXa, while the colour remains consistent wherever that
+            service area appears.
           </p>
         </div>
         <div className="work-segment-grid">
           {serviceSegments.map((segment, segmentIndex) => {
             const relatedProducts = products.filter((product) => product.serviceSlug === segment.slug);
             return (
-              <article className="work-segment-card" key={segment.slug}>
-                <span>{String(segmentIndex + 1).padStart(2, "0")}</span>
+              <article className={`work-segment-card segment-${segment.slug}`} key={segment.slug}>
+                <span className="work-segment-index">{String(segmentIndex + 1).padStart(2, "0")}</span>
                 <h3><a href={segment.href}>{segment.shortTitle}</a></h3>
                 {relatedProducts.length > 0 ? (
-                  <div className="work-card-links">
+                  <div className="work-segment-products">
                     {relatedProducts.map((product) => (
-                      <a href={`/work/${product.slug}`} key={product.slug}>{product.name} →</a>
+                      <a href={`/work/${product.slug}`} key={product.slug}>{product.name}</a>
                     ))}
                   </div>
                 ) : (
-                  <div className="work-card-links">
-                    <a href={segment.href}>Explore advisory services →</a>
+                  <div className="work-segment-products">
+                    <a href={segment.href}>Explore advisory services</a>
                   </div>
                 )}
               </article>
@@ -191,7 +193,7 @@ export default function WorkPage() {
           {products.map((product, index) => {
             const segment = serviceSegments.find((item) => item.slug === product.serviceSlug);
             return (
-              <article className={`work-card work-card-${(index % 4) + 1}`} key={product.slug}>
+              <article className={`work-card work-card-${(index % 4) + 1} segment-${product.serviceSlug}`} key={product.slug}>
                 <a className="work-card-visual" href={`/work/${product.slug}`} aria-label={`Read about ${product.name}`}>
                   <div className="work-visual-topline">
                     <span>{product.visualKicker}</span>
