@@ -1,0 +1,188 @@
+/* OMNeXa mobile layout safety layer
+   Imported last so responsive safeguards cannot be overridden by later base rules. */
+
+/* Any multi-column content child must be allowed to shrink inside its grid/flex track. */
+.service-row > *,
+.contact-grid > *,
+.split-section > *,
+.about-layout > *,
+.about-profile-grid > *,
+.education-layout > *,
+.home-hero > *,
+.about-hero-grid > *,
+.leadership-profile > *,
+.media-guidance > *,
+.issue-content > *,
+.company-founder-callout > * {
+  min-width: 0;
+}
+
+/* Protect prose and headings from pathological narrow-column wrapping. */
+.service-row h2,
+.service-row p,
+.service-row li,
+.contact-grid h1,
+.contact-grid h2,
+.contact-grid h3,
+.contact-grid p,
+.page-hero h1,
+.page-hero h2,
+.page-hero p {
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 1000px) {
+  /* These layouts were being re-expanded by later desktop CSS declarations. */
+  .service-row,
+  .contact-grid,
+  .split-section,
+  .about-layout,
+  .about-profile-grid,
+  .education-layout,
+  .home-hero,
+  .about-hero-grid,
+  .leadership-profile,
+  .media-guidance,
+  .issue-content {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .service-row {
+    gap: 18px;
+  }
+
+  .service-row ul {
+    width: 100%;
+    max-width: none;
+  }
+
+  .contact-grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  /* Keep the mobile viewport clean and prevent any child from forcing page width. */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .section-shell,
+  .page-hero,
+  .about-hero,
+  .about-hero-grid {
+    width: min(100% - 28px, 1180px);
+  }
+
+  /* Final single-column safety for all recurring site grids. */
+  .stats-strip,
+  .route-list,
+  .pillar-grid,
+  .service-preview-grid,
+  .timeline,
+  .format-grid,
+  .testimonial-grid,
+  .ai-grid,
+  .proof-grid,
+  .field-grid,
+  .track-record-grid,
+  .competency-grid,
+  .recommendation-grid,
+  .home-trust-strip,
+  .home-focus-grid,
+  .service-lead-grid,
+  .service-visual-grid,
+  .education-focus-grid,
+  .market-list,
+  .knowledge-links-grid,
+  .publication-grid,
+  .entity-facts-grid,
+  .about-focus-grid,
+  .media-grid,
+  .video-media-grid,
+  .initiative-grid,
+  .company-founder-callout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Services cards: number, narrative and bullet list become one clean vertical flow. */
+  .service-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .service-number {
+    margin-bottom: 0;
+  }
+
+  .service-row h2 {
+    margin-bottom: 12px;
+    font-size: clamp(1.45rem, 7.4vw, 1.85rem);
+    line-height: 1.1;
+  }
+
+  .service-row p,
+  .service-row li {
+    font-size: 0.94rem;
+    line-height: 1.58;
+  }
+
+  .service-row ul {
+    margin-top: 2px;
+  }
+
+  /* Contact and forms must never retain a desktop split on phones. */
+  .contact-grid,
+  .field-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .contact-form,
+  .contact-card,
+  .faq-list article {
+    min-width: 0;
+  }
+
+  /* Avoid fixed no-wrap content forcing horizontal overflow on About/Founder pages. */
+  .founder-role-nowrap {
+    white-space: normal;
+  }
+
+  /* Keep long links and labels inside the viewport. */
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+  }
+
+  .contact-card a,
+  .site-footer a,
+  .publication-card a,
+  .knowledge-link-card a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Header remains multi-row but cannot push beyond phone width. */
+  .site-header,
+  .brand,
+  nav {
+    max-width: 100%;
+  }
+
+  nav {
+    width: 100%;
+    gap: 4px 6px;
+  }
+
+  nav a {
+    padding: 7px 8px;
+    font-size: 0.8rem;
+  }
+}
