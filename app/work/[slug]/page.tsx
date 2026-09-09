@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProduct, getProductsByService, getServiceSegment, products } from "@/lib/product-data";
 import "./detail-refine.css";
+import "./hero-restore.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 
