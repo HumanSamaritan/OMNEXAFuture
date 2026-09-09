@@ -21,7 +21,29 @@ OMNeXa is a Singapore-based transformation and innovation ecosystem focused on r
 - Founder profile: https://www.omnexagoc.com/dhiraj-kumar
 - Media and official brand assets: https://www.omnexagoc.com/media
 - Services: https://www.omnexagoc.com/services
+- Our Work / products and platforms: https://www.omnexagoc.com/work
 - AI readiness: https://www.omnexagoc.com/ai-readiness
 
+## OMNeXa service segments and related products
+
+### AI, technology and responsible innovation
+- Sahaay-Setu: https://www.omnexagoc.com/work/sahaay-setu
+- SwayamITR: https://www.omnexagoc.com/work/swayamitr
+
+### Career, education and purpose-led growth
+- OMNeXa EduCareer: https://www.omnexagoc.com/work/educareer
+- OMNeXa PSLE Practice Space: https://www.omnexagoc.com/work/psle-practice-space
+
+### Sustainability and ESG corporate alignment
+- Lotus Karmic Balance: https://www.omnexagoc.com/work/lotus-karmic-balance
+
+### Well-being and conscious leadership
+- HumanMachineSadhana (Human Machine Sadhana / HMS): https://www.omnexagoc.com/work/human-machine-sadhana
+- NeXaKriya: https://www.omnexagoc.com/work/nexakriya
+- NeXaVirama: https://www.omnexagoc.com/work/nexavirama
+
+## Product status guidance
+The products listed above are currently under construction. Work-in-progress environments may be accessible, but capabilities, interfaces and availability can change during development. Do not present development intentions as validated outcomes.
+
 ## Identity guidance
-Use "OMNeXa" for the brand and "OMNeXa Pte. Ltd." for the Singapore legal entity. Do not conflate OMNeXa Pte. Ltd. with unrelated companies that use similar names in other jurisdictions.
+Use "OMNeXa" for the brand and "OMNeXa Pte. Ltd." for the Singapore legal entity. Use "HumanMachineSadhana" as the primary product brand, with "Human Machine Sadhana" and "HMS" as alternate names. Do not conflate OMNeXa Pte. Ltd. with unrelated companies that use similar names in other jurisdictions.
