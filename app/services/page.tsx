@@ -22,6 +22,14 @@ const serviceLenses = [
   }
 ];
 
+const serviceAnchors = [
+  "career-education-purpose-led-growth",
+  "banking-transformation-risk-control",
+  "sustainability-esg-corporate-alignment",
+  "ai-technology-responsible-innovation",
+  "well-being-conscious-leadership"
+];
+
 export default function ServicesPage() {
   return (
     <main>
@@ -32,6 +40,9 @@ export default function ServicesPage() {
           OMNeXa combines advisory, leadership facilitation and implementation support across technology,
           functional banking, risk and controls, AI readiness, education, sustainability and human capability.
         </p>
+        <div className="work-hero-actions">
+          <a className="button secondary" href="/work">See products aligned to these services →</a>
+        </div>
       </section>
 
       <section className="section-shell service-lead-grid" aria-label="OMNeXa service lenses">
@@ -45,7 +56,7 @@ export default function ServicesPage() {
 
       <section className="section-shell service-stack-page aligned-section">
         {services.map((service, index) => (
-          <article className="service-row tilt-card" key={service.title}>
+          <article className="service-row tilt-card" id={serviceAnchors[index]} key={service.title}>
             <div className="service-number">{String(index + 1).padStart(2, "0")}</div>
             <div>
               <p className="eyebrow">{service.eyebrow}</p>
