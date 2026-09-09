@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProduct, getProductsByService, getServiceSegment, products } from "@/lib/product-data";
+import "./detail-refine.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 
@@ -113,7 +114,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   };
 
   return (
-    <main>
+    <main className="product-detail-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
       <section className="section-shell aligned-section product-detail-hero">
