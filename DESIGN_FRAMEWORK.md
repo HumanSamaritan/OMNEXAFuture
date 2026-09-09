@@ -18,7 +18,8 @@ Text must never collide with an adjacent visual, card, button or navigation elem
 
 Every substantial page change should be visually checked at approximately:
 
-- 360–390 px mobile
+- 360–390 px mobile (iPhone-class widths)
+- 412–430 px mobile (common Android widths)
 - 768 px tablet
 - 1024 px compact desktop/tablet landscape
 - 1280 px laptop
@@ -26,6 +27,13 @@ Every substantial page change should be visually checked at approximately:
 - 1920 px wide desktop
 
 Checks must include long product names, multi-line headings, buttons, breadcrumbs, navigation, capability lists and footer content.
+
+Responsive CSS must also respect the cascade:
+
+- Mobile/tablet safeguards must be loaded after generic desktop refinement layers, or use a clearly later responsive override layer.
+- A later desktop declaration must never silently re-expand a grid that was intentionally stacked for mobile.
+- Any new `grid-template-columns` or `white-space: nowrap` rule must be checked against the final mobile cascade.
+- Cross-page QA must include at least Home, Services, Our Work, one Product Detail page, About/Founder, Knowledge and Contact before production promotion.
 
 ## 3. Typography hierarchy
 
@@ -117,5 +125,7 @@ Before a design branch is promoted:
 - [ ] Text/background contrast is readable
 - [ ] Status labels remain visible
 - [ ] Links remain obvious without excessive decoration
+- [ ] Services and Contact mobile layouts checked specifically for desktop-grid regression
+- [ ] iPhone-class and Android-class widths checked
 - [ ] SEO/AEO semantic structure remains intact
 - [ ] Preview deployment checked before production promotion
