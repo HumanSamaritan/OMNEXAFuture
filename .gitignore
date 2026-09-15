@@ -1,5 +1,15 @@
 node_modules
 .next
 .vercel
-.env*.local
 .DS_Store
+
+# Never commit runtime secrets. Keep only the documented placeholder template.
+.env
+.env.*
+!.env.example
+
+# Prevent accidental publication of bundled source archives.
+*.zip
+*.tar
+*.tar.gz
+*.tgz
