@@ -21,12 +21,12 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const service = getServiceSegment(product.serviceSlug);
   return {
-    title: `${product.name} | OMNeXa`,
-    description: product.oneLiner,
+    title: `${product.name} | Coming Soon | OMNeXa`,
+    description: `${product.oneLiner} Coming soon from OMNeXa.`,
     keywords: [product.name, ...product.alternateNames, ...product.seoTerms],
     alternates: { canonical: `/work/${product.slug}` },
     openGraph: {
-      title: `${product.name} by OMNeXa`,
+      title: `${product.name} by OMNeXa | Coming Soon`,
       description: product.oneLiner,
       url: `${siteUrl}/work/${product.slug}`,
       type: "website",
@@ -65,7 +65,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     {
       question: `Is ${product.name} available now?`,
-      answer: `${product.name} is currently under construction. Any accessible work-in-progress environment may change as the product is tested and refined.`
+      answer: `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
   ];
 
@@ -78,7 +78,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         name: product.name,
         alternateName: product.alternateNames,
         url: `${siteUrl}/work/${product.slug}`,
-        sameAs: product.externalUrl,
         description: product.description,
         applicationCategory: service?.title,
         operatingSystem: "Web",
@@ -92,7 +91,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         additionalProperty: {
           "@type": "PropertyValue",
           name: "Development status",
-          value: product.status
+          value: "Coming Soon"
         }
       },
       {
@@ -130,9 +129,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">{product.status}</span>
-              <a className="button secondary" href={product.externalUrl} target="_blank" rel="noreferrer">Open work-in-progress site ↗</a>
+              <span className="work-status large">Coming Soon</span>
             </div>
+            <p>
+              OMNeXa is currently building and validating this product. This public page explains what it is
+              intended to do; access to the unfinished application is not being provided from the OMNeXa website.
+            </p>
           </div>
 
           <div className="product-detail-visual" aria-label={`${product.name} concept visual`}>
@@ -161,7 +163,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       <section className="band product-capability-band">
         <div className="section-shell aligned-section">
           <div className="section-heading compact-heading">
-            <p className="eyebrow">Current capability direction</p>
+            <p className="eyebrow">Planned capability direction</p>
             <h2>What the product is being designed to support.</h2>
             <p>These are development intentions, not claims of completed or validated outcomes.</p>
           </div>
@@ -195,7 +197,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <section className="section-shell aligned-section sibling-products">
           <div className="section-heading compact-heading">
             <p className="eyebrow">Related OMNeXa work</p>
-            <h2>Other products in {service?.shortTitle}.</h2>
+            <h2>Other coming-soon products in {service?.shortTitle}.</h2>
           </div>
           <div className="sibling-product-grid">
             {siblings.map((item) => (
