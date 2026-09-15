@@ -7,7 +7,7 @@ const siteUrl = "https://www.omnexagoc.com";
 export const metadata: Metadata = {
   title: "Our Work | OMNeXa Products & Platforms",
   description:
-    "Explore OMNeXa products and work in progress across AI and responsible innovation, education and careers, sustainability and ESG, and well-being and conscious leadership.",
+    "Explore OMNeXa product concepts and coming-soon platforms across AI and responsible innovation, education and careers, sustainability and ESG, and well-being and conscious leadership.",
   keywords: [
     "OMNeXa products",
     "OMNeXa portfolio",
@@ -52,7 +52,7 @@ const workFaqs = [
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "The products shown on this page are currently under construction. Some work-in-progress environments may be accessible, but capabilities, availability and interfaces can change during development."
+      "The products shown here are coming soon. Their public pages describe the problem, intended direction and planned capabilities, but do not provide access to unfinished product environments."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -75,7 +75,7 @@ const collectionSchema = {
       url: `${siteUrl}/work`,
       name: "OMNeXa Products & Platforms",
       description:
-        "OMNeXa work in progress across responsible innovation, education, sustainability and well-being.",
+        "OMNeXa coming-soon product portfolio across responsible innovation, education, sustainability and well-being.",
       about: { "@id": `${siteUrl}/#organization` },
       mainEntity: {
         "@type": "ItemList",
@@ -89,7 +89,6 @@ const collectionSchema = {
             name: product.name,
             alternateName: product.alternateNames,
             url: `${siteUrl}/work/${product.slug}`,
-            sameAs: product.externalUrl,
             description: product.description,
             applicationCategory: getCategoryName(product.serviceSlug),
             operatingSystem: "Web",
@@ -98,7 +97,7 @@ const collectionSchema = {
             additionalProperty: {
               "@type": "PropertyValue",
               name: "Development status",
-              value: product.status
+              value: "Coming Soon"
             }
           }
         }))
@@ -150,9 +149,8 @@ export default function WorkPage() {
           <p className="eyebrow">One ecosystem</p>
           <h2>Browse OMNeXa work by service area.</h2>
           <p>
-            Each service area takes visitors directly to the relevant product or advisory work. The numbering
-            follows the same service order used across OMNeXa, while the colour remains consistent wherever that
-            service area appears.
+            Each service area takes visitors to a public product overview or advisory section. Unfinished product
+            environments are not linked from this website.
           </p>
         </div>
         <div className="work-segment-grid">
@@ -182,10 +180,10 @@ export default function WorkPage() {
       <section id="portfolio" className="section-shell aligned-section work-portfolio-section">
         <div className="section-heading">
           <p className="eyebrow">Products & platforms</p>
-          <h2>Work in progress, shown with clear status.</h2>
+          <h2>Coming soon, with the intended value made clear.</h2>
           <p>
-            All products are currently under construction. We show the problem, intended role and service
-            alignment now; capability and outcome claims will only mature with evidence.
+            These public pages explain the problem, intended users and planned capabilities. Product access will
+            be opened only when the relevant experience is ready for public testing or release.
           </p>
         </div>
 
@@ -207,14 +205,13 @@ export default function WorkPage() {
 
                 <div className="work-card-copy">
                   <div className="work-card-meta">
-                    <span className="work-status">{product.status}</span>
+                    <span className="work-status">Coming Soon</span>
                     <a href={segment?.href ?? "/services"}>{segment?.shortTitle}</a>
                   </div>
                   <h3><a href={`/work/${product.slug}`}>{product.name}</a></h3>
                   <p>{product.oneLiner}</p>
                   <div className="work-card-links">
-                    <a href={`/work/${product.slug}`}>Why it exists →</a>
-                    <a href={product.externalUrl} target="_blank" rel="noreferrer">Work-in-progress site ↗</a>
+                    <a href={`/work/${product.slug}`}>See what it will do →</a>
                   </div>
                 </div>
               </article>
