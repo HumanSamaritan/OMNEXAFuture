@@ -6,6 +6,21 @@ const fromEmail = process.env.CONTACT_FROM_EMAIL || "OMNeXa Website <onboarding@
 const replyEmail = process.env.CONTACT_REPLY_EMAIL || toEmail;
 const sendConfirmationEmail = process.env.CONTACT_SEND_CONFIRMATION === "true";
 
+const MAX_BODY_BYTES = 16_384;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+
+type RateEntry = { count: number; resetAt: number };
+
+const globalForContactRateLimit = globalThis as typeof globalThis & {
+  __omnexaContactRateLimit?: Map<string, RateEntry>;
+};
+
+const contactRateLimit =
+  globalForContactRateLimit.__omnexaContactRateLimit ?? new Map<string, RateEntry>();
+
+globalForContactRateLimit.__omnexaContactRateLimit = contactRateLimit;
+
 function clean(value: unknown): string {
   return String(value || "").trim();
 }
@@ -27,33 +42,85 @@ function plainText(value: string): string {
   return value.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
+function getClientKey(request: Request): string {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  return forwardedFor || realIp || "unknown";
+}
+
+function isRateLimited(key: string): boolean {
+  const now = Date.now();
+  const entry = contactRateLimit.get(key);
+
+  if (!entry || entry.resetAt <= now) {
+    contactRateLimit.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  entry.count += 1;
+  contactRateLimit.set(key, entry);
+  return false;
+}
+
+function exceeds(value: string, max: number): boolean {
+  return value.length > max;
+}
+
 function getErrorMessage(error: unknown): string {
-  if (!error) {
-    return "Unknown email provider error.";
-  }
-
-  if (typeof error === "string") {
-    return error;
-  }
-
-  if (error instanceof Error) {
-    return error.message;
-  }
-
+  if (!error) return "Unknown email provider error.";
+  if (typeof error === "string") return error;
+  if (error instanceof Error) return error.message;
   if (typeof error === "object" && "message" in error) {
     return String((error as { message?: unknown }).message || "Unknown email provider error.");
   }
-
   return "Unknown email provider error.";
 }
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return NextResponse.json({ error: "Unsupported request format." }, { status: 415 });
+    }
+
+    const requestOrigin = new URL(request.url).origin;
+    const origin = request.headers.get("origin");
+    if (origin && origin !== requestOrigin) {
+      return NextResponse.json({ error: "Cross-origin request blocked." }, { status: 403 });
+    }
+
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: "Request is too large." }, { status: 413 });
+    }
+
+    const rawBody = await request.text();
+    if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: "Request is too large." }, { status: 413 });
+    }
+
+    let body: Record<string, unknown>;
+    try {
+      body = JSON.parse(rawBody) as Record<string, unknown>;
+    } catch {
+      return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+    }
 
     // Basic honeypot spam check. Real users will never see or fill this field.
     if (clean(body.companyWebsite)) {
       return NextResponse.json({ ok: true });
+    }
+
+    const clientKey = getClientKey(request);
+    if (isRateLimited(clientKey)) {
+      return NextResponse.json(
+        { error: "Too many enquiries from this connection. Please try again later." },
+        { status: 429, headers: { "Retry-After": "600" } }
+      );
     }
 
     const name = clean(body.name);
@@ -62,6 +129,14 @@ export async function POST(request: Request) {
     const organisation = clean(body.organisation);
     const interest = clean(body.interest);
     const message = clean(body.message);
+
+    if (exceeds(name, 100) || exceeds(email, 254) || exceeds(phone, 40)) {
+      return NextResponse.json({ error: "One or more fields are too long." }, { status: 400 });
+    }
+
+    if (exceeds(organisation, 160) || exceeds(interest, 120) || exceeds(message, 4000)) {
+      return NextResponse.json({ error: "One or more fields are too long." }, { status: 400 });
+    }
 
     if (!name || name.length < 2) {
       return NextResponse.json({ error: "Please enter your name." }, { status: 400 });
@@ -80,12 +155,10 @@ export async function POST(request: Request) {
     }
 
     if (!process.env.RESEND_API_KEY) {
+      console.error("Contact form email service is not configured.");
       return NextResponse.json(
-        {
-          error:
-            "Email service is not configured yet. Please add RESEND_API_KEY in Vercel Environment Variables or email dhiraj.kumar@omnexagoc.com directly."
-        },
-        { status: 500 }
+        { error: "Email service is temporarily unavailable. Please email us directly." },
+        { status: 503 }
       );
     }
 
@@ -129,16 +202,11 @@ export async function POST(request: Request) {
     });
 
     if (ownerResult.error) {
-      const providerMessage = getErrorMessage(ownerResult.error);
       console.error("Resend owner email error", {
-        error: ownerResult.error,
-        fromEmail,
-        toEmail
+        error: getErrorMessage(ownerResult.error)
       });
       return NextResponse.json(
-        {
-          error: `Email provider rejected the enquiry email: ${providerMessage}. Please check RESEND_API_KEY, CONTACT_FROM_EMAIL, and Resend domain verification in Vercel.`
-        },
+        { error: "Unable to send the enquiry right now. Please email us directly." },
         { status: 502 }
       );
     }
@@ -154,18 +222,16 @@ export async function POST(request: Request) {
 
       if (confirmationResult.error) {
         console.error("Resend confirmation email error", {
-          error: confirmationResult.error,
-          fromEmail,
-          confirmationTo: email
+          error: getErrorMessage(confirmationResult.error)
         });
       }
     }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Contact form error", error);
+    console.error("Contact form error", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json(
-      { error: "Unable to send enquiry right now. Please email dhiraj.kumar@omnexagoc.com directly." },
+      { error: "Unable to send enquiry right now. Please email us directly." },
       { status: 500 }
     );
   }
