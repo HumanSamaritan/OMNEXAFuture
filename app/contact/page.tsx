@@ -11,10 +11,21 @@ export default function ContactPage() {
           Share what you are trying to achieve across AI, technology transformation, banking, risk and controls,
           education, sustainability or leadership. OMNeXa will use the context to identify the most relevant next step.
         </p>
+        <div className="hero-actions">
+          <a className="button primary" href="/connect">Book an introductory call</a>
+        </div>
       </section>
 
       <section className="section-shell contact-grid aligned-section">
         <div className="contact-copy">
+          <div className="contact-card">
+            <strong>Book an introductory conversation</strong>
+            <p>
+              Prefer to choose a time directly? Use the secure booking page to view available appointment slots
+              without seeing Dhiraj&apos;s private calendar details.
+            </p>
+            <a href="/connect">View available-time booking</a>
+          </div>
           <div className="contact-card">
             <strong>Email</strong>
             <a href="mailto:dhiraj.kumar@omnexagoc.com">dhiraj.kumar@omnexagoc.com</a>
