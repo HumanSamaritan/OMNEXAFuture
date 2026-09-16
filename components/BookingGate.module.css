@@ -1,0 +1,132 @@
+.card {
+  overflow: hidden;
+  border: 1px solid rgba(18, 24, 38, 0.12);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(31, 143, 133, 0.045), rgba(255, 255, 255, 0) 160px),
+    #ffffff;
+  box-shadow: 0 28px 70px rgba(18, 24, 38, 0.12);
+  padding: clamp(28px, 4vw, 42px);
+}
+
+.kicker {
+  margin: 0 0 12px;
+  color: var(--teal);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.card h2 {
+  max-width: 520px;
+  margin-bottom: 14px;
+  font-size: clamp(2.35rem, 4vw, 3.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.metaRow span {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #faf8f4;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.divider {
+  height: 1px;
+  margin: 28px 0 24px;
+  background: var(--line);
+}
+
+.confirmTitle {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.confirmRow {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.confirmRow input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  margin: 2px 0 0;
+  padding: 0;
+  accent-color: var(--teal);
+}
+
+.primaryAction {
+  width: 100%;
+  margin-top: 20px;
+  min-height: 56px;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.48;
+  box-shadow: none !important;
+}
+
+.privacyNote {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.fallback {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #faf8f4;
+}
+
+.fallback strong {
+  font-size: 0.92rem;
+}
+
+.fallback a {
+  color: var(--teal);
+  font-weight: 900;
+}
+
+@media (max-width: 620px) {
+  .card {
+    border-radius: 22px;
+    padding: 26px 22px;
+  }
+
+  .card h2 {
+    font-size: clamp(2.2rem, 11vw, 3rem);
+  }
+}

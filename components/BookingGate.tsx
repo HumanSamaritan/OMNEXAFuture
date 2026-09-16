@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "./BookingGate.module.css";
 
 type BookingGateProps = {
   bookingUrl: string;
@@ -11,50 +12,54 @@ export default function BookingGate({ bookingUrl }: BookingGateProps) {
   const bookingReady = /^https:\/\//i.test(bookingUrl);
 
   return (
-    <div className="contact-card" aria-labelledby="booking-gate-title" style={{ maxWidth: "720px", margin: "0 auto" }}>
-      <div aria-hidden="true" style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>📅</div>
-      <p className="eyebrow">Book a time</p>
-      <h2 id="booking-gate-title">Choose an open slot.</h2>
+    <div className={styles.card} aria-labelledby="booking-gate-title">
+      <p className={styles.kicker}>Introductory conversation</p>
+      <h2 id="booking-gate-title">Find a time that works.</h2>
+      <p className={styles.copy}>
+        Only available slots are shown. Google Calendar creates the Meet link and sends the invitation.
+      </p>
 
-      <label style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start", marginTop: "1rem" }}>
+      <div className={styles.metaRow} aria-label="Meeting details">
+        <span>30 minutes</span>
+        <span>Google Meet</span>
+        <span>Singapore Time</span>
+      </div>
+
+      <div className={styles.divider} />
+
+      <p className={styles.confirmTitle}>Quick confirmation</p>
+      <label className={styles.confirmRow}>
         <input
           type="checkbox"
           checked={humanConfirmed}
           onChange={(event) => setHumanConfirmed(event.target.checked)}
-          style={{ marginTop: "0.25rem" }}
         />
-        <span>I&apos;m human and booking a genuine OMNeXa conversation.</span>
+        <span>I&apos;m booking a genuine conversation with OMNeXa.</span>
       </label>
 
-      <div className="hero-actions" style={{ marginTop: "1.25rem" }}>
-        {bookingReady ? (
-          <a
-            className="button primary"
-            href={humanConfirmed ? bookingUrl : undefined}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-disabled={!humanConfirmed}
-            onClick={(event) => {
-              if (!humanConfirmed) event.preventDefault();
-            }}
-            style={!humanConfirmed ? { opacity: 0.55, pointerEvents: "none" } : undefined}
-          >
-            See available times
-          </a>
-        ) : (
-          <span className="button secondary" aria-disabled="true" style={{ opacity: 0.65 }}>
-            Booking unavailable
-          </span>
-        )}
-      </div>
-
       {bookingReady ? (
-        <p className="fine">Google Calendar shows free times only and sends the Meet invitation.</p>
+        <a
+          className={`button primary ${styles.primaryAction} ${!humanConfirmed ? styles.disabled : ""}`}
+          href={humanConfirmed ? bookingUrl : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-disabled={!humanConfirmed}
+          onClick={(event) => {
+            if (!humanConfirmed) event.preventDefault();
+          }}
+        >
+          View available times →
+        </a>
       ) : (
-        <p className="fine">
-          Please email <a href="mailto:dhiraj.kumar@omnexagoc.com">dhiraj.kumar@omnexagoc.com</a>.
-        </p>
+        <div className={styles.fallback}>
+          <strong>Online booking is temporarily unavailable.</strong>
+          <a href="mailto:dhiraj.kumar@omnexagoc.com">Email Dhiraj instead →</a>
+        </div>
       )}
+
+      <p className={styles.privacyNote}>
+        Your private calendar details are never displayed on this page.
+      </p>
     </div>
   );
 }
