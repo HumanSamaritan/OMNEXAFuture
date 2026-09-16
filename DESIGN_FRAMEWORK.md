@@ -100,14 +100,26 @@ Hero actions should follow one consistent rule:
 - Status and action controls should have matched visual height and balanced spacing.
 - They may wrap or stack only at responsive widths where keeping them on one line would create compression or overflow.
 
-## 7. Content and design integrity
+## 7. Content density & progressive disclosure
+
+Visible copy should be concise and easy to scan.
+
+- Hero sections: one headline, one short supporting paragraph and no more than two primary actions.
+- Prefer short labels, icons, numbers and visual grouping over repeated explanatory paragraphs.
+- Cards should usually contain one idea and one short paragraph at most.
+- FAQs and secondary detail should use progressive disclosure rather than showing all answers at once.
+- Do not repeat privacy, security or process explanations in multiple visible sections. Keep essential reassurance brief and link to dedicated detail where needed.
+- SEO/AEO metadata can remain descriptive; visible page copy should stay human-first and concise.
+- Booking and conversion flows should explain only what the user needs to act safely.
+
+## 8. Content and design integrity
 
 - “Currently under construction” must remain visible for work-in-progress products.
 - Development intentions must not be presented as validated outcomes.
 - UI styling must not imply clinical, regulatory or performance validation that has not occurred.
 - SEO/AEO copy must remain readable to humans; do not distort visible design for keyword stuffing.
 
-## 8. Pre-merge visual QA checklist
+## 9. Pre-merge visual QA checklist
 
 Before a design branch is promoted:
 
@@ -123,6 +135,7 @@ Before a design branch is promoted:
 - [ ] No unnecessary boxes or nested cards
 - [ ] Colour palette is restrained and category-consistent
 - [ ] Text/background contrast is readable
+- [ ] Visible copy is concise; secondary detail uses progressive disclosure
 - [ ] Status labels remain visible
 - [ ] Links remain obvious without excessive decoration
 - [ ] Services and Contact mobile layouts checked specifically for desktop-grid regression

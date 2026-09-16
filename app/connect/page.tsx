@@ -2,48 +2,41 @@ import type { Metadata } from "next";
 import BookingGate from "@/components/BookingGate";
 
 export const metadata: Metadata = {
-  title: "Book an Introductory Call | OMNeXa",
-  description:
-    "Book an introductory discussion with Dhiraj Kumar to explore OMNeXa's vision, products, partnerships and transformation initiatives.",
+  title: "Book a Call | OMNeXa",
+  description: "Choose an available time for a 30-minute introductory conversation with Dhiraj Kumar.",
   alternates: { canonical: "/connect" }
 };
 
 const bookingUrl = process.env.NEXT_PUBLIC_OMNEXA_BOOKING_URL || "";
 
+const quickFacts = [
+  { icon: "🕒", label: "30 min" },
+  { icon: "🌏", label: "Singapore time" },
+  { icon: "🎥", label: "Google Meet" },
+  { icon: "🔒", label: "Free slots only" }
+];
+
 export default function ConnectPage() {
   return (
     <main>
       <section className="page-hero section-shell aligned-section">
-        <p className="eyebrow">Connect with OMNeXa</p>
-        <h1>Book an introductory conversation with Dhiraj Kumar.</h1>
-        <p>
-          Use this page for an initial discussion on OMNeXa&apos;s vision, products, collaboration opportunities,
-          responsible AI, human-centred transformation, education, risk, governance or related initiatives.
-        </p>
+        <p className="eyebrow">Meet OMNeXa</p>
+        <h1>Choose a time. Let&apos;s talk.</h1>
+        <p>Introductory call with Dhiraj Kumar on OMNeXa, products or partnerships.</p>
       </section>
 
-      <section className="section-shell contact-grid aligned-section">
-        <div className="contact-copy">
-          <div className="contact-card">
-            <strong>How scheduling works</strong>
-            <p>
-              The booking destination shows available appointment times only. Existing calendar event titles,
-              attendees and private activity details are not displayed to visitors.
-            </p>
-          </div>
-          <div className="contact-card">
-            <strong>Default introductory format</strong>
-            <p>30-minute introductory discussion. Availability is managed in Singapore Time (SGT).</p>
-          </div>
-          <div className="contact-card">
-            <strong>Privacy by design</strong>
-            <p>
-              OMNeXa does not collect booking identity data on this landing page. Scheduling data is entered only
-              after you continue to the Google-hosted booking experience.
-            </p>
-          </div>
+      <section className="section-shell aligned-section">
+        <div className="home-focus-grid" aria-label="Meeting details">
+          {quickFacts.map((item) => (
+            <article key={item.label}>
+              <span className="focus-index" aria-hidden="true">{item.icon}</span>
+              <h3>{item.label}</h3>
+            </article>
+          ))}
         </div>
+      </section>
 
+      <section className="section-shell aligned-section">
         <BookingGate bookingUrl={bookingUrl} />
       </section>
     </main>

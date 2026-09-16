@@ -11,20 +11,17 @@ const focusAreas = [
   {
     index: "01",
     title: "AI, technology & transformation",
-    description:
-      "Human-defined AI, responsible automation, technology leadership and transformation programs designed with governance, security, privacy and accountability from the start."
+    description: "Responsible AI, automation and transformation built with governance from the start."
   },
   {
     index: "02",
     title: "Banking, risk & controls",
-    description:
-      "Functional banking and technology leadership across payments, client onboarding, financial crime, risk, controls, compliance reporting and complex multi-market change."
+    description: "Payments, onboarding, financial crime, controls and multi-market change."
   },
   {
     index: "03",
     title: "Human capability & sustainable progress",
-    description:
-      "Education, employability, leadership, sustainability and well-being initiatives that use technology to strengthen human capability rather than simply remove work."
+    description: "Education, employability, leadership, sustainability and well-being."
   }
 ];
 
@@ -40,7 +37,7 @@ const homePageSchema = {
   about: { "@id": "https://www.omnexagoc.com/#organization" },
   primaryImageOfPage: { "@id": "https://www.omnexagoc.com/#primary-image" },
   inLanguage: "en-SG",
-  dateModified: "2026-08-23"
+  dateModified: "2026-09-16"
 };
 
 export default function Home() {
@@ -55,18 +52,12 @@ export default function Home() {
           <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
           <h1>Human-centred AI. Risk-aware transformation. Leadership for what comes next.</h1>
           <p className="hero-copy">
-            OMNeXa™ brings together enterprise technology, banking and risk leadership, responsible AI,
-            and human capability to help organisations turn transformation ideas into governed,
-            executable outcomes.
-          </p>
-          <p className="hero-copy">
-            We focus on the choices around AI: what should be automated, what should remain human-led,
-            how accountability is retained, and how released capacity is redirected into higher-value work.
-            This is the progression from Human-in-the-Loop to Humans Defining the Loop.
+            OMNeXa™ connects responsible AI, enterprise transformation, banking and risk, and human capability
+            to turn complex change into practical, governed outcomes.
           </p>
           <div className="hero-actions">
-            <a className="button primary" href="/knowledge">Explore OMNeXa</a>
-            <a className="button secondary" href="/contact">Start a conversation</a>
+            <a className="button primary" href="/work">Explore our work</a>
+            <a className="button secondary" href="/connect">Book a conversation</a>
           </div>
         </div>
 
@@ -82,10 +73,7 @@ export default function Home() {
         <div className="section-heading">
           <p className="eyebrow">What OMNeXa brings together</p>
           <h2>Three lenses. One transformation mindset.</h2>
-          <p>
-            The differentiator is not technology alone. It is the ability to connect technology decisions
-            with business outcomes, controls, people, operating models and long-term human value.
-          </p>
+          <p>Technology, business, controls and people — designed as one system.</p>
         </div>
         <div className="home-focus-grid">
           {focusAreas.map((area) => (
@@ -101,17 +89,12 @@ export default function Home() {
       <section className="section-shell split-section aligned-section">
         <div>
           <p className="eyebrow">Why OMNeXa</p>
-          <h2>Design the transformation around the outcome — not around the tool.</h2>
+          <h2>Design around the outcome — not the tool.</h2>
         </div>
         <div className="copy-stack">
           <p>
-            AI disruption, regulatory pressure, changing customer journeys, workforce transition and
-            sustainability are converging. Treating them as separate programs often creates duplicated
-            effort and fragmented accountability.
-          </p>
-          <p>
-            OMNeXa approaches transformation with risk, control, privacy, cybersecurity, leadership and
-            human adoption considered from the beginning — while keeping the operating model practical enough to execute.
+            OMNeXa brings AI, risk, privacy, cybersecurity, operating models and human adoption together from
+            the beginning, so transformation stays practical and accountable.
           </p>
         </div>
       </section>
@@ -129,11 +112,8 @@ export default function Home() {
         <div>
           <p className="eyebrow">Founder-led transformation</p>
           <h2>Dhiraj Kumar connects banking depth, technology leadership and governance-first AI.</h2>
-          <p>
-            OMNeXa is founded and led by Dhiraj Kumar, whose experience spans global banking technology,
-            payments, client onboarding, financial crime, risk, controls and complex multi-market change.
-          </p>
-          <a href="/dhiraj-kumar">View the official founder profile</a>
+          <p>Experience across banking technology, payments, financial crime, risk, controls and global transformation.</p>
+          <a href="/dhiraj-kumar">Founder profile</a>
         </div>
       </section>
 
@@ -141,31 +121,31 @@ export default function Home() {
         <div className="section-shell aligned-section">
           <div className="section-heading">
             <p className="eyebrow">Ideas that define the work</p>
-            <h2>Understand the philosophy behind OMNeXa.</h2>
+            <h2>Explore the thinking behind OMNeXa.</h2>
           </div>
           <div className="pillar-grid">
             <article className="pillar-card">
               <span>01</span>
               <h3>What is OMNeXa?</h3>
-              <p>Official company identity, founder, focus areas and the practical problems OMNeXa is designed to address.</p>
-              <a href="/knowledge">Read the knowledge guide</a>
+              <p>Company identity, focus and practical purpose.</p>
+              <a href="/knowledge">Knowledge guide</a>
             </article>
             <article className="pillar-card">
               <span>02</span>
               <h3>Humans Defining the Loop</h3>
-              <p>Purpose, decision rights, boundaries, escalation and accountability should be defined before autonomy scales.</p>
+              <p>Keep purpose, boundaries and accountability human-defined.</p>
               <a href="/humans-defining-the-loop">Explore the principle</a>
             </article>
             <article className="pillar-card">
               <span>03</span>
               <h3>Robotics with Human Values</h3>
-              <p>Physical and digital intelligence should remain anchored to dignity, safety, traceability and human responsibility.</p>
+              <p>Anchor intelligence to dignity, safety and responsibility.</p>
               <a href="/robotics-with-human-values">Explore the principle</a>
             </article>
             <article className="pillar-card">
               <span>04</span>
               <h3>The Convergence Brief</h3>
-              <p>OMNeXa's thought-leadership series on AI, work, governance, employability and human-machine convergence.</p>
+              <p>AI, work, governance and human-machine convergence.</p>
               <a href="/convergence-brief">Explore the publication</a>
             </article>
           </div>
@@ -175,7 +155,7 @@ export default function Home() {
       <section className="section-shell preview-section aligned-section">
         <div className="section-heading">
           <p className="eyebrow">Ways to engage</p>
-          <h2>Advisory, workshops and transformation programs that can start focused and scale.</h2>
+          <h2>Start focused. Scale what works.</h2>
         </div>
         <div className="service-preview-grid">
           {services.slice(0, 3).map((service) => (
