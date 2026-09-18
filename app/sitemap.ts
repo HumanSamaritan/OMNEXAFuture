@@ -60,7 +60,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${siteUrl}/convergence-brief/${issue.slug}`,
     lastModified: issue.publishedAt ? new Date(`${issue.publishedAt}T00:00:00Z`) : siteLastModified,
     changeFrequency: "monthly" as const,
-    priority: issue.slug === "issue-04" ? 0.95 : issue.slug === "issue-03" ? 0.9 : 0.85,
+    priority: issue.slug === "issue-05" ? 0.95 : issue.slug === "issue-04" ? 0.9 : issue.slug === "issue-03" ? 0.88 : 0.85,
     images: [`${siteUrl}/convergence-brief/${issue.slug}/opengraph-image`]
   }));
 
