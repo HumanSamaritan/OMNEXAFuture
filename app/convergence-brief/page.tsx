@@ -4,9 +4,9 @@ import { getConvergenceIssues } from "@/lib/publications";
 const siteUrl = "https://www.omnexagoc.com";
 
 export const metadata: Metadata = {
-  title: "The Convergence Brief | AI Testing, Agentic AI, Quality & Human-Machine Transformation",
+  title: "The Convergence Brief | Agentic AI, Human Agency & Transformation",
   description:
-    "OMNeXa's Convergence Brief explores agentic AI, AI testing, quality engineering, defect prevention, AI assurance, requirement traceability, AI governance, interfaces and human-machine transformation.",
+    "OMNeXa's Convergence Brief turns practical AI product-building lessons into perspectives on agentic AI, human agency, governance, experience, engineering, assurance and human-machine advancement.",
   keywords: [
     "agentic AI",
     "AI testing",
@@ -19,13 +19,18 @@ export const metadata: Metadata = {
     "human-agent traceability",
     "AI governance",
     "human-machine collaboration",
-    "agentic AI interface"
+    "agentic AI interface",
+    "human agency",
+    "human authority",
+    "AI product engineering",
+    "agent interoperability",
+    "human AI partnership"
   ],
   alternates: { canonical: `${siteUrl}/convergence-brief` },
   openGraph: {
     title: "The Convergence Brief | OMNeXa",
     description:
-      "Practical OMNeXa perspectives on agentic AI, AI testing, quality engineering, assurance, governance, interfaces and human-machine convergence.",
+      "Practical OMNeXa lessons on agentic AI, human agency, governance, experience, engineering and human-machine advancement — Where Consciousness Meets Intelligence.",
     url: `${siteUrl}/convergence-brief`,
     type: "website"
   }
@@ -39,7 +44,7 @@ export default async function ConvergenceBriefPage() {
     "@id": `${siteUrl}/convergence-brief#collection`,
     name: "The Convergence Brief",
     description:
-      "OMNeXa's thought-leadership series exploring agentic AI, AI testing, quality engineering, assurance, defect prevention, governance, interfaces and human-machine transformation.",
+      "OMNeXa's practical learning series connecting agentic AI product-building lessons with human agency, governance, experience, engineering and human-machine advancement.",
     url: `${siteUrl}/convergence-brief`,
     publisher: { "@id": `${siteUrl}/#organization` },
     about: [
@@ -53,7 +58,12 @@ export default async function ConvergenceBriefPage() {
       "Human-agent traceability",
       "AI governance",
       "Agentic interfaces",
-      "Human-machine collaboration"
+      "Human-machine collaboration",
+      "Human agency",
+      "Human authority",
+      "AI product engineering",
+      "Agent interoperability",
+      "Human-AI partnership"
     ],
     hasPart: issues.map((issue) => ({
       "@type": "Article",
@@ -75,9 +85,13 @@ export default async function ConvergenceBriefPage() {
         <p className="eyebrow">OMNeXa thought leadership</p>
         <h1>The Convergence Brief</h1>
         <p>
-          The Convergence Brief connects the questions appearing as AI moves from a parallel technology
-          capability into operating processes: architecture, decision rights, interfaces, testing,
-          assurance, defect prevention, quality and human-machine accountability.
+          The Convergence Brief turns questions encountered while OMNeXa builds AI products into practical
+          perspectives for the wider industry — connecting architecture, human agency, decision rights,
+          experience, engineering, assurance and accountable agentic AI.
+        </p>
+        <p>
+          <strong>Where Consciousness Meets Intelligence:</strong> human purpose, exploration and advancement
+          remain part of the transformation while intelligent systems expand what people and organisations can do.
         </p>
       </section>
 
@@ -88,12 +102,21 @@ export default async function ConvergenceBriefPage() {
         </div>
         <div className="copy-stack">
           <p>
-            Issue 01 asks whether organisations are building a parallel AI technology universe. Issue 02
-            moves to decision rights and who defines the AI loop. Issue 03 turns to the interface when the
-            screen stops being the product. Issue 04 moves into AI testing, assurance and defect prevention
-            once human intent can pass through agents before becoming action. Issue 05 follows that intent
-            across organisational boundaries and asks how human authority remains intact as multiple agents
-            and providers coordinate an outcome.
+            <strong>Issue 01</strong> asks whether organisations are building a parallel AI technology universe.{" "}
+            <strong>Issue 02</strong> moves to decision rights and who defines the AI loop.{" "}
+            <strong>Issue 03</strong> turns to experience when the screen stops being the product.{" "}
+            <strong>Issue 04</strong> follows human intent through testing, assurance, traceability and defect prevention.{" "}
+            <strong>Issue 05</strong> follows that authority across organisational boundaries as multiple agents and providers coordinate an outcome.
+          </p>
+          <p>
+            The issues are not intended as abstract predictions. They are shaped by practical questions, design
+            choices and lessons emerging from OMNeXa&apos;s own AI product-creation journey, then tested as
+            potential lessons and ways forward for broader industry practice.
+          </p>
+          <p>
+            The connecting principle is not simply &quot;human first&quot;. It is preserving <strong>human agency,
+            exploration and advancement</strong> while building a productive partnership with an increasingly
+            agentic AI universe — the practical path behind OMNeXa&apos;s <strong>Where Consciousness Meets Intelligence</strong>.
           </p>
           <p>
             OVIA — the OMNeXa Verification & Integrity Assistant — provides publication-integrity controls
