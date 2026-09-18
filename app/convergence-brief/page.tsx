@@ -91,7 +91,9 @@ export default async function ConvergenceBriefPage() {
             Issue 01 asks whether organisations are building a parallel AI technology universe. Issue 02
             moves to decision rights and who defines the AI loop. Issue 03 turns to the interface when the
             screen stops being the product. Issue 04 moves into AI testing, assurance and defect prevention
-            once human intent can pass through agents before becoming action.
+            once human intent can pass through agents before becoming action. Issue 05 follows that intent
+            across organisational boundaries and asks how human authority remains intact as multiple agents
+            and providers coordinate an outcome.
           </p>
           <p>
             OVIA — the OMNeXa Verification & Integrity Assistant — provides publication-integrity controls
