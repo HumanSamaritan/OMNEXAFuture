@@ -259,7 +259,93 @@ export const canonicalIssues: ConvergenceIssue[] = [
     linkedinUrl:
       process.env.OMNEXA_ISSUE_04_LINKEDIN_URL ||
       "https://www.linkedin.com/feed/update/urn:li:ugcPost:7503022929857626112/"
+  }  ,
+  {
+    issue: "Issue 05",
+    slug: "issue-05",
+    title: "As AI Agents Cross Boundaries",
+    subtitle: "One request. Many intelligent systems. How does human authority travel with them?",
+    publishedAt: "2026-09-18",
+    summary:
+      "As AI agents coordinate actions across businesses, platforms and payment networks, OMNeXa examines continuity of human authority: how the original human mandate can remain visible from intent through autonomous decisions to outcome.",
+    themes: [
+      "AI agent interoperability",
+      "Agentic AI",
+      "Human authority",
+      "Agentic payments",
+      "AI governance",
+      "Human-machine collaboration"
+    ],
+    seoKeywords: [
+      "AI agent interoperability",
+      "agentic AI interoperability",
+      "AI agents across companies",
+      "human authority in AI",
+      "agentic payments",
+      "AI agent authorization",
+      "AI agent governance",
+      "human intent and AI agents",
+      "multi agent systems",
+      "responsible agentic AI"
+    ],
+    questions: [
+      {
+        question: "What happens when AI agents act across company boundaries?",
+        answer:
+          "A single human request can pass through multiple agents, providers and systems. The technical challenge is interoperability; the governance challenge is preserving the scope of the human or organisational authority as decisions move through that chain."
+      },
+      {
+        question: "What does OMNeXa mean by continuity of human authority?",
+        answer:
+          "OMNeXa uses continuity of human authority as a human-centred operating principle: intelligence may optimise the route, but the original human mandate should continue to define the destination and boundaries. Within the mandate the system can proceed; if the mandate must materially change it should return to the human; outside the mandate it should stop."
+      },
+      {
+        question: "Is agent interoperability a new OMNeXa concept?",
+        answer:
+          "No. Agent interoperability, identity, authorization, payment mandates and auditability are established or actively developing industry areas. OMNeXa's perspective focuses on how human authority remains intact across the full journey from intent to outcome."
+      },
+      {
+        question: "How does Where Consciousness Meets Intelligence apply to AI agents?",
+        answer:
+          "In this OMNeXa perspective, consciousness represents human purpose, judgement, values, limits and accountability, while machine intelligence searches, compares, routes, optimises and executes. The design goal is useful autonomy inside consciously chosen boundaries."
+      }
+    ],
+    sections: [
+      {
+        heading: "The click is starting to disappear",
+        body:
+          "Today, buying something online is obvious: we choose, click, approve and pay. In an agentic experience, a request such as 'Upgrade me to Premium. Keep it under SGD 20 and use an approved payment option' could move through an AI assistant, service system, payment route, provider and entitlement system. The experience becomes simpler for the human while the decision chain underneath becomes more distributed."
+      },
+      {
+        heading: "The infrastructure is evolving",
+        body:
+          "AI agents are adding a new layer to systems that already connect businesses, platforms and payment networks. NIST's AI Agent Standards Initiative focuses on trusted, secure and interoperable agent ecosystems. Google's Agent Payments Protocol addresses verifiable user authorization across agents, merchants and payment providers, while Mastercard's Verifiable Intent connects identity, intent and action. These developments show active industry work rather than a single settled architecture."
+      },
+      {
+        heading: "The question that matters to the human",
+        body:
+          "Several legitimate systems can make valid decisions in sequence and still drift from what the human meant. If a preferred provider is unavailable, a currency changes or a product term changes, the important question is not only whether each agent is authenticated, but whether the original mandate still covers the next action."
+      },
+      {
+        heading: "The OMNeXa principle",
+        body:
+          "Agents need interoperability. Systems need trust. Humans need continuity of authority. OMNeXa treats human authority as a thread through the journey: within my mandate — GO; if my mandate must change — ASK ME; outside my mandate — STOP."
+      },
+      {
+        heading: "Where Consciousness Meets Intelligence",
+        body:
+          "Consciousness represents the human side of the relationship: purpose, judgement, values, limits and accountability. Intelligence represents what machines increasingly do well: search, compare, route, negotiate, optimise and execute. The design goal is not human approval for every tiny action; it is useful machine autonomy inside consciously chosen human boundaries."
+      },
+      {
+        heading: "The way forward",
+        body:
+          "Existing identity, payment, security, contractual and audit controls should remain the foundation. The additional habit is to design the whole journey around the human mandate, not only authenticate each individual step. As agents cross organisational and national boundaries, the question is whether the human intention still arrives intact at the other end."
+      }
+    ],
+    linkedinUrl:
+      process.env.OMNEXA_ISSUE_05_LINKEDIN_URL || linkedInArticlesHub
   }
+
 ];
 
 function isIssue(value: unknown): value is ConvergenceIssue {
