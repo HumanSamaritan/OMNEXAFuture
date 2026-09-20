@@ -12,9 +12,9 @@ const securityHeaders = [
       "media-src 'self' https:",
       "font-src 'self' data:",
       "style-src 'self' 'unsafe-inline'",
-      "script-src 'self' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com",
       "connect-src 'self' https:",
-      "frame-src https://www.youtube-nocookie.com https://www.youtube.com",
+      "frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://recaptcha.google.com",
       "upgrade-insecure-requests"
     ].join("; ")
   },
