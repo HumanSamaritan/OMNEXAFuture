@@ -1,13 +1,13 @@
 .page {
-  padding: 0 0 96px;
+  padding: 0 0 88px;
 }
 
 .connectGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-  gap: clamp(42px, 7vw, 92px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(440px, 1.1fr);
+  gap: clamp(38px, 5vw, 68px);
   align-items: start;
-  padding-top: clamp(72px, 8vw, 112px);
+  padding-top: clamp(58px, 6vw, 84px);
 }
 
 .intro {
@@ -17,19 +17,19 @@
 .identity {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin-bottom: 36px;
+  gap: 16px;
+  margin-bottom: 30px;
 }
 
 .portraitWrap {
-  width: 112px;
-  height: 112px;
-  flex: 0 0 112px;
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
   overflow: hidden;
-  border: 1px solid rgba(18, 24, 38, 0.12);
-  border-radius: 26px;
+  border: 1px solid rgba(18, 24, 38, 0.1);
+  border-radius: 20px;
   background: #fff;
-  box-shadow: 10px 10px 0 rgba(31, 143, 133, 0.12);
+  box-shadow: 7px 7px 0 rgba(31, 143, 133, 0.1);
 }
 
 .portrait {
@@ -40,114 +40,115 @@
 }
 
 .role {
-  margin: -4px 0 7px;
+  margin: -2px 0 7px;
   color: var(--ink);
-  font-size: 1rem;
-  font-weight: 850;
+  font-size: 0.96rem;
+  font-weight: 650;
   line-height: 1.4;
 }
 
 .profileLink {
   color: var(--teal);
-  font-size: 0.9rem;
-  font-weight: 800;
+  font-size: 0.86rem;
+  font-weight: 650;
 }
 
 .headline {
-  max-width: 760px;
-  margin-bottom: 24px;
-  font-size: clamp(3rem, 5.3vw, 5.3rem);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  max-width: 720px;
+  margin-bottom: 20px;
+  font-size: clamp(2.55rem, 4.5vw, 4.35rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .lead {
-  max-width: 680px;
+  max-width: 650px;
   margin-bottom: 0;
   color: var(--muted);
-  font-size: clamp(1.06rem, 1.6vw, 1.22rem);
-  line-height: 1.7;
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
+  line-height: 1.65;
 }
 
 .themeGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 24px;
-  margin-top: 38px;
+  gap: 0 20px;
+  margin-top: 32px;
   border-top: 1px solid var(--line);
 }
 
 .themeItem {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
   align-items: center;
-  min-height: 74px;
+  min-height: 68px;
   border-bottom: 1px solid var(--line);
 }
 
 .themeItem span {
   color: var(--teal);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .themeItem strong {
-  font-size: 0.97rem;
+  font-size: 0.92rem;
+  font-weight: 650;
   line-height: 1.35;
 }
 
 .note {
-  max-width: 650px;
-  margin: 30px 0 0;
-  padding-left: 18px;
+  max-width: 620px;
+  margin: 26px 0 0;
+  padding-left: 16px;
   border-left: 3px solid var(--gold);
   color: var(--muted);
-  font-size: 0.94rem;
-  line-height: 1.65;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .bookingColumn {
-  position: sticky;
-  top: 104px;
+  position: static;
   min-width: 0;
+  width: 100%;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1040px) {
   .connectGrid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 42px;
   }
 
   .bookingColumn {
-    position: static;
+    width: min(100%, 680px);
   }
 }
 
 @media (max-width: 620px) {
   .page {
-    padding-bottom: 64px;
+    padding-bottom: 60px;
   }
 
   .connectGrid {
-    padding-top: 52px;
+    padding-top: 42px;
   }
 
   .identity {
     align-items: flex-start;
-    margin-bottom: 30px;
+    margin-bottom: 26px;
   }
 
   .portraitWrap {
-    width: 88px;
-    height: 88px;
-    flex-basis: 88px;
-    border-radius: 22px;
+    width: 82px;
+    height: 82px;
+    flex-basis: 82px;
+    border-radius: 18px;
   }
 
   .headline {
-    font-size: clamp(2.65rem, 13vw, 4rem);
+    font-size: clamp(2.25rem, 11vw, 3.35rem);
   }
 
   .themeGrid {

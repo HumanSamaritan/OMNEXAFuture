@@ -526,9 +526,9 @@ export default function BookingGate({
           <textarea
             value={form.focus}
             onChange={(event) => updateField("focus", event.target.value)}
-            rows={4}
+            rows={3}
             maxLength={1200}
-            placeholder="For example: partnership, product pilot, responsible AI, education or transformation."
+            placeholder="Partnership, product pilot, responsible AI, education or transformation."
           />
         </label>
 
@@ -549,6 +549,8 @@ export default function BookingGate({
               data-sitekey={recaptchaSiteKey}
               data-callback="omnexaRecaptchaSuccess"
               data-expired-callback="omnexaRecaptchaExpired"
+              data-theme="light"
+              data-size="normal"
             />
           ) : (
             <div className={styles.verificationUnavailable}>
