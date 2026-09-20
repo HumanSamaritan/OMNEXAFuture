@@ -10,7 +10,7 @@ export const BOOKING_TIME_ZONE = "Asia/Singapore";
 export const BOOKING_TIME_ZONE_LABEL = "UTC +08:00 · Singapore";
 
 const DEFAULT_DURATION_MINUTES = 30;
-const DEFAULT_STEP_MINUTES = 15;
+const DEFAULT_STEP_MINUTES = 30;
 const DEFAULT_OPEN = "09:00";
 const DEFAULT_CLOSE = "18:00";
 const DEFAULT_MIN_NOTICE_HOURS = 4;
