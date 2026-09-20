@@ -3,7 +3,7 @@
   border: 1px solid rgba(18, 24, 38, 0.12);
   border-radius: 28px;
   background:
-    linear-gradient(180deg, rgba(31, 143, 133, 0.045), rgba(255, 255, 255, 0) 160px),
+    linear-gradient(180deg, rgba(31, 143, 133, 0.045), rgba(255, 255, 255, 0) 180px),
     #ffffff;
   box-shadow: 0 28px 70px rgba(18, 24, 38, 0.12);
   padding: clamp(28px, 4vw, 42px);
@@ -19,9 +19,9 @@
 }
 
 .card h2 {
-  max-width: 520px;
+  max-width: 620px;
   margin-bottom: 14px;
-  font-size: clamp(2.35rem, 4vw, 3.8rem);
+  font-size: clamp(2.2rem, 4vw, 3.65rem);
   line-height: 0.98;
   letter-spacing: -0.04em;
 }
@@ -33,91 +33,402 @@
   line-height: 1.65;
 }
 
-.metaRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 26px;
+.copy strong {
+  color: var(--ink);
 }
 
-.metaRow span {
-  padding: 8px 11px;
+.form {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  border: 1px solid rgba(18, 24, 38, 0.16);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  padding: 13px 14px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-color: rgba(31, 143, 133, 0.78);
+  box-shadow: 0 0 0 4px rgba(31, 143, 133, 0.11);
+}
+
+.form textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.optional {
+  color: var(--muted);
+  font-weight: 650;
+}
+
+.honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+.recaptchaWrap {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+
+.verificationUnavailable {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(182, 79, 69, 0.28);
+  border-radius: 12px;
+  background: rgba(182, 79, 69, 0.06);
+  color: #8f332c;
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.consent,
+.privacyNote {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.79rem;
+  line-height: 1.55;
+}
+
+.consent a,
+.privacyNote a {
+  color: var(--teal);
+  font-weight: 850;
+}
+
+.continueButton,
+.confirmButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--charcoal);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 900;
+  padding: 0 22px;
+  box-shadow: 8px 8px 0 rgba(201, 145, 47, 0.2);
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.continueButton {
+  width: min(100%, 320px);
+}
+
+.continueButton:hover:not(:disabled),
+.confirmButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.continueButton:disabled,
+.confirmButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.errorBox {
+  padding: 13px 15px;
+  border: 1px solid rgba(182, 79, 69, 0.28);
+  border-radius: 12px;
+  background: rgba(182, 79, 69, 0.07);
+  color: #8f332c;
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.successBanner {
+  margin: -8px -8px 26px;
+  padding: 14px 16px;
+  border: 1px solid rgba(31, 143, 133, 0.3);
+  border-radius: 14px;
+  background: rgba(31, 143, 133, 0.08);
+  color: #166c64;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.scheduleHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.textButton {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 900;
+  padding: 7px 0;
+}
+
+.meetingFacts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 26px 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.meetingFacts span {
+  display: grid;
+  gap: 6px;
+  min-height: 86px;
+  padding: 16px;
+  background: #faf8f4;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.meetingFacts strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+.dateRail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 10px;
+  scrollbar-width: thin;
+}
+
+.dateButton,
+.dateActive {
+  flex: 0 0 auto;
+  min-height: 44px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: #faf8f4;
-  color: var(--ink);
+  cursor: pointer;
+  padding: 0 14px;
   font-size: 0.8rem;
   font-weight: 850;
 }
 
-.divider {
-  height: 1px;
-  margin: 28px 0 24px;
-  background: var(--line);
-}
-
-.confirmTitle {
-  margin: 0 0 10px;
-  color: var(--ink);
-  font-size: 0.88rem;
-  font-weight: 900;
-}
-
-.confirmRow {
-  display: flex;
-  gap: 11px;
-  align-items: flex-start;
+.dateButton {
+  background: #fff;
   color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 700;
-  line-height: 1.45;
 }
 
-.confirmRow input {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 18px;
-  margin: 2px 0 0;
-  padding: 0;
-  accent-color: var(--teal);
+.dateActive {
+  border-color: var(--charcoal);
+  background: var(--charcoal);
+  color: #fff;
 }
 
-.primaryAction {
-  width: 100%;
-  margin-top: 20px;
-  min-height: 56px;
-}
-
-.disabled {
-  pointer-events: none;
-  opacity: 0.48;
-  box-shadow: none !important;
-}
-
-.privacyNote {
-  margin: 18px 0 0;
+.dateTitle {
+  margin: 16px 0 12px;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
-.fallback {
+.dateTitle strong {
+  color: var(--ink);
+}
+
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.slotButton,
+.slotSelected {
+  min-height: 50px;
+  border: 1px solid rgba(18, 24, 38, 0.14);
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 850;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.slotButton {
+  background: #fff;
+  color: #165b91;
+}
+
+.slotButton:hover {
+  border-color: rgba(31, 143, 133, 0.6);
+  background: rgba(31, 143, 133, 0.045);
+}
+
+.slotSelected {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: #fff;
+}
+
+.emptyState {
+  padding: 24px;
+  border: 1px dashed rgba(18, 24, 38, 0.2);
+  border-radius: 14px;
+  background: #faf8f4;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.reviewPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid rgba(31, 143, 133, 0.3);
+  border-radius: 16px;
+  background: rgba(31, 143, 133, 0.055);
+}
+
+.reviewPanel div {
+  display: grid;
+  gap: 4px;
+}
+
+.reviewPanel span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.reviewPanel strong {
+  color: var(--ink);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.confirmButton {
+  min-width: 220px;
+  box-shadow: none;
+}
+
+.successMark {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 950;
+  box-shadow: 8px 8px 0 rgba(201, 145, 47, 0.18);
+}
+
+.confirmationPanel {
   display: grid;
   gap: 8px;
-  margin-top: 20px;
-  padding: 16px;
+  margin: 26px 0 18px;
+  padding: 22px;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 16px;
   background: #faf8f4;
 }
 
-.fallback strong {
-  font-size: 0.92rem;
+.confirmationPanel span {
+  color: var(--teal);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.fallback a {
-  color: var(--teal);
+.confirmationPanel strong {
+  color: var(--ink);
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.confirmationPanel small {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.secondaryAction {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.86rem;
   font-weight: 900;
+}
+
+.privacyNote {
+  margin-top: 18px;
+}
+
+@media (max-width: 780px) {
+  .fieldGrid,
+  .meetingFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .slotGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reviewPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmButton {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 @media (max-width: 620px) {
@@ -127,6 +438,18 @@
   }
 
   .card h2 {
-    font-size: clamp(2.2rem, 11vw, 3rem);
+    font-size: clamp(2.1rem, 11vw, 3rem);
+  }
+
+  .scheduleHeading {
+    display: grid;
+  }
+
+  .slotGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .continueButton {
+    width: 100%;
   }
 }
