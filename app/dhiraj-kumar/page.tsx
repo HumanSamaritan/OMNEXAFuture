@@ -12,6 +12,7 @@ import {
 const siteUrl = "https://www.omnexagoc.com";
 const profileUrl = `${siteUrl}/dhiraj-kumar`;
 const portraitUrl = `${siteUrl}/dhiraj-founder.png`;
+const linkedinUrl = "https://www.linkedin.com/in/dhiraj-kumar-a9763616";
 
 export const metadata: Metadata = {
   title: "Dhiraj Kumar | Founder & CEO",
@@ -53,7 +54,7 @@ const profilePageSchema = {
       description:
         "Official profile of Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd., Singapore.",
       dateCreated: "2026-08-23",
-      dateModified: "2026-08-23",
+      dateModified: "2026-09-20",
       inLanguage: "en-SG",
       isPartOf: { "@id": `${siteUrl}/#website` },
       primaryImageOfPage: { "@id": `${profileUrl}#portrait` },
@@ -71,7 +72,7 @@ const profilePageSchema = {
       jobTitle: "Founder & CEO",
       worksFor: { "@id": `${siteUrl}/#organization` },
       homeLocation: { "@type": "Place", name: "Singapore" },
-      sameAs: ["https://www.linkedin.com/in/dhiraj-kumar-a9763616"],
+      sameAs: [linkedinUrl],
       knowsAbout: [
         "Technology transformation",
         "Banking transformation",
@@ -136,6 +137,15 @@ export default function DhirajKumarPage() {
           </p>
           <div className="hero-actions">
             <a className="button primary" href="/contact">Start a conversation</a>
+            <a
+              className="button secondary"
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Dhiraj Kumar's LinkedIn profile (opens in a new tab)"
+            >
+              View LinkedIn profile
+            </a>
             <a className="button secondary" href="/about">About OMNeXa</a>
           </div>
         </div>
