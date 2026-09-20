@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/connect" }
 };
 
-const bookingUrl = process.env.NEXT_PUBLIC_OMNEXA_BOOKING_URL || "";
-
 const conversationThemes = [
   { number: "01", label: "Partnerships & ecosystems" },
   { number: "02", label: "OMNeXa products & pilots" },
@@ -20,6 +18,8 @@ const conversationThemes = [
 ];
 
 export default function ConnectPage() {
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
+
   return (
     <main className={styles.page}>
       <section className={`section-shell ${styles.connectGrid}`}>
@@ -64,7 +64,7 @@ export default function ConnectPage() {
         </div>
 
         <aside className={styles.bookingColumn} aria-label="Book an introductory conversation">
-          <BookingGate bookingUrl={bookingUrl} />
+          <BookingGate recaptchaSiteKey={recaptchaSiteKey} />
         </aside>
       </section>
     </main>
