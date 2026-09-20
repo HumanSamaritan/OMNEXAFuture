@@ -119,7 +119,7 @@ export async function POST(request: Request) {
       throw error;
     }
 
-    void notifyOwner({
+    await notifyOwner({
       name: session.name,
       email: session.email,
       company: session.company,
