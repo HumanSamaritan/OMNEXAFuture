@@ -454,22 +454,28 @@ export async function verifyRecaptcha(
       invalidReason?: string;
     };
     riskAnalysis?: {
-      challenge?: string;
+      score?: number;
+      reasons?: string[];
     };
   };
 
   if (!result.tokenProperties?.valid) {
     console.warn("reCAPTCHA token rejected", {
-      reason: result.tokenProperties?.invalidReason || "unknown"
+      reason: result.tokenProperties?.invalidReason || "unknown",
+      hostname: result.tokenProperties?.hostname || "unknown"
     });
     return false;
   }
 
-  const expectedHost = process.env.RECAPTCHA_EXPECTED_HOSTNAME?.trim();
-  if (expectedHost && result.tokenProperties.hostname !== expectedHost) return false;
-
-  const challenge = result.riskAnalysis?.challenge;
-  if (challenge && challenge !== "PASS") return false;
+  // For an Enterprise CHECKBOX key, a valid token is the authoritative pass/fail
+  // signal. The checkbox key's own domain verification remains enforced by Google.
+  // Risk score/reasons are retained for observability and must not invalidate a
+  // successfully completed checkbox challenge.
+  console.info("reCAPTCHA token accepted", {
+    hostname: result.tokenProperties.hostname || "unknown",
+    score: result.riskAnalysis?.score ?? null,
+    reasons: result.riskAnalysis?.reasons || []
+  });
 
   return true;
 }
