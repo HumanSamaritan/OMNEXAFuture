@@ -103,6 +103,21 @@ function formatDate(date: string, compact = false): string {
   }).format(new Date(`${date}T00:00:00+08:00`));
 }
 
+function formatWeekday(date: string): string {
+  return new Intl.DateTimeFormat("en-SG", {
+    timeZone: "Asia/Singapore",
+    weekday: "short"
+  }).format(new Date(`${date}T00:00:00+08:00`));
+}
+
+function formatMonthDay(date: string): string {
+  return new Intl.DateTimeFormat("en-SG", {
+    timeZone: "Asia/Singapore",
+    day: "numeric",
+    month: "short"
+  }).format(new Date(`${date}T00:00:00+08:00`));
+}
+
 function formatTime(iso: string): string {
   return new Intl.DateTimeFormat("en-SG", {
     timeZone: "Asia/Singapore",
@@ -143,6 +158,13 @@ export default function BookingGate({
   const [loading, setLoading] = useState(false);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [error, setError] = useState("");
+  const [datePage, setDatePage] = useState(0);
+  const datesPerPage = 5;
+  const pageCount = Math.ceil(dates.length / datesPerPage);
+  const visibleDates = dates.slice(
+    datePage * datesPerPage,
+    datePage * datesPerPage + datesPerPage
+  );
 
   useEffect(() => {
     window.omnexaRecaptchaSuccess = (token: string) => {
@@ -354,14 +376,16 @@ export default function BookingGate({
   if (step === "schedule") {
     return (
       <div className={styles.card} aria-labelledby="booking-schedule-title">
-        <div className={styles.successBanner}>
-          Verified. Select an available 30-minute time.
-        </div>
-
-        <div className={styles.scheduleHeading}>
+        <div className={styles.scheduleTop}>
           <div>
-            <p className={styles.kicker}>Introductory conversation</p>
-            <h2 id="booking-schedule-title">What time works best?</h2>
+            <div className={styles.verifiedLine}>
+              <span aria-hidden="true">✓</span>
+              Verification complete
+            </div>
+            <h2 id="booking-schedule-title">Choose a time.</h2>
+            <p className={styles.scheduleIntro}>
+              Select a 30-minute slot that works for you.
+            </p>
           </div>
           <button
             className={styles.textButton}
@@ -371,6 +395,7 @@ export default function BookingGate({
               setSessionToken("");
               setSlots([]);
               setSelectedSlot(null);
+              setError("");
               resetCaptcha();
             }}
           >
@@ -378,75 +403,119 @@ export default function BookingGate({
           </button>
         </div>
 
-        <div className={styles.meetingFacts}>
-          <span><strong>Meeting location</strong>Google Meet</span>
-          <span><strong>Meeting duration</strong>{bookingConfig?.durationMinutes || 30} min</span>
-          <span><strong>Time zone</strong>{bookingConfig?.timeZoneLabel || "UTC +08:00 · Singapore"}</span>
+        <div className={styles.meetingMeta} aria-label="Meeting details">
+          <span>Google Meet</span>
+          <span aria-hidden="true">•</span>
+          <span>{bookingConfig?.durationMinutes || 30} min</span>
+          <span aria-hidden="true">•</span>
+          <span>Singapore time (UTC+8)</span>
         </div>
 
-        <div className={styles.dateRail} aria-label="Choose a date">
-          {dates.map((date) => (
-            <button
-              key={date}
-              type="button"
-              className={date === selectedDate ? styles.dateActive : styles.dateButton}
-              onClick={() => setSelectedDate(date)}
-            >
-              {formatDate(date, true)}
-            </button>
-          ))}
-        </div>
-
-        <p className={styles.dateTitle}>
-          Showing available start times for <strong>{formatDate(selectedDate)}</strong>
-        </p>
-
-        {error ? <div className={styles.errorBox}>{error}</div> : null}
-
-        {loadingSlots ? (
-          <div className={styles.emptyState}>Checking the calendar…</div>
-        ) : slots.length ? (
-          <div className={styles.slotGrid}>
-            {slots.map((slot) => (
+        <div className={styles.calendarSection}>
+          <div className={styles.calendarHeader}>
+            <div>
+              <p className={styles.sectionLabel}>Choose a date</p>
+              <strong>{formatDate(selectedDate)}</strong>
+            </div>
+            <div className={styles.pageControls} aria-label="Browse dates">
               <button
-                key={slot.start}
                 type="button"
-                className={
-                  selectedSlot?.start === slot.start ? styles.slotSelected : styles.slotButton
-                }
-                onClick={() => setSelectedSlot(slot)}
+                aria-label="Earlier dates"
+                disabled={datePage === 0}
+                onClick={() => setDatePage((page) => Math.max(0, page - 1))}
               >
-                {formatTime(slot.start)}
+                ←
+              </button>
+              <button
+                type="button"
+                aria-label="Later dates"
+                disabled={datePage >= pageCount - 1}
+                onClick={() =>
+                  setDatePage((page) => Math.min(pageCount - 1, page + 1))
+                }
+              >
+                →
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.dateRail} aria-label="Choose a date">
+            {visibleDates.map((date) => (
+              <button
+                key={date}
+                type="button"
+                className={date === selectedDate ? styles.dateActive : styles.dateButton}
+                onClick={() => {
+                  setSelectedDate(date);
+                  setSelectedSlot(null);
+                  setError("");
+                }}
+              >
+                <span className={styles.dateDay}>{formatWeekday(date)}</span>
+                <span className={styles.dateNumber}>{formatMonthDay(date)}</span>
               </button>
             ))}
           </div>
-        ) : (
-          <div className={styles.emptyState}>
-            No 30-minute times are currently available on this date. Please choose another day.
-          </div>
-        )}
 
-        {selectedSlot ? (
-          <div className={styles.reviewPanel}>
+          <div className={styles.timesHeader}>
             <div>
-              <span>Selected time</span>
-              <strong>
-                {formatDate(selectedDate)} · {formatTime(selectedSlot.start)}
-              </strong>
+              <p className={styles.sectionLabel}>Available times</p>
+              <strong>{formatDate(selectedDate)}</strong>
             </div>
-            <button
-              className={styles.confirmButton}
-              type="button"
-              disabled={loading}
-              onClick={() => void confirmBooking()}
-            >
-              {loading ? "Confirming…" : "Confirm 30-minute meeting"}
-            </button>
+            <span>{bookingConfig?.durationMinutes || 30}-minute meeting</span>
           </div>
-        ) : null}
+
+          {error ? <div className={styles.errorBox}>{error}</div> : null}
+
+          {loadingSlots ? (
+            <div className={styles.loadingState}>Checking availability…</div>
+          ) : error && !slots.length ? null : slots.length ? (
+            <div className={styles.slotGrid}>
+              {slots.map((slot) => (
+                <button
+                  key={slot.start}
+                  type="button"
+                  className={
+                    selectedSlot?.start === slot.start ? styles.slotSelected : styles.slotButton
+                  }
+                  onClick={() => {
+                    setSelectedSlot(slot);
+                    setError("");
+                  }}
+                >
+                  {formatTime(slot.start)}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.emptyState}>
+              No times are available on this date. Please choose another day.
+            </div>
+          )}
+
+          {selectedSlot ? (
+            <div className={styles.reviewPanel}>
+              <div>
+                <span>Selected</span>
+                <strong>
+                  {formatDate(selectedDate)} · {formatTime(selectedSlot.start)}
+                </strong>
+                <small>Google Meet · Singapore time</small>
+              </div>
+              <button
+                className={styles.confirmButton}
+                type="button"
+                disabled={loading}
+                onClick={() => void confirmBooking()}
+              >
+                {loading ? "Confirming…" : "Confirm meeting"}
+              </button>
+            </div>
+          ) : null}
+        </div>
 
         <p className={styles.privacyNote}>
-          Times are shown in Singapore Time (UTC+8). Your invitation will include a Google Meet link.
+          Your calendar invitation will include the Google Meet link.
         </p>
       </div>
     );
