@@ -413,34 +413,63 @@ export function sameOriginRequest(request: Request): boolean {
   return origin === new URL(request.url).origin;
 }
 
-export async function verifyRecaptcha(token: string, remoteIp?: string): Promise<boolean> {
-  const secret = process.env.RECAPTCHA_SECRET_KEY || "";
-  if (!secret || !token) return false;
+export async function verifyRecaptcha(
+  token: string,
+  remoteIp?: string,
+  userAgent?: string
+): Promise<boolean> {
+  const projectId = process.env.RECAPTCHA_PROJECT_ID || "";
+  const apiKey = process.env.RECAPTCHA_ENTERPRISE_API_KEY || "";
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
 
-  const params = new URLSearchParams({
-    secret,
-    response: token
-  });
-  if (remoteIp && remoteIp !== "unknown") params.set("remoteip", remoteIp);
+  if (!projectId || !apiKey || !siteKey || !token) return false;
 
-  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: { "content-type": "application/x-www-form-urlencoded" },
-    body: params,
-    cache: "no-store"
-  });
-
-  if (!response.ok) return false;
-
-  const result = (await response.json()) as {
-    success?: boolean;
-    hostname?: string;
+  const event: Record<string, string> = {
+    token,
+    siteKey
   };
 
-  if (!result.success) return false;
+  if (remoteIp && remoteIp !== "unknown") event.userIpAddress = remoteIp;
+  if (userAgent) event.userAgent = userAgent.slice(0, 512);
+
+  const response = await fetch(
+    `https://recaptchaenterprise.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/assessments?key=${encodeURIComponent(apiKey)}`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ event }),
+      cache: "no-store"
+    }
+  );
+
+  if (!response.ok) {
+    console.error("reCAPTCHA Enterprise assessment failed", { status: response.status });
+    return false;
+  }
+
+  const result = (await response.json()) as {
+    tokenProperties?: {
+      valid?: boolean;
+      hostname?: string;
+      invalidReason?: string;
+    };
+    riskAnalysis?: {
+      challenge?: string;
+    };
+  };
+
+  if (!result.tokenProperties?.valid) {
+    console.warn("reCAPTCHA token rejected", {
+      reason: result.tokenProperties?.invalidReason || "unknown"
+    });
+    return false;
+  }
 
   const expectedHost = process.env.RECAPTCHA_EXPECTED_HOSTNAME?.trim();
-  if (expectedHost && result.hostname !== expectedHost) return false;
+  if (expectedHost && result.tokenProperties.hostname !== expectedHost) return false;
+
+  const challenge = result.riskAnalysis?.challenge;
+  if (challenge && challenge !== "PASS") return false;
 
   return true;
 }

@@ -1,11 +1,11 @@
 .card {
   overflow: hidden;
   border: 1px solid rgba(18, 24, 38, 0.12);
-  border-radius: 28px;
+  border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(31, 143, 133, 0.045), rgba(255, 255, 255, 0) 180px),
     #ffffff;
-  box-shadow: 0 28px 70px rgba(18, 24, 38, 0.12);
+  box-shadow: 0 18px 48px rgba(18, 24, 38, 0.09);
   padding: clamp(28px, 4vw, 42px);
 }
 
@@ -13,7 +13,7 @@
   margin: 0 0 12px;
   color: var(--teal);
   font-size: 0.76rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -21,9 +21,9 @@
 .card h2 {
   max-width: 620px;
   margin-bottom: 14px;
-  font-size: clamp(2.2rem, 4vw, 3.65rem);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.9rem, 3vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 .copy {
@@ -53,8 +53,16 @@
   display: grid;
   gap: 8px;
   color: var(--ink);
-  font-size: 0.88rem;
-  font-weight: 850;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.labelText {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .form input,
@@ -66,6 +74,10 @@
   color: var(--ink);
   padding: 13px 14px;
   outline: none;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.45;
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
@@ -80,9 +92,17 @@
   min-height: 110px;
 }
 
+.form input::placeholder,
+.form textarea::placeholder {
+  color: #7d8594;
+  font-weight: 400;
+  opacity: 1;
+}
+
 .optional {
   color: var(--muted);
-  font-weight: 650;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 .honeypot {
@@ -106,10 +126,10 @@
   padding: 14px 16px;
   border: 1px solid rgba(182, 79, 69, 0.28);
   border-radius: 12px;
-  background: rgba(182, 79, 69, 0.06);
-  color: #8f332c;
+  background: #faf8f4;
+  color: var(--muted);
   font-size: 0.88rem;
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .consent,
@@ -123,7 +143,7 @@
 .consent a,
 .privacyNote a {
   color: var(--teal);
-  font-weight: 850;
+  font-weight: 600;
 }
 
 .continueButton,
@@ -133,11 +153,11 @@
   justify-content: center;
   min-height: 54px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 12px;
   background: var(--charcoal);
   color: #fff;
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 700;
   padding: 0 22px;
   box-shadow: 8px 8px 0 rgba(201, 145, 47, 0.2);
   transition: transform 160ms ease, opacity 160ms ease;
@@ -166,7 +186,7 @@
   background: rgba(182, 79, 69, 0.07);
   color: #8f332c;
   font-size: 0.88rem;
-  font-weight: 750;
+  font-weight: 600;
   line-height: 1.5;
 }
 
@@ -178,7 +198,7 @@
   background: rgba(31, 143, 133, 0.08);
   color: #166c64;
   font-size: 0.88rem;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.5;
 }
 
@@ -196,7 +216,7 @@
   color: var(--teal);
   cursor: pointer;
   font-size: 0.84rem;
-  font-weight: 900;
+  font-weight: 700;
   padding: 7px 0;
 }
 
@@ -243,7 +263,7 @@
   cursor: pointer;
   padding: 0 14px;
   font-size: 0.8rem;
-  font-weight: 850;
+  font-weight: 600;
 }
 
 .dateButton {
@@ -283,7 +303,7 @@
   border: 1px solid rgba(18, 24, 38, 0.14);
   border-radius: 12px;
   cursor: pointer;
-  font-weight: 850;
+  font-weight: 600;
   transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
 }
 
@@ -333,7 +353,7 @@
 .reviewPanel span {
   color: var(--muted);
   font-size: 0.76rem;
-  font-weight: 800;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -359,7 +379,7 @@
   background: var(--teal);
   color: #fff;
   font-size: 2rem;
-  font-weight: 950;
+  font-weight: 700;
   box-shadow: 8px 8px 0 rgba(201, 145, 47, 0.18);
 }
 
@@ -376,7 +396,7 @@
 .confirmationPanel span {
   color: var(--teal);
   font-size: 0.76rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -404,7 +424,7 @@
   background: #fff;
   color: var(--ink);
   font-size: 0.86rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .privacyNote {

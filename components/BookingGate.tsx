@@ -42,7 +42,7 @@ declare global {
   interface Window {
     omnexaRecaptchaSuccess?: (token: string) => void;
     omnexaRecaptchaExpired?: () => void;
-    grecaptcha?: { reset: () => void };
+    grecaptcha?: { enterprise?: { reset: () => void } };
   }
 }
 
@@ -212,7 +212,7 @@ export default function BookingGate({
   function resetCaptcha() {
     setCaptchaToken("");
     try {
-      window.grecaptcha?.reset();
+      window.grecaptcha?.enterprise?.reset();
     } catch {
       // Google may not have initialized the widget yet.
     }
@@ -355,7 +355,7 @@ export default function BookingGate({
     return (
       <div className={styles.card} aria-labelledby="booking-schedule-title">
         <div className={styles.successBanner}>
-          Details verified. Choose a 30-minute time below and we&apos;ll place it on the calendar.
+          Verified. Select an available 30-minute time.
         </div>
 
         <div className={styles.scheduleHeading}>
@@ -446,7 +446,7 @@ export default function BookingGate({
         ) : null}
 
         <p className={styles.privacyNote}>
-          Availability is checked again when you confirm, preventing a slot from being double-booked.
+          Times are shown in Singapore Time (UTC+8). Your invitation will include a Google Meet link.
         </p>
       </div>
     );
@@ -455,15 +455,14 @@ export default function BookingGate({
   return (
     <div className={styles.card} aria-labelledby="booking-gate-title">
       <Script
-        src="https://www.google.com/recaptcha/api.js"
+        src="https://www.google.com/recaptcha/enterprise.js"
         strategy="afterInteractive"
       />
 
-      <p className={styles.kicker}>Introductory conversation</p>
-      <h2 id="booking-gate-title">Tell us who we&apos;re meeting.</h2>
+      <p className={styles.kicker}>30-minute conversation</p>
+      <h2 id="booking-gate-title">Book a conversation.</h2>
       <p className={styles.copy}>
-        Share a few details first. After verification, you&apos;ll see live 30-minute availability
-        without leaving OMNeXa.
+        Share a few details to view available times. You can complete the booking here without leaving OMNeXa.
       </p>
 
       <form className={styles.form} onSubmit={startScheduling}>
@@ -479,7 +478,7 @@ export default function BookingGate({
             />
           </label>
           <label>
-            Work email
+            Email address
             <input
               type="email"
               value={form.email}
@@ -512,7 +511,7 @@ export default function BookingGate({
         </div>
 
         <label>
-          Phone number <span className={styles.optional}>(optional)</span>
+          <span className={styles.labelText}>Phone number <span className={styles.optional}>Optional</span></span>
           <input
             type="tel"
             value={form.phone}
@@ -523,7 +522,7 @@ export default function BookingGate({
         </label>
 
         <label>
-          What should we focus on? <span className={styles.optional}>(optional)</span>
+          <span className={styles.labelText}>What would you like to discuss? <span className={styles.optional}>Optional</span></span>
           <textarea
             value={form.focus}
             onChange={(event) => updateField("focus", event.target.value)}
@@ -553,7 +552,7 @@ export default function BookingGate({
             />
           ) : (
             <div className={styles.verificationUnavailable}>
-              Human verification is not configured yet.
+              Human verification is temporarily unavailable. Please try again shortly.
             </div>
           )}
         </div>
@@ -570,14 +569,10 @@ export default function BookingGate({
           type="submit"
           disabled={loading || !captchaToken || !recaptchaSiteKey}
         >
-          {loading ? "Checking…" : "Continue to scheduling"}
+          {loading ? "Checking…" : "Continue to available times"}
         </button>
       </form>
 
-      <p className={styles.privacyNote}>
-        Guardrails include Google reCAPTCHA, rate limits, server-side slot validation and a final
-        availability check before the meeting is created.
-      </p>
     </div>
   );
 }

@@ -71,14 +71,22 @@ export async function POST(request: Request) {
     }
 
     const captchaToken = String(body.captchaToken || "").trim();
-    if (!process.env.RECAPTCHA_SECRET_KEY) {
+    if (
+      !process.env.RECAPTCHA_ENTERPRISE_API_KEY ||
+      !process.env.RECAPTCHA_PROJECT_ID ||
+      !process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+    ) {
       return NextResponse.json(
         { error: "Booking verification is temporarily unavailable." },
         { status: 503 }
       );
     }
 
-    const captchaOk = await verifyRecaptcha(captchaToken, clientKey);
+    const captchaOk = await verifyRecaptcha(
+      captchaToken,
+      clientKey,
+      request.headers.get("user-agent") || undefined
+    );
     if (!captchaOk) {
       return NextResponse.json(
         { error: "Please complete the reCAPTCHA verification again." },

@@ -3,7 +3,7 @@
 The `/connect` page now supports a first-party booking flow:
 
 1. Visitor enters meeting details.
-2. Google reCAPTCHA v2 verifies that the visitor is human.
+2. Google Cloud reCAPTCHA Enterprise checkbox verifies that the visitor is human.
 3. OMNeXa issues a short-lived signed booking session.
 4. Live availability is read from Google Calendar.
 5. The visitor selects a 30-minute Singapore-time slot.
@@ -15,7 +15,7 @@ No application database is required. Google Calendar remains the source of truth
 
 ## 1. reCAPTCHA
 
-Create a Google reCAPTCHA v2 checkbox key for:
+Create a Google Cloud reCAPTCHA Enterprise checkbox checkbox key for:
 
 - `omnexagoc.com`
 - `www.omnexagoc.com`
@@ -26,7 +26,8 @@ Add these Vercel environment variables:
 
 ```
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=...
-RECAPTCHA_SECRET_KEY=...
+RECAPTCHA_PROJECT_ID=omnexa-website
+RECAPTCHA_ENTERPRISE_API_KEY=...
 RECAPTCHA_EXPECTED_HOSTNAME=www.omnexagoc.com
 ```
 
@@ -98,7 +99,7 @@ Set `BOOKING_REQUIRE_WORK_EMAIL=true` only if OMNeXa wants the partnership booki
 
 ## 5. Guardrails implemented
 
-- Google reCAPTCHA v2 checkbox
+- Google Cloud reCAPTCHA Enterprise checkbox checkbox
 - same-origin POST checks
 - honeypot field
 - per-IP rate limiting
