@@ -370,7 +370,11 @@ export const canonicalIssues: ConvergenceIssue[] = [
       "AI reskilling",
       "human agency in AI",
       "AI and entry level jobs",
-      "future of work skills"
+      "future of work skills",
+      "AI transition framework",
+      "AI transformation human capability",
+      "human machine operating model",
+      "AI transition strategy"
     ],
     questions: [
       {
@@ -389,12 +393,22 @@ export const canonicalIssues: ConvergenceIssue[] = [
           "OMNeXa uses a simple practitioner loop: AI performs, the human observes and questions, the human learns, and the human remains capable of deciding. The principle is that automation and human capability development should be designed together."
       },
       {
+        question: "How should organisations manage human capability during an AI transition?",
+        answer:
+          "AI transition should consider more than automation opportunity. Teams can examine which work changes, which human capabilities must develop, where human-agent decision authority should sit and how learning, accountability and ways of working should evolve alongside AI adoption."
+      },
+      {
         question: "How do NeXaCareer and HumanMachineSadhana relate to human capability?",
         answer:
           "NeXaCareer explores capability through learning, skill gaps, evidence and opportunity. HumanMachineSadhana explores the human foundation behind performance through daily patterns, reflection and wellbeing. They are development-stage examples of OMNeXa testing the same human-capability questions it publishes, not evidence of proven outcomes."
       }
     ],
     sections: [
+      {
+        heading: "Connecting the dots: from AI systems to the future of work",
+        body:
+          "The Convergence Brief follows one connected question: as intelligence becomes more autonomous, what must remain distinctly human? Issue 01 began with the technology landscape; Issue 02 moved to decision rights; Issue 03 to human experience; Issue 04 to assurance and traceability; and Issue 05 to continuity of human authority across agent ecosystems. Issue 06 takes the next step — from continuity of human authority to continuity of human capability. The progression is deliberate: Technology → Decision Rights → Experience → Assurance → Authority → Human Capability."
+      },
       {
         heading: "The apprenticeship problem",
         body:
@@ -413,7 +427,7 @@ export const canonicalIssues: ConvergenceIssue[] = [
       {
         heading: "From publication to practice",
         body:
-          "This question also influences OMNeXa's product development. NeXaCareer explores capability from a learning and work perspective by connecting profiles, skill gaps, learning, demonstrated capability and opportunity. HumanMachineSadhana approaches capability from the human foundation behind performance, exploring daily patterns, reflection and wellbeing. Neither is presented as a finished answer or proof of impact; they are places where OMNeXa can test in practice the questions raised in The Convergence Brief."
+          "This question also influences how OMNeXa approaches its own product development, but the same questions extend beyond our products. As organisations and teams introduce AI into everyday work, they need to consider not only what AI can do, but how human capability, decision rights, accountability and ways of working should evolve alongside it. OMNeXa is developing a practical approach to help teams examine where AI can extend capability, which human capabilities remain important, where decision authority should sit and how people and intelligent systems can work together without creating unnecessary dependency. NeXaCareer explores capability through learning, skill gaps, demonstrated capability and opportunity, while HumanMachineSadhana explores the human foundations behind performance through daily patterns, reflection and wellbeing. Neither is presented as a finished answer or proof of impact. For organisations, the same thinking can be applied at a team, function or transformation-programme level to examine AI opportunity, changing human capabilities, human-agent decision boundaries and transition priorities — helping translate AI adoption into a human + machine operating model."
       },
       {
         heading: "The strongest counterargument",
