@@ -17,6 +17,7 @@ OMNeXa is a Singapore-based transformation and innovation ecosystem focused on r
 - Robotics with Human Values: https://www.omnexagoc.com/robotics-with-human-values
 - OMNeXa knowledge guide: https://www.omnexagoc.com/knowledge
 - The Convergence Brief: https://www.omnexagoc.com/convergence-brief
+- Latest Convergence Brief — Issue 06, "When AI Does the Work, What Do Humans Learn?": https://www.omnexagoc.com/convergence-brief/issue-06
 - About OMNeXa: https://www.omnexagoc.com/about
 - Founder profile: https://www.omnexagoc.com/dhiraj-kumar
 - Media and official brand assets: https://www.omnexagoc.com/media
