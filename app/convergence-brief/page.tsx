@@ -4,9 +4,9 @@ import { getConvergenceIssues } from "@/lib/publications";
 const siteUrl = "https://www.omnexagoc.com";
 
 export const metadata: Metadata = {
-  title: "The Convergence Brief | Agentic AI, Human Agency & Transformation",
+  title: "The Convergence Brief | AI, Human Agency & Future of Work",
   description:
-    "OMNeXa's Convergence Brief turns practical AI product-building lessons into perspectives on agentic AI, human agency, governance, experience, engineering, assurance and human-machine advancement.",
+    "Evidence-led OMNeXa perspectives connecting AI, human agency, future of work, human capability, governance, assurance and responsible transformation.",
   keywords: [
     "agentic AI",
     "AI testing",
@@ -24,13 +24,18 @@ export const metadata: Metadata = {
     "human authority",
     "AI product engineering",
     "agent interoperability",
-    "human AI partnership"
+    "human AI partnership",
+    "AI future of work",
+    "human capability",
+    "AI transition",
+    "AI transformation",
+    "workplace learning"
   ],
   alternates: { canonical: `${siteUrl}/convergence-brief` },
   openGraph: {
     title: "The Convergence Brief | OMNeXa",
     description:
-      "Practical OMNeXa lessons on agentic AI, human agency, governance, experience, engineering and human-machine advancement — Where Consciousness Meets Intelligence.",
+      "Evidence-led OMNeXa perspectives on AI, human agency, future of work, human capability and responsible transformation — Where Consciousness Meets Intelligence.",
     url: `${siteUrl}/convergence-brief`,
     type: "website"
   }
@@ -44,7 +49,7 @@ export default async function ConvergenceBriefPage() {
     "@id": `${siteUrl}/convergence-brief#collection`,
     name: "The Convergence Brief",
     description:
-      "OMNeXa's practical learning series connecting agentic AI product-building lessons with human agency, governance, experience, engineering and human-machine advancement.",
+      "An evidence-led OMNeXa publication connecting AI, human agency, future of work, human capability, governance, assurance and responsible transformation.",
     url: `${siteUrl}/convergence-brief`,
     publisher: { "@id": `${siteUrl}/#organization` },
     about: [
@@ -63,7 +68,11 @@ export default async function ConvergenceBriefPage() {
       "Human authority",
       "AI product engineering",
       "Agent interoperability",
-      "Human-AI partnership"
+      "Human-AI partnership",
+      "Future of work",
+      "Human capability",
+      "AI transition",
+      "Workplace learning"
     ],
     hasPart: issues.map((issue) => ({
       "@type": "Article",
@@ -98,7 +107,7 @@ export default async function ConvergenceBriefPage() {
       <section className="section-shell split-section aligned-section">
         <div>
           <p className="eyebrow">The journey so far</p>
-          <h2>From AI capability to the operating loop around it.</h2>
+          <h2>From AI capability to the future of human capability.</h2>
         </div>
         <div className="copy-stack">
           <p>
@@ -106,7 +115,8 @@ export default async function ConvergenceBriefPage() {
             <strong>Issue 02</strong> moves to decision rights and who defines the AI loop.{" "}
             <strong>Issue 03</strong> turns to experience when the screen stops being the product.{" "}
             <strong>Issue 04</strong> follows human intent through testing, assurance, traceability and defect prevention.{" "}
-            <strong>Issue 05</strong> follows that authority across organisational boundaries as multiple agents and providers coordinate an outcome.
+            <strong>Issue 05</strong> follows that authority across organisational boundaries as multiple agents and providers coordinate an outcome.{" "}
+            <strong>Issue 06</strong> moves from continuity of human authority to continuity of human capability: if AI performs more of the work through which people once learned, how do people continue developing the judgement required to direct and challenge it?
           </p>
           <p>
             The issues are not intended as abstract predictions. They are shaped by practical questions, design
