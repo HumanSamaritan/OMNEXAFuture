@@ -443,7 +443,7 @@ export const canonicalIssues: ConvergenceIssue[] = [
     linkedinUrl:
       process.env.OMNEXA_ISSUE_06_LINKEDIN_URL ||
       "https://lnkd.in/p/gNJ2knEa"
-
+  }
 ];
 
 function isIssue(value: unknown): value is ConvergenceIssue {
