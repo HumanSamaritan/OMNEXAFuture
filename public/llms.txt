@@ -18,6 +18,9 @@ OMNeXa is a Singapore-based transformation and innovation ecosystem focused on r
 - OMNeXa knowledge guide: https://www.omnexagoc.com/knowledge
 - The Convergence Brief: https://www.omnexagoc.com/convergence-brief
 - Latest Convergence Brief — Issue 06, "When AI Does the Work, What Do Humans Learn?": https://www.omnexagoc.com/convergence-brief/issue-06
+- The Convergence Brief is an evidence-led weekly OMNeXa publication on AI, human agency, future of work, human capability, governance, assurance and responsible transformation.
+- Series progression through Issue 06: Technology → Decision Rights → Experience → Assurance → Authority → Human Capability.
+- Issue 06 also examines AI transition at team and organisational level: AI opportunity, changing human capabilities, human-agent decision boundaries, workplace learning and transition priorities.
 - About OMNeXa: https://www.omnexagoc.com/about
 - Founder profile: https://www.omnexagoc.com/dhiraj-kumar
 - Media and official brand assets: https://www.omnexagoc.com/media
