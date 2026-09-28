@@ -440,7 +440,9 @@ export const canonicalIssues: ConvergenceIssue[] = [
           "AI programmes are normally measured through cost, speed, productivity, accuracy and customer experience. Add another question: what happened to human capability? Did people gain time for higher-value judgement, can junior employees still build expertise, and are people becoming more capable with AI rather than simply more dependent on it?"
       }
     ],
-    linkedinUrl: process.env.OMNEXA_ISSUE_06_LINKEDIN_URL || linkedInArticlesHub
+    linkedinUrl:
+      process.env.OMNEXA_ISSUE_06_LINKEDIN_URL ||
+      "https://lnkd.in/p/gNJ2knEa"
 
 ];
 
