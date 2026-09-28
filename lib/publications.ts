@@ -344,7 +344,89 @@ export const canonicalIssues: ConvergenceIssue[] = [
     ],
     linkedinUrl:
       process.env.OMNEXA_ISSUE_05_LINKEDIN_URL || linkedInArticlesHub
-  }
+  },
+  {
+    issue: "Issue 06",
+    slug: "issue-06",
+    title: "When AI Does the Work, What Do Humans Learn?",
+    subtitle: "If AI performs the work through which people once learned, where does tomorrow's judgement come from?",
+    publishedAt: "2026-09-28",
+    summary:
+      "As AI performs more of the work through which people once built experience, OMNeXa examines how organisations can preserve and increase human capability, judgement and learning alongside automation.",
+    themes: [
+      "AI and the future of work",
+      "Human capability",
+      "Workplace learning",
+      "AI skills and reskilling",
+      "Human-machine collaboration",
+      "Human agency"
+    ],
+    seoKeywords: [
+      "AI and human capability",
+      "AI future of work",
+      "AI workplace learning",
+      "AI skills transformation",
+      "human AI collaboration",
+      "AI reskilling",
+      "human agency in AI",
+      "AI and entry level jobs",
+      "future of work skills"
+    ],
+    questions: [
+      {
+        question: "How can people keep learning when AI performs more of their work?",
+        answer:
+          "Organisations can deliberately redesign the learning pathway through supervised exceptions, applied projects, simulations, rotations, AI-assisted coaching and opportunities to explain and challenge AI recommendations. The aim is not to preserve repetitive work, but to preserve the experiences that develop judgement."
+      },
+      {
+        question: "Does AI automatically make workers more capable?",
+        answer:
+          "Not necessarily. AI can remove repetitive work and create time for higher-value judgement, but capability development is not automatic. Organisations still need to decide which human capabilities matter and how people will continue to develop them."
+      },
+      {
+        question: "What does OMNeXa mean by the human capability loop?",
+        answer:
+          "OMNeXa uses a simple practitioner loop: AI performs, the human observes and questions, the human learns, and the human remains capable of deciding. The principle is that automation and human capability development should be designed together."
+      },
+      {
+        question: "How do NeXaCareer and HumanMachineSadhana relate to human capability?",
+        answer:
+          "NeXaCareer explores capability through learning, skill gaps, evidence and opportunity. HumanMachineSadhana explores the human foundation behind performance through daily patterns, reflection and wellbeing. They are development-stage examples of OMNeXa testing the same human-capability questions it publishes, not evidence of proven outcomes."
+      }
+    ],
+    sections: [
+      {
+        heading: "The apprenticeship problem",
+        body:
+          "A junior analyst learns by comparing imperfect information. A developer learns by debugging. A new manager learns through difficult judgement calls. AI can increasingly research, draft, check, recommend and execute, raising a practical question: if the machine performs more of the work through which people once learned, how will future professionals accumulate enough experience to challenge it?"
+      },
+      {
+        heading: "The evidence points to a skills redesign",
+        body:
+          "Recent ILO and World Economic Forum work points toward changing skill requirements as AI adoption expands, including greater emphasis on higher-order cognitive and socioemotional capabilities, digital and AI skills, adaptability, resilience and human agency. These findings and projections should not be read as universal labour-market outcomes, but they strengthen the case for designing automation and capability development together."
+      },
+      {
+        heading: "The OMNeXa capability loop",
+        body:
+          "Keeping a human in the loop is important, but approval alone does not prove meaningful agency. The person also needs enough understanding to question a recommendation, recognise an exception and intervene. OMNeXa's practitioner shorthand is AI PERFORMS → HUMAN QUESTIONS → HUMAN LEARNS → HUMAN DECIDES → AI EXTENDS CAPABILITY."
+      },
+      {
+        heading: "From publication to practice",
+        body:
+          "This question also influences OMNeXa's product development. NeXaCareer explores capability from a learning and work perspective by connecting profiles, skill gaps, learning, demonstrated capability and opportunity. HumanMachineSadhana approaches capability from the human foundation behind performance, exploring daily patterns, reflection and wellbeing. Neither is presented as a finished answer or proof of impact; they are places where OMNeXa can test in practice the questions raised in The Convergence Brief."
+      },
+      {
+        heading: "The strongest counterargument",
+        body:
+          "Technology has repeatedly removed lower-value tasks without eliminating human capability. AI may similarly free people from repetitive work and help them develop sophisticated capabilities sooner. That is a credible possibility. The risk is assuming it will happen automatically: if the traditional beginner task disappears, organisations and educators need an alternative learning architecture."
+      },
+      {
+        heading: "A transformation question worth measuring",
+        body:
+          "AI programmes are normally measured through cost, speed, productivity, accuracy and customer experience. Add another question: what happened to human capability? Did people gain time for higher-value judgement, can junior employees still build expertise, and are people becoming more capable with AI rather than simply more dependent on it?"
+      }
+    ],
+    linkedinUrl: process.env.OMNEXA_ISSUE_06_LINKEDIN_URL || linkedInArticlesHub
 
 ];
 
