@@ -71,24 +71,19 @@ export const serviceSegments: ServiceSegment[] = [
 export const products: ProductEntry[] = [
   {
     slug: "sahaay-setu",
-    name: "Sahaay-Setu",
-    alternateNames: ["Sahaay Setu", "OMNeXa Sahaay-Setu"],
+    name: "Sahaay Setu",
+    alternateNames: ["Sahaay-Setu", "OMNeXa Sahaay Setu"],
     serviceSlug: "ai-technology-responsible-innovation",
     status: "Currently under construction",
     externalUrl: "https://sahaay-setu.omnexagoc.com",
-    oneLiner: "A digital support-coordination bridge for seniors, families, caregivers and trusted service ecosystems.",
+    oneLiner: "A human-centred way for seniors, families and caregivers to coordinate everyday support.",
     description:
       "Sahaay-Setu is being developed as a human-centred coordination layer to make everyday support easier to discover, request and organise for seniors, families and caregivers while keeping consent, trust and human oversight visible.",
     problem:
       "Support is often fragmented across people, phone calls, service providers and informal follow-ups, leaving families with coordination burden precisely when clarity matters most.",
     whyHere:
       "The core challenge is responsible digital coordination: technology can reduce friction, but sensitive support decisions still require privacy, consent, traceability and human judgement. That makes Sahaay-Setu a natural fit for AI, technology and responsible innovation.",
-    capabilities: [
-      "Support discovery and request coordination",
-      "Caregiver and family visibility",
-      "Trusted partner and service hand-offs",
-      "Human confirmation for sensitive actions"
-    ],
+    capabilities: ["Support discovery", "Family and caregiver coordination", "Human-centred follow-through"],
     audiences: ["Seniors", "Families", "Caregivers", "Support partners"],
     seoTerms: ["senior support platform", "caregiver coordination", "family support technology", "responsible AI for care"],
     visualKicker: "CARE COORDINATION",
@@ -102,19 +97,14 @@ export const products: ProductEntry[] = [
     serviceSlug: "ai-technology-responsible-innovation",
     status: "Currently under construction",
     externalUrl: "https://swayamitr.omnexagoc.com",
-    oneLiner: "A guided tax-preparation experience designed to make Indian income-tax filing easier to understand and navigate.",
+    oneLiner: "A guided experience to make common Indian income-tax preparation easier to understand.",
     description:
       "SwayamITR is being developed as a guided digital workflow for common Indian income-tax return journeys, with structured questions, clearer explanations and human confirmation around important inputs and decisions.",
     problem:
       "Tax filing can be difficult to navigate for people who do not work with tax forms every day, particularly when terminology, eligibility and supporting information are spread across multiple steps.",
     whyHere:
       "SwayamITR handles high-trust financial information, so explainability, data privacy, secure design and explicit user confirmation matter as much as automation. Its primary value is responsible technology applied to a complex citizen workflow.",
-    capabilities: [
-      "Guided ITR preparation journeys",
-      "Plain-language explanations of inputs",
-      "Structured document and data checkpoints",
-      "Human review before important submissions"
-    ],
+    capabilities: ["Tax preparation guidance", "Clear information at important steps", "User review before important actions"],
     audiences: ["Individual taxpayers", "NRIs", "Older users", "Families supporting tax filing"],
     seoTerms: ["AI tax assistant India", "ITR filing guidance", "NRI tax filing support", "digital tax preparation"],
     visualKicker: "GUIDED TAX JOURNEY",
@@ -123,26 +113,21 @@ export const products: ProductEntry[] = [
   },
   {
     slug: "educareer",
-    name: "OMNeXa EduCareer",
-    alternateNames: ["EduCareer", "OMNeXa Edu Career"],
+    name: "NeXaCareer",
+    alternateNames: ["OMNeXa EduCareer", "EduCareer", "NeXa Career"],
     serviceSlug: "career-education-purpose-led-growth",
     status: "Currently under construction",
-    externalUrl: "https://educareer.omnexagoc.com",
-    oneLiner: "An education, skills and work orchestration layer built around the person rather than a single admission, course or job transaction.",
+    externalUrl: "",
+    oneLiner: "A learner-centred bridge between education, skills and future work.",
     description:
-      "EduCareer is being developed to connect education pathways, skill evidence, opportunity discovery and partner ecosystems so learners and professionals can move from education choices to capabilities, experience and future-ready work.",
+      "NeXaCareer is being developed to help learners and professionals connect education choices, skill development and work goals as their interests evolve.",
     problem:
-      "Education, skills, internships and jobs are usually treated as separate searches even though the person experiences them as one connected journey.",
+      "Education, skills and employment decisions are often treated separately, even when people experience them as one connected journey.",
     whyHere:
-      "EduCareer directly supports pathway clarity, skills readiness, employability and purposeful career progression, which are the core outcomes of OMNeXa's career, education and purpose-led growth service segment.",
-    capabilities: [
-      "Education and admissions pathways",
-      "Skills assessment and evolving skills passport",
-      "Jobs, internships and opportunity discovery",
-      "Partner-supported next steps and referrals"
-    ],
+      "NeXaCareer aligns with OMNeXa’s career and education work by helping people consider learning and work pathways together.",
+    capabilities: ["Explore learning and work pathways", "Reflect on strengths and skills", "Consider relevant next steps"],
     audiences: ["Students", "Parents", "Professionals", "Education partners", "Employers"],
-    seoTerms: ["education and career platform", "future skills", "career pathway guidance", "skills passport", "AI career guidance"],
+    seoTerms: ["education and career guidance", "future skills", "learning pathways", "career development"],
     visualKicker: "EDUCATION → SKILLS → WORK",
     visualTitle: "One journey around the person.",
     visualItems: ["Discover", "Assess", "Act"]
@@ -154,19 +139,14 @@ export const products: ProductEntry[] = [
     serviceSlug: "career-education-purpose-led-growth",
     status: "Currently under construction",
     externalUrl: "https://psle.omnexagoc.com",
-    oneLiner: "A practice and error-regression workspace designed to turn school papers into clearer learning feedback for students.",
+    oneLiner: "A learning workspace that turns practice into clearer feedback on recurring mistakes.",
     description:
       "The PSLE Practice Space is being developed to let students work through uploaded practice papers, record answers, compare responses with answer keys and revisit recurring mistakes through an error-regression view.",
     problem:
       "Completing more papers does not automatically improve performance if mistakes are not classified, revisited and converted into targeted practice.",
     whyHere:
       "The product is fundamentally about learning quality, student self-awareness and targeted academic progress, making it a direct extension of career, education and purpose-led growth.",
-    capabilities: [
-      "Practice-paper upload and answer capture",
-      "Answer-key comparison",
-      "Wrong-answer and error-regression review",
-      "School and paper-based practice history"
-    ],
+    capabilities: ["Learning from practice", "Clear review and feedback", "Focused improvement"],
     audiences: ["Primary students", "Parents", "Tutors", "Schools"],
     seoTerms: ["PSLE practice platform", "PSLE paper practice", "student error analysis", "Singapore primary education technology"],
     visualKicker: "PRACTICE WITH FEEDBACK",
@@ -180,19 +160,14 @@ export const products: ProductEntry[] = [
     serviceSlug: "sustainability-esg-corporate-alignment",
     status: "Currently under construction",
     externalUrl: "https://lotuskarmicbalance.omnexagoc.com",
-    oneLiner: "A participation concept connecting positive action, recognition and tangible sustainability engagement.",
+    oneLiner: "A sustainability initiative exploring how community participation can become visible and repeatable.",
     description:
       "Lotus Karmic Balance is being developed as a simple participation mechanism that can connect individual or community actions with recognition and sustainability-oriented outcomes, helping make environmental engagement more visible and repeatable.",
     problem:
       "Sustainability strategies often struggle to become everyday participation because people cannot easily see how small actions connect to a broader outcome.",
     whyHere:
       "The concept translates sustainability intent into participation, activation and observable action — directly supporting OMNeXa's sustainability and ESG corporate alignment work.",
-    capabilities: [
-      "Action and participation recognition",
-      "QR-enabled engagement concepts",
-      "Community or employee activation",
-      "Connection to sustainability outcomes"
-    ],
+    capabilities: ["Participation and recognition", "Community and employee engagement", "Connection to sustainability outcomes"],
     audiences: ["Corporates", "Employees", "Communities", "NGOs", "Sustainability partners"],
     seoTerms: ["employee sustainability engagement", "ESG participation", "green champion platform", "sustainability rewards"],
     visualKicker: "ACTION → IMPACT",
@@ -201,24 +176,19 @@ export const products: ProductEntry[] = [
   },
   {
     slug: "human-machine-sadhana",
-    name: "HumanMachineSadhana",
-    alternateNames: ["Human Machine Sadhana", "HMS", "HumanMachineSadhana by OMNeXa"],
+    name: "Human Machine Sadhana",
+    alternateNames: ["HumanMachineSadhana", "HMS", "OMNeXa Human Machine Sadhana"],
     serviceSlug: "well-being-conscious-leadership",
     status: "Currently under construction",
     externalUrl: "https://humanmachinesadhana.omnexagoc.com",
-    oneLiner: "An AI-enabled wellness and human-readiness platform designed to strengthen awareness without replacing human choice.",
+    oneLiner: "A guided wellbeing experience for noticing daily patterns and choosing manageable next steps.",
     description:
       "HumanMachineSadhana (HMS) is being developed to help people notice patterns across sleep, movement, food, mood, stress, relationships and reflection, using machine intelligence to support awareness while the human remains in charge.",
     problem:
       "More data, more convenience and potentially longer lives do not automatically create better wellbeing; people still need a way to understand patterns and convert awareness into healthier choices.",
     whyHere:
       "HMS is centred on wellbeing, reflection, resilience and conscious decision-making. Its defining principle — the machine helps you notice, the human decides — directly supports conscious leadership and sustainable human performance.",
-    capabilities: [
-      "Daily wellbeing rhythm and reflection",
-      "Pattern awareness across lifestyle signals",
-      "AI-assisted observations and guidance",
-      "Human decision authority and correction"
-    ],
+    capabilities: ["Daily wellbeing reflection", "Patterns that support awareness", "Human-led choices and correction"],
     audiences: ["Individuals", "Professionals", "Wellness practitioners", "Employers", "Wellbeing partners"],
     seoTerms: ["Human Machine Sadhana", "HumanMachineSadhana", "AI wellness", "future of wellness", "longevity and wellbeing", "human AI wellness"],
     visualKicker: "HUMAN × MACHINE",
@@ -232,19 +202,14 @@ export const products: ProductEntry[] = [
     serviceSlug: "well-being-conscious-leadership",
     status: "Currently under construction",
     externalUrl: "https://nexakriya.omnexagoc.com",
-    oneLiner: "An intentional action and follow-through companion designed to reduce cognitive load and keep commitments visible.",
+    oneLiner: "A practical companion for capturing commitments, keeping follow-ups visible and closing the loop.",
     description:
-      "NeXaKriya is being developed as an action-management companion connecting tasks, follow-ups and calendar context while keeping user permissions, intentional action and recovery from missed commitments explicit.",
+      "NeXaKriya is being developed to help people keep everyday commitments visible and bring intention, follow-up and completion into a more connected experience.",
     problem:
       "People often lose energy not because they lack tasks, but because commitments are scattered across calendars, messages and memory with no coherent way to close the loop.",
     whyHere:
       "Although it uses technology and automation, NeXaKriya's primary outcome is human: clearer intention, reduced mental load and more reliable follow-through. That places it within well-being and conscious leadership rather than enterprise automation alone.",
-    capabilities: [
-      "Action and follow-up management",
-      "Calendar-aware coordination",
-      "Permission-conscious integrations",
-      "Reopen and recovery guardrails"
-    ],
+    capabilities: ["Everyday action and follow-through", "Calendar context", "Manageable next steps"],
     audiences: ["Professionals", "Families", "Teams", "People managing complex commitments"],
     seoTerms: ["AI task companion", "calendar action management", "intentional productivity", "personal follow up app"],
     visualKicker: "INTENTION → ACTION",
@@ -258,24 +223,91 @@ export const products: ProductEntry[] = [
     serviceSlug: "well-being-conscious-leadership",
     status: "Currently under construction",
     externalUrl: "https://nexavirama.omnexagoc.com",
-    oneLiner: "A digital pause-and-reset experience focused on creating space between overload and the next action.",
+    oneLiner: "A digital pause-and-reset experience that helps people create space before the next action.",
     description:
-      "NeXaVirama is being developed around intentional pause, recovery and reset — helping people step out of repetitive digital or work patterns and return with greater awareness rather than simply adding another productivity demand.",
+      "NeXaVirama supports awareness, a brief reset and reflection before people return to the next activity.",
     problem:
       "Modern work rarely stops when the task ends; attention continues to carry unfinished loops, notifications and mental residue into rest and relationships.",
     whyHere:
       "NeXaVirama is explicitly about pause, recovery, emotional space and conscious re-entry. Those outcomes sit directly within well-being and conscious leadership.",
-    capabilities: [
-      "Intentional pause and reset flows",
-      "Reflection before re-entry",
-      "Digital wellbeing prompts",
-      "Awareness-oriented routines"
-    ],
+    capabilities: ["Intentional pause and reset", "Reflection before continuing", "Digital wellbeing awareness"],
     audiences: ["Professionals", "Leaders", "Teams", "People managing digital overload"],
     seoTerms: ["digital wellbeing", "AI stress management", "work recovery", "mindful productivity", "pause and reset app"],
     visualKicker: "PAUSE → RESET",
     visualTitle: "Make space before the next move.",
     visualItems: ["Pause", "Reset", "Return"]
+  },
+  {
+    slug: "nexaaml",
+    name: "NeXaAML",
+    alternateNames: ["NeXa AML", "OMNeXa NeXaAML"],
+    serviceSlug: "banking-transformation-risk-control",
+    status: "Currently under construction",
+    externalUrl: "",
+    oneLiner: "A developing workspace for more structured source-of-wealth and KYC review.",
+    description: "NeXaAML aims to help financial crime teams organise review context, supporting evidence and accountable decisions in a consistent way.",
+    problem: "Source-of-wealth reviews can involve complex information and judgement, making it important to keep context and evidence clear.",
+    whyHere: "NeXaAML applies OMNeXa’s banking and risk experience to better-governed review work, with people accountable for decisions.",
+    capabilities: ["Structured review context", "Evidence and risk visibility", "Accountable human decisions"],
+    audiences: ["KYC and financial crime teams", "Compliance professionals", "Business approvers"],
+    seoTerms: ["AML and KYC review", "source of wealth", "financial crime controls", "responsible AI in banking"],
+    visualKicker: "BANKING • RISK • REVIEW",
+    visualTitle: "Keep evidence and judgement connected.",
+    visualItems: ["Context", "Evidence", "Review"]
+  },
+  {
+    slug: "nexalead",
+    name: "NeXaLead",
+    alternateNames: ["NeXa Lead", "OMNeXa NeXaLead"],
+    serviceSlug: "career-education-purpose-led-growth",
+    status: "Currently under construction",
+    externalUrl: "",
+    oneLiner: "Leadership and workplace learning for people working alongside AI agents.",
+    description: "NeXaLead is being developed to help individuals and teams strengthen judgement, collaboration and accountability as AI agents become part of everyday work.",
+    problem: "As work changes, people need practical ways to adapt their judgement, collaboration and leadership.",
+    whyHere: "NeXaLead connects future-of-work learning with human capability and responsible technology adoption.",
+    capabilities: ["Leadership and workplace learning", "Practical scenario-based practice", "Human judgement and accountability"],
+    audiences: ["Students", "Employees", "Leaders", "Universities and companies"],
+    seoTerms: ["future of work learning", "AI leadership training", "human agent collaboration", "workplace capability"],
+    visualKicker: "PEOPLE + AGENTS",
+    visualTitle: "Build judgement for work with agents.",
+    visualItems: ["Learn", "Practise", "Reflect"]
+  },
+  {
+    slug: "nexasetu",
+    name: "NeXaSetu",
+    alternateNames: ["NeXa Setu", "OMNeXa NeXaSetu"],
+    serviceSlug: "ai-technology-responsible-innovation",
+    status: "Currently under construction",
+    externalUrl: "",
+    oneLiner: "A developing assurance framework to keep agent-supported work connected to its intended outcomes.",
+    description: "NeXaSetu is being developed to help teams review whether AI-supported work delivers the outcomes people intended, with human accountability kept visible.",
+    problem: "When people and AI systems contribute to work over time, the original purpose and responsibility for the result can become harder to see.",
+    whyHere: "NeXaSetu supports OMNeXa’s focus on responsible agent delivery and human-accountable outcomes.",
+    capabilities: ["Intent and outcome alignment", "Evidence-led review", "Human accountability"],
+    audiences: ["Project teams", "Developers and testers", "Educators", "Governance leads"],
+    seoTerms: ["AI assurance framework", "agent delivery assurance", "human accountability", "responsible AI testing"],
+    visualKicker: "INTENT → IMPACT",
+    visualTitle: "Keep the intended outcome in view.",
+    visualItems: ["Align", "Review", "Learn"]
+  },
+  {
+    slug: "nexaforge",
+    name: "NeXaForge",
+    alternateNames: ["NeXa Forge", "OMNeXa NeXaForge"],
+    serviceSlug: "ai-technology-responsible-innovation",
+    status: "Currently under construction",
+    externalUrl: "",
+    oneLiner: "An early concept for helping teams coordinate agent-assisted work and review key decisions.",
+    description: "NeXaForge is an early concept exploring how people can remain informed and involved as AI agents support work that continues over time.",
+    problem: "Agent-assisted work may continue beyond a live conversation, making progress and decisions harder for people to follow.",
+    whyHere: "NeXaForge explores practical human oversight as teams adopt agent-assisted ways of working.",
+    capabilities: ["Work progress visibility", "Human review and decision points", "Responsible continuation of work"],
+    audiences: ["Founders", "Product and delivery teams", "Teams using AI agents"],
+    seoTerms: ["agent-assisted work", "AI agent oversight", "human review", "responsible automation"],
+    visualKicker: "AGENT-ASSISTED WORK",
+    visualTitle: "Stay informed as work moves forward.",
+    visualItems: ["Follow", "Review", "Decide"]
   }
 ];
 

@@ -11,12 +11,17 @@ export const metadata: Metadata = {
   keywords: [
     "OMNeXa products",
     "OMNeXa portfolio",
-    "HumanMachineSadhana",
     "Human Machine Sadhana",
+    "HMS",
     "NeXaKriya",
     "NeXaVirama",
+    "NeXaCareer",
     "EduCareer",
-    "Sahaay-Setu",
+    "NeXaLead",
+    "NeXaAML",
+    "NeXaSetu",
+    "NeXaForge",
+    "Sahaay Setu",
     "SwayamITR",
     "PSLE practice",
     "Lotus Karmic Balance",
@@ -47,22 +52,27 @@ const workFaqs = [
   {
     question: "What products is OMNeXa developing?",
     answer:
-      "OMNeXa is developing products across AI and responsible innovation, education and career pathways, sustainability engagement, and well-being and conscious leadership. Current work includes HumanMachineSadhana, NeXaKriya, NeXaVirama, EduCareer, PSLE Practice Space, Sahaay-Setu, SwayamITR and Lotus Karmic Balance."
+      "OMNeXa is developing work across education and future careers, banking and responsible AI, sustainability, and wellbeing. Current initiatives include NeXaCareer, NeXaLead, PSLE Practice Space, NeXaAML, NeXaSetu, NeXaForge, NeXaKriya, NeXaVirama, Human Machine Sadhana (HMS), Sahaay Setu, SwayamITR and Lotus Karmic Balance."
   },
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "The products shown here are coming soon. Their public pages describe the problem, intended direction and planned capabilities, but do not provide access to unfinished product environments."
+      "The products shown here are coming soon. Their public pages describe the problem and intended direction; pilot access, available features and readiness are confirmed individually."
+  },
+  {
+    question: "How can I register interest in a pilot?",
+    answer:
+      "Email support@omnexagoc.com with the initiative that interests you. OMNeXa will confirm the available pilot, access and next steps."
   },
   {
     question: "How are OMNeXa products connected to its services?",
     answer:
-      "Each product is mapped to the OMNeXa service segment whose primary outcome it supports. The portfolio is designed to turn service principles into practical tools, pilots and digital experiences."
+      "Each product is mapped to the OMNeXa service area whose outcome it is designed to support. The portfolio turns service principles into practical tools, pilots and digital experiences."
   },
   {
-    question: "What is HumanMachineSadhana by OMNeXa?",
+    question: "What is Human Machine Sadhana (HMS)?",
     answer:
-      "HumanMachineSadhana, also written Human Machine Sadhana and abbreviated HMS, is an AI-enabled wellness and human-readiness platform being developed by OMNeXa to support awareness across everyday wellbeing patterns while keeping human choice central."
+      "Human Machine Sadhana is a wellbeing initiative being developed to help people notice everyday patterns and consider manageable next steps while keeping human choice central."
   }
 ];
 
@@ -141,6 +151,7 @@ export default function WorkPage() {
         <div className="work-hero-actions">
           <a className="button" href="#portfolio">Explore the portfolio</a>
           <a className="button secondary" href="/services">See our service segments</a>
+          <a className="button secondary" href="mailto:support@omnexagoc.com?subject=OMNeXa%20pilot%20interest">Register pilot interest</a>
         </div>
       </section>
 
@@ -182,8 +193,8 @@ export default function WorkPage() {
           <p className="eyebrow">Products & platforms</p>
           <h2>Coming soon, with the intended value made clear.</h2>
           <p>
-            These public pages explain the problem, intended users and planned capabilities. Product access will
-            be opened only when the relevant experience is ready for public testing or release.
+            These public pages outline the problem and intended direction. Pilot availability, access and available
+            features are confirmed individually.
           </p>
         </div>
 
