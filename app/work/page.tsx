@@ -134,7 +134,7 @@ function getCategoryName(serviceSlug: string) {
 
 export default function WorkPage() {
   return (
-    <main>
+    <main className="work-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
@@ -160,8 +160,8 @@ export default function WorkPage() {
           <p className="eyebrow">One ecosystem</p>
           <h2>Browse OMNeXa work by service area.</h2>
           <p>
-            Each service area takes visitors to a public product overview or advisory section. Unfinished product
-            environments are not linked from this website.
+            Find an initiative by the outcome that matters to you. Explore a product overview or learn more
+            about the service area behind it.
           </p>
         </div>
         <div className="work-segment-grid">
@@ -169,8 +169,17 @@ export default function WorkPage() {
             const relatedProducts = products.filter((product) => product.serviceSlug === segment.slug);
             return (
               <article className={`work-segment-card segment-${segment.slug}`} key={segment.slug}>
-                <span className="work-segment-index">{String(segmentIndex + 1).padStart(2, "0")}</span>
-                <h3><a href={segment.href}>{segment.shortTitle}</a></h3>
+                <div className="work-segment-heading">
+                  <span className="work-segment-index" aria-hidden="true">{String(segmentIndex + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3><a href={segment.href}>{segment.shortTitle}</a></h3>
+                    <p className="work-segment-count">
+                      {relatedProducts.length > 0
+                        ? `${relatedProducts.length} ${relatedProducts.length === 1 ? "initiative" : "initiatives"}`
+                        : "Advisory services"}
+                    </p>
+                  </div>
+                </div>
                 {relatedProducts.length > 0 ? (
                   <div className="work-segment-products">
                     {relatedProducts.map((product) => (
@@ -202,7 +211,7 @@ export default function WorkPage() {
           {products.map((product, index) => {
             const segment = serviceSegments.find((item) => item.slug === product.serviceSlug);
             return (
-              <article className={`work-card work-card-${(index % 4) + 1} segment-${product.serviceSlug}`} key={product.slug}>
+              <article className={`work-card segment-${product.serviceSlug}`} key={product.slug}>
                 <a className="work-card-visual" href={`/work/${product.slug}`} aria-label={`Read about ${product.name}`}>
                   <div className="work-visual-topline">
                     <span>{product.visualKicker}</span>
