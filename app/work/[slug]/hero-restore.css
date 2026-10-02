@@ -135,6 +135,22 @@
 }
 
 /* Stack before the long product name becomes cramped. */
+.product-detail-page .product-pilot-terms {
+  margin-top: 20px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: #364b60;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.product-detail-page .product-pilot-terms summary {
+  color: #086b70;
+  font-weight: 750;
+  cursor: pointer;
+}
+.product-detail-page .product-pilot-terms p { margin: 12px 0 0; }
+
 @media (max-width: 1120px) {
   .product-detail-page .product-detail-grid {
     grid-template-columns: 1fr;

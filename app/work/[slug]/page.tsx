@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProduct, getProductsByService, getServiceSegment, products } from "@/lib/product-data";
+import { pilotProducts } from "@/lib/pilot-catalog";
+import { B2C_BENEFIT, B2B_BENEFIT } from "@/lib/pilot-agreement";
 import "./detail-refine.css";
 import "./hero-restore.css";
 
@@ -49,6 +51,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   const service = getServiceSegment(product.serviceSlug);
   const siblings = getProductsByService(product.serviceSlug).filter((item) => item.slug !== product.slug);
+  const pilot = pilotProducts.find((item) => item.slug === product.slug);
 
   const faqs = [
     {
@@ -130,11 +133,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
               <span className="work-status large">Coming Soon</span>
+              {pilot ? <a className="button secondary" href={`/pilot?product=${product.slug}`}>Apply for the pilot</a> : null}
             </div>
             <p>
               OMNeXa is currently building and validating this product. This public page explains what it is
               intended to do; access to the unfinished application is not being provided from the OMNeXa website.
             </p>
+            {pilot ? <details className="product-pilot-terms"><summary>{pilot.audience === "B2C" ? "B2C pilot benefit: one year of free subscription" : "Organisation / B2B pilot terms"}</summary><p>{pilot.audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT}</p></details> : null}
           </div>
 
           <div className="product-detail-visual" aria-label={`${product.name} concept visual`}>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { products, serviceSegments } from "@/lib/product-data";
+import { pilotProducts } from "@/lib/pilot-catalog";
 import "./work-refine.css";
 
 const siteUrl = "https://www.omnexagoc.com";
@@ -62,7 +63,7 @@ const workFaqs = [
   {
     question: "How can I register interest in a pilot?",
     answer:
-      "Email support@omnexagoc.com with the initiative that interests you. OMNeXa will confirm the available pilot, access and next steps."
+      "Use the pilot application page to select an initiative and product, share your experience, verify your email and review the NDA. OMNeXa will confirm available pilots, access and next steps. B2C participants who take part and provide agreed feedback receive one year of a free individual subscription to the product tested once its subscription service becomes available. B2B pilots have separate terms."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -151,7 +152,7 @@ export default function WorkPage() {
         <div className="work-hero-actions">
           <a className="button" href="#portfolio">Explore the portfolio</a>
           <a className="button secondary" href="/services">See our service segments</a>
-          <a className="button secondary" href="mailto:support@omnexagoc.com?subject=OMNeXa%20pilot%20interest">Register pilot interest</a>
+          <a className="button secondary" href="/pilot">Register pilot interest</a>
         </div>
       </section>
 
@@ -210,6 +211,7 @@ export default function WorkPage() {
         <div className="work-card-grid">
           {products.map((product, index) => {
             const segment = serviceSegments.find((item) => item.slug === product.serviceSlug);
+            const pilot = pilotProducts.find((item) => item.slug === product.slug);
             return (
               <article className={`work-card segment-${product.serviceSlug}`} key={product.slug}>
                 <a className="work-card-visual" href={`/work/${product.slug}`} aria-label={`Read about ${product.name}`}>
@@ -230,8 +232,10 @@ export default function WorkPage() {
                   </div>
                   <h3><a href={`/work/${product.slug}`}>{product.name}</a></h3>
                   <p>{product.oneLiner}</p>
+                  {pilot ? <p className="work-pilot-benefit">{pilot.audience === "B2C" ? "B2C pilot participants receive 1 year of a free subscription after participation and agreed feedback, once subscriptions become available. Terms apply." : "Organisation / B2B pilot. Access and commercial terms are agreed separately."}</p> : null}
                   <div className="work-card-links">
                     <a href={`/work/${product.slug}`}>See what it will do →</a>
+                    {pilot ? <a href={`/pilot?product=${product.slug}`}>Apply for the pilot →</a> : null}
                   </div>
                 </div>
               </article>

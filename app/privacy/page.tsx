@@ -22,6 +22,19 @@ export default function PrivacyPage() {
 
       <section className="section-shell split-section aligned-section">
         <div>
+          <p className="eyebrow">Pilot applications</p>
+          <h2>Your application and agreement.</h2>
+        </div>
+        <div className="copy-stack">
+          <p>When you apply for a product pilot, OMNeXa receives your contact details, country, role, organisation where relevant, product selection, experience, testing interests and availability. We use these details to assess your request and coordinate pilot participation.</p>
+          <p>We verify control of your email address and retain your typed signature, agreement version and acceptance record to evidence the agreement and administer any B2C subscription benefit. Copies are sent to support@omnexagoc.com and your verified email using Resend. Vercel hosts the flow, and Google reCAPTCHA helps prevent abuse; these providers may process data outside your country.</p>
+          <p>Please do not provide medical records, financial records, identity documents or confidential employer/client information in the application. Pilot records are kept only while needed for pilot administration, subscription benefits or legal obligations, then deleted or anonymised. No marketing consent is assumed.</p>
+          <p>For access, correction, deletion or consent-withdrawal requests relating to a pilot application, email <a href="mailto:support@omnexagoc.com">support@omnexagoc.com</a>. Some agreement records may need to be retained for legal purposes. Preview applications are marked as non-binding tests.</p>
+        </div>
+      </section>
+
+      <section className="section-shell split-section aligned-section">
+        <div>
           <p className="eyebrow">Information we receive</p>
           <h2>Only what is needed for the interaction.</h2>
         </div>
@@ -94,7 +107,7 @@ export default function PrivacyPage() {
             or deletion where applicable, contact{" "}
             <a href="mailto:dhiraj.kumar@omnexagoc.com">dhiraj.kumar@omnexagoc.com</a>.
           </p>
-          <p>Last updated: 20 September 2026.</p>
+          <p>Last updated: 2 October 2026.</p>
         </div>
       </section>
     </main>
