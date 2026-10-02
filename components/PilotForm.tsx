@@ -13,9 +13,9 @@ declare global {
   }
 }
 
-type Receipt = { reference: string; preview: boolean; receiptQueued: boolean; agreementCopy: string };
-type SignPayload = { session: string; signature: string; signatureActionTime: string; agreementVersion: string; ndaConsent: boolean; privacyConsent: boolean; adultConsent: boolean; benefitConsent: boolean; authorityConsent: boolean };
-const steps = ["Choose a pilot", "Your experience", "Verify email", "Review & sign"];
+type Receipt = { reference: string; preview: boolean; agreementCopy: string };
+type SignPayload = { application: PilotApplication; signature: string; signatureActionTime: string; agreementVersion: string; ndaConsent: boolean; privacyConsent: boolean; adultConsent: boolean; benefitConsent: boolean; authorityConsent: boolean; captchaToken: string };
+const steps = ["Choose a pilot", "Your experience", "Review & sign"];
 
 function downloadText(text: string, filename: string) {
   const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
@@ -43,10 +43,6 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const [authorityConsent, setAuthorityConsent] = useState(false);
   const [signature, setSignature] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
-  const [challenge, setChallenge] = useState("");
-  const [code, setCode] = useState("");
-  const [session, setSession] = useState("");
-  const [reference, setReference] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [receipt, setReceipt] = useState<Receipt | null>(null);
@@ -85,34 +81,15 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   function update(key: keyof PilotApplication, value: string) { setApplication((old) => ({ ...old, [key]: value })); }
   function changeStep(next: number) { setError(""); setCaptchaToken(""); setStep(next); }
   function editDetails() {
-    setChallenge(""); setSession(""); setCode(""); setSignature(""); setNdaConsent(false); setBenefitConsent(false); setAuthorityConsent(false); signedRequest.current = null; changeStep(1);
-  }
-
-  async function sendCode(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setError(""); setBusy(true);
-    const trap = new FormData(event.currentTarget).get("companyWebsite") || "";
-    try {
-      const data = await post("/api/pilot/session", { application, adultConsent, privacyConsent, captchaToken, companyWebsite: trap });
-      setChallenge(data.challenge); setCode(""); changeStep(2);
-    } catch (e) { setError(e instanceof Error ? e.message : "Unable to send the verification code."); }
-    finally { setBusy(false); setCaptchaToken(""); window.grecaptcha?.enterprise?.reset(); }
-  }
-
-  async function verifyEmail(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setError(""); setBusy(true);
-    try {
-      const data = await post("/api/pilot/verify", { challenge, code });
-      setSession(data.session); setReference(data.reference); setChallenge(""); setCode(""); changeStep(3);
-    } catch (e) { setError(e instanceof Error ? e.message : "Unable to verify this code."); }
-    finally { setBusy(false); }
+    setSignature(""); setNdaConsent(false); setBenefitConsent(false); setAuthorityConsent(false); signedRequest.current = null; changeStep(1);
   }
 
   async function submit(event?: FormEvent<HTMLFormElement>) {
     event?.preventDefault(); setError(""); setBusy(true);
-    if (!signedRequest.current) signedRequest.current = { session, signature, signatureActionTime: new Date().toISOString(), agreementVersion: PILOT_AGREEMENT_VERSION, ndaConsent, privacyConsent, adultConsent, benefitConsent, authorityConsent };
+    if (!signedRequest.current) signedRequest.current = { application, signature, signatureActionTime: new Date().toISOString(), agreementVersion: PILOT_AGREEMENT_VERSION, ndaConsent, privacyConsent, adultConsent, benefitConsent, authorityConsent, captchaToken };
     try {
       const data: Receipt = await post("/api/pilot/apply", signedRequest.current);
-      setReceipt(data); changeStep(4);
+      setReceipt(data); changeStep(3);
     } catch (e) { setError(e instanceof Error ? e.message : "Unable to submit. Your details are still available for retry."); }
     finally { setBusy(false); }
   }
@@ -120,16 +97,16 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   return (
     <>
       {recaptchaSiteKey ? <Script id="omnexa-pilot-recaptcha" src="https://www.google.com/recaptcha/enterprise.js?render=explicit" strategy="afterInteractive" onReady={renderCaptcha} /> : null}
-      {preview ? <div className="pilot-preview" role="note"><strong>Preview · Test applications only</strong><span>Emails are labelled as tests. No binding contract, pilot enrolment or subscription is activated in this preview.</span></div> : null}
+      {preview ? <div className="pilot-preview" role="note"><strong>Preview · Test applications only</strong><span>One support notification is sent for each submitted interest. No binding contract, pilot enrolment or subscription is activated in this preview.</span></div> : null}
       <ol className="pilot-steps" aria-label="Application progress">
         {steps.map((label, index) => <li key={label} className={step === index ? "is-current" : step > index ? "is-complete" : ""} aria-current={step === index ? "step" : undefined}><span>{step > index ? "✓" : index + 1}</span>{label}</li>)}
       </ol>
       <div className="pilot-layout">
         <section className="pilot-form-panel" aria-labelledby="pilot-step-title">
-          {!ready ? <p className="pilot-error" role="status">Registration email verification is temporarily unavailable. You can explore the form; please contact <a href="mailto:support@omnexagoc.com">support@omnexagoc.com</a> to register your interest.</p> : null}
+          {!ready ? <p className="pilot-error" role="status">Pilot registration email is temporarily unavailable. You can still review the application; please contact <a href="mailto:support@omnexagoc.com">support@omnexagoc.com</a> to register your interest.</p> : null}
           {error ? <p className="pilot-error" role="alert">{error}</p> : null}
           {step === 0 ? <form onSubmit={(event) => { event.preventDefault(); if (product) changeStep(1); }}>
-            <p className="pilot-step-label">Step 01 / 04</p>
+            <p className="pilot-step-label">Step 01 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Find the right pilot for you.</h2>
             <p className="pilot-lead">Choose one product per application. You can apply separately for another product.</p>
             <fieldset className="pilot-route-choice"><legend>I want to explore</legend>
@@ -143,11 +120,10 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <div className="pilot-actions"><button className="pilot-primary" type="submit" disabled={!product}>Continue to your experience <span aria-hidden="true">→</span></button></div>
           </form> : null}
 
-          {step === 1 ? <form onSubmit={sendCode}>
-            <p className="pilot-step-label">Step 02 / 04</p>
+          {step === 1 ? <form onSubmit={(event) => { event.preventDefault(); if (captchaToken) changeStep(2); }}>
+            <p className="pilot-step-label">Step 02 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Tell us what you bring.</h2>
             <p className="pilot-lead">Personal experience matters as much as professional experience. All fields are required unless marked optional.</p>
-            <div className="pilot-honeypot" aria-hidden="true"><label>Leave this field empty<input name="companyWebsite" tabIndex={-1} autoComplete="off" /></label></div>
             <div className="pilot-field-grid">
               <label className="pilot-field">Full legal name<input value={application.fullName} onChange={(e) => update("fullName", e.target.value)} autoComplete="name" minLength={2} maxLength={100} required /></label>
               <label className="pilot-field">Email address<input type="email" value={application.email} onChange={(e) => update("email", e.target.value)} autoComplete="email" maxLength={254} required /></label>
@@ -163,23 +139,15 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <label className="pilot-check"><input type="checkbox" checked={adultConsent} onChange={(e) => setAdultConsent(e.target.checked)} required /><span>I am at least 18 and legally able to enter this agreement. For a child-related pilot, I am applying as an adult parent or guardian.</span></label>
             <label className="pilot-check"><input type="checkbox" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required /><span>I consent to OMNeXa processing these details and emailing me about this application as described above.</span></label>
             {recaptchaSiteKey ? <div className="pilot-captcha" ref={captchaContainer} /> : null}
-            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || !captchaToken}>{busy ? "Sending code…" : "Email me a verification code →"}</button></div>
-            <p className="pilot-fine">This step verifies your email. You will review and sign the NDA in the final step.</p>
+            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || !captchaToken}>Continue to review & sign →</button></div>
+            <p className="pilot-fine">Your email is collected so the support team can reply if your pilot is selected. This flow sends one message to support only.</p>
           </form> : null}
 
-          {step === 2 ? <form onSubmit={verifyEmail}>
-            <p className="pilot-step-label">Step 03 / 04</p>
-            <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Check your inbox.</h2>
-            <p className="pilot-lead">We sent a six-digit code to <strong>{application.email}</strong>. It expires after 10 minutes. Check your spam folder if needed.</p>
-            <label className="pilot-field">Verification code<input className="pilot-code" value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))} inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6} required /></label>
-            <div className="pilot-actions"><button className="pilot-secondary" type="button" disabled={busy} onClick={editDetails}>Change email / request a new code</button><button className="pilot-primary" type="submit" disabled={busy || code.length !== 6}>{busy ? "Verifying…" : "Verify & review agreement →"}</button></div>
-          </form> : null}
-
-          {step === 3 && product ? <form onSubmit={submit}>
-            <p className="pilot-step-label">Step 04 / 04 · Email verified</p>
+          {step === 2 && product ? <form onSubmit={submit}>
+            <p className="pilot-step-label">Step 03 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Review the agreement and sign.</h2>
             <p className="pilot-lead">{preview ? "Try the NDA acceptance flow below. This preview acceptance is non-binding." : "Read the product-specific agreement before signing. Your request will be reviewed before any pilot access is granted."}</p>
-            <dl className="pilot-review"><div><dt>Applicant</dt><dd>{application.fullName}</dd></div><div><dt>Verified email</dt><dd>{application.email}</dd></div><div><dt>Product</dt><dd>{product.name} · {product.audience}</dd></div>{b2b ? <div><dt>Organisation</dt><dd>{application.organisation}</dd></div> : null}<div><dt>Reference</dt><dd>{reference}</dd></div></dl>
+            <dl className="pilot-review"><div><dt>Applicant</dt><dd>{application.fullName}</dd></div><div><dt>Email</dt><dd>{application.email}</dd></div><div><dt>Product</dt><dd>{product.name} · {product.audience}</dd></div>{b2b ? <div><dt>Organisation</dt><dd>{application.organisation}</dd></div> : null}</dl>
             <details className="pilot-disclosure"><summary>Review your experience and testing interests</summary><p><strong>{application.experienceLevel}</strong></p><p>{application.experience}</p><p>{application.goals}</p><p>Availability: {application.availability}</p><button className="pilot-text-button" type="button" disabled={busy} onClick={editDetails}>Edit details and verify again</button></details>
             <p className="pilot-benefit-note">{b2b ? B2B_BENEFIT : B2C_BENEFIT}</p>
             <details className="pilot-nda" open>
@@ -194,17 +162,17 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
               {b2b ? <label className="pilot-check"><input type="checkbox" checked={authorityConsent} onChange={(e) => setAuthorityConsent(e.target.checked)} required /><span>I am authorised to represent the organisation named above for this pilot application and agreement.</span></label> : null}
             </fieldset>
             <div className="pilot-actions"><button className="pilot-secondary" type="button" onClick={editDetails} disabled={busy}>Edit application</button><button className="pilot-primary" type="submit" disabled={busy || !ndaConsent || !benefitConsent || (b2b && !authorityConsent) || signature.trim().replace(/\s+/g, " ").toLowerCase() !== application.fullName.trim().replace(/\s+/g, " ").toLowerCase()}>{busy ? "Submitting…" : signedRequest.current ? "Retry this submission" : preview ? "Submit test acceptance & request" : "Sign agreement & submit request"}</button></div>
-            <p className="pilot-fine">Your application and agreement copy go to support@omnexagoc.com. A receipt goes to your verified email. Keep this page open until confirmation appears.</p>
+            <p className="pilot-fine">Your application and agreement copy go to support@omnexagoc.com. This flow sends one support message only; no confirmation email is sent to you.</p>
           </form> : null}
 
-          {step === 4 && receipt ? <div className="pilot-success">
+          {step === 3 && receipt ? <div className="pilot-success">
             <span className="pilot-success-icon" aria-hidden="true">✓</span><p className="pilot-step-label">{receipt.preview ? "Preview test complete" : "Application received"}</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>{receipt.preview ? "Your test request is with us." : "Thank you for helping shape the product."}</h2>
             <p>Your {product?.name} application has been sent to <strong>support@omnexagoc.com</strong>.</p>
-            <p>{receipt.receiptQueued ? `A confirmation and agreement copy have been queued to ${application.email}. Please check your inbox and spam folder.` : "Your application was received, but the confirmation email could not be queued. Download your copy below and retry the receipt email."}</p>
+            <p>No email is sent to the applicant in this lower-cost flow. OMNeXa support will contact you if the pilot team needs more information.</p>
             <div className="pilot-reference"><span>Application reference</span><strong>{receipt.reference}</strong></div>
             <p>{receipt.preview ? "This test has not created a binding contract, enrolled you in a pilot or activated a subscription." : "OMNeXa will review your experience and contact you about suitability, timing and next steps. Please wait for an invitation before testing."}</p>
-            <div className="pilot-actions"><button className="pilot-primary" type="button" onClick={() => downloadText(receipt.agreementCopy, `${receipt.reference}-agreement.txt`)}>Download your agreement copy ↓</button>{!receipt.receiptQueued ? <button className="pilot-secondary" type="button" disabled={busy} onClick={() => submit()}>{busy ? "Retrying…" : "Retry confirmation email"}</button> : null}<a className="pilot-text-button" href="/work">Back to Our Work →</a></div>
+            <div className="pilot-actions"><button className="pilot-primary" type="button" onClick={() => downloadText(receipt.agreementCopy, `${receipt.reference}-agreement.txt`)}>Download your agreement copy ↓</button><a className="pilot-text-button" href="/work">Back to Our Work →</a></div>
           </div> : null}
         </section>
 
@@ -213,7 +181,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           <h2>{product?.name || "Choose where you can make a difference."}</h2>
           {product ? <><span className={`pilot-type ${product.audience.toLowerCase()}`}>{b2b ? "Organisation / B2B" : "Individual / B2C"}</span><p>{product.initiativeName}</p></> : <p>Explore individual products and organisational pilots across the OMNeXa ecosystem.</p>}
           <div className="pilot-aside-benefit"><strong>{b2b ? "A pilot built around your organisation" : "1 year of free subscription"}</strong><p>{b2b ? "Scope, access and commercial terms are agreed separately. The individual subscription offer does not apply." : "For users who participate in a B2C product pilot and provide the agreed feedback. Applies to the product tested, once its subscription service becomes available."}</p></div>
-          <ul className="pilot-journey"><li><span>01</span>Tell us about your experience</li><li><span>02</span>Verify email and review the NDA</li><li><span>03</span>Receive your application receipt</li><li><span>04</span>Wait for a pilot invitation</li></ul>
+          <ul className="pilot-journey"><li><span>01</span>Tell us about your experience</li><li><span>02</span>Review and sign the NDA</li><li><span>03</span>Send one support notification</li><li><span>04</span>Wait for a pilot invitation</li></ul>
           <p className="pilot-fine">All products remain Coming Soon. Registration does not provide access to unfinished applications.</p>
           <a href="mailto:support@omnexagoc.com">Questions? Contact support →</a>
         </aside>

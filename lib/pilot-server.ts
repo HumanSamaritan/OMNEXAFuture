@@ -28,7 +28,7 @@ const rawSecret = () => process.env.PILOT_SIGNING_SECRET || process.env.BOOKING_
 const fromAddress = () => process.env.PILOT_FROM_EMAIL || process.env.CONTACT_FROM_EMAIL || "";
 
 export function pilotReady() {
-  return Boolean(process.env.RESEND_API_KEY && rawSecret().length >= 32 && fromAddress() && !fromAddress().includes("resend.dev") && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && process.env.RECAPTCHA_PROJECT_ID && process.env.RECAPTCHA_ENTERPRISE_API_KEY);
+  return Boolean(process.env.RESEND_API_KEY && fromAddress() && !fromAddress().includes("resend.dev") && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && process.env.RECAPTCHA_PROJECT_ID && process.env.RECAPTCHA_ENTERPRISE_API_KEY);
 }
 
 function encryptionKey() {
@@ -150,9 +150,11 @@ export function verifyPilotCode(body: Record<string, unknown>, request: Request)
 }
 
 export async function submitPilotApplication(body: Record<string, unknown>, request: Request) {
+  if (!pilotReady()) throw new PilotHttpError("Pilot registration email is temporarily unavailable. Please contact support@omnexagoc.com.", 503);
   limitPilot("submit-ip", getClientKey(request), 12);
-  const session = readPilotToken(body.session, "verified");
-  const application = session.application;
+  const captchaToken = typeof body.captchaToken === "string" ? body.captchaToken : "";
+  if (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined)) throw new PilotInputError("Please complete the human verification again.");
+  const application = validatePilotApplication(body.application);
   const product = pilotProducts.find((item) => item.slug === application.productSlug)!;
   const signature = typeof body.signature === "string" ? body.signature.trim().replace(/\s+/g, " ") : "";
   if (signature.toLocaleLowerCase() !== application.fullName.replace(/\s+/g, " ").toLocaleLowerCase()) throw new PilotInputError("Type your full name exactly as shown in the application.");
@@ -160,13 +162,15 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   if (body.agreementVersion !== PILOT_AGREEMENT_VERSION) throw new PilotHttpError("The agreement has changed. Please reload and review the latest terms.", 409);
   const signatureActionTime = typeof body.signatureActionTime === "string" ? body.signatureActionTime : "";
   const actionTime = Date.parse(signatureActionTime);
-  if (!Number.isFinite(actionTime) || actionTime < session.issuedAt - 60_000 || actionTime > Date.now() + 60_000 || actionTime > session.expiresAt) throw new PilotInputError("Your signing session has expired. Please verify your email again.");
+  if (!Number.isFinite(actionTime) || actionTime > Date.now() + 60_000) throw new PilotInputError("Your signing session has expired. Please review and submit again.");
+  const reference = `OMX-${randomUUID()}`;
+  const preview = pilotIsPreview();
   const agreement = pilotAgreementText(product.name, product.audience);
   const agreementHash = createHash("sha256").update(agreement).digest("hex");
   const record = {
-    reference: session.reference, environment: session.preview ? "PREVIEW TEST — NON-BINDING" : "PRODUCTION",
+    reference, environment: preview ? "PREVIEW TEST — NON-BINDING" : "PRODUCTION",
     application, product: product.name, audience: product.audience,
-    emailVerifiedAtServer: session.verifiedAt, verificationMethod: "Email one-time code",
+    verificationMethod: "Applicant-submitted interest form",
     signature, signatureActionTimeClient: signatureActionTime,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
     declarations: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
@@ -176,37 +180,25 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   const recordHash = createHash("sha256").update(recordJson).digest("hex");
   const integritySeal = createHmac("sha256", encryptionKey()).update(recordJson).digest("hex");
   const copy = [
-    session.preview ? "PREVIEW TEST — NON-BINDING. No contract, pilot enrolment or subscription is activated." : "OMNeXa pilot application and electronic acceptance record",
-    `Reference: ${session.reference}`, `Applicant: ${application.fullName}`, `Verified email: ${application.email}`,
+    preview ? "PREVIEW TEST — NON-BINDING. No contract, pilot enrolment or subscription is activated." : "OMNeXa pilot application and electronic acceptance record",
+    `Reference: ${reference}`, `Applicant: ${application.fullName}`, `Email: ${application.email}`,
     `Organisation: ${application.organisation || "Individual"}`, `Product: ${product.name}`, `Route: ${product.audience}`,
-    `Email verified (server UTC): ${session.verifiedAt}`, `Signature action time (applicant device): ${signatureActionTime}`,
+    `Interest submitted (server UTC): ${new Date().toISOString()}`, `Signature action time (applicant device): ${signatureActionTime}`,
     `Typed signature: ${signature}`, `Agreement version: ${PILOT_AGREEMENT_VERSION}`,
     "Declarations accepted: NDA, privacy processing, adult applicant, subscription eligibility" + (product.audience === "B2B" ? ", authority to represent the organisation" : ""),
     `Agreement SHA-256: ${agreementHash}`, `Record SHA-256: ${recordHash}`, `Server integrity seal: ${integritySeal}`,
     "The email provider's message timestamp records when this copy was queued. The integrity seal is an internal record check, not an independently certified digital signature.",
     agreement
   ].join("\n\n");
-  const prefix = session.preview ? "[PREVIEW TEST — NON-BINDING] " : "";
+  const prefix = preview ? "[PREVIEW TEST — NON-BINDING] " : "";
   const benefit = product.audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT;
-  const attachments = [{ filename: `${session.reference}-agreement.txt`, content: Buffer.from(copy).toString("base64") }];
+  const attachments = [{ filename: `${reference}-agreement.txt`, content: Buffer.from(copy).toString("base64") }];
   const supportText = [
-    `${prefix}Pilot application received`, `Reference: ${session.reference}`,
+    `${prefix}Pilot interest received`, `Reference: ${reference}`,
     `Product: ${product.name}`, `Initiative: ${product.initiativeName}`, `Route: ${product.audience}`,
     ...Object.entries(application).filter(([key]) => !["productSlug", "initiativeSlug"].includes(key)).map(([key, value]) => `${key}: ${value || "Not provided"}`),
-    `Applicable benefit: ${benefit}`, "The complete agreement and acceptance copy are attached. A receipt is also queued to the applicant.", copy
+    `Applicable benefit: ${benefit}`, "The complete agreement and acceptance copy are attached. No applicant email is sent by this flow.", copy
   ].join("\n\n");
-  // Queue the durable support copy first. Only then confirm receipt to the applicant.
-  await sendPilotEmail({ to: PILOT_SUPPORT_EMAIL, replyTo: application.email, subject: `${prefix}Pilot request: ${product.name} | ${session.reference}`, text: supportText, attachments: [...attachments, { filename: `${session.reference}-record.json`, content: Buffer.from(recordJson).toString("base64") }] }, `pilot-support-${session.reference}`);
-  let receiptQueued = true;
-  try {
-    await sendPilotEmail({
-      to: application.email, replyTo: PILOT_SUPPORT_EMAIL,
-      subject: `${prefix}We received your ${product.name} pilot request`, attachments,
-      text: `Hello ${application.fullName},\n\nWe have received your pilot request for ${product.name}.\nReference: ${session.reference}\n\n${session.preview ? "This is a preview test only. No contract, pilot enrolment or subscription has been activated.\n\n" : "OMNeXa will review your request and contact you about suitability, timing and next steps. This receipt is not a pilot invitation or a product-access link.\n\n"}${benefit}\n\nYour agreement and acceptance copy are attached. You can reply to this email or contact ${PILOT_SUPPORT_EMAIL}, quoting your reference.\n\nThank you,\nOMNeXa Pte. Ltd.`
-    }, `pilot-receipt-${session.reference}`);
-  } catch {
-    receiptQueued = false;
-    console.error("Pilot receipt email pending", { reference: session.reference });
-  }
-  return { ok: true, reference: session.reference, preview: session.preview, receiptQueued, agreementCopy: copy, recordHash };
+  await sendPilotEmail({ to: PILOT_SUPPORT_EMAIL, replyTo: application.email, subject: `${prefix}Pilot interest: ${product.name} | ${reference}`, text: supportText, attachments: [...attachments, { filename: `${reference}-record.json`, content: Buffer.from(recordJson).toString("base64") }] }, `pilot-support-${reference}`);
+  return { ok: true, reference, preview, agreementCopy: copy, recordHash };
 }
