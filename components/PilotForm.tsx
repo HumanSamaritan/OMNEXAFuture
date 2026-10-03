@@ -52,6 +52,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const captchaWidget = useRef<number | null>(null);
   const product = products.find((item) => item.slug === application.productSlug);
   const b2b = product?.audience === "B2B";
+  const captchaRequired = !preview;
   const initiatives = Array.from(new Map(products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter).map((item) => [item.initiativeSlug, item.initiativeName])).entries());
   const choices = products.filter((item) => item.initiativeSlug === application.initiativeSlug && (audienceFilter === "all" || item.audience === audienceFilter));
 
@@ -72,11 +73,11 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
     });
   }
   useEffect(() => {
-    if (step === 1) renderCaptcha();
+    if (step === 1 && captchaRequired) renderCaptcha();
     return () => { captchaWidget.current = null; };
     // The widget belongs to this form step and is recreated after returning to it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step]);
+  }, [step, captchaRequired]);
 
   function update(key: keyof PilotApplication, value: string) { setApplication((old) => ({ ...old, [key]: value })); }
   function changeStep(next: number) { setError(""); setCaptchaToken(""); setStep(next); }
@@ -96,7 +97,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
 
   return (
     <>
-      {recaptchaSiteKey ? <Script id="omnexa-pilot-recaptcha" src="https://www.google.com/recaptcha/enterprise.js?render=explicit" strategy="afterInteractive" onReady={renderCaptcha} /> : null}
+      {captchaRequired && recaptchaSiteKey ? <Script id="omnexa-pilot-recaptcha" src="https://www.google.com/recaptcha/enterprise.js?render=explicit" strategy="afterInteractive" onReady={renderCaptcha} /> : null}
       {preview ? <div className="pilot-preview" role="note"><strong>Preview · Test applications only</strong><span>One support notification is sent for each submitted interest. No binding contract, pilot enrolment or subscription is activated in this preview.</span></div> : null}
       <ol className="pilot-steps" aria-label="Application progress">
         {steps.map((label, index) => <li key={label} className={step === index ? "is-current" : step > index ? "is-complete" : ""} aria-current={step === index ? "step" : undefined}><span>{step > index ? "✓" : index + 1}</span>{label}</li>)}
@@ -120,7 +121,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <div className="pilot-actions"><button className="pilot-primary" type="submit" disabled={!product}>Continue to your experience <span aria-hidden="true">→</span></button></div>
           </form> : null}
 
-          {step === 1 ? <form onSubmit={(event) => { event.preventDefault(); if (captchaToken) changeStep(2); }}>
+          {step === 1 ? <form onSubmit={(event) => { event.preventDefault(); if (!captchaRequired || captchaToken) changeStep(2); }}>
             <p className="pilot-step-label">Step 02 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Tell us what you bring.</h2>
             <p className="pilot-lead">Personal experience matters as much as professional experience. All fields are required unless marked optional.</p>
@@ -138,8 +139,8 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <details className="pilot-disclosure"><summary>How we use your application details</summary><p>{PILOT_PRIVACY_NOTICE}</p><a href="/privacy" target="_blank" rel="noreferrer">Read the privacy notice ↗</a></details>
             <label className="pilot-check"><input type="checkbox" checked={adultConsent} onChange={(e) => setAdultConsent(e.target.checked)} required /><span>I am at least 18 and legally able to enter this agreement. For a child-related pilot, I am applying as an adult parent or guardian.</span></label>
             <label className="pilot-check"><input type="checkbox" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required /><span>I consent to OMNeXa processing these details and emailing me about this application as described above.</span></label>
-            {recaptchaSiteKey ? <div className="pilot-captcha" ref={captchaContainer} /> : null}
-            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || !captchaToken}>Continue to review & sign →</button></div>
+            {captchaRequired && recaptchaSiteKey ? <div className="pilot-captcha" ref={captchaContainer} /> : preview ? <p className="pilot-note">Human verification is skipped in this private preview; it is required for live applications.</p> : null}
+            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || (captchaRequired && !captchaToken)}>Continue to review & sign →</button></div>
             <p className="pilot-fine">Your email is collected so the support team can reply if your pilot is selected. This flow sends one message to support only.</p>
           </form> : null}
 

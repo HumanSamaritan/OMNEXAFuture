@@ -124,7 +124,7 @@ export async function requestPilotCode(body: Record<string, unknown>, request: R
   if (body.privacyConsent !== true || body.adultConsent !== true) throw new PilotInputError("Please confirm you are an adult and consent to processing your pilot application.");
   limitPilot("send-email", application.email, 3);
   const captchaToken = typeof body.captchaToken === "string" ? body.captchaToken : "";
-  if (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined)) throw new PilotInputError("Please complete the human verification again.");
+  if (!pilotIsPreview() && (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined))) throw new PilotInputError("Please complete the human verification again.");
   const now = Date.now();
   const code = String(randomInt(100000, 1000000));
   const challenge: TokenData = { purpose: "challenge", application, reference: `OMX-${randomUUID()}`, version: PILOT_AGREEMENT_VERSION, preview: pilotIsPreview(), issuedAt: now, expiresAt: now + 10 * 60_000, code };
@@ -153,7 +153,7 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   if (!pilotReady()) throw new PilotHttpError("Pilot registration email is temporarily unavailable. Please contact support@omnexagoc.com.", 503);
   limitPilot("submit-ip", getClientKey(request), 12);
   const captchaToken = typeof body.captchaToken === "string" ? body.captchaToken : "";
-  if (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined)) throw new PilotInputError("Please complete the human verification again.");
+  if (!pilotIsPreview() && (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined))) throw new PilotInputError("Please complete the human verification again.");
   const application = validatePilotApplication(body.application);
   const product = pilotProducts.find((item) => item.slug === application.productSlug)!;
   const signature = typeof body.signature === "string" ? body.signature.trim().replace(/\s+/g, " ") : "";
