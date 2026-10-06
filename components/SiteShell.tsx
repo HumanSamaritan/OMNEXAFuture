@@ -1,10 +1,20 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { navItems } from "@/lib/site-data";
 import TiltCards from "./TiltCards";
 import WhatsAppLead from "./WhatsAppLead";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+
+  if (isAdmin) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <header className="site-header">
