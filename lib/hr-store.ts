@@ -252,13 +252,27 @@ async function writeDocument(
 
 let migrationPromise: Promise<void> | null = null;
 
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, child]) => child !== undefined)
+      .sort(([a], [b]) => a.localeCompare(b));
+    return `{${entries.map(([key, child]) => `${JSON.stringify(key)}:${canonicalJson(child)}`).join(",")}}`;
+  }
+  return JSON.stringify(value) ?? "null";
+}
+
 async function migrateFromSupabaseOnce(): Promise<void> {
   const marker = await readDocument<Record<string, unknown>>(META_COLLECTION, MIGRATION_DOCUMENT);
-  if (marker) return;
+  if (marker?.state === "completed") return;
 
-  const existingEmployees = await listCollection<EmployeeRecord>(EMPLOYEE_COLLECTION);
-  const existingDocuments = await listCollection<HrDocumentRecord>(DOCUMENT_COLLECTION);
-  if (existingEmployees.length || existingDocuments.length) {
+  const [existingEmployees, existingDocuments] = await Promise.all([
+    listCollection<EmployeeRecord>(EMPLOYEE_COLLECTION),
+    listCollection<HrDocumentRecord>(DOCUMENT_COLLECTION)
+  ]);
+
+  if (!marker && (existingEmployees.length || existingDocuments.length)) {
     throw new Error(
       "OMNeXa HR Firestore already contains data but has no migration marker. Migration stopped to prevent a merge conflict."
     );
@@ -269,8 +283,12 @@ async function migrateFromSupabaseOnce(): Promise<void> {
   );
 
   if (!hasSupabaseHrArchive()) {
+    if (marker) {
+      throw new Error("OMNeXa HR migration is incomplete and its Supabase archive is unavailable.");
+    }
     await writeDocument(META_COLLECTION, MIGRATION_DOCUMENT, {
       id: MIGRATION_DOCUMENT,
+      state: "completed",
       source: "fresh-firestore",
       employees_migrated: 0,
       documents_migrated: 0,
@@ -284,6 +302,16 @@ async function migrateFromSupabaseOnce(): Promise<void> {
     listSupabaseDocuments()
   ]);
 
+  if (!marker) {
+    await writeDocument(META_COLLECTION, MIGRATION_DOCUMENT, {
+      id: MIGRATION_DOCUMENT,
+      state: "in_progress",
+      source: "FuturePlus Supabase archive",
+      started_at: new Date().toISOString()
+    });
+  }
+
+  // Deterministic document IDs make retries safe after a partial network or write failure.
   for (const employee of employees) {
     await writeDocument(EMPLOYEE_COLLECTION, employee.id, employee as unknown as Record<string, unknown>);
   }
@@ -296,27 +324,31 @@ async function migrateFromSupabaseOnce(): Promise<void> {
     listCollection<HrDocumentRecord>(DOCUMENT_COLLECTION)
   ]);
 
-  const employeeIds = new Set(verifiedEmployees.map((row) => row.id));
-  const documentIds = new Set(verifiedDocuments.map((row) => row.id));
-  const employeeMismatch = employees.some((row) => !employeeIds.has(row.id));
-  const documentMismatch = documents.some((row) => !documentIds.has(row.id));
+  const matchesExactly = <T extends { id: string }>(source: T[], target: T[]): boolean => {
+    if (source.length !== target.length) return false;
+    const sourceById = new Map(source.map((row) => [row.id, row]));
+    const targetById = new Map(target.map((row) => [row.id, row]));
+    if (sourceById.size !== source.length || targetById.size !== target.length) return false;
+    if (sourceById.size !== targetById.size) return false;
+    for (const [id, sourceRow] of sourceById) {
+      const targetRow = targetById.get(id);
+      if (!targetRow || canonicalJson(sourceRow) !== canonicalJson(targetRow)) return false;
+    }
+    return true;
+  };
 
-  if (
-    verifiedEmployees.length !== employees.length ||
-    verifiedDocuments.length !== documents.length ||
-    employeeMismatch ||
-    documentMismatch
-  ) {
+  if (!matchesExactly(employees, verifiedEmployees) || !matchesExactly(documents, verifiedDocuments)) {
     throw new Error("OMNeXa HR migration verification failed. Supabase remains unchanged; Firestore cutover was not completed.");
   }
 
   await writeDocument(META_COLLECTION, MIGRATION_DOCUMENT, {
     id: MIGRATION_DOCUMENT,
+    state: "completed",
     source: "FuturePlus Supabase archive",
     employees_migrated: employees.length,
     documents_migrated: documents.length,
     migrated_at: new Date().toISOString(),
-    verification: "record-count-and-id-match"
+    verification: "record-count-id-and-content-match"
   });
 }
 
