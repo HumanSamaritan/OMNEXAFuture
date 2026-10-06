@@ -9,7 +9,7 @@ function qrUrl(value: string): string {
 }
 
 function linkedInDisplay(value?: string | null): string {
-  return String(value || "").replace(/^https?:\\/\\/(www\\.)?/, "").replace(/\\/$/, "");
+  return String(value || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 }
 
 function linkedInMark(): string {
