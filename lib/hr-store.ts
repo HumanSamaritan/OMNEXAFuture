@@ -37,7 +37,6 @@ async function dbRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
     cache: "no-store",
     headers: {
       apikey: key,
-      Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
       "x-omnexa-admin-secret": adminSecret,
       ...(init.headers || {})
