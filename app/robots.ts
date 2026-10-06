@@ -4,7 +4,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/"
+      allow: "/",
+      disallow: ["/admin", "/admin/", "/api/admin", "/api/admin/"]
     },
     sitemap: [
       "https://www.omnexagoc.com/sitemap.xml",
