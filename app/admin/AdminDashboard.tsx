@@ -88,6 +88,17 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
     setEmployees((items) => items.map((item) => (item.id === employee.id ? employee : item)));
   }
 
+  function updateName(value: string) {
+    setForm((current) => ({
+      ...current,
+      full_name: value,
+      work_email:
+        !current.work_email || current.work_email === suggestEmail(current.full_name)
+          ? suggestEmail(value)
+          : current.work_email
+    }));
+  }
+
   return (
     <main className={styles.page}>
       <header className={styles.adminHeader}>
@@ -116,7 +127,7 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
             <section className={styles.panel}>
               <div className={styles.panelTitle}><div><p className={styles.eyebrow}>Employee master</p><h1>Add employee or intern</h1></div></div>
               <form className={styles.formGrid} onSubmit={createEmployeeRecord}>
-                <label>Full legal name<input required value={form.full_name} onChange={(e) => setForm((current) => ({ ...current, full_name: e.target.value, work_email: current.work_email || suggestEmail(e.target.value) }))} /></label>
+                <label>Full legal name<input required value={form.full_name} onChange={(e) => updateName(e.target.value)} /></label>
                 <label>Employee ID <span className={styles.muted}>(optional)</span><input value={form.employee_id} onChange={(e) => setForm((current) => ({ ...current, employee_id: e.target.value }))} placeholder="Auto-generated if blank" /></label>
                 <label>OMNeXa email<input required type="email" value={form.work_email} onChange={(e) => setForm((current) => ({ ...current, work_email: e.target.value }))} placeholder="firstname.lastname@omnexagoc.com" /></label>
                 <label>Personal email <span className={styles.muted}>(optional)</span><input type="email" value={form.personal_email} onChange={(e) => setForm((current) => ({ ...current, personal_email: e.target.value }))} /></label>
