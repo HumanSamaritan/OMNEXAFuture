@@ -32,6 +32,17 @@ const securityHeaders = [
   }
 ];
 
+const privateAdminHeaders = [
+  {
+    key: "X-Robots-Tag",
+    value: "noindex, nofollow, noarchive, nosnippet, noimageindex"
+  },
+  {
+    key: "Cache-Control",
+    value: "private, no-store, no-cache, max-age=0, must-revalidate"
+  }
+];
+
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -41,6 +52,14 @@ const nextConfig = {
       {
         source: "/(.*)",
         headers: securityHeaders
+      },
+      {
+        source: "/admin/:path*",
+        headers: privateAdminHeaders
+      },
+      {
+        source: "/api/admin/:path*",
+        headers: privateAdminHeaders
       }
     ];
   }
