@@ -330,11 +330,14 @@ async function migrateFromSupabaseOnce(): Promise<void> {
     const targetById = new Map(target.map((row) => [row.id, row]));
     if (sourceById.size !== source.length || targetById.size !== target.length) return false;
     if (sourceById.size !== targetById.size) return false;
-    for (const [id, sourceRow] of sourceById) {
+    let allRecordsMatch = true;
+    sourceById.forEach((sourceRow, id) => {
       const targetRow = targetById.get(id);
-      if (!targetRow || canonicalJson(sourceRow) !== canonicalJson(targetRow)) return false;
-    }
-    return true;
+      if (!targetRow || canonicalJson(sourceRow) !== canonicalJson(targetRow)) {
+        allRecordsMatch = false;
+      }
+    });
+    return allRecordsMatch;
   };
 
   if (!matchesExactly(employees, verifiedEmployees) || !matchesExactly(documents, verifiedDocuments)) {
