@@ -3,8 +3,21 @@ import AdminPortal from "./AdminPortal";
 import { getAdminEmail } from "@/lib/admin-session";
 
 export const metadata: Metadata = {
-  title: "OMNeXa Admin",
-  robots: { index: false, follow: false }
+  title: "OMNeXa People & HR",
+  description: "Private OMNeXa employee administration workspace.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      "max-snippet": 0,
+      "max-image-preview": "none",
+      "max-video-preview": 0
+    }
+  }
 };
 
 export default async function AdminPage() {

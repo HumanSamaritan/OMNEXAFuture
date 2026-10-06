@@ -64,13 +64,13 @@ export default function AdminPortal({ initialAdminEmail }: { initialAdminEmail: 
       <section className={styles.loginCard}>
         <div className={styles.loginBrand}>
           <img src="/omnexa-logo.png" alt="OMNeXa" />
-          <div><strong>OMNeXa Admin</strong><span>Internal people and HR workspace</span></div>
+          <div><strong>OMNeXa People &amp; HR</strong><span>Private employee lifecycle workspace</span></div>
         </div>
-        <h1>Authorised access only</h1>
-        <p>This route is intentionally not listed on the public website. Access is limited to approved OMNeXa administrator accounts.</p>
+        <h1>Authorised HR access only</h1>
+        <p>Employee records, identity assets and HR documents are available only to approved OMNeXa administrators. This workspace is not part of the public website.</p>
         {!codeSent ? (
           <form onSubmit={requestCode} className={styles.stack}>
-            <label>OMNeXa login ID<input type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} placeholder="name@omnexagoc.com" required /></label>
+            <label>Authorised OMNeXa login ID<input type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} placeholder="name@omnexagoc.com" required /></label>
             <button className={styles.primaryButton} disabled={busy}>{busy ? "Sending…" : "Send one-time code"}</button>
           </form>
         ) : (

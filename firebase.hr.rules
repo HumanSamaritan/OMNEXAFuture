@@ -1,0 +1,12 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // OMNeXa HR data is server-only. The Vercel backend uses a Google service account,
+    // which is authorised through IAM and is not governed by client security rules.
+    // No browser/mobile client receives direct Firestore access.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

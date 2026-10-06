@@ -22,10 +22,10 @@ export default function CardPanel({ employee }: { employee: Employee }) {
     frame.setAttribute("title", "OMNeXa visiting card PDF");
     Object.assign(frame.style, {
       position: "fixed",
-      width: "1px",
-      height: "1px",
-      right: "0",
-      bottom: "0",
+      width: "91mm",
+      height: "55mm",
+      left: "-10000px",
+      top: "0",
       border: "0",
       opacity: "0",
       pointerEvents: "none"
@@ -60,15 +60,34 @@ export default function CardPanel({ employee }: { employee: Employee }) {
       }
     };
 
-    frame.onload = () => window.setTimeout(launchPrint, 250);
-    window.setTimeout(launchPrint, 1200);
+    const waitForImagesThenPrint = () => {
+      const images = Array.from(doc.images);
+      const pending = images.filter((image) => !image.complete);
+      if (!pending.length) {
+        window.setTimeout(launchPrint, 150);
+        return;
+      }
+
+      let remaining = pending.length;
+      const done = () => {
+        remaining -= 1;
+        if (remaining <= 0) window.setTimeout(launchPrint, 150);
+      };
+      pending.forEach((image) => {
+        image.addEventListener("load", done, { once: true });
+        image.addEventListener("error", done, { once: true });
+      });
+    };
+
+    window.setTimeout(waitForImagesThenPrint, 50);
+    window.setTimeout(launchPrint, 4000);
   }
 
   return (
     <section className={styles.panel}>
       <div className={styles.panelTitle}>
         <div><p className={styles.eyebrow}>Standard OMNeXa identity</p><h1>Visiting card</h1></div>
-        <button className={styles.primaryButton} onClick={printCard}>Save / Print card PDF</button>
+        <button type="button" className={styles.primaryButton} onClick={printCard}>Save / Print card PDF</button>
       </div>
       <p className={styles.helper}>This design is locked for consistency across OMNeXa. It uses the official website logo without redrawing it. QR codes link directly to the employee&apos;s LinkedIn and WhatsApp. Choose “Save as PDF” in the browser print dialog.</p>
       <div className={styles.cardGallery}>
