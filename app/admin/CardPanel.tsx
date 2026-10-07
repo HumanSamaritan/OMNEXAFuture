@@ -12,6 +12,10 @@ function linkedInDisplay(value?: string | null): string {
   return String(value || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 }
 
+function linkedInMark(): string {
+  return '<svg class="linkedin-icon" viewBox="0 0 16 16" role="img" aria-label="LinkedIn"><rect width="16" height="16" rx="2" fill="#0A66C2"/><text x="8" y="12" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#fff">in</text></svg>';
+}
+
 export default function CardPanel({ employee }: { employee: Employee }) {
   const linkedinQr = employee.linkedin_url ? qrUrl(employee.linkedin_url) : "";
   const whatsappLink = employee.whatsapp_number ? `https://wa.me/${cleanPhone(employee.whatsapp_number)}` : "";
@@ -21,7 +25,7 @@ export default function CardPanel({ employee }: { employee: Employee }) {
     employee.whatsapp_number ? `<div class="contact"><b>◉</b><span>${escapeHtml(employee.whatsapp_number)}</span></div>` : "",
     `<div class="contact"><b>◎</b><span>www.omnexagoc.com</span></div>`,
     employee.work_email ? `<div class="contact"><b>@</b><span>${escapeHtml(employee.work_email)}</span></div>` : "",
-    employee.linkedin_url ? `<div class="contact linkedin"><b>in</b><span>${escapeHtml(linkedInDisplay(employee.linkedin_url))}</span></div>` : ""
+    employee.linkedin_url ? `<div class="contact linkedin">${linkedInMark()}<span>${escapeHtml(linkedInDisplay(employee.linkedin_url))}</span></div>` : ""
   ].filter(Boolean).join("");
 
   function printCard() {
@@ -50,8 +54,8 @@ export default function CardPanel({ employee }: { employee: Employee }) {
     doc.write(`<!doctype html><html><head><meta charset="utf-8"><title>${escapeHtml(employee.full_name)} - OMNeXa Visiting Card</title><style>
       @page{size:A4 portrait;margin:0}
       *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-      html,body{width:210mm;height:297mm;margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif}
-      .sheet{position:relative;width:210mm;height:297mm;page-break-after:always;break-after:page}
+      html,body{width:210mm;height:280mm;margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif}
+      .sheet{position:relative;width:210mm;height:280mm;overflow:hidden;page-break-after:always;break-after:page}
       .sheet:last-child{page-break-after:auto;break-after:auto}
       .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:90mm;height:54mm;overflow:hidden;background:radial-gradient(circle at 42% 15%,#163e75 0,#071b38 38%,#031126 72%,#020b18 100%);color:#fff}
       .card:before{content:"";position:absolute;inset:0;background:linear-gradient(130deg,transparent 0 45%,rgba(235,173,63,.12) 60%,transparent 75%);pointer-events:none}
@@ -67,7 +71,7 @@ export default function CardPanel({ employee }: { employee: Employee }) {
       .contact{display:flex;align-items:baseline;gap:1.2mm;min-width:0;font-size:6.3pt;line-height:1.16}
       .contact b{flex:0 0 4mm;color:#efb44b}
       .contact span{min-width:0;overflow-wrap:anywhere;word-break:break-word}
-      .linkedin{font-size:5.7pt;line-height:1.1}
+      .linkedin{font-size:5.7pt;line-height:1.1;align-items:center}.linkedin-icon{display:block;flex:0 0 3mm;width:3mm;height:3mm}
       .back{display:grid;grid-template-columns:42% 58%;padding:4mm}
       .backbrand{display:flex;flex-direction:column;justify-content:center;align-items:center;padding-right:3mm;border-right:.35mm solid rgba(232,176,67,.75);text-align:center}
       .backbrand img{width:100%;max-height:34mm;object-fit:cover;object-position:50% 16%}
@@ -151,7 +155,7 @@ export default function CardPanel({ employee }: { employee: Employee }) {
               {employee.whatsapp_number && <div style={previewContactStyle}><span aria-hidden="true">◉</span><span style={valueStyle}>{employee.whatsapp_number}</span></div>}
               <div style={previewContactStyle}><span aria-hidden="true">◎</span><span style={valueStyle}>www.omnexagoc.com</span></div>
               {employee.work_email && <div style={previewContactStyle}><span aria-hidden="true">@</span><span style={valueStyle}>{employee.work_email}</span></div>}
-              {employee.linkedin_url && <div style={{ ...previewContactStyle, fontSize: "clamp(5px, .68vw, 9px)" }}><span aria-hidden="true">in</span><span style={valueStyle}>{linkedInDisplay(employee.linkedin_url)}</span></div>}
+              {employee.linkedin_url && <div style={{ ...previewContactStyle, fontSize: "clamp(5px, .68vw, 9px)", alignItems: "center" }}><svg width="16" height="16" viewBox="0 0 16 16" role="img" aria-label="LinkedIn"><rect width="16" height="16" rx="2" fill="#0A66C2" /><text x="8" y="12" textAnchor="middle" fontFamily="Arial, Helvetica, sans-serif" fontSize="10" fontWeight="700" fill="#fff">in</text></svg><span style={valueStyle}>{linkedInDisplay(employee.linkedin_url)}</span></div>}
             </div>
           </div>
         </div>

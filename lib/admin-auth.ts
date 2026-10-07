@@ -85,6 +85,15 @@ export function isAllowedAdmin(emailInput: string): boolean {
   return allowList.length === 0 ? true : allowList.includes(email);
 }
 
+export function isAllowedHrApprover(emailInput: string): boolean {
+  const email = emailInput.trim().toLowerCase();
+  const allowList = (process.env.OMNEXA_HR_APPROVER_EMAILS || "dhiraj.kums@gmail.com")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+  return allowList.includes(email);
+}
+
 export function makeEmployeeId(name: string): string {
   const initials = name
     .split(/\s+/)

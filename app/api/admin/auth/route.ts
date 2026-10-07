@@ -8,6 +8,7 @@ import {
   AdminChallenge,
   hashCode,
   isAllowedAdmin,
+  isAllowedHrApprover,
   safeCodeMatch,
   signToken,
   verifyToken
@@ -58,7 +59,7 @@ export async function POST(request: Request) {
 
     if (action === "request") {
       const email = String(body.email || "").trim().toLowerCase();
-      if (!isAllowedAdmin(email)) {
+      if (!isAllowedAdmin(email) && !isAllowedHrApprover(email)) {
         return NextResponse.json({ error: "This account is not authorised for OMNeXa Admin." }, { status: 403 });
       }
 
@@ -101,7 +102,7 @@ export async function POST(request: Request) {
       }
 
       const challenge = verifyToken<AdminChallenge>(jar.get(ADMIN_CHALLENGE_COOKIE)?.value);
-      if (!challenge || !isAllowedAdmin(challenge.email)) {
+      if (!challenge || (!isAllowedAdmin(challenge.email) && !isAllowedHrApprover(challenge.email))) {
         return NextResponse.json({ error: "The login request has expired. Request a new code." }, { status: 401 });
       }
 
@@ -116,7 +117,7 @@ export async function POST(request: Request) {
         cookieOptions(8 * 60 * 60)
       );
       jar.set(ADMIN_CHALLENGE_COOKIE, "", cookieOptions(0));
-      return NextResponse.json({ ok: true });
+      return NextResponse.json({ ok: true, role: isAllowedHrApprover(challenge.email) ? "hr_approver" : "admin" });
     }
 
     return NextResponse.json({ error: "Unsupported action." }, { status: 400 });

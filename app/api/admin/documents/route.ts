@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/admin-session";
-import { logDocument } from "@/lib/hr-store";
+import { listEmployees, logDocument } from "@/lib/hr-store";
 
 const allowedTypes = new Set(["nda", "offer", "exit", "service_certificate", "promotion"]);
 
@@ -17,6 +17,9 @@ export async function POST(request: Request) {
     if (!body.employee_ref || !body.document_type || !allowedTypes.has(body.document_type)) {
       return NextResponse.json({ error: "Employee and document type are required." }, { status: 400 });
     }
+    const employee = (await listEmployees()).find((row) => row.id === body.employee_ref);
+    if (!employee) return NextResponse.json({ error: "Employee record was not found." }, { status: 404 });
+    if (employee.workflow_stage !== "approved") return NextResponse.json({ error: "HR documents are available after screening and HR approval." }, { status: 409 });
     await logDocument(body.employee_ref, body.document_type, body.document_data || {}, admin);
     return NextResponse.json({ ok: true });
   } catch (error) {

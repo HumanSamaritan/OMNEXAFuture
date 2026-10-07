@@ -3,12 +3,16 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import CardPanel from "./CardPanel";
 import DocumentPanel from "./DocumentPanel";
+import HrWorkflowPanel from "./HrWorkflowPanel";
+import PayrollPanel from "./PayrollPanel";
 import styles from "./admin.module.css";
 import { api, suggestEmail } from "./admin-utils";
 import { blankEmployee, Employee, EmployeeForm, Tab } from "./types";
 
 const tabs: { id: Tab; label: string }[] = [
-  { id: "employees", label: "Employees & Email" },
+  { id: "employees", label: "Employees" },
+  { id: "screening", label: "Screening & approval" },
+  { id: "payroll", label: "Payroll" },
   { id: "card", label: "Visiting Card" },
   { id: "nda", label: "NDA" },
   { id: "offer", label: "Offer Letter" },
@@ -24,6 +28,7 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [workspaceResult, setWorkspaceResult] = useState<{ email: string; password: string } | null>(null);
+  const [editEmployee, setEditEmployee] = useState<Partial<Employee>>({});
 
   const selected = useMemo(
     () => employees.find((employee) => employee.id === selectedId) || null,
@@ -57,9 +62,29 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
       setEmployees((items) => [data.employee, ...items]);
       setSelectedId(data.employee.id);
       setForm(blankEmployee);
-      setMessage(`${data.employee.full_name} was added. You can now create the OMNeXa email account, visiting card and HR documents.`);
+      setMessage(`${data.employee.full_name} was added to the manual screening queue. Account creation and HR documents unlock after screening and HR approval.`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to create employee record.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function saveEmployeeDetails(event: FormEvent) {
+    event.preventDefault();
+    if (!selected) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      const data = await api<{ employee: Employee }>("/api/admin/employees", {
+        method: "PATCH",
+        body: JSON.stringify({ ...editEmployee, id: selected.id })
+      });
+      updateEmployeeInState(data.employee);
+      setEditEmployee(data.employee);
+      setMessage("Employee profile updated. Visiting cards and HR documents will use these saved details.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Unable to update employee details.");
     } finally {
       setBusy(false);
     }
@@ -125,7 +150,7 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
         {tab === "employees" && (
           <div className={styles.twoColumn}>
             <section className={styles.panel}>
-              <div className={styles.panelTitle}><div><p className={styles.eyebrow}>Employee master</p><h1>Add employee or intern</h1></div></div>
+              <div className={styles.panelTitle}><div><p className={styles.eyebrow}>Employee master</p><h1>Create employee record</h1></div></div>
               <form className={styles.formGrid} onSubmit={createEmployeeRecord}>
                 <label>Full legal name<input required value={form.full_name} onChange={(e) => updateName(e.target.value)} /></label>
                 <label>Employee ID <span className={styles.muted}>(optional)</span><input value={form.employee_id} onChange={(e) => setForm((current) => ({ ...current, employee_id: e.target.value }))} placeholder="Auto-generated if blank" /></label>
@@ -133,13 +158,14 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
                 <label>Personal email <span className={styles.muted}>(optional)</span><input type="email" value={form.personal_email} onChange={(e) => setForm((current) => ({ ...current, personal_email: e.target.value }))} /></label>
                 <label>Role in OMNeXa<input required value={form.role} onChange={(e) => setForm((current) => ({ ...current, role: e.target.value }))} placeholder="e.g. Product Intern, Director" /></label>
                 <label>Start date<input type="date" value={form.start_date} onChange={(e) => setForm((current) => ({ ...current, start_date: e.target.value }))} /></label>
+                <label>Work location / country<input value={form.work_location} onChange={(e) => setForm((current) => ({ ...current, work_location: e.target.value }))} placeholder="Singapore" /></label>
                 <label>LinkedIn path<input value={form.linkedin_url} onChange={(e) => setForm((current) => ({ ...current, linkedin_url: e.target.value }))} placeholder="https://www.linkedin.com/in/..." /></label>
                 <label>WhatsApp number<input value={form.whatsapp_number} onChange={(e) => setForm((current) => ({ ...current, whatsapp_number: e.target.value }))} placeholder="+65 ..." /></label>
                 <label>Phone number<input value={form.phone_number} onChange={(e) => setForm((current) => ({ ...current, phone_number: e.target.value }))} placeholder="+65 ..." /></label>
                 <label>Engagement<select value={form.engagement_type} onChange={(e) => setForm((current) => ({ ...current, engagement_type: e.target.value as "employee" | "intern" }))}><option value="employee">Employee</option><option value="intern">Intern</option></select></label>
                 {form.engagement_type === "intern" && <label className={styles.checkboxLabel}><input type="checkbox" checked={form.internship_paid} onChange={(e) => setForm((current) => ({ ...current, internship_paid: e.target.checked }))} />Paid internship</label>}
-                {(form.engagement_type === "employee" || form.internship_paid) && <><label>Compensation / stipend <span className={styles.muted}>(optional)</span><input type="number" min="0" step="0.01" value={form.compensation_amount} onChange={(e) => setForm((current) => ({ ...current, compensation_amount: e.target.value }))} /></label><label>Currency<input value={form.compensation_currency} onChange={(e) => setForm((current) => ({ ...current, compensation_currency: e.target.value.toUpperCase() }))} /></label></>}
-                <div className={styles.fullRow}><button className={styles.primaryButton} disabled={busy}>{busy ? "Creating…" : "Create employee record"}</button></div>
+                {(form.engagement_type === "employee" || form.internship_paid) && <><label>Compensation / stipend <span className={styles.muted}>(optional)</span><input type="number" min="0" step="0.01" value={form.compensation_amount} onChange={(e) => setForm((current) => ({ ...current, compensation_amount: e.target.value }))} /></label><label>Salary currency<select value={form.compensation_currency} onChange={(e) => setForm((current) => ({ ...current, compensation_currency: e.target.value }))}>{["SGD","USD","GBP","AUD","INR","MYR","IDR","EUR","THB","CAD","NZD","HKD","PHP","VND","JPY","KRW","CNY","AED","CHF","Other"].map((currency) => <option key={currency} value={currency}>{currency}</option>)}</select></label><label>Pay frequency<select value={form.pay_frequency} onChange={(e) => setForm((current) => ({ ...current, pay_frequency: e.target.value as EmployeeForm["pay_frequency"] }))}><option value="monthly">Monthly</option><option value="biweekly">Biweekly</option><option value="weekly">Weekly</option><option value="hourly">Hourly</option></select></label></>}
+                <label className={styles.checkboxLabel}><input type="checkbox" checked={form.screening_consent} onChange={(e) => setForm((current) => ({ ...current, screening_consent: e.target.checked }))} />Consent for pre-employment checks recorded</label><div className={styles.fullRow}><button className={styles.primaryButton} disabled={busy}>{busy ? "Creating…" : "Create employee record"}</button></div>
               </form>
             </section>
 
@@ -147,9 +173,9 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
               <div className={styles.panelTitle}><div><p className={styles.eyebrow}>Directory</p><h2>OMNeXa people</h2></div><span className={styles.count}>{employees.length}</span></div>
               <div className={styles.employeeList}>
                 {employees.map((employee) => (
-                  <button type="button" key={employee.id} className={`${styles.employeeRow} ${selectedId === employee.id ? styles.selectedRow : ""}`} onClick={() => { setSelectedId(employee.id); setWorkspaceResult(null); }}>
+                  <button type="button" key={employee.id} className={`${styles.employeeRow} ${selectedId === employee.id ? styles.selectedRow : ""}`} onClick={() => { setSelectedId(employee.id); setEditEmployee(employee); setWorkspaceResult(null); }}>
                     <div><strong>{employee.full_name}</strong><span>{employee.role}</span><small>{employee.employee_id} · {employee.work_email}</small></div>
-                    <div className={styles.statusGroup}><span className={employee.status === "active" ? styles.statusActive : styles.statusExited}>{employee.status}</span><span>{employee.workspace_account_status === "created" ? "Google ✓" : "Google pending"}</span></div>
+                    <div className={styles.statusGroup}><span className={employee.status === "active" ? styles.statusActive : employee.status === "exited" ? styles.statusExited : styles.muted}>{employee.status}</span><span>{employee.workflow_stage?.replaceAll("_", " ") || "review existing record"}</span></div>
                   </button>
                 ))}
                 {!employees.length && <p className={styles.empty}>No employee records yet.</p>}
@@ -157,9 +183,26 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
 
               {selected && (
                 <div className={styles.workspaceBox}>
+                  <h3>Employee profile</h3>
+                  <form className={styles.formGrid} onSubmit={saveEmployeeDetails}>
+                    <label>Full name<input required value={editEmployee.full_name ?? selected.full_name} onChange={(e) => setEditEmployee((current) => ({ ...current, full_name: e.target.value }))} /></label>
+                    <label>OMNeXa email<input required type="email" value={editEmployee.work_email ?? selected.work_email} onChange={(e) => setEditEmployee((current) => ({ ...current, work_email: e.target.value }))} /></label>
+                    <label>Role<input required value={editEmployee.role ?? selected.role} onChange={(e) => setEditEmployee((current) => ({ ...current, role: e.target.value }))} /></label>
+                    <label>Work location / country<input value={editEmployee.work_location ?? selected.work_location ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, work_location: e.target.value }))} /></label>
+                    <label>Start date<input type="date" value={editEmployee.start_date ?? selected.start_date ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, start_date: e.target.value }))} /></label>
+                    <label>Phone<input value={editEmployee.phone_number ?? selected.phone_number ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, phone_number: e.target.value }))} /></label>
+                    <label>WhatsApp<input value={editEmployee.whatsapp_number ?? selected.whatsapp_number ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, whatsapp_number: e.target.value }))} /></label>
+                    <label>LinkedIn URL<input value={editEmployee.linkedin_url ?? selected.linkedin_url ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, linkedin_url: e.target.value }))} /></label>
+                    <label>Salary / stipend<input type="number" min="0" step="0.01" value={editEmployee.compensation_amount ?? selected.compensation_amount ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_amount: e.target.value === "" ? null : Number(e.target.value) }))} /></label>
+                    <label>Currency<select value={editEmployee.compensation_currency ?? selected.compensation_currency ?? "SGD"} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_currency: e.target.value }))}>{["SGD","USD","GBP","AUD","INR","MYR","IDR","EUR","THB","CAD","NZD","HKD","PHP","VND","JPY","KRW","CNY","AED","CHF","Other"].map((currency) => <option key={currency} value={currency}>{currency}</option>)}</select></label>
+                    {(editEmployee.compensation_currency ?? selected.compensation_currency) === "Other" && <label>Other ISO currency code<input maxLength={3} value={editEmployee.compensation_currency === "Other" ? "" : editEmployee.compensation_currency ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_currency: e.target.value.toUpperCase() }))} placeholder="e.g. ZAR" /></label>}
+                    <label>Pay frequency<select value={editEmployee.pay_frequency ?? selected.pay_frequency ?? "monthly"} onChange={(e) => setEditEmployee((current) => ({ ...current, pay_frequency: e.target.value as Employee["pay_frequency"] }))}><option value="monthly">Monthly</option><option value="biweekly">Biweekly</option><option value="weekly">Weekly</option><option value="hourly">Hourly</option></select></label>
+                    <label className={styles.checkboxLabel}><input type="checkbox" checked={editEmployee.screening_consent ?? selected.screening_consent ?? false} onChange={(e) => setEditEmployee((current) => ({ ...current, screening_consent: e.target.checked }))} />Screening consent recorded</label>
+                    <div className={styles.fullRow}><button className={styles.primaryButton} disabled={busy}>{busy ? "Saving…" : "Save employee details"}</button></div>
+                  </form>
                   <h3>Google Workspace email account</h3>
                   <p>{selected.work_email}</p>
-                  <button className={styles.secondaryButton} disabled={busy || selected.workspace_account_status === "created"} onClick={() => void provisionWorkspace(selected)}>{selected.workspace_account_status === "created" ? "Account created" : busy ? "Creating…" : "Create Google account"}</button>
+                  <button className={styles.secondaryButton} disabled={busy || selected.workspace_account_status === "created" || selected.status !== "active"} onClick={() => void provisionWorkspace(selected)}>{selected.workspace_account_status === "created" ? "Account created" : selected.status !== "active" ? "Available after HR approval" : busy ? "Creating…" : "Create Google account"}</button>
                   <small>Requires one-time Google Workspace Admin API setup. The account is created with a temporary password that must be changed at first sign-in.</small>
                   {workspaceResult && workspaceResult.email === selected.work_email && <div className={styles.passwordBox}><strong>Temporary password — displayed once</strong><code>{workspaceResult.password}</code><small>Copy it now and share through a secure channel.</small></div>}
                 </div>
@@ -168,16 +211,20 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
           </div>
         )}
 
-        {tab !== "employees" && (
+        {["card","nda","offer","exit","promotion"].includes(tab) && (
           <section className={styles.selectorBar}>
-            <label>Employee<select value={selectedId} onChange={(e) => setSelectedId(e.target.value)}><option value="">Select employee</option>{employees.map((employee) => <option key={employee.id} value={employee.id}>{employee.full_name} — {employee.role}</option>)}</select></label>
+            <label>Employee<select value={selectedId} onChange={(e) => { setSelectedId(e.target.value); const person = employees.find((item) => item.id === e.target.value); if (person) setEditEmployee(person); }}><option value="">Select employee</option>{employees.map((employee) => <option key={employee.id} value={employee.id}>{employee.full_name} — {employee.role}</option>)}</select></label>
             {selected && <div><strong>{selected.employee_id}</strong><span>{selected.work_email}</span></div>}
           </section>
         )}
 
-        {tab === "card" && selected && <CardPanel employee={selected} />}
-        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
-        {tab !== "employees" && !selected && <section className={styles.emptyPanel}>Create or select an employee first.</section>}
+        {tab === "screening" && <HrWorkflowPanel employees={employees} onEmployeeUpdate={updateEmployeeInState} />}
+        {tab === "payroll" && <PayrollPanel employees={employees} />}
+        {tab === "card" && selected && selected.status === "active" && <CardPanel employee={selected} />}
+        {tab === "card" && selected && selected.status !== "active" && <section className={styles.emptyPanel}>Visiting cards are available after HR approval.</section>}
+        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage === "approved" && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
+        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage !== "approved" && <section className={styles.emptyPanel}>HR documents become available after manual screening and HR approval.</section>}
+        {["card","nda","offer","exit","promotion"].includes(tab) && !selected && <section className={styles.emptyPanel}>Create or select an employee first.</section>}
       </section>
     </main>
   );
