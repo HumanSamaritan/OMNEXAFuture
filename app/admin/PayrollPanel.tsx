@@ -6,7 +6,7 @@ import styles from "./admin.module.css";
 
 export default function PayrollPanel({ employees }: { employees: Employee[] }) {
   const [period, setPeriod] = useState(new Date().toISOString().slice(0, 7));
-  const rows = employees.filter((person) => person.status === "active" && person.workflow_stage !== "screening_pending" && person.workflow_stage !== "approval_pending" && person.workflow_stage !== "review_required" && person.compensation_amount != null);
+  const rows = employees.filter((person) => person.status === "active" && person.workflow_stage === "approved" && person.compensation_amount != null);
   const totals = useMemo(() => rows.reduce<Record<string, number>>((acc, person) => {
     const currency = person.compensation_currency || "SGD";
     acc[currency] = (acc[currency] || 0) + Number(person.compensation_amount || 0);
