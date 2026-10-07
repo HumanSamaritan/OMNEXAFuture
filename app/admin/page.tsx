@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import AdminPortal from "./AdminPortal";
-import { getAdminEmail } from "@/lib/admin-session";
+import { getAdminEmail, getHrApproverEmail } from "@/lib/admin-session";
 
 export const metadata: Metadata = {
   title: "OMNeXa People & HR",
@@ -22,5 +22,6 @@ export const metadata: Metadata = {
 
 export default async function AdminPage() {
   const adminEmail = await getAdminEmail();
-  return <AdminPortal initialAdminEmail={adminEmail} />;
+  const reviewerEmail = adminEmail ? null : await getHrApproverEmail();
+  return <AdminPortal initialAdminEmail={adminEmail || reviewerEmail} initialRole={adminEmail ? "admin" : reviewerEmail ? "hr_approver" : null} />;
 }
