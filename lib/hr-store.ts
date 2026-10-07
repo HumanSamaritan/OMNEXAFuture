@@ -19,7 +19,6 @@ export type EmployeeRecord = {
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
   approval_by?: string | null;
   approval_at?: string | null;
-  role: string;
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
   compensation_amount?: number | null;
@@ -58,6 +57,7 @@ type FirestoreDocument = {
 const EMPLOYEE_COLLECTION = "omnexa_hr_employees";
 const DOCUMENT_COLLECTION = "omnexa_hr_documents";
 const META_COLLECTION = "omnexa_hr_meta";
+const AUDIT_COLLECTION = "omnexa_hr_audit";
 const MIGRATION_DOCUMENT = "supabase_to_firestore_v1";
 
 function firebaseConfig() {
@@ -466,4 +466,23 @@ export async function logDocument(
     generated_at: new Date().toISOString()
   };
   await writeDocument(DOCUMENT_COLLECTION, id, record as unknown as Record<string, unknown>);
+}
+
+
+export async function recordHrAuditEvent(
+  employeeRef: string,
+  action: string,
+  actor: string,
+  changedFields: string[]
+): Promise<void> {
+  await ensureFirestoreReady();
+  const event = {
+    id: crypto.randomUUID(),
+    employee_ref: employeeRef,
+    action,
+    actor,
+    changed_fields: changedFields,
+    occurred_at: new Date().toISOString()
+  };
+  await writeDocument(AUDIT_COLLECTION, event.id, event);
 }
