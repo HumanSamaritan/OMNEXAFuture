@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/admin-session";
-import { createEmployee, listEmployees, updateEmployee } from "@/lib/hr-store";
+import { createEmployee, listEmployees, recordHrAuditEvent, updateEmployee } from "@/lib/hr-store";
 import { makeEmployeeId, suggestWorkEmail } from "@/lib/admin-auth";
 
 function clean(value: unknown, max = 300): string {
@@ -97,7 +97,10 @@ export async function PATCH(request: Request) {
     if ("compensation_amount" in body) allowed.compensation_amount = numberOrNull(body.compensation_amount);
     if ("screening_consent" in body) allowed.screening_consent = body.screening_consent === true;
 
+    const before = (await listEmployees()).find((row) => row.id === id);
     const employee = await updateEmployee(id, allowed);
+    const changedFields = Object.keys(allowed).filter((field) => JSON.stringify((before as Record<string, unknown> | undefined)?.[field]) !== JSON.stringify((employee as unknown as Record<string, unknown>)[field]));
+    if (changedFields.length) await recordHrAuditEvent(id, "profile_updated", admin, changedFields);
     return NextResponse.json({ employee });
   } catch (error) {
     console.error("Admin employee update error", error instanceof Error ? error.message : "Unknown error");
