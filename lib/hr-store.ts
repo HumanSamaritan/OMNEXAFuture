@@ -26,6 +26,12 @@ export type EmployeeRecord = {
   exit_reviewed_at?: string | null;
   exit_review_note?: string | null;
   exit_request_last_working_date?: string | null;
+  status_correction_status?: "not_requested" | "pending" | "approved" | "returned";
+  status_correction_requested_by?: string | null;
+  status_correction_requested_at?: string | null;
+  status_correction_reviewed_by?: string | null;
+  status_correction_reviewed_at?: string | null;
+  status_correction_reason?: string | null;
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
   compensation_amount?: number | null;
