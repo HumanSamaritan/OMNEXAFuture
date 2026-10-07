@@ -13,6 +13,7 @@ export type EmployeeRecord = {
   work_location?: string | null;
   pay_frequency?: "monthly" | "biweekly" | "weekly" | "hourly" | null;
   workflow_stage?: "screening_pending" | "approval_pending" | "approved" | "review_required";
+  screening_consent?: boolean;
   screening_status?: "not_started" | "in_progress" | "clear" | "potential_match" | "unable_to_complete";
   screening_checks?: Array<{ check_type: string; source_name: string; source_url: string; checked_at: string; outcome: "no_match" | "potential_match" | "unable_to_check" | "not_applicable"; note?: string }>;
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
@@ -406,6 +407,7 @@ export async function createEmployee(input: Partial<EmployeeRecord>): Promise<Em
     phone_number: input.phone_number ?? null,
     role: String(input.role || "").trim(),
     work_location: input.work_location ?? null,
+    screening_consent: Boolean(input.screening_consent),
     pay_frequency: input.pay_frequency ?? "monthly",
     workflow_stage: input.workflow_stage,
     screening_status: input.screening_status,
