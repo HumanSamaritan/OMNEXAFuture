@@ -62,7 +62,7 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
       setEmployees((items) => [data.employee, ...items]);
       setSelectedId(data.employee.id);
       setForm(blankEmployee);
-      setMessage(`${data.employee.full_name} was added. You can now create the OMNeXa email account, visiting card and HR documents.`);
+      setMessage(`${data.employee.full_name} was added to the manual screening queue. Account creation and HR documents unlock after screening and HR approval.`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to create employee record.");
     } finally {
@@ -224,7 +224,7 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
         {tab === "card" && selected && selected.status !== "active" && <section className={styles.emptyPanel}>Visiting cards are available after HR approval.</section>}
         {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage === "approved" && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
         {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage !== "approved" && <section className={styles.emptyPanel}>HR documents become available after manual screening and HR approval.</section>}
-        {tab !== "employees" && !selected && <section className={styles.emptyPanel}>Create or select an employee first.</section>}
+        {["card","nda","offer","exit","promotion"].includes(tab) && !selected && <section className={styles.emptyPanel}>Create or select an employee first.</section>}
       </section>
     </main>
   );
