@@ -52,6 +52,6 @@ The named reviewer signs in with the approved email and a one-time code. The rev
 
 ## Screening categories configured in OMNeXa HR
 
-The current checklist covers Singapore / UN sanctions, OFAC, UK, EU and Australia sanctions, PEP/adverse-media research, and lawful criminal/fraud/conviction checks. Add another jurisdiction only after HR documents its official source, access requirements, permissible use, consent language, retention rule, and reviewer procedure.
+The current checklist covers Singapore / UN sanctions, OFAC, UK, EU and Australia sanctions, FATF jurisdiction context, PEP/adverse-media research, and lawful criminal/fraud/conviction checks. Add another jurisdiction only after HR documents its official source, access requirements, permissible use, consent language, retention rule, and reviewer procedure.
 
 The application does not connect to these sites or scrape their data. HR performs each search manually and records the outcome.
