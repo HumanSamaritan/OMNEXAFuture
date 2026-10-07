@@ -23,18 +23,27 @@ type ExitRequest = {
   exit_requested_at: string;
   last_working_date: string;
 };
+type StatusCorrection = {
+  id: string;
+  employee_id: string;
+  full_name: string;
+  role: string;
+  requested_by: string;
+  requested_at: string;
+  reason: string;
+};
 
 export default function HrApprovalPortal({ reviewer, onLogout }: { reviewer: string; onLogout: () => void }) {
   const [employees, setEmployees] = useState<ReviewPerson[]>([]);
-  const [exits, setExits] = useState<ExitRequest[]>([]);
+  const [exits, setExits] = useState<ExitRequest[]>([]);\n  const [corrections, setCorrections] = useState<StatusCorrection[]>([]);
   const [busyId, setBusyId] = useState("");
   const [message, setMessage] = useState("");
 
   async function load() {
     try {
-      const data = await api<{ employees: ReviewPerson[]; exits: ExitRequest[] }>("/api/admin/approvals", { method: "GET" });
+      const data = await api<{ employees: ReviewPerson[]; exits: ExitRequest[]; corrections: StatusCorrection[] }>("/api/admin/approvals", { method: "GET" });
       setEmployees(data.employees || []);
-      setExits(data.exits || []);
+      setExits(data.exits || []);\n      setCorrections(data.corrections || []);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to load approvals.");
     }
@@ -42,7 +51,7 @@ export default function HrApprovalPortal({ reviewer, onLogout }: { reviewer: str
 
   useEffect(() => { void load(); }, []);
 
-  async function decide(id: string, name: string, decision: "approve" | "reject", kind: "employee" | "exit") {
+  async function decide(id: string, name: string, decision: "approve" | "reject", kind: "employee" | "exit" | "correction") {
     const note = decision === "reject" ? window.prompt("Reason to return this request for follow-up?") : "";
     if (decision === "reject" && !note?.trim()) return;
     setBusyId(id);
@@ -95,6 +104,17 @@ export default function HrApprovalPortal({ reviewer, onLogout }: { reviewer: str
             </div>
           </article>)}
           {!exits.length && <p className={styles.empty}>No exit requests await approval.</p>}
+        </section>
+        <section className={styles.panel} style={{ marginTop: 20 }}>
+          <div className={styles.panelTitle}><div><p className={styles.eyebrow}>Employment record correction</p><h1>Pending status corrections</h1></div><span className={styles.count}>{corrections.length}</span></div>
+          {corrections.map((item) => <article className={styles.employeeRow} key={item.id} style={{ marginTop: 12, cursor: "default" }}>
+            <div><strong>{item.full_name}</strong><span>{item.employee_id} · {item.role}</span><small>Requested by: {item.requested_by} · {item.requested_at ? new Date(item.requested_at).toLocaleString() : ""}</small><small>Reason: {item.reason}</small></div>
+            <div className={styles.headerActions}>
+              <button className={styles.primaryButton} disabled={busyId === item.id} onClick={() => void decide(item.id, item.full_name, "approve", "correction")}>{busyId === item.id ? "Saving…" : "Restore active status"}</button>
+              <button className={styles.secondaryButton} disabled={busyId === item.id} onClick={() => void decide(item.id, item.full_name, "reject", "correction")}>Return</button>
+            </div>
+          </article>)}
+          {!corrections.length && <p className={styles.empty}>No status corrections await approval.</p>}
         </section>
       </section>
     </main>
