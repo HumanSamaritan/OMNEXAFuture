@@ -20,6 +20,7 @@ export default function DocumentPanel({
   const [promotionComp, setPromotionComp] = useState("");
   const [promotionCurrency, setPromotionCurrency] = useState(employee.compensation_currency || "SGD");
   const [message, setMessage] = useState("");
+  const [correctionReason, setCorrectionReason] = useState("");
 
   async function logDocument(type: "nda" | "offer" | "exit" | "service_certificate" | "promotion", data: Record<string, unknown>) {
     await api("/api/admin/documents", {
@@ -76,22 +77,57 @@ export default function DocumentPanel({
   }
 
   async function exitLetter() {
-    if (!lastWorkingDate) {
-      setMessage("Enter the last working date first.");
+    if (employee.status === "active") {
+      if (!lastWorkingDate) {
+        setMessage("Enter the proposed last working date first.");
+        return;
+      }
+      try {
+        const result = await api<{ employee: Employee }>("/api/admin/exits", {
+          method: "POST",
+          body: JSON.stringify({ id: employee.id, last_working_date: lastWorkingDate })
+        });
+        onEmployeeUpdate(result.employee);
+        setMessage("Exit request submitted. The employee remains active until a different HR approver approves it.");
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Unable to submit the exit request.");
+      }
       return;
     }
-    const updated = await patchEmployee({ last_working_date: lastWorkingDate, status: "exited" });
-    openLetter(`Exit Letter - ${updated.full_name}`, `
+
+    if (employee.status !== "exited" || employee.exit_request_status !== "approved") {
+      setMessage("An approved exit record is required before generating an exit letter.");
+      return;
+    }
+    const effectiveDate = employee.last_working_date || lastWorkingDate;
+    openLetter(`Exit Letter - ${employee.full_name}`, `
       <h1>Resignation Acceptance / Exit Confirmation</h1>
-      <p>Dear ${escapeHtml(updated.full_name)},</p>
-      <p>This confirms acceptance of your resignation from the role of <strong>${escapeHtml(updated.role)}</strong> with OMNeXa Pte. Ltd.</p>
-      <div class="meta"><strong>ID:</strong> ${escapeHtml(updated.employee_id)}<br><strong>Joining date:</strong> ${escapeHtml(displayDate(updated.start_date))}<br><strong>Last working date:</strong> ${escapeHtml(displayDate(lastWorkingDate))}</div>
+      <p>Dear ${escapeHtml(employee.full_name)},</p>
+      <p>This confirms acceptance of your resignation from the role of <strong>${escapeHtml(employee.role)}</strong> with OMNeXa Pte. Ltd.</p>
+      <div class="meta"><strong>ID:</strong> ${escapeHtml(employee.employee_id)}<br><strong>Joining date:</strong> ${escapeHtml(displayDate(employee.start_date))}<br><strong>Last working date:</strong> ${escapeHtml(displayDate(effectiveDate))}</div>
       <p>Please complete the agreed handover and return or securely delete OMNeXa/client assets, credentials, data and confidential material. Continuing confidentiality and information-security obligations remain applicable after exit.</p>
       <p>We thank you for your contribution and wish you well.</p>
       <div class="sign"><div><div class="line">For OMNeXa Pte. Ltd.<br>Authorised Signatory / Date</div></div><div></div></div>
     `);
-    await logDocument("exit", { last_working_date: lastWorkingDate, role: updated.role });
-    setMessage("Employee marked exited and exit letter generated.");
+    await logDocument("exit", { last_working_date: effectiveDate, role: employee.role });
+    setMessage("Approved exit letter generated.");
+  }
+
+  async function requestStatusCorrection() {
+    if (!correctionReason.trim()) {
+      setMessage("Enter why this exited status should be corrected.");
+      return;
+    }
+    try {
+      const result = await api<{ employee: Employee }>("/api/admin/status-corrections", {
+        method: "POST",
+        body: JSON.stringify({ id: employee.id, reason: correctionReason.trim() })
+      });
+      onEmployeeUpdate(result.employee);
+      setMessage("Status correction submitted. A different HR approver must confirm it before the record becomes active.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Unable to submit the status correction.");
+    }
   }
 
   function serviceCertificate() {
@@ -134,7 +170,30 @@ export default function DocumentPanel({
 
   if (tab === "offer") return <section className={styles.documentPanel}><p className={styles.eyebrow}>Onboarding</p><h1>{employee.engagement_type === "intern" ? "Internship offer letter" : "Employment offer letter"}</h1><div className={styles.summaryGrid}><div><span>Role</span><strong>{employee.role}</strong></div><div><span>Start</span><strong>{displayDate(employee.start_date)}</strong></div><div><span>Type</span><strong>{employee.engagement_type === "intern" ? employee.internship_paid ? "Paid internship" : "Unpaid internship" : "Employment"}</strong></div><div><span>Compensation</span><strong>{employee.compensation_amount ? `${employee.compensation_currency || "SGD"} ${employee.compensation_amount}` : "Not entered"}</strong></div></div><div className={styles.warning}>Review statutory terms for the employee/intern's jurisdiction before issue.</div><button className={styles.primaryButton} onClick={offer}>Generate offer / Save as PDF</button></section>;
 
-  if (tab === "exit") return <section className={styles.documentPanel}><p className={styles.eyebrow}>Offboarding</p><h1>Exit letter & service certificate</h1><label className={styles.singleField}>Last working date<input type="date" value={lastWorkingDate} onChange={(e) => setLastWorkingDate(e.target.value)} /></label>{message && <div className={styles.banner}>{message}</div>}<div className={styles.buttonRow}><button className={styles.primaryButton} onClick={() => void exitLetter()}>Generate exit letter & mark exited</button><button className={styles.secondaryButton} onClick={serviceCertificate}>Generate service certificate</button></div></section>;
+  if (tab === "exit") return <section className={styles.documentPanel}>
+    <p className={styles.eyebrow}>Offboarding · maker-checker</p>
+    <h1>{employee.status === "exited" ? "Exit record" : "Submit exit request"}</h1>
+    {employee.status === "active" && <>
+      {employee.exit_request_status === "pending" ? <div className={styles.notice}>Exit request is awaiting approval from a different HR reviewer. The employee remains active until approval.</div> : <>
+        <label className={styles.singleField}>Proposed last working date<input type="date" value={lastWorkingDate} onChange={(e) => setLastWorkingDate(e.target.value)} /></label>
+        {employee.exit_request_status === "returned" && <div className={styles.notice}>The previous request was returned. Review the dates and resubmit if needed.</div>}
+        <button className={styles.primaryButton} onClick={() => void exitLetter()}>Submit exit request for approval</button>
+      </>}
+    </>}
+    {employee.status === "exited" && employee.exit_request_status === "approved" && <>
+      <div className={styles.notice}>Exit approved by {employee.exit_reviewed_by || "HR reviewer"} on {displayDate(employee.exit_reviewed_at)}.</div>
+      {message && <div className={styles.banner}>{message}</div>}
+      <div className={styles.buttonRow}><button className={styles.primaryButton} onClick={() => void exitLetter()}>Generate approved exit letter</button><button className={styles.secondaryButton} onClick={serviceCertificate}>Generate service certificate</button></div>
+    </>}
+    {employee.status === "exited" && employee.exit_request_status !== "approved" && <>
+      <div className={styles.notice}>This employee is marked exited without an approved exit request. Submit a status correction for a different HR approver to review.</div>
+      {employee.status_correction_status === "pending" ? <p>Status correction is awaiting a different HR approver.</p> : <>
+        <label className={styles.singleField}>Correction reason<input value={correctionReason} onChange={(e) => setCorrectionReason(e.target.value)} placeholder="Explain why the exited status is incorrect" /></label>
+        <button className={styles.primaryButton} onClick={() => void requestStatusCorrection()}>Request correction to active</button>
+      </>}
+    </>}
+    {message && employee.status !== "exited" && <div className={styles.banner}>{message}</div>}
+  </section>;
 
   return <section className={styles.documentPanel}><p className={styles.eyebrow}>Role change</p><h1>Promotion letter</h1><div className={styles.formGrid}><label>Current role<input value={employee.role} readOnly /></label><label>New role<input value={promotionRole} onChange={(e) => setPromotionRole(e.target.value)} /></label><label>Effective date<input type="date" value={promotionDate} onChange={(e) => setPromotionDate(e.target.value)} /></label><label>Revised compensation <span className={styles.muted}>(optional)</span><input type="number" min="0" step="0.01" value={promotionComp} onChange={(e) => setPromotionComp(e.target.value)} /></label><label>Currency<input value={promotionCurrency} onChange={(e) => setPromotionCurrency(e.target.value.toUpperCase())} /></label></div>{message && <div className={styles.banner}>{message}</div>}<button className={styles.primaryButton} onClick={() => void promotion()}>Generate promotion letter & update role</button></section>;
 }
