@@ -11,6 +11,7 @@ const sources = [
   { id: "uk", label: "UK Sanctions List", url: "https://search-uk-sanctions-list.service.gov.uk/" },
   { id: "eu", label: "EU financial sanctions", url: "https://webgate.ec.europa.eu/fsd/fsf" },
   { id: "au", label: "Australia DFAT consolidated list", url: "https://www.dfat.gov.au/international-relations/security/sanctions/consolidated-list" },
+  { id: "fatf_jurisdiction", label: "FATF jurisdiction statement (context only)", url: "https://www.fatf-gafi.org/en/topics/high-risk-and-other-monitored-jurisdictions.html" },
   { id: "pep_media", label: "PEP / adverse media (record the source searched)", url: "" },
   { id: "criminal_fraud", label: "Criminal / fraud / conviction check (where lawful)", url: "" }
 ] as const;
