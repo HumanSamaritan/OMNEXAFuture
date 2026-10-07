@@ -10,6 +10,15 @@ export type EmployeeRecord = {
   whatsapp_number?: string | null;
   phone_number?: string | null;
   role: string;
+  work_location?: string | null;
+  pay_frequency?: "monthly" | "biweekly" | "weekly" | "hourly" | null;
+  workflow_stage?: "screening_pending" | "approval_pending" | "approved" | "review_required";
+  screening_status?: "not_started" | "in_progress" | "clear" | "potential_match" | "unable_to_complete";
+  screening_checks?: Array<{ check_type: string; source_name: string; source_url: string; checked_at: string; outcome: "no_match" | "potential_match" | "unable_to_check" | "not_applicable"; note?: string }>;
+  approval_status?: "not_requested" | "pending" | "approved" | "rejected";
+  approval_by?: string | null;
+  approval_at?: string | null;
+  role: string;
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
   compensation_amount?: number | null;
@@ -396,13 +405,21 @@ export async function createEmployee(input: Partial<EmployeeRecord>): Promise<Em
     whatsapp_number: input.whatsapp_number ?? null,
     phone_number: input.phone_number ?? null,
     role: String(input.role || "").trim(),
+    work_location: input.work_location ?? null,
+    pay_frequency: input.pay_frequency ?? "monthly",
+    workflow_stage: input.workflow_stage,
+    screening_status: input.screening_status,
+    screening_checks: input.screening_checks,
+    approval_status: input.approval_status,
+    approval_by: input.approval_by,
+    approval_at: input.approval_at,
     engagement_type: input.engagement_type === "intern" ? "intern" : "employee",
     internship_paid: Boolean(input.internship_paid),
     compensation_amount: input.compensation_amount ?? null,
     compensation_currency: input.compensation_currency ?? "SGD",
     start_date: input.start_date ?? null,
     last_working_date: input.last_working_date ?? null,
-    status: input.status === "exited" ? "exited" : "active",
+    status: input.status === "exited" || input.status === "pending" ? input.status : "active",
     workspace_account_status:
       input.workspace_account_status === "created" || input.workspace_account_status === "manual"
         ? input.workspace_account_status
