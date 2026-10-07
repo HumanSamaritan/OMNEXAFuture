@@ -222,8 +222,9 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
         {tab === "payroll" && <PayrollPanel employees={employees} />}
         {tab === "card" && selected && selected.status === "active" && <CardPanel employee={selected} />}
         {tab === "card" && selected && selected.status !== "active" && <section className={styles.emptyPanel}>Visiting cards are available after HR approval.</section>}
-        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage === "approved" && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
-        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage !== "approved" && <section className={styles.emptyPanel}>HR documents become available after manual screening and HR approval.</section>}
+        {tab === "exit" && selected && <DocumentPanel tab="exit" employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
+        {(tab === "nda" || tab === "offer" || tab === "promotion") && selected && selected.workflow_stage === "approved" && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
+        {(tab === "nda" || tab === "offer" || tab === "promotion") && selected && selected.workflow_stage !== "approved" && <section className={styles.emptyPanel}>This document is available after onboarding screening and HR approval.</section>}
         {["card","nda","offer","exit","promotion"].includes(tab) && !selected && <section className={styles.emptyPanel}>Create or select an employee first.</section>}
       </section>
     </main>
