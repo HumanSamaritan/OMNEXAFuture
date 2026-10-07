@@ -2,11 +2,13 @@
 
 import { FormEvent, useState } from "react";
 import AdminDashboard from "./AdminDashboard";
+import HrApprovalPortal from "./HrApprovalPortal";
 import styles from "./admin.module.css";
 import { api } from "./admin-utils";
 
-export default function AdminPortal({ initialAdminEmail }: { initialAdminEmail: string | null }) {
+export default function AdminPortal({ initialAdminEmail, initialRole }: { initialAdminEmail: string | null; initialRole: "admin" | "hr_approver" | null }) {
   const [adminEmail, setAdminEmail] = useState(initialAdminEmail);
+  const [role, setRole] = useState(initialRole);
   const [loginEmail, setLoginEmail] = useState(initialAdminEmail || "");
   const [loginCode, setLoginCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -23,7 +25,7 @@ export default function AdminPortal({ initialAdminEmail }: { initialAdminEmail: 
         body: JSON.stringify({ action: "request", email: loginEmail })
       });
       setCodeSent(true);
-      setMessage("A one-time login code was sent to your authorised OMNeXa email.");
+      setMessage("A one-time login code was sent to your authorised email.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to send login code.");
     } finally {
@@ -36,11 +38,12 @@ export default function AdminPortal({ initialAdminEmail }: { initialAdminEmail: 
     setBusy(true);
     setMessage("");
     try {
-      await api("/api/admin/auth", {
+      const result = await api<{ role: "admin" | "hr_approver" }>("/api/admin/auth", {
         method: "POST",
         body: JSON.stringify({ action: "verify", code: loginCode })
       });
       setAdminEmail(loginEmail.trim().toLowerCase());
+      setRole(result.role);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to verify login code.");
     } finally {
@@ -51,13 +54,13 @@ export default function AdminPortal({ initialAdminEmail }: { initialAdminEmail: 
   async function logout() {
     await api("/api/admin/auth", { method: "POST", body: JSON.stringify({ action: "logout" }) }).catch(() => undefined);
     setAdminEmail(null);
+    setRole(null);
     setCodeSent(false);
     setLoginCode("");
   }
 
-  if (adminEmail) {
-    return <AdminDashboard adminEmail={adminEmail} onLogout={logout} />;
-  }
+  if (adminEmail && role === "hr_approver") return <HrApprovalPortal reviewer={adminEmail} onLogout={logout} />;
+  if (adminEmail && role === "admin") return <AdminDashboard adminEmail={adminEmail} onLogout={logout} />;
 
   return (
     <main className={styles.loginPage}>
@@ -67,10 +70,10 @@ export default function AdminPortal({ initialAdminEmail }: { initialAdminEmail: 
           <div><strong>OMNeXa People &amp; HR</strong><span>Private employee lifecycle workspace</span></div>
         </div>
         <h1>Authorised HR access only</h1>
-        <p>Employee records, identity assets and HR documents are available only to approved OMNeXa administrators. This workspace is not part of the public website.</p>
+        <p>Employee records and HR documents are restricted to authorised administrators. The HR reviewer sees only the approval queue. This workspace is not part of the public website.</p>
         {!codeSent ? (
           <form onSubmit={requestCode} className={styles.stack}>
-            <label>Authorised OMNeXa login ID<input type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} placeholder="name@omnexagoc.com" required /></label>
+            <label>Authorised administrator or HR reviewer email<input type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} placeholder="name@omnexagoc.com" required /></label>
             <button className={styles.primaryButton} disabled={busy}>{busy ? "Sending…" : "Send one-time code"}</button>
           </form>
         ) : (
