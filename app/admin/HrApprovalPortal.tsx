@@ -35,7 +35,8 @@ type StatusCorrection = {
 
 export default function HrApprovalPortal({ reviewer, onLogout }: { reviewer: string; onLogout: () => void }) {
   const [employees, setEmployees] = useState<ReviewPerson[]>([]);
-  const [exits, setExits] = useState<ExitRequest[]>([]);\n  const [corrections, setCorrections] = useState<StatusCorrection[]>([]);
+  const [exits, setExits] = useState<ExitRequest[]>([]);
+  const [corrections, setCorrections] = useState<StatusCorrection[]>([]);
   const [busyId, setBusyId] = useState("");
   const [message, setMessage] = useState("");
 
@@ -43,7 +44,8 @@ export default function HrApprovalPortal({ reviewer, onLogout }: { reviewer: str
     try {
       const data = await api<{ employees: ReviewPerson[]; exits: ExitRequest[]; corrections: StatusCorrection[] }>("/api/admin/approvals", { method: "GET" });
       setEmployees(data.employees || []);
-      setExits(data.exits || []);\n      setCorrections(data.corrections || []);
+      setExits(data.exits || []);
+      setCorrections(data.corrections || []);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to load approvals.");
     }
@@ -59,8 +61,10 @@ export default function HrApprovalPortal({ reviewer, onLogout }: { reviewer: str
     try {
       await api("/api/admin/approvals", { method: "POST", body: JSON.stringify({ id, decision, note, kind }) });
       if (kind === "exit") setExits((current) => current.filter((item) => item.id !== id));
+      else if (kind === "correction") setCorrections((current) => current.filter((item) => item.id !== id));
       else setEmployees((current) => current.filter((item) => item.id !== id));
-      setMessage(name + (decision === "approve" ? (kind === "exit" ? " exit approved and recorded." : " screening and onboarding approved.") : " returned for follow-up."));
+      const label = kind === "exit" ? " exit" : kind === "correction" ? " status correction" : " screening and onboarding";
+      setMessage(name + (decision === "approve" ? label + " approved." : label + " returned for follow-up."));
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to save the decision.");
     } finally {
