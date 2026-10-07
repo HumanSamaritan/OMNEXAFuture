@@ -34,7 +34,18 @@ export async function GET() {
         exit_requested_at: row.exit_requested_at || "",
         last_working_date: row.exit_request_last_working_date || ""
       }));
-    return NextResponse.json({ employees, exits });
+    const corrections = rows
+      .filter((row) => row.status === "exited" && row.status_correction_status === "pending")
+      .map((row) => ({
+        id: row.id,
+        employee_id: row.employee_id,
+        full_name: row.full_name,
+        role: row.role,
+        requested_by: row.status_correction_requested_by || "",
+        requested_at: row.status_correction_requested_at || "",
+        reason: row.status_correction_reason || ""
+      }));
+    return NextResponse.json({ employees, exits, corrections });
   } catch (error) {
     console.error("HR approval queue error", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: "Unable to load the HR approval queue." }, { status: 500 });
@@ -56,6 +67,25 @@ export async function POST(request: Request) {
     const employee = (await listEmployees()).find((row) => row.id === id);
     if (!employee) return NextResponse.json({ error: "Employee record was not found." }, { status: 404 });
     if (decision === "reject" && !note) return NextResponse.json({ error: "Add a reason before returning the request." }, { status: 400 });
+
+    if (kind === "correction") {
+      if (employee.status !== "exited" || employee.exit_request_status === "approved" || employee.status_correction_status !== "pending") {
+        return NextResponse.json({ error: "This status correction is no longer awaiting approval." }, { status: 409 });
+      }
+      if ((employee.status_correction_requested_by || "").toLowerCase() === reviewer.toLowerCase()) {
+        return NextResponse.json({ error: "The correction maker cannot approve their own request. A different HR approver is required." }, { status: 403 });
+      }
+      const approved = decision === "approve";
+      const updated = await updateEmployee(id, {
+        status: approved ? "active" : "exited",
+        status_correction_status: approved ? "approved" : "returned",
+        status_correction_reviewed_by: reviewer,
+        status_correction_reviewed_at: new Date().toISOString(),
+        workflow_stage: approved ? "review_required" : employee.workflow_stage
+      });
+      await recordHrAuditEvent(id, approved ? "employment_status_correction_approved" : "employment_status_correction_returned", reviewer, ["status", "status_correction_status", "workflow_stage"]);
+      return NextResponse.json({ ok: true, kind: "correction", employee: { id: updated.id, status: updated.status, status_correction_status: updated.status_correction_status } });
+    }
 
     if (kind === "exit") {
       if (employee.exit_request_status !== "pending" || employee.status !== "active") {
