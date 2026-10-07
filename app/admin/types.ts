@@ -11,6 +11,7 @@ export type Employee = {
   work_location?: string | null;
   pay_frequency?: "monthly" | "biweekly" | "weekly" | "hourly" | null;
   workflow_stage?: "screening_pending" | "approval_pending" | "approved" | "review_required";
+  screening_consent?: boolean;
   screening_status?: "not_started" | "in_progress" | "clear" | "potential_match" | "unable_to_complete";
   screening_checks?: Array<{ check_type: string; source_name: string; source_url: string; checked_at: string; outcome: "no_match" | "potential_match" | "unable_to_check" | "not_applicable"; note?: string }>;
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
@@ -18,6 +19,7 @@ export type Employee = {
   approval_at?: string | null;
   role: string;
   work_location: string;
+  screening_consent: boolean;
   pay_frequency: "monthly" | "biweekly" | "weekly" | "hourly";
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
@@ -59,6 +61,7 @@ export const blankEmployee: EmployeeForm = {
   phone_number: "",
   role: "",
   work_location: "",
+  screening_consent: false,
   pay_frequency: "monthly",
   engagement_type: "employee",
   internship_paid: false,
