@@ -37,7 +37,7 @@ export async function POST(request: Request) {
         source_url: sourceUrl,
         checked_at: new Date().toISOString(),
         checked_by: admin,
-        outcome,
+        outcome: outcome as typeof OUTCOMES[number],
         note
       };
     });
