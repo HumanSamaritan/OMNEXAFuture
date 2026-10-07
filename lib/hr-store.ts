@@ -19,6 +19,13 @@ export type EmployeeRecord = {
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
   approval_by?: string | null;
   approval_at?: string | null;
+  exit_request_status?: "not_requested" | "pending" | "approved" | "returned";
+  exit_requested_by?: string | null;
+  exit_requested_at?: string | null;
+  exit_reviewed_by?: string | null;
+  exit_reviewed_at?: string | null;
+  exit_review_note?: string | null;
+  exit_request_last_working_date?: string | null;
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
   compensation_amount?: number | null;
