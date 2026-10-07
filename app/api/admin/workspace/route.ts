@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/admin-session";
-import { updateEmployee } from "@/lib/hr-store";
+import { listEmployees, updateEmployee } from "@/lib/hr-store";
 
 function base64url(input: string | Buffer): string {
   return Buffer.from(input).toString("base64url");
@@ -60,6 +60,10 @@ export async function POST(request: Request) {
     if (!id || !fullName || !workEmail.endsWith("@omnexagoc.com")) {
       return NextResponse.json({ error: "Employee, name and OMNeXa email are required." }, { status: 400 });
     }
+
+    const employee = (await listEmployees()).find((row) => row.id === id);
+    if (!employee) return NextResponse.json({ error: "Employee record was not found." }, { status: 404 });
+    if (employee.workflow_stage !== "approved") return NextResponse.json({ error: "Google Workspace provisioning is available after screening and HR approval." }, { status: 409 });
 
     const accessToken = await getGoogleAccessToken();
     const parts = fullName.split(/\s+/).filter(Boolean);
