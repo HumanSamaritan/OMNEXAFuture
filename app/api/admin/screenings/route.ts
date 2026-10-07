@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/admin-session";
-import { listEmployees, updateEmployee } from "@/lib/hr-store";
+import { listEmployees, recordHrAuditEvent, updateEmployee } from "@/lib/hr-store";
 
 const CHECK_TYPES = ["sg_un_sanctions", "ofac", "uk", "eu", "au", "pep_media", "criminal_fraud"] as const;
 const OUTCOMES = ["no_match", "potential_match", "unable_to_check", "not_applicable"] as const;
@@ -54,6 +54,7 @@ export async function POST(request: Request) {
       workflow_stage: workflowStage,
       approval_status: screeningStatus === "clear" ? "pending" : "not_requested"
     });
+    await recordHrAuditEvent(id, "manual_screening_saved", admin, ["screening_checks", "screening_status", "workflow_stage"]);
     return NextResponse.json({ employee: updated });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to save screening checks.";
