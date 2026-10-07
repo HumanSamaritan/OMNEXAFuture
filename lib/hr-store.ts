@@ -26,7 +26,7 @@ export type EmployeeRecord = {
   compensation_currency?: string | null;
   start_date?: string | null;
   last_working_date?: string | null;
-  status: "active" | "exited";
+  status: "pending" | "active" | "exited";
   workspace_account_status: "pending" | "created" | "manual";
   created_at: string;
   updated_at: string;
