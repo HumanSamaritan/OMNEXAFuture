@@ -8,19 +8,30 @@ export type Employee = {
   whatsapp_number?: string | null;
   phone_number?: string | null;
   role: string;
+  work_location?: string | null;
+  pay_frequency?: "monthly" | "biweekly" | "weekly" | "hourly" | null;
+  workflow_stage?: "screening_pending" | "approval_pending" | "approved" | "review_required";
+  screening_status?: "not_started" | "in_progress" | "clear" | "potential_match" | "unable_to_complete";
+  screening_checks?: Array<{ check_type: string; source_name: string; source_url: string; checked_at: string; outcome: "no_match" | "potential_match" | "unable_to_check" | "not_applicable"; note?: string }>;
+  approval_status?: "not_requested" | "pending" | "approved" | "rejected";
+  approval_by?: string | null;
+  approval_at?: string | null;
+  role: string;
+  work_location: string;
+  pay_frequency: "monthly" | "biweekly" | "weekly" | "hourly";
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
   compensation_amount?: number | null;
   compensation_currency?: string | null;
   start_date?: string | null;
   last_working_date?: string | null;
-  status: "active" | "exited";
+  status: "pending" | "active" | "exited";
   workspace_account_status: "pending" | "created" | "manual";
   created_at: string;
   updated_at: string;
 };
 
-export type Tab = "employees" | "card" | "nda" | "offer" | "exit" | "promotion";
+export type Tab = "employees" | "screening" | "payroll" | "card" | "nda" | "offer" | "exit" | "promotion";
 
 export type EmployeeForm = {
   full_name: string;
@@ -47,6 +58,8 @@ export const blankEmployee: EmployeeForm = {
   whatsapp_number: "",
   phone_number: "",
   role: "",
+  work_location: "",
+  pay_frequency: "monthly",
   engagement_type: "employee",
   internship_paid: false,
   compensation_amount: "",
