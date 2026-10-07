@@ -193,8 +193,9 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
                     <label>Phone<input value={editEmployee.phone_number ?? selected.phone_number ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, phone_number: e.target.value }))} /></label>
                     <label>WhatsApp<input value={editEmployee.whatsapp_number ?? selected.whatsapp_number ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, whatsapp_number: e.target.value }))} /></label>
                     <label>LinkedIn URL<input value={editEmployee.linkedin_url ?? selected.linkedin_url ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, linkedin_url: e.target.value }))} /></label>
-                    <label>Salary / stipend<input type="number" min="0" step="0.01" value={editEmployee.compensation_amount ?? selected.compensation_amount ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_amount: Number(e.target.value) }))} /></label>
+                    <label>Salary / stipend<input type="number" min="0" step="0.01" value={editEmployee.compensation_amount ?? selected.compensation_amount ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_amount: e.target.value === "" ? null : Number(e.target.value) }))} /></label>
                     <label>Currency<select value={editEmployee.compensation_currency ?? selected.compensation_currency ?? "SGD"} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_currency: e.target.value }))}>{["SGD","USD","GBP","AUD","INR","MYR","IDR","EUR","THB","CAD","NZD","HKD","PHP","VND","JPY","KRW","CNY","AED","CHF","Other"].map((currency) => <option key={currency} value={currency}>{currency}</option>)}</select></label>
+                    {(editEmployee.compensation_currency ?? selected.compensation_currency) === "Other" && <label>Other ISO currency code<input maxLength={3} value={editEmployee.compensation_currency === "Other" ? "" : editEmployee.compensation_currency ?? ""} onChange={(e) => setEditEmployee((current) => ({ ...current, compensation_currency: e.target.value.toUpperCase() }))} placeholder="e.g. ZAR" /></label>}
                     <label>Pay frequency<select value={editEmployee.pay_frequency ?? selected.pay_frequency ?? "monthly"} onChange={(e) => setEditEmployee((current) => ({ ...current, pay_frequency: e.target.value as Employee["pay_frequency"] }))}><option value="monthly">Monthly</option><option value="biweekly">Biweekly</option><option value="weekly">Weekly</option><option value="hourly">Hourly</option></select></label>
                     <label className={styles.checkboxLabel}><input type="checkbox" checked={editEmployee.screening_consent ?? selected.screening_consent ?? false} onChange={(e) => setEditEmployee((current) => ({ ...current, screening_consent: e.target.checked }))} />Screening consent recorded</label>
                     <div className={styles.fullRow}><button className={styles.primaryButton} disabled={busy}>{busy ? "Saving…" : "Save employee details"}</button></div>
@@ -212,15 +213,17 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
 
         {["card","nda","offer","exit","promotion"].includes(tab) && (
           <section className={styles.selectorBar}>
-            <label>Employee<select value={selectedId} onChange={(e) => setSelectedId(e.target.value)}><option value="">Select employee</option>{employees.map((employee) => <option key={employee.id} value={employee.id}>{employee.full_name} — {employee.role}</option>)}</select></label>
+            <label>Employee<select value={selectedId} onChange={(e) => { setSelectedId(e.target.value); const person = employees.find((item) => item.id === e.target.value); if (person) setEditEmployee(person); }}><option value="">Select employee</option>{employees.map((employee) => <option key={employee.id} value={employee.id}>{employee.full_name} — {employee.role}</option>)}</select></label>
             {selected && <div><strong>{selected.employee_id}</strong><span>{selected.work_email}</span></div>}
           </section>
         )}
 
         {tab === "screening" && <HrWorkflowPanel employees={employees} onEmployeeUpdate={updateEmployeeInState} />}
         {tab === "payroll" && <PayrollPanel employees={employees} />}
-        {tab === "card" && selected && <CardPanel employee={selected} />}
-        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
+        {tab === "card" && selected && selected.status === "active" && <CardPanel employee={selected} />}
+        {tab === "card" && selected && selected.status !== "active" && <section className={styles.emptyPanel}>Visiting cards are available after HR approval.</section>}
+        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage === "approved" && <DocumentPanel tab={tab} employee={selected} onEmployeeUpdate={updateEmployeeInState} />}
+        {(tab === "nda" || tab === "offer" || tab === "exit" || tab === "promotion") && selected && selected.workflow_stage !== "approved" && <section className={styles.emptyPanel}>HR documents become available after manual screening and HR approval.</section>}
         {tab !== "employees" && !selected && <section className={styles.emptyPanel}>Create or select an employee first.</section>}
       </section>
     </main>
