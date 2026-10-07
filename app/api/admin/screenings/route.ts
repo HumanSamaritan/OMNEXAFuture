@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/admin-session";
 import { listEmployees, recordHrAuditEvent, updateEmployee } from "@/lib/hr-store";
 
-const CHECK_TYPES = ["sg_un_sanctions", "ofac", "uk", "eu", "au", "pep_media", "criminal_fraud"] as const;
+const CHECK_TYPES = ["sg_un_sanctions", "ofac", "uk", "eu", "au", "fatf_jurisdiction", "pep_media", "criminal_fraud"] as const;
 const OUTCOMES = ["no_match", "potential_match", "unable_to_check", "not_applicable"] as const;
 
 function clean(value: unknown, max = 400): string {
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       if (!CHECK_TYPES.includes(checkType as typeof CHECK_TYPES[number])) throw new Error("Unsupported screening check.");
       if (!OUTCOMES.includes(outcome as typeof OUTCOMES[number])) throw new Error("Unsupported screening outcome.");
       if (sourceUrl && !sourceUrl.startsWith("https://")) throw new Error("Screening references must use secure HTTPS URLs.");
-      if (outcome === "no_match" && !sourceUrl) throw new Error("Add the official source URL or a precise source reference for each completed no-match check.");
+      if ((outcome === "no_match" || outcome === "potential_match") && !sourceUrl) throw new Error("Add the official source URL or a precise source reference for each completed check.");
       if ((outcome === "potential_match" || outcome === "not_applicable") && !note) throw new Error("Add a brief reason for potential matches and not-applicable checks.");
       return {
         check_type: checkType,
