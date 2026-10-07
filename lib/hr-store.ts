@@ -15,7 +15,7 @@ export type EmployeeRecord = {
   workflow_stage?: "screening_pending" | "approval_pending" | "approved" | "review_required";
   screening_consent?: boolean;
   screening_status?: "not_started" | "in_progress" | "clear" | "potential_match" | "unable_to_complete";
-  screening_checks?: Array<{ check_type: string; source_name: string; source_url: string; checked_at: string; outcome: "no_match" | "potential_match" | "unable_to_check" | "not_applicable"; note?: string }>;
+  screening_checks?: Array<{ check_type: string; source_name: string; source_url: string; checked_at: string; checked_by?: string; outcome: "no_match" | "potential_match" | "unable_to_check" | "not_applicable"; note?: string }>;
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
   approval_by?: string | null;
   approval_at?: string | null;
