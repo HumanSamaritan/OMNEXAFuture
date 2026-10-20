@@ -21,12 +21,12 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const service = getServiceSegment(product.serviceSlug);
   return {
-    title: `${product.name} | Coming Soon | OMNeXa`,
-    description: `${product.oneLiner} Coming soon from OMNeXa.`,
+    title: product.slug === "educareer" ? "NeXaCareer | Partner Enquiries Open | OMNeXa" : `${product.name} | Coming Soon | OMNeXa`,
+    description: product.slug === "educareer" ? product.oneLiner : `${product.oneLiner} Coming soon from OMNeXa.`,
     keywords: [product.name, ...product.alternateNames, ...product.seoTerms],
     alternates: { canonical: `/work/${product.slug}` },
     openGraph: {
-      title: `${product.name} by OMNeXa | Coming Soon`,
+      title: product.slug === "educareer" ? "NeXaCareer by OMNeXa | Human-Centred Education & Partners" : `${product.name} by OMNeXa | Coming Soon`,
       description: product.oneLiner,
       url: `${siteUrl}/work/${product.slug}`,
       type: "website",
@@ -65,7 +65,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     {
       question: `Is ${product.name} available now?`,
-      answer: `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
+      answer: product.slug === "educareer" ? "NeXaCareer is open for partnership enquiries across four service categories. Partner profiles remain subject to OMNeXa review. The portable Skills Passport remains a development direction." : `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
   ];
 
@@ -91,7 +91,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         additionalProperty: {
           "@type": "PropertyValue",
           name: "Development status",
-          value: "Coming Soon"
+          value: product.slug === "educareer" ? "Open for partner enquiries" : "Coming Soon"
         }
       },
       {
@@ -129,11 +129,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">Coming Soon</span>
+              <span className="work-status large">{product.slug === "educareer" ? "Partner enquiries open" : "Coming Soon"}</span>
+              {product.slug === "educareer" ? <a className="button primary" href="https://omnexa-career.omnexagoc.com/partners">Request a partnership →</a> : null}
             </div>
             <p>
-              OMNeXa is currently building and validating this product. This public page explains what it is
-              intended to do; access to the unfinished application is not being provided from the OMNeXa website.
+              {product.slug === "educareer"
+                ? "NeXaCareer is open for public partner enquiries and AI-assisted career exploration. OMNeXa reviews prospective partners before listing or approving them; some Skills Passport capabilities remain a roadmap intention."
+                : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
             </p>
           </div>
 
@@ -164,8 +166,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <div className="section-shell aligned-section">
           <div className="section-heading compact-heading">
             <p className="eyebrow">Planned capability direction</p>
-            <h2>What the product is being designed to support.</h2>
-            <p>These are development intentions, not claims of completed or validated outcomes.</p>
+            <h2>What the platform supports or is being designed to support.</h2>
+            <p>Where a capability is still planned, it is a direction rather than a claim of completed or validated outcomes.</p>
           </div>
           <div className="product-capability-grid">
             {product.capabilities.map((capability, index) => (
