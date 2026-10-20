@@ -7,7 +7,7 @@ const siteUrl = "https://www.omnexagoc.com";
 export const metadata: Metadata = {
   title: "Our Work | OMNeXa Products & Platforms",
   description:
-    "Explore OMNeXa product concepts and coming-soon platforms across AI and responsible innovation, education and careers, sustainability and ESG, and well-being and conscious leadership.",
+    "Explore OMNeXa platforms across human-centred AI, education and careers, sustainability and wellbeing. NeXaCareer is open for partner enquiries in education, skills, jobs and mobility.",
   keywords: [
     "OMNeXa products",
     "OMNeXa portfolio",
@@ -57,12 +57,12 @@ const workFaqs = [
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "The products shown here are coming soon. Their public pages describe the problem and intended direction; pilot access, available features and readiness are confirmed individually."
+      "NeXaCareer is open for partner enquiries, subject to OMNeXa review and approval. Other initiatives remain in development; their pilot access and readiness are confirmed individually."
   },
   {
-    question: "How can I register interest in a pilot?",
+    question: "How can I register interest in a pilot or NeXaCareer partnership?",
     answer:
-      "Email support@omnexagoc.com with the initiative that interests you. OMNeXa will confirm the available pilot, access and next steps."
+      "For NeXaCareer, use the public partner enquiry form at https://omnexa-career.omnexagoc.com/partners. For other product pilots, email support@omnexagoc.com to confirm availability."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -85,7 +85,7 @@ const collectionSchema = {
       url: `${siteUrl}/work`,
       name: "OMNeXa Products & Platforms",
       description:
-        "OMNeXa coming-soon product portfolio across responsible innovation, education, sustainability and well-being.",
+        "OMNeXa product portfolio across responsible innovation, education, sustainability and well-being, including NeXaCareer partner onboarding.",
       about: { "@id": `${siteUrl}/#organization` },
       mainEntity: {
         "@type": "ItemList",
@@ -107,7 +107,7 @@ const collectionSchema = {
             additionalProperty: {
               "@type": "PropertyValue",
               name: "Development status",
-              value: "Coming Soon"
+              value: product.slug === "educareer" ? "Open for partner enquiries" : "Coming Soon"
             }
           }
         }))
@@ -200,10 +200,9 @@ export default function WorkPage() {
       <section id="portfolio" className="section-shell aligned-section work-portfolio-section">
         <div className="section-heading">
           <p className="eyebrow">Products & platforms</p>
-          <h2>Coming soon, with the intended value made clear.</h2>
+          <h2>NeXaCareer is open for partner enquiries; other initiatives are progressing.</h2>
           <p>
-            These public pages outline the problem and intended direction. Pilot availability, access and available
-            features are confirmed individually.
+            NeXaCareer accepts enquiries from education, skills, jobs and mobility partners now; every partner is reviewed before publication. Other product pilots, access and feature readiness are confirmed individually.
           </p>
         </div>
 
@@ -225,13 +224,13 @@ export default function WorkPage() {
 
                 <div className="work-card-copy">
                   <div className="work-card-meta">
-                    <span className="work-status">Coming Soon</span>
+                    <span className="work-status">{product.slug === "educareer" ? "Partner enquiries open" : "Coming Soon"}</span>
                     <a href={segment?.href ?? "/services"}>{segment?.shortTitle}</a>
                   </div>
                   <h3><a href={`/work/${product.slug}`}>{product.name}</a></h3>
                   <p>{product.oneLiner}</p>
                   <div className="work-card-links">
-                    <a href={`/work/${product.slug}`}>See what it will do →</a>
+                    <a href={`/work/${product.slug}`}>{product.slug === "educareer" ? "Explore NeXaCareer →" : "See what it will do →"}</a>
                   </div>
                 </div>
               </article>
@@ -244,7 +243,7 @@ export default function WorkPage() {
         <div className="section-shell aligned-section split-section compact-band-content">
           <div>
             <p className="eyebrow">Build with evidence</p>
-            <h2>Construction status is part of the story, not something to hide.</h2>
+            <h2>Be clear about what is live, what is emerging and what still needs validation.</h2>
           </div>
           <div className="copy-stack">
             <p>
