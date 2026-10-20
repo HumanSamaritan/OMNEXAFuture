@@ -11,7 +11,7 @@ export type ProductEntry = {
   name: string;
   alternateNames: string[];
   serviceSlug: string;
-  status: "Currently under construction";
+  status: "Currently under construction" | "Open for partner enquiries";
   externalUrl: string;
   oneLiner: string;
   description: string;
