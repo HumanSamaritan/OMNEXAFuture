@@ -42,6 +42,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
             </a>
           ))}
           <a href="/work">Our Work</a>
+          <a href="/nexacareer">NeXaCareer</a>
           {navItems.slice(2).map((item) => (
             <a key={item.href} href={item.href}>
               {item.label}
