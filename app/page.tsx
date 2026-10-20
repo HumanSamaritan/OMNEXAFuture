@@ -37,7 +37,7 @@ const homePageSchema = {
   about: { "@id": "https://www.omnexagoc.com/#organization" },
   primaryImageOfPage: { "@id": "https://www.omnexagoc.com/#primary-image" },
   inLanguage: "en-SG",
-  dateModified: "2026-09-16"
+  dateModified: "2026-10-20"
 };
 
 export default function Home() {
@@ -66,6 +66,19 @@ export default function Home() {
             src="/omnexa-driver-home.jpg"
             alt="OMNeXa visual representing human capability, artificial intelligence and robotics guided by human values"
           />
+        </div>
+      </section>
+
+      <section className="section-shell aligned-section home-first-section">
+        <div className="section-heading">
+          <p className="eyebrow">Featured public ecosystem · NeXaCareer</p>
+          <h2>Human agency first. AI as a partner. Education, skills and careers connected.</h2>
+          <p>NeXaCareer applies OMNeXa's human-centred approach to education choices, skills assessment and career discovery. Its evolving Skills Passport concept keeps evidence distinct from AI interpretation, with consequential decisions reserved for people and accountable institutions.</p>
+          <p>Partnership enquiries are open for universities and education counsellors, skills and training providers, employers and opportunity networks, and mobility or visa-support organisations. No partner is publicly approved without human review.</p>
+          <div className="hero-actions">
+            <a className="button primary" href="/nexacareer">Explore NeXaCareer</a>
+            <a className="button secondary" href="https://omnexa-career.omnexagoc.com/partners">Request partnership</a>
+          </div>
         </div>
       </section>
 

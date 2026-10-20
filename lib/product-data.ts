@@ -116,18 +116,18 @@ export const products: ProductEntry[] = [
     name: "NeXaCareer",
     alternateNames: ["OMNeXa EduCareer", "EduCareer", "NeXa Career"],
     serviceSlug: "career-education-purpose-led-growth",
-    status: "Currently under construction",
-    externalUrl: "",
-    oneLiner: "A learner-centred bridge between education, skills and future work.",
+    status: "Open for partner enquiries",
+    externalUrl: "https://omnexa-career.omnexagoc.com",
+    oneLiner: "Human-agency-first education and careers, with a simple Skills Passport approach and partner enquiries open across four categories.",
     description:
-      "NeXaCareer is being developed to help learners and professionals connect education choices, skill development and work goals as their interests evolve.",
+      "NeXaCareer connects education discovery, skills assessment, employment pathways and partner enquiries while keeping education and career decisions with people. Its evolving Skills Passport is a human-directed product vision; a fully portable and verified passport is not yet universally available.",
     problem:
       "Education, skills and employment decisions are often treated separately, even when people experience them as one connected journey.",
     whyHere:
-      "NeXaCareer aligns with OMNeXa’s career and education work by helping people consider learning and work pathways together.",
-    capabilities: ["Explore learning and work pathways", "Reflect on strengths and skills", "Consider relevant next steps"],
-    audiences: ["Students", "Parents", "Professionals", "Education partners", "Employers"],
-    seoTerms: ["education and career guidance", "future skills", "learning pathways", "career development"],
+      "NeXaCareer makes human agency visible in education and AI-assisted career guidance. Education institutions, counsellors, training providers, employers and mobility partners can enquire now, subject to OMNeXa review before public listing.",
+    capabilities: ["Explore education, skill assessment and career pathways", "Submit partnership enquiries across education, training, jobs and mobility", "Understand the planned human-directed Skills Passport and consent-based handoffs"],
+    audiences: ["Students", "Parents", "Professionals", "Education institutions and counsellors", "Training partners", "Employers", "Mobility and visa-support providers"],
+    seoTerms: ["human agency in AI", "human centred AI education", "Skills Passport", "AI career guidance with human control", "education partnerships", "future skills", "career guidance", "human AI collaboration"],
     visualKicker: "EDUCATION → SKILLS → WORK",
     visualTitle: "One journey around the person.",
     visualItems: ["Discover", "Assess", "Act"]
