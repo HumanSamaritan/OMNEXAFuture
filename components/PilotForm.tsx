@@ -17,6 +17,13 @@ type Receipt = { reference: string; preview: boolean; agreementCopy: string; app
 type SignPayload = { session: string; application: PilotApplication; signature: string; signatureActionTime: string; agreementVersion: string; ndaConsent: boolean; privacyConsent: boolean; adultConsent: boolean; benefitConsent: boolean; authorityConsent: boolean; captchaToken: string };
 const regionNames = new Intl.DisplayNames(["en"], {type: "region"});
 const countryNames = Array.from({length:26*26},(_,i)=>String.fromCharCode(65+Math.floor(i/26),65+i%26)).map(code=>regionNames.of(code) ?? code).filter((name,i)=>name.length>2 && name !== String.fromCharCode(65+Math.floor(i/26),65+i%26)).sort();
+const euEea = new Set(["Austria","Belgium","Bulgaria","Croatia","Cyprus","Czechia","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Latvia","Liechtenstein","Lithuania","Luxembourg","Malta","Netherlands","Norway","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden"]);
+function countryPrivacyNote(country: string): string {
+  if (euEea.has(country)) return "EU/EEA applicants: GDPR rights and transfer protections may apply. Pilot registration only covers application administration and does not authorise HMS health or wellbeing processing. OMNeXa must assess any transfers outside the EEA."; 
+  if (country === "United Kingdom") return "UK applicants: UK GDPR and the Data Protection Act may apply. Cross-border transfer safeguards and separate HMS wellbeing consent must be reviewed."; 
+  if (country === "Singapore") return "Singapore applicants: OMNeXa processes this pilot request under the Singapore PDPA. You can request access, correction or withdrawal subject to applicable law."; 
+  return "Local privacy requirements may apply in your country. This consent covers only pilot administration, not in-app wellbeing processing; OMNeXa will assess relevant local restrictions before product access.";
+}
 const steps = ["Choose a pilot", "Your experience", "Review & sign"];
 
 function downloadText(text: string, filename: string) {
@@ -167,6 +174,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <label className="pilot-field">Tell us about your relevant experience<textarea value={application.experience} onChange={(e) => update("experience", e.target.value)} rows={4} minLength={20} maxLength={2000} placeholder="Share the situations, skills or everyday experience that relate to this product." required /><small>20–2,000 characters. Please leave out medical, financial, identity and confidential employer/client details.</small></label>
             <label className="pilot-field">What would you like to test or help improve?<textarea value={application.goals} onChange={(e) => update("goals", e.target.value)} rows={3} minLength={20} maxLength={1600} required /></label>
             <label className="pilot-field">Time you could contribute<select value={application.availability} onChange={(e) => update("availability", e.target.value)} required><option value="">Choose your availability</option>{AVAILABILITY_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
+            {application.country ? <p className="pilot-benefit-note" role="note"><strong>Privacy for {application.country}:</strong> {countryPrivacyNote(application.country)}</p> : null}
             <details className="pilot-disclosure"><summary>How we use your application details</summary><p>{PILOT_PRIVACY_NOTICE}</p><a href="/privacy" target="_blank" rel="noreferrer">Read the privacy notice ↗</a></details>
             <label className="pilot-check"><input type="checkbox" checked={adultConsent} onChange={(e) => setAdultConsent(e.target.checked)} required /><span>I am at least 18 and legally able to enter this agreement. For a child-related pilot, I am applying as an adult parent or guardian.</span></label>
             <label className="pilot-check"><input type="checkbox" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required /><span>I have reviewed the pilot privacy notice for my selected country, including possible processing outside that country. I consent to processing my application and receiving related email; I understand this is separate from HMS wellbeing-data consent.</span></label>
