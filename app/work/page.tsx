@@ -63,7 +63,7 @@ const workFaqs = [
   {
     question: "How can I register interest in a pilot?",
     answer:
-      "Use the pilot application page to select an initiative and product, share your experience, verify your email and review the NDA. OMNeXa will confirm available pilots, access and next steps. B2C participants who take part and provide agreed feedback receive one year of a free individual subscription to the product tested once its subscription service becomes available. B2B pilots have separate terms."
+      "Use the pilot application page to select an initiative and product, share your experience, verify your email and review the NDA. OMNeXa will confirm available pilots, access and next steps. B2C participants who take part and provide agreed feedback receive six months of a free individual subscription to the product tested once its subscription service becomes available. B2B pilots have separate terms."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -232,7 +232,7 @@ export default function WorkPage() {
                   </div>
                   <h3><a href={`/work/${product.slug}`}>{product.name}</a></h3>
                   <p>{product.oneLiner}</p>
-                  {pilot ? <p className="work-pilot-benefit">{pilot.audience === "B2C" ? "B2C pilot participants receive 1 year of a free subscription after participation and agreed feedback, once subscriptions become available. Terms apply." : "Organisation / B2B pilot. Access and commercial terms are agreed separately."}</p> : null}
+                  {pilot ? <p className="work-pilot-benefit">{pilot.audience === "B2C" ? "B2C pilot participants receive 6 months of free subscription after participation and agreed feedback, once subscriptions become available. Terms apply." : "Organisation / B2B pilot. Access and commercial terms are agreed separately."}</p> : null}
                   <div className="work-card-links">
                     <a href={`/work/${product.slug}`}>See what it will do →</a>
                     {pilot ? <a href={`/pilot?product=${product.slug}`}>Apply for the pilot →</a> : null}
