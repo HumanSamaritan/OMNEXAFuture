@@ -62,7 +62,7 @@ const workFaqs = [
   {
     question: "How can I register interest in a pilot?",
     answer:
-      "Email support@omnexagoc.com with the initiative that interests you. OMNeXa will confirm the available pilot, access and next steps."
+      "Open the pilot registration form and select HMS or NeXaCareer to submit your interest. OMNeXa will confirm next steps."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -151,7 +151,7 @@ export default function WorkPage() {
         <div className="work-hero-actions">
           <a className="button" href="#portfolio">Explore the portfolio</a>
           <a className="button secondary" href="/services">See our service segments</a>
-          <a className="button secondary" href="mailto:support@omnexagoc.com?subject=OMNeXa%20pilot%20interest">Register pilot interest</a>
+          <a className="button secondary" href="https://omnexa-website-1r2wep2lw-future-plus.vercel.app/pilot">Register pilot interest</a>
         </div>
       </section>
 
@@ -233,7 +233,7 @@ export default function WorkPage() {
                   <div className="work-card-links">
                     <a href={`/work/${product.slug}`}>Explore {product.name} →</a>
                     {product.status === "Live" && product.externalUrl ? (
-                      <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
+                      <a href={product.slug === "human-machine-sadhana" ? "https://omnexa-website-1r2wep2lw-future-plus.vercel.app/pilot?product=human-machine-sadhana" : product.externalUrl} target="_blank" rel="noopener noreferrer">{product.slug === "human-machine-sadhana" ? "Register for pilot ↗" : "Open app ↗"}</a>
                     ) : null}
                   </div>
                 </div>
