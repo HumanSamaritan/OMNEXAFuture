@@ -154,7 +154,11 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   limitPilot("submit-ip", getClientKey(request), 12);
   const captchaToken = typeof body.captchaToken === "string" ? body.captchaToken : "";
   if (!pilotIsPreview() && (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined))) throw new PilotInputError("Please complete the human verification again.");
+  const verified = readPilotToken(body.session, "verified");
   const application = validatePilotApplication(body.application);
+  if (JSON.stringify(verified.application) !== JSON.stringify(application)) {
+    throw new PilotHttpError("Your application changed after email verification. Please verify again.", 401);
+  }
   const product = pilotProducts.find((item) => item.slug === application.productSlug)!;
   const signature = typeof body.signature === "string" ? body.signature.trim().replace(/\s+/g, " ") : "";
   if (signature.toLocaleLowerCase() !== application.fullName.replace(/\s+/g, " ").toLocaleLowerCase()) throw new PilotInputError("Type your full name exactly as shown in the application.");
@@ -163,14 +167,14 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   const signatureActionTime = typeof body.signatureActionTime === "string" ? body.signatureActionTime : "";
   const actionTime = Date.parse(signatureActionTime);
   if (!Number.isFinite(actionTime) || actionTime > Date.now() + 60_000) throw new PilotInputError("Your signing session has expired. Please review and submit again.");
-  const reference = `OMX-${randomUUID()}`;
+  const reference = verified.reference;
   const preview = pilotIsPreview();
   const agreement = pilotAgreementText(product.name, product.audience);
   const agreementHash = createHash("sha256").update(agreement).digest("hex");
   const record = {
     reference, environment: preview ? "PREVIEW TEST — NON-BINDING" : "PRODUCTION",
     application, product: product.name, audience: product.audience,
-    verificationMethod: "Applicant-submitted interest form",
+    verificationMethod: "Email one-time code", verifiedAt: verified.verifiedAt,
     signature, signatureActionTimeClient: signatureActionTime,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
     declarations: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
@@ -200,5 +204,15 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
     `Applicable benefit: ${benefit}`, "The complete agreement and acceptance copy are attached. No applicant email is sent by this flow.", copy
   ].join("\n\n");
   await sendPilotEmail({ to: PILOT_SUPPORT_EMAIL, replyTo: application.email, subject: `${prefix}Pilot interest: ${product.name} | ${reference}`, text: supportText, attachments: [...attachments, { filename: `${reference}-record.json`, content: Buffer.from(recordJson).toString("base64") }] }, `pilot-support-${reference}`);
-  return { ok: true, reference, preview, agreementCopy: copy, recordHash };
+  const appUrl = application.productSlug === "human-machine-sadhana"
+    ? "https://humanmachinesadhana.omnexagoc.com"
+    : "https://omnexa-career.omnexagoc.com";
+  await sendPilotEmail({
+    to: application.email,
+    replyTo: PILOT_SUPPORT_EMAIL,
+    subject: `${prefix}OMNeXa pilot registration confirmation | ${product.name} | ${reference}`,
+    text: `Thank you for registering your interest in ${product.name}.\n\nYour reference: ${reference}\nVerified email: ${application.email}\n\n${preview ? "This is a preview test only; no enrolment or access is activated.\n" : "Your application has been received. Registration does not guarantee selection or authorise access to restricted features.\n"}\nProduct website: ${appUrl}\n\nA copy of your agreement is attached.\n\nOMNeXa support: ${PILOT_SUPPORT_EMAIL}`,
+    attachments
+  }, `pilot-applicant-${reference}`);
+  return { ok: true, reference, preview, agreementCopy: copy, recordHash, appUrl };
 }
