@@ -7,7 +7,7 @@ const siteUrl = "https://www.omnexagoc.com";
 export const metadata: Metadata = {
   title: "Our Work | OMNeXa Products & Platforms",
   description:
-    "Explore OMNeXa product concepts and coming-soon platforms across AI and responsible innovation, education and careers, sustainability and ESG, and well-being and conscious leadership.",
+    "Explore OMNeXa live apps and developing platforms across AI and responsible innovation, education and careers, sustainability and ESG, and well-being and conscious leadership.",
   keywords: [
     "OMNeXa products",
     "OMNeXa portfolio",
@@ -57,7 +57,7 @@ const workFaqs = [
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "The products shown here are coming soon. Their public pages describe the problem and intended direction; pilot access, available features and readiness are confirmed individually."
+      "Human Machine Sadhana (HMS) is live and accessible from its product page. Other offerings may still be in development; check each product page for its current availability."
   },
   {
     question: "How can I register interest in a pilot?",
@@ -72,7 +72,7 @@ const workFaqs = [
   {
     question: "What is Human Machine Sadhana (HMS)?",
     answer:
-      "Human Machine Sadhana is a wellbeing initiative being developed to help people notice everyday patterns and consider manageable next steps while keeping human choice central."
+      "Human Machine Sadhana (HMS) is a live web application for everyday wellbeing reflection, helping people notice patterns while keeping human choice central."
   }
 ];
 
@@ -107,7 +107,7 @@ const collectionSchema = {
             additionalProperty: {
               "@type": "PropertyValue",
               name: "Development status",
-              value: "Coming Soon"
+              value: product.status === "Live" ? "Live" : "Coming Soon"
             }
           }
         }))
@@ -200,7 +200,7 @@ export default function WorkPage() {
       <section id="portfolio" className="section-shell aligned-section work-portfolio-section">
         <div className="section-heading">
           <p className="eyebrow">Products & platforms</p>
-          <h2>Coming soon, with the intended value made clear.</h2>
+          <h2>Live applications and initiatives in development.</h2>
           <p>
             These public pages outline the problem and intended direction. Pilot availability, access and available
             features are confirmed individually.
@@ -225,13 +225,16 @@ export default function WorkPage() {
 
                 <div className="work-card-copy">
                   <div className="work-card-meta">
-                    <span className="work-status">Coming Soon</span>
+                    <span className="work-status">{product.status === "Live" ? "Live" : "Coming Soon"}</span>
                     <a href={segment?.href ?? "/services"}>{segment?.shortTitle}</a>
                   </div>
                   <h3><a href={`/work/${product.slug}`}>{product.name}</a></h3>
                   <p>{product.oneLiner}</p>
                   <div className="work-card-links">
-                    <a href={`/work/${product.slug}`}>See what it will do →</a>
+                    <a href={`/work/${product.slug}`}>Explore {product.name} →</a>
+                    {product.status === "Live" && product.externalUrl ? (
+                      <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
+                    ) : null}
                   </div>
                 </div>
               </article>
