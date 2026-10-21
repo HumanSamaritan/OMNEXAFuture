@@ -135,7 +135,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <div className="product-detail-actions">
               <span className="work-status large">{isLive ? "Live" : "Coming Soon"}</span>
               {isLive && product.externalUrl ? (
-                <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open HMS App →</a>
+                <a className="button" href={product.slug === "human-machine-sadhana" ? "https://omnexa-website-1r2wep2lw-future-plus.vercel.app/pilot?product=human-machine-sadhana" : product.externalUrl} target="_blank" rel="noopener noreferrer">{product.slug === "human-machine-sadhana" ? "Register for HMS Pilot →" : "Open App →"}</a>
               ) : null}
             </div>
             <p>
