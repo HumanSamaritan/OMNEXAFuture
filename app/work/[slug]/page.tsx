@@ -20,13 +20,14 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   if (!product) return {};
 
   const service = getServiceSegment(product.serviceSlug);
+  const isLive = product.status === "Live";
   return {
-    title: `${product.name} | Coming Soon | OMNeXa`,
-    description: `${product.oneLiner} Coming soon from OMNeXa.`,
+    title: `${product.name} | ${isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
+    description: `${product.oneLiner} ${isLive ? "Open the live application." : "Coming soon from OMNeXa."}`,
     keywords: [product.name, ...product.alternateNames, ...product.seoTerms],
     alternates: { canonical: `/work/${product.slug}` },
     openGraph: {
-      title: `${product.name} by OMNeXa | Coming Soon`,
+      title: `${product.name} by OMNeXa | ${isLive ? "Live App" : "Coming Soon"}`,
       description: product.oneLiner,
       url: `${siteUrl}/work/${product.slug}`,
       type: "website",
@@ -49,6 +50,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   const service = getServiceSegment(product.serviceSlug);
   const siblings = getProductsByService(product.serviceSlug).filter((item) => item.slug !== product.slug);
+  const isLive = product.status === "Live";
 
   const faqs = [
     {
@@ -65,7 +67,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     {
       question: `Is ${product.name} available now?`,
-      answer: `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
+      answer: isLive
+        ? `${product.name} is live. Open the official application at ${product.externalUrl}. Some features may continue to evolve.`
+        : `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
   ];
 
@@ -91,7 +95,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         additionalProperty: {
           "@type": "PropertyValue",
           name: "Development status",
-          value: "Coming Soon"
+          value: product.status === "Live" ? "Live" : "Coming Soon"
         }
       },
       {
@@ -129,11 +133,15 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">Coming Soon</span>
+              <span className="work-status large">{isLive ? "Live" : "Coming Soon"}</span>
+              {isLive && product.externalUrl ? (
+                <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open HMS App →</a>
+              ) : null}
             </div>
             <p>
-              OMNeXa is currently building and validating this product. This public page explains what it is
-              intended to do; access to the unfinished application is not being provided from the OMNeXa website.
+              {isLive
+                ? "The HMS web app is available now. Open it to begin your daily wellbeing reflection. Features and experience may continue to improve."
+                : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
             </p>
           </div>
 
