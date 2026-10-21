@@ -139,7 +139,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               OMNeXa is currently building and validating this product. This public page explains what it is
               intended to do; access to the unfinished application is not being provided from the OMNeXa website.
             </p>
-            {pilot ? <details className="product-pilot-terms"><summary>{pilot.audience === "B2C" ? "B2C pilot benefit: one year of free subscription" : "Organisation / B2B pilot terms"}</summary><p>{pilot.audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT}</p></details> : null}
+            {pilot ? <details className="product-pilot-terms"><summary>{pilot.audience === "B2C" ? "B2C pilot benefit: six months of free subscription" : "Organisation / B2B pilot terms"}</summary><p>{pilot.audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT}</p></details> : null}
           </div>
 
           <div className="product-detail-visual" aria-label={`${product.name} concept visual`}>
