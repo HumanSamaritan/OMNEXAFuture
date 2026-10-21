@@ -135,12 +135,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <div className="product-detail-actions">
               <span className="work-status large">{isLive ? "Live" : "Coming Soon"}</span>
               {isLive && product.externalUrl ? (
-                product.slug === "human-machine-sadhana" ? <span className="button secondary" aria-disabled="true">Pilot enrolment opening soon</span> : <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open App →</a>
+                product.slug === "human-machine-sadhana" ? <a className="button" href="/pilot?product=human-machine-sadhana">Register for HMS Pilot →</a> : <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open App →</a>
               ) : null}
             </div>
             <p>
               {isLive
-                ? product.slug === "human-machine-sadhana" ? "HMS is in live pilot development. Public enrolment will open once privacy, registration records and access checks are complete." : "The app is available now. Features may continue to improve."
+                ? product.slug === "human-machine-sadhana" ? "HMS is accepting pilot applications. Applicants verify their email, review privacy and participation terms, and receive an acknowledgement after successful submission." : "The app is available now. Features may continue to improve."
                 : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
             </p>
           </div>
