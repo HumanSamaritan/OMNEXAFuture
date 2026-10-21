@@ -94,6 +94,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
       const result = await post("/api/pilot/send", { application, privacyConsent, adultConsent, captchaToken });
       setChallenge(result.challenge);
       setVerifiedSession("");
+      setVerificationCode("");
     } catch (e) { setError(e instanceof Error ? e.message : "Unable to send code."); }
     finally { setBusy(false); }
   }
@@ -145,7 +146,9 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           {step === 1 && challenge ? <div className="pilot-verify">
             <p>Enter the six-digit code sent to {application.email}.</p>
             <label className="pilot-field">Verification code<input inputMode="numeric" pattern="[0-9]{6}" maxLength={6} value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} /></label>
-            <button className="pilot-primary" type="button" disabled={busy || !/^\\d{6}$/.test(verificationCode)} onClick={() => void verifyCode()}>Verify email and continue</button>
+            <button className="pilot-primary" type="button" disabled={busy || !(/^[0-9]{6}$/).test(verificationCode)} onClick={() => void verifyCode()}>Verify email and continue</button>
+            <p className="pilot-fine">If the code has not arrived, check Spam/Junk and the email address above. Codes expire after 10 minutes.</p>
+            <button className="pilot-text-button" type="button" disabled={busy} onClick={() => void sendCode()}>Send a new verification code</button>
           </div> : null}
           {step === 1 && !challenge ? <form onSubmit={(event) => { event.preventDefault(); if (!captchaRequired || captchaToken) void sendCode(); }}>
             <p className="pilot-step-label">Step 02 / 03</p>
