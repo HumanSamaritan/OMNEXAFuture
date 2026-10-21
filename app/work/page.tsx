@@ -62,7 +62,7 @@ const workFaqs = [
   {
     question: "How can I register interest in a pilot?",
     answer:
-      "HMS pilot enrolment is temporarily paused while data privacy and registration controls are finalised. Please check the HMS page for the reopening announcement."
+      "HMS and NeXaCareer pilot applications can be submitted through the OMNeXa registration form. Applicants must verify their email and accept the terms."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -151,7 +151,7 @@ export default function WorkPage() {
         <div className="work-hero-actions">
           <a className="button" href="#portfolio">Explore the portfolio</a>
           <a className="button secondary" href="/services">See our service segments</a>
-          <a className="button secondary" href="/work/human-machine-sadhana">Explore HMS pilot (enrolment opening soon)</a>
+          <a className="button secondary" href="/pilot">Register pilot interest</a>
         </div>
       </section>
 
@@ -233,7 +233,7 @@ export default function WorkPage() {
                   <div className="work-card-links">
                     <a href={`/work/${product.slug}`}>Explore {product.name} →</a>
                     {product.status === "Live" && product.externalUrl ? (
-                      product.slug === "human-machine-sadhana" ? <span>Pilot enrolment opening soon</span> : <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
+                      product.slug === "human-machine-sadhana" ? <a href="/pilot?product=human-machine-sadhana">Register for pilot ↗</a> : <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
                     ) : null}
                   </div>
                 </div>
