@@ -11,7 +11,7 @@ export type ProductEntry = {
   name: string;
   alternateNames: string[];
   serviceSlug: string;
-  status: "Currently under construction";
+  status: "Currently under construction" | "Live";
   externalUrl: string;
   oneLiner: string;
   description: string;
@@ -179,11 +179,11 @@ export const products: ProductEntry[] = [
     name: "Human Machine Sadhana",
     alternateNames: ["HumanMachineSadhana", "HMS", "OMNeXa Human Machine Sadhana"],
     serviceSlug: "well-being-conscious-leadership",
-    status: "Currently under construction",
+    status: "Live",
     externalUrl: "https://humanmachinesadhana.omnexagoc.com",
     oneLiner: "A guided wellbeing experience for noticing daily patterns and choosing manageable next steps.",
     description:
-      "HumanMachineSadhana (HMS) is being developed to help people notice patterns across sleep, movement, food, mood, stress, relationships and reflection, using machine intelligence to support awareness while the human remains in charge.",
+      "HumanMachineSadhana (HMS) is a live web app designed to help people notice patterns across sleep, movement, food, mood, stress, relationships and reflection, using machine intelligence to support awareness while the human remains in charge.",
     problem:
       "More data, more convenience and potentially longer lives do not automatically create better wellbeing; people still need a way to understand patterns and convert awareness into healthier choices.",
     whyHere:
