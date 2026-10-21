@@ -153,7 +153,9 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   if (!pilotReady()) throw new PilotHttpError("Pilot registration email is temporarily unavailable. Please contact support@omnexagoc.com.", 503);
   limitPilot("submit-ip", getClientKey(request), 12);
   const captchaToken = typeof body.captchaToken === "string" ? body.captchaToken : "";
-  if (!pilotIsPreview() && (captchaToken.length > 10000 || !await verifyRecaptcha(captchaToken, getClientKey(request), request.headers.get("user-agent") || undefined))) throw new PilotInputError("Please complete the human verification again.");
+  // CAPTCHA was already verified during /api/pilot/send, before issuing the signed challenge.
+  // Final submission requires the short-lived verified-email token below; avoid requiring
+  // a second CAPTCHA token that is cleared during navigation to the NDA step.
   const verified = readPilotToken(body.session, "verified");
   const application = validatePilotApplication(body.application);
   if (JSON.stringify(verified.application) !== JSON.stringify(application)) {
