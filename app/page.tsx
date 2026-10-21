@@ -69,6 +69,26 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section-shell aligned-section" aria-labelledby="hms-dussehra-title" style={{paddingTop:"2.5rem",paddingBottom:"2.5rem"}}>
+        <div className="section-heading">
+          <p className="eyebrow">Dussehra 2026 · OMNeXa story</p>
+          <h2 id="hms-dussehra-title">Conquer Your Inner Ravan. Awaken the Ram Within.</h2>
+          <p>Ten everyday challenges. The courage of human awareness. The strength of trusted allies. Discover the Human + Machine Sadhana pilot journey.</p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))",gap:"24px",alignItems:"center"}}>
+          <div style={{aspectRatio:"16 / 9",borderRadius:"16px",overflow:"hidden",background:"#081726"}}>
+            <iframe src="https://www.youtube-nocookie.com/embed/faabEp-rkIQ" title="OMNeXa Dussehra HMS launch video" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen style={{width:"100%",height:"100%",border:0}} />
+          </div>
+          <div>
+            <p>Inspired by Ram, Ravan and the power of the Vanara Sena, HMS explores how human wisdom and responsible intelligence can work as allies for a more conscious life.</p>
+            <div className="hero-actions" style={{marginTop:"16px"}}>
+              <a className="button primary" href="/insights/dussehra-human-machine-sadhana">Read the Dussehra story →</a>
+              <a className="button secondary" href="/work/human-machine-sadhana">Explore HMS →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section-shell aligned-section home-first-section">
         <div className="section-heading">
           <p className="eyebrow">What OMNeXa brings together</p>
