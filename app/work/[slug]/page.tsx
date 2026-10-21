@@ -155,6 +155,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </div>
       </section>
 
+      {product.slug === "human-machine-sadhana" ? <section className="section-shell aligned-section" style={{paddingBottom:"2rem"}}><p className="eyebrow">Dussehra 2026 · HMS launch story</p><h2>Conquer Your Inner Ravan. Awaken the Ram Within.</h2><p>Discover the philosophy behind HMS through the Ramayana, human agency and responsible AI.</p><a className="button secondary" href="/insights/dussehra-human-machine-sadhana">Read the story and watch the film →</a></section> : null}
       <section className="section-shell aligned-section product-detail-story">
         <article>
           <p className="eyebrow">Why it exists</p>
