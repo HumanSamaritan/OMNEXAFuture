@@ -196,7 +196,7 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
     consents: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
     application: application as unknown as Record<string, unknown>,
     firstUsedAt: null, lastUsedAt: null
-  });
+  }, request);
   const copy = [
     preview ? "PREVIEW TEST — NON-BINDING. No contract, pilot enrolment or subscription is activated." : "OMNeXa pilot application and electronic acceptance record",
     `Reference: ${reference}`, `Applicant: ${application.fullName}`, `Email: ${application.email}`,
