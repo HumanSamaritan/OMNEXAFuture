@@ -26,7 +26,7 @@ const audiences: Record<string, PilotAudience> = {
 };
 
 export const pilotProducts: PilotProduct[] = products
-  .filter((product) => ["human-machine-sadhana", "educareer"].includes(product.slug))
+  .filter((product) => ["human-machine-sadhana", "educareer", "nexakriya"].includes(product.slug))
   .map((product) => ({
     slug: product.slug,
     name: product.name,
