@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const service = getServiceSegment(product.serviceSlug);
   const isLive = product.status === "Live";
   return {
-    title: `${product.name} | ${product.slug === "human-machine-sadhana" ? "Pilot Registration" : isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
-    description: `${product.oneLiner} ${product.slug === "human-machine-sadhana" ? "Apply for the controlled HMS pilot; access requires approval." : isLive ? "Open the live application." : "Coming soon from OMNeXa."}`,
+    title: `${product.name} | ${isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
+    description: `${product.oneLiner} ${isLive ? "Open the live application; optional pilot registration is also available." : "Coming soon from OMNeXa."}`,
     keywords: [product.name, ...product.alternateNames, ...product.seoTerms],
     alternates: { canonical: `/work/${product.slug}` },
     openGraph: {
@@ -67,10 +67,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     {
       question: `Is ${product.name} available now?`,
-      answer: product.slug === "human-machine-sadhana"
-        ? "HMS currently accepts applications for its controlled pilot. Apply at https://www.omnexagoc.com/pilot?product=human-machine-sadhana. Submitting an application does not grant access; approved applicants receive separate onboarding instructions."
-        : isLive
-        ? `${product.name} is live. Open the official application at ${product.externalUrl}. Some features may continue to evolve.`
+      answer: isLive
+        ? `${product.name} is available at ${product.externalUrl}. You can use the app directly. Optional OMNeXa pilot registration is available at https://www.omnexagoc.com/pilot?product=${product.slug}, with separate pilot terms and feedback.`
         : `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
   ];
@@ -135,15 +133,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">{product.slug === "human-machine-sadhana" ? "Pilot applications open" : isLive ? "Live" : "Coming Soon"}</span>
-              {isLive && product.externalUrl ? (
-                product.slug === "human-machine-sadhana" ? <a className="button" href="/pilot?product=human-machine-sadhana">Register for HMS Pilot →</a> : <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open App →</a>
-              ) : null}
+              <span className="work-status large">{isLive ? "Live · Available now" : "Coming Soon"}</span>
+              {isLive && product.externalUrl ? <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open {product.name} →</a> : null}
+              {isLive && ["human-machine-sadhana", "educareer", "nexakriya"].includes(product.slug) ? <a className="button secondary" href={`/pilot?product=${product.slug}`}>Join the pilot →</a> : null}
             </div>
             <p>
-              {isLive
-                ? product.slug === "human-machine-sadhana" ? "HMS is accepting pilot applications. Applicants verify their email, review privacy and participation terms, and receive an acknowledgement after successful submission." : "The app is available now. Features may continue to improve."
-                : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
+              {isLive ? "The application is available now. You can use it directly without joining a pilot. If you choose to participate in a pilot, your application and feedback are managed separately." : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
             </p>
           </div>
 
@@ -165,7 +160,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           <p>{product.problem}</p>
         </article>
         <article>
-          <p className="eyebrow">What we are building</p>
+          <p className="eyebrow">What we offer</p>
           <h2>The direction</h2>
           <p>{product.description}</p>
         </article>
@@ -174,9 +169,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       <section className="band product-capability-band">
         <div className="section-shell aligned-section">
           <div className="section-heading compact-heading">
-            <p className="eyebrow">Planned capability direction</p>
-            <h2>What the product is being designed to support.</h2>
-            <p>These are development intentions, not claims of completed or validated outcomes.</p>
+            <p className="eyebrow">Product capabilities</p>
+            <h2>What the product supports and continues to improve.</h2>
+            <p>Features and availability may evolve as we improve the service.</p>
           </div>
           <div className="product-capability-grid">
             {product.capabilities.map((capability, index) => (
@@ -208,7 +203,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <section className="section-shell aligned-section sibling-products">
           <div className="section-heading compact-heading">
             <p className="eyebrow">Related OMNeXa work</p>
-            <h2>Other coming-soon products in {service?.shortTitle}.</h2>
+            <h2>Other OMNeXa products in {service?.shortTitle}.</h2>
           </div>
           <div className="sibling-product-grid">
             {siblings.map((item) => (
