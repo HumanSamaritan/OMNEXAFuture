@@ -19,7 +19,7 @@ const decode = (v: Value): unknown => {
   return null;
 };
 async function token(request: Request): Promise<string> {
-  if (process.env.VERCEL_ENV !== "preview") throw new Error("Pilot federation limited to Preview");
+  if (process.env.VERCEL_ENV !== "preview" && process.env.VERCEL_ENV !== "production") throw new Error("Unsupported pilot deployment environment");
   const oidc = request.headers.get("x-vercel-oidc-token") || process.env.VERCEL_OIDC_TOKEN;
   if (!oidc) throw new Error("Vercel OIDC identity unavailable");
   const audience = "//iam.googleapis.com/projects/465158402810/locations/global/workloadIdentityPools/omnexa-vercel/providers/vercel";
