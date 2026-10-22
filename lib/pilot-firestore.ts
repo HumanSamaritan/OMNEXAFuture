@@ -15,7 +15,15 @@ const env = () => {
 };
 const encode = (x:unknown):Value => x===null?{nullValue:null}: typeof x==="string"?{stringValue:x}:typeof x==="boolean"?{booleanValue:x}:typeof x==="number"?{integerValue:String(x)}:Array.isArray(x)?{arrayValue:{values:x.map(encode)}}:{mapValue:{fields:Object.fromEntries(Object.entries(x as Record<string,unknown>).filter(([,v])=>v!==undefined).map(([k,v])=>[k,encode(v)]))}};
 const fields = (x:Record<string,unknown>)=>Object.fromEntries(Object.entries(x).filter(([,v])=>v!==undefined).map(([k,v])=>[k,encode(v)]));
-const decode=(v:Value):unknown => v.stringValue??v.booleanValue??(v.integerValue!==undefined?Number(v.integerValue):undefined)??("nullValue" in v?null:undefined)??(v.mapValue?Object.fromEntries(Object.entries(v.mapValue.fields).map(([k,w])=>[k,decode(w)])):undefined)??(v.arrayValue?v.arrayValue.values.map(decode):undefined);
+const decode = (v: Value): unknown => {
+  if ("nullValue" in v) return null;
+  if (v.stringValue !== undefined) return v.stringValue;
+  if (v.booleanValue !== undefined) return v.booleanValue;
+  if (v.integerValue !== undefined) return Number(v.integerValue);
+  if (v.mapValue) return Object.fromEntries(Object.entries(v.mapValue.fields).map(([k, w]) => [k, decode(w)]));
+  if (v.arrayValue) return v.arrayValue.values.map(decode);
+  return null;
+};
 let cached:{token:string;exp:number}|undefined;
 async function token(){
   if(cached && cached.exp>Date.now()+60000)return cached.token;
