@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const service = getServiceSegment(product.serviceSlug);
   const isLive = product.status === "Live";
   return {
-    title: `${product.name} | ${isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
-    description: `${product.oneLiner} ${isLive ? "Open the live application." : "Coming soon from OMNeXa."}`,
+    title: `${product.name} | ${product.slug === "human-machine-sadhana" ? "Pilot Registration" : isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
+    description: `${product.oneLiner} ${product.slug === "human-machine-sadhana" ? "Apply for the controlled HMS pilot; access requires approval." : isLive ? "Open the live application." : "Coming soon from OMNeXa."}`,
     keywords: [product.name, ...product.alternateNames, ...product.seoTerms],
     alternates: { canonical: `/work/${product.slug}` },
     openGraph: {
@@ -67,7 +67,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     {
       question: `Is ${product.name} available now?`,
-      answer: isLive
+      answer: product.slug === "human-machine-sadhana"
+        ? "HMS currently accepts applications for its controlled pilot. Apply at https://www.omnexagoc.com/pilot?product=human-machine-sadhana. Submitting an application does not grant access; approved applicants receive separate onboarding instructions."
+        : isLive
         ? `${product.name} is live. Open the official application at ${product.externalUrl}. Some features may continue to evolve.`
         : `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
@@ -133,7 +135,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">{isLive ? "Live" : "Coming Soon"}</span>
+              <span className="work-status large">{product.slug === "human-machine-sadhana" ? "Pilot applications open" : isLive ? "Live" : "Coming Soon"}</span>
               {isLive && product.externalUrl ? (
                 product.slug === "human-machine-sadhana" ? <a className="button" href="/pilot?product=human-machine-sadhana">Register for HMS Pilot →</a> : <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open App →</a>
               ) : null}
