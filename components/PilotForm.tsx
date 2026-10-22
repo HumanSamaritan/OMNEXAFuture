@@ -64,7 +64,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const captchaWidget = useRef<number | null>(null);
   const product = products.find((item) => item.slug === application.productSlug);
   const b2b = product?.audience === "B2B";
-  const captchaRequired = !preview;
+  const captchaRequired = Boolean(recaptchaSiteKey);
   const initiatives = Array.from(new Map(products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter).map((item) => [item.initiativeSlug, item.initiativeName])).entries());
   const choices = products.filter((item) => item.initiativeSlug === application.initiativeSlug && (audienceFilter === "all" || item.audience === audienceFilter));
 
@@ -178,7 +178,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <details className="pilot-disclosure"><summary>How we use your application details</summary><p>{PILOT_PRIVACY_NOTICE}</p><a href="/privacy" target="_blank" rel="noreferrer">Read the privacy notice ↗</a></details>
             <label className="pilot-check"><input type="checkbox" checked={adultConsent} onChange={(e) => setAdultConsent(e.target.checked)} required /><span>I am at least 18 and legally able to enter this agreement. For a child-related pilot, I am applying as an adult parent or guardian.</span></label>
             <label className="pilot-check"><input type="checkbox" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required /><span>I have reviewed the pilot privacy notice for my selected country, including possible processing outside that country. I consent to processing my application and receiving related email; I understand this is separate from HMS wellbeing-data consent.</span></label>
-            {captchaRequired && recaptchaSiteKey ? <div className="pilot-captcha" ref={captchaContainer} /> : preview ? <p className="pilot-note">Human verification is skipped in this private preview; it is required for live applications.</p> : null}
+            {captchaRequired && recaptchaSiteKey ? <div className="pilot-captcha" ref={captchaContainer} /> : <p className="pilot-error">Human verification is unavailable. Contact support before submitting.</p>}
             <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || (captchaRequired && !captchaToken)}>Continue to review & sign →</button></div>
             <p className="pilot-fine">Your email is collected so the support team can reply if your pilot is selected. This flow sends one message to support only.</p>
           </form> : null}
