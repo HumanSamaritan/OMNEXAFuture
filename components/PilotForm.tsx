@@ -210,9 +210,11 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>{receipt.preview ? "Your test request is with us." : "Thank you for helping shape the product."}</h2>
             <p>Your {product?.name} application has been sent to <strong>support@omnexagoc.com</strong>.</p>
             <p>A confirmation email with your reference and agreement copy will be sent to your verified address.</p>
-            {!receipt.preview && receipt.appUrl ? <p><a href={receipt.appUrl} target="_blank" rel="noopener noreferrer">Visit the selected product website →</a></p> : null}
+            {!receipt.preview && receipt.appUrl ? <p><a href={receipt.appUrl} target="_blank" rel="noopener noreferrer">Open the application now →</a></p> : null}
+            {!receipt.preview && application.productSlug === "human-machine-sadhana" ? <p><a href="https://youtu.be/ODp-WjSw5sg" target="_blank" rel="noopener noreferrer">Watch the HMS video demo on YouTube →</a></p> : null}
+            {!receipt.preview && application.productSlug === "nexakriya" ? <p><a href="https://youtu.be/FfdUY4fouQg" target="_blank" rel="noopener noreferrer">Watch the NeXaKriya video demo on YouTube →</a></p> : null}
             <div className="pilot-reference"><span>Application reference</span><strong>{receipt.reference}</strong></div>
-            <p>{receipt.preview ? "This test has not created a binding contract, enrolled you in a pilot or activated a subscription." : "OMNeXa will review your experience and contact you about suitability, timing and next steps. Please wait for an invitation before testing."}</p>
+            <p>{receipt.preview ? "This test has not created a binding contract, enrolled you in a pilot or activated a subscription." : "Your interest is recorded. You can use the app directly; OMNeXa may contact you separately about pilot feedback and participation."}</p>
             <div className="pilot-actions"><button className="pilot-primary" type="button" onClick={() => downloadText(receipt.agreementCopy, `${receipt.reference}-agreement.txt`)}>Download your agreement copy ↓</button><a className="pilot-text-button" href="/work">Back to Our Work →</a></div>
           </div> : null}
         </section>
