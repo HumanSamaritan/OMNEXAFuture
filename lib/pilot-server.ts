@@ -6,6 +6,7 @@ import { pilotProducts } from "./pilot-catalog";
 import { PILOT_AGREEMENT_VERSION, PILOT_SUPPORT_EMAIL, B2C_BENEFIT, B2B_BENEFIT, pilotAgreementText } from "./pilot-agreement";
 import { PilotInputError, validatePilotApplication } from "./pilot-validation";
 import type { PilotApplication } from "./pilot-types";
+import { createPilotIntake } from "./pilot-firestore";
 
 type TokenData = {
   purpose: "challenge" | "verified";
@@ -185,6 +186,17 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   const recordJson = JSON.stringify(record, null, 2);
   const recordHash = createHash("sha256").update(recordJson).digest("hex");
   const integritySeal = createHmac("sha256", encryptionKey()).update(recordJson).digest("hex");
+  // Durable intake is required before notifying the applicant. Pilot preview remains
+  // unavailable until dedicated Firestore credentials are configured.
+  await createPilotIntake({
+    reference, productSlug: application.productSlug, email: application.email,
+    status: "pending_review", createdAt: new Date().toISOString(),
+    agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
+    recordSha256: recordHash,
+    consents: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
+    application: application as unknown as Record<string, unknown>,
+    firstUsedAt: null, lastUsedAt: null
+  });
   const copy = [
     preview ? "PREVIEW TEST — NON-BINDING. No contract, pilot enrolment or subscription is activated." : "OMNeXa pilot application and electronic acceptance record",
     `Reference: ${reference}`, `Applicant: ${application.fullName}`, `Email: ${application.email}`,
