@@ -57,7 +57,7 @@ const workFaqs = [
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "Human Machine Sadhana (HMS) is live and accessible from its product page. Other offerings may still be in development; check each product page for its current availability."
+      "HMS is accepting controlled pilot applications; registration does not automatically grant access. Other products may have different availability and development status."
   },
   {
     question: "How can I register interest in a pilot?",
@@ -72,7 +72,7 @@ const workFaqs = [
   {
     question: "What is Human Machine Sadhana (HMS)?",
     answer:
-      "Human Machine Sadhana (HMS) is a live web application for everyday wellbeing reflection, helping people notice patterns while keeping human choice central."
+      "Human Machine Sadhana (HMS) is a wellbeing reflection application currently offered through a controlled pilot application and approval process, with human choice central."
   }
 ];
 
