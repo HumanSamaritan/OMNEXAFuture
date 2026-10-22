@@ -159,7 +159,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <p className="pilot-fine">If the code has not arrived, check Spam/Junk and the email address above. Codes expire after 10 minutes.</p>
             <button className="pilot-text-button" type="button" disabled={busy} onClick={() => void sendCode()}>Send a new verification code</button>
           </div> : null}
-          {step === 1 && !challenge ? <form onSubmit={(event) => { event.preventDefault(); if (!captchaRequired || captchaToken) void sendCode(); }}>
+          {step === 1 && !challenge ? <form onInvalid={(event) => { const el = event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement; setError(`Please complete the required field: ${el.closest("label")?.textContent?.trim().slice(0, 80) || "a missing field"}.`); }} onSubmit={(event) => { event.preventDefault(); if (captchaRequired && !captchaToken) { setError("Human verification has expired. Please complete the reCAPTCHA again."); return; } void sendCode(); }}>
             <p className="pilot-step-label">Step 02 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Tell us what you bring.</h2>
             <p className="pilot-lead">Personal experience matters as much as professional experience. All fields are required unless marked optional.</p>
@@ -179,7 +179,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <label className="pilot-check"><input type="checkbox" checked={adultConsent} onChange={(e) => setAdultConsent(e.target.checked)} required /><span>I am at least 18 and legally able to enter this agreement. For a child-related pilot, I am applying as an adult parent or guardian.</span></label>
             <label className="pilot-check"><input type="checkbox" checked={privacyConsent} onChange={(e) => setPrivacyConsent(e.target.checked)} required /><span>I have reviewed the pilot privacy notice for my selected country, including possible processing outside that country. I consent to processing my application and receiving related email; I understand this is separate from HMS wellbeing-data consent.</span></label>
             {captchaRequired && recaptchaSiteKey ? <div className="pilot-captcha" ref={captchaContainer} /> : <p className="pilot-error">Human verification is unavailable. Contact support before submitting.</p>}
-            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || (captchaRequired && !captchaToken)}>Continue to review & sign →</button></div>
+            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={() => changeStep(0)} disabled={busy}>Back</button><button className="pilot-primary" type="submit" disabled={busy || !ready || (captchaRequired && !captchaToken)}>Continue to review & sign →</button></div><p className="pilot-fine">If the form does not advance, check the required fields above. The first incomplete field will be highlighted.</p>
             <p className="pilot-fine">Your email is collected so the support team can reply if your pilot is selected. This flow sends one message to support only.</p>
           </form> : null}
 
