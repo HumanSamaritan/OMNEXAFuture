@@ -116,11 +116,11 @@ export const products: ProductEntry[] = [
     name: "NeXaCareer",
     alternateNames: ["OMNeXa EduCareer", "EduCareer", "NeXa Career"],
     serviceSlug: "career-education-purpose-led-growth",
-    status: "Currently under construction",
-    externalUrl: "",
+    status: "Live",
+    externalUrl: "https://omnexa-career.omnexagoc.com",
     oneLiner: "A learner-centred bridge between education, skills and future work.",
     description:
-      "NeXaCareer is being developed to help learners and professionals connect education choices, skill development and work goals as their interests evolve.",
+      "NeXaCareer connects learners and professionals connect education choices, skill development and work goals as their interests evolve.",
     problem:
       "Education, skills and employment decisions are often treated separately, even when people experience them as one connected journey.",
     whyHere:
@@ -200,11 +200,11 @@ export const products: ProductEntry[] = [
     name: "NeXaKriya",
     alternateNames: ["NeXa Kriya", "NeXaKriya by OMNeXa", "ActionLoop"],
     serviceSlug: "well-being-conscious-leadership",
-    status: "Currently under construction",
+    status: "Live",
     externalUrl: "https://nexakriya.omnexagoc.com",
     oneLiner: "A practical companion for capturing commitments, keeping follow-ups visible and closing the loop.",
     description:
-      "NeXaKriya is being developed to help people keep everyday commitments visible and bring intention, follow-up and completion into a more connected experience.",
+      "NeXaKriya helps people keep everyday commitments visible and bring intention, follow-up and completion into a more connected experience.",
     problem:
       "People often lose energy not because they lack tasks, but because commitments are scattered across calendars, messages and memory with no coherent way to close the loop.",
     whyHere:
