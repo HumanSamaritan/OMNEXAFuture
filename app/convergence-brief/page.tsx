@@ -116,7 +116,8 @@ export default async function ConvergenceBriefPage() {
             <strong>Issue 03</strong> turns to experience when the screen stops being the product.{" "}
             <strong>Issue 04</strong> follows human intent through testing, assurance, traceability and defect prevention.{" "}
             <strong>Issue 05</strong> follows that authority across organisational boundaries as multiple agents and providers coordinate an outcome.{" "}
-            <strong>Issue 06</strong> moves from continuity of human authority to continuity of human capability: if AI performs more of the work through which people once learned, how do people continue developing the judgement required to direct and challenge it?
+            <strong>Issue 06</strong> moves from continuity of human authority to continuity of human capability: if AI performs more of the work through which people once learned, how do people continue developing the judgement required to direct and challenge it?{" "}
+            <strong>Issue 07</strong> extends this into the learning divide: as AI becomes more accessible, do people use it to develop independent understanding or substitute it for learning?
           </p>
           <p>
             The issues are not intended as abstract predictions. They are shaped by practical questions, design
