@@ -444,6 +444,95 @@ export const canonicalIssues: ConvergenceIssue[] = [
       process.env.OMNEXA_ISSUE_06_LINKEDIN_URL ||
       "https://lnkd.in/p/gNJ2knEa"
   }
+  {
+    "issue": "Issue 07",
+    "slug": "issue-07",
+    "title": "The AI Divide Is Becoming a Learning Divide",
+    "subtitle": "When access to intelligence becomes widespread, will independent thinking become humanity's greatest advantage?",
+    "publishedAt": "2026-10-05",
+    "summary": "Issue 07 builds on the apprenticeship question in Issue 06: the emerging divide is not only who can access AI, but who uses it to strengthen understanding, judgement and independent learning rather than substitute for them.",
+    "themes": [
+      "AI-assisted learning",
+      "Cognitive independence",
+      "Future of education",
+      "Skills-based future of work",
+      "Human agency",
+      "Responsible AI"
+    ],
+    "seoKeywords": [
+      "AI learning divide",
+      "AI assisted versus substituted learning",
+      "AI and critical thinking",
+      "human agency in education",
+      "AI cognitive independence",
+      "future of skills",
+      "OViA learning assurance"
+    ],
+    "questions": [
+      {
+        "question": "What is the AI learning divide?",
+        "answer": "It is the difference between using AI to deepen reasoning, knowledge and independent judgement versus relying on its outputs without building understanding. Access to AI alone does not guarantee learning."
+      },
+      {
+        "question": "How is this issue connected to Issue 06?",
+        "answer": "Issue 06 asked how people can keep developing capability when AI performs traditional apprenticeship tasks. Issue 07 asks whether widespread access to AI may create a new divide between those who continue learning and those whose learning is substituted by AI."
+      },
+      {
+        "question": "What is the difference between AI-assisted and AI-substituted learning?",
+        "answer": "AI-assisted learning helps people question, explore evidence and apply reasoning. AI-substituted learning occurs when systems complete cognitive tasks while the human gains little understanding of how or why the answer works."
+      },
+      {
+        "question": "How does OMNeXa apply this principle?",
+        "answer": "Human + Machine Sadhana explores reflection and wellbeing; NeXaCareer explores skills, learning pathways and opportunity. NeXaLead and NeXaSetu remain works in progress around leadership development and human-agent assurance. These are practical explorations rather than validated evidence of improved learning outcomes."
+      },
+      {
+        "question": "What is OViA's learning-assurance loop?",
+        "answer": "OMNeXa proposes asking about INTENT, EVIDENCE, UNDERSTANDING, AUTHORITY, OUTCOME and CORRECTION. It is an illustrative practitioner framework, not a scientifically validated educational measurement."
+      }
+    ],
+    "sections": [
+      {
+        "heading": "Continuing the convergence: from human capability to independent learning",
+        "body": "Issue 06 asked what humans learn when AI performs the tasks through which people once developed expertise. Issue 07 follows the next consequence: two people can access the same AI yet develop different capabilities. The next divide may be less about access to answers and more about the capacity to question, interpret, verify and apply them independently."
+      },
+      {
+        "heading": "The illusion of intelligence through access",
+        "body": "Students, professionals and executives can generate sophisticated outputs rapidly. But a correct AI answer does not establish that its user understands the reasoning, while a persuasive incorrect answer can mislead someone who cannot challenge it. Access to intelligent outputs must not be confused with demonstrated human understanding."
+      },
+      {
+        "heading": "AI-assisted learning versus AI-substituted learning",
+        "body": "AI-assisted learning helps people explore alternatives, evaluate evidence, explain underlying concepts and strengthen judgement. AI-substituted learning completes the cognitive task while the individual gains little understanding. Neither outcome is automatic: product design, educational practice and individual habits shape what people learn."
+      },
+      {
+        "heading": "The future of skills and education",
+        "body": "Formal qualifications and foundational knowledge remain valuable, but employers and educators should also examine demonstrable skills, adaptability, curiosity, critical thinking and domain-specific judgement. Assessment should ask not only whether an answer is correct, but whether the learner can explain its assumptions, detect errors and transfer understanding to a new situation."
+      },
+      {
+        "heading": "Leadership must learn as well",
+        "body": "The learning divide extends to management. Executives need not build every AI agent, but they must be capable of challenging expert evidence, understanding decision boundaries and recognising when a deployment is unsafe. Technical specialists likewise need operational and human-centred judgement. Both sides must remain open to learning."
+      },
+      {
+        "heading": "Human agency is more than an approval button",
+        "body": "OMNeXa's principle is Human Defines the Loop → Machine Amplifies the Loop → Human Manages and Ends the Loop. Meaningful agency requires the ability to understand decisions, challenge recommendations, recognise uncertainty and intervene where consequences are significant."
+      },
+      {
+        "heading": "OViA: an illustrative accountable-learning workflow",
+        "body": "INTENT → EVIDENCE → UNDERSTANDING → AUTHORITY → OUTCOME → CORRECTION. The learner defines a purpose, checks sources, explains the reasoning, accepts responsibility for action, reviews what improved and uses mistakes to learn. This is an OMNeXa working interpretation of OViA, not a validated scoring standard."
+      },
+      {
+        "heading": "OMNeXa: selected work informing the perspective",
+        "body": "Human + Machine Sadhana explores reflective daily habits and wellbeing; NeXaCareer explores skills, learning and opportunity; NeXaAML examines domain intelligence and evidence in consequential workflows. NeXaLead and NeXaSetu are works in progress focused on leadership capability and human-agent assurance. These initiatives inform questions being explored, not claims of proven learning outcomes."
+      },
+      {
+        "heading": "The strongest counterargument",
+        "body": "AI can also accelerate learning by removing repetitive burdens, providing personalised explanations and opening access to specialist knowledge. The concern is not that AI necessarily makes humans dependent, but that access and productivity improvements do not automatically create independent judgement. Effective learning design must be intentional."
+      },
+      {
+        "heading": "The question we leave with humanity",
+        "body": "If artificial intelligence increasingly provides the answers, who will develop the understanding needed to ask the right questions? The AI divide of tomorrow may not be defined only by who owns the most powerful model, but by who continues to learn while using it. Human wisdom leads. Technology supports. Human agency remains in control."
+      }
+    ]
+  },
 ];
 
 function isIssue(value: unknown): value is ConvergenceIssue {
