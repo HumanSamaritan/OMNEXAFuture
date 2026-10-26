@@ -532,7 +532,8 @@ export const canonicalIssues: ConvergenceIssue[] = [
         "body": "If artificial intelligence increasingly provides the answers, who will develop the understanding needed to ask the right questions? The AI divide of tomorrow may not be defined only by who owns the most powerful model, but by who continues to learn while using it. Human wisdom leads. Technology supports. Human agency remains in control."
       }
     ]
-  },
+    , "linkedinUrl": "https://lnkd.in/p/dhq_gkBV"
+  }
 ];
 
 function isIssue(value: unknown): value is ConvergenceIssue {
