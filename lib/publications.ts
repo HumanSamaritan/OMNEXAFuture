@@ -449,7 +449,7 @@ export const canonicalIssues: ConvergenceIssue[] = [
     "slug": "issue-07",
     "title": "The AI Divide Is Becoming a Learning Divide",
     "subtitle": "When access to intelligence becomes widespread, will independent thinking become humanity's greatest advantage?",
-    "publishedAt": "2026-10-05",
+    "publishedAt": "2026-10-26",
     "summary": "Issue 07 builds on the apprenticeship question in Issue 06: the emerging divide is not only who can access AI, but who uses it to strengthen understanding, judgement and independent learning rather than substitute for them.",
     "themes": [
       "AI-assisted learning",
@@ -532,7 +532,7 @@ export const canonicalIssues: ConvergenceIssue[] = [
         "body": "If artificial intelligence increasingly provides the answers, who will develop the understanding needed to ask the right questions? The AI divide of tomorrow may not be defined only by who owns the most powerful model, but by who continues to learn while using it. Human wisdom leads. Technology supports. Human agency remains in control."
       }
     ]
-    , "linkedinUrl": "https://lnkd.in/p/dhq_gkBV"
+    , "linkedinUrl": "https://www.linkedin.com/pulse/ai-divide-becoming-learning-dhiraj-kumar-i56hf"
   }
 ];
 
