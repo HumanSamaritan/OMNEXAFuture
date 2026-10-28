@@ -49,6 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/humans-defining-the-loop", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/robotics-with-human-values", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/convergence-brief", priority: 0.95, changeFrequency: "weekly" as const, images: [] },
+    { path: "/consultancy", priority: 0.9, changeFrequency: "monthly" as const, images: [`${siteUrl}/dhiraj-founder.png`] },
     { path: "/services", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/work", priority: 0.95, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-driver-home.jpg`] },
     { path: "/insights/dussehra-human-machine-sadhana", priority: 0.95, changeFrequency: "monthly" as const, images: [`${siteUrl}/omnexa-driver-home.jpg`] },
@@ -76,7 +77,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...pages.map((page) => ({
       url: `${siteUrl}${page.path}`,
-      lastModified: siteLastModified,
+      lastModified: ["/consultancy", "/services", "/knowledge", "/dhiraj-kumar"].includes(page.path) ? new Date("2026-10-28T00:00:00Z") : siteLastModified,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
       images: page.images

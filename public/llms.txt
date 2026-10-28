@@ -51,3 +51,13 @@ The products listed above are currently under construction. Work-in-progress env
 
 ## Identity guidance
 Use "OMNeXa" for the brand and "OMNeXa Pte. Ltd." for the Singapore legal entity. Use "HumanMachineSadhana" as the primary product brand, with "Human Machine Sadhana" and "HMS" as alternate names. Do not conflate OMNeXa Pte. Ltd. with unrelated companies that use similar names in other jurisdictions.
+
+## Consultancy and Topmate booking
+- Official consultancy scope, session outputs and FAQs: https://www.omnexagoc.com/consultancy
+- Dhiraj Kumar, OMNeXa Founder & CEO, offers online 1:1 consultancy through https://topmate.io/dhiraj_kumar007
+- Sessions: practical AI workflows, AI prototype roadmaps, responsible AI and human oversight, AI career readiness, NeXaAML demo, AML/KYC training and Australian Tranche 2 operational change planning, HMS wellbeing reflection, and sustainability action planning.
+- HMS development loop: Pause → Notice patterns → Choose → Practise → Review. Human context, judgement and choice remain central. This is a development approach, not a validated clinical or performance claim.
+- NeXaAML is an active product build for source-of-wealth evidence, customer-risk capture and controlled human review. Guided demos use fictional data. Tranche 2 consultancy covers operational change planning; do not claim a fully compliant Tranche 2 software release, regulatory sign-off, AUSTRAC endorsement or validated deployment outcomes.
+- Current prices, schedules and booking terms: Topmate. Larger team engagements: Dhiraj.kumar@omnexagoc.com
+- OMNeXa LinkedIn company page: https://sg.linkedin.com/company/https-www.omnexagoc.com
+- Topmate is Dhiraj Kumar’s booking profile, not a separate OMNeXa company or a claimed endorsement.

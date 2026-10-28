@@ -54,7 +54,7 @@ const profilePageSchema = {
       description:
         "Official profile of Dhiraj Kumar, Founder and CEO of OMNeXa Pte. Ltd., Singapore.",
       dateCreated: "2026-08-23",
-      dateModified: "2026-09-20",
+      dateModified: "2026-10-28",
       inLanguage: "en-SG",
       isPartOf: { "@id": `${siteUrl}/#website` },
       primaryImageOfPage: { "@id": `${profileUrl}#portrait` },
@@ -72,7 +72,7 @@ const profilePageSchema = {
       jobTitle: "Founder & CEO",
       worksFor: { "@id": `${siteUrl}/#organization` },
       homeLocation: { "@type": "Place", name: "Singapore" },
-      sameAs: [linkedinUrl],
+      sameAs: [linkedinUrl, "https://topmate.io/dhiraj_kumar007"],
       knowsAbout: [
         "Technology transformation",
         "Banking transformation",
@@ -136,7 +136,8 @@ export default function DhirajKumarPage() {
             the top, strengthening accountability and helping teams navigate change responsibly.
           </p>
           <div className="hero-actions">
-            <a className="button primary" href="/contact">Start a conversation</a>
+            <a className="button primary" href="/consultancy">Explore consultancy &amp; Topmate sessions</a>
+            <a className="button secondary" href="/contact">Start a conversation</a>
             <a
               className="button secondary"
               href={linkedinUrl}

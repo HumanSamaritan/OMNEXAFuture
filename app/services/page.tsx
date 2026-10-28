@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   educationMarketFocus,
   engagementFormats,
@@ -6,6 +7,13 @@ import {
   services,
   targetMarkets
 } from "@/lib/site-data";
+
+export const metadata: Metadata = {
+  title: "Consultancy, Training & Transformation Services",
+  description: "OMNeXa services across practical AI, AML/KYC training, risk, HMS wellbeing and sustainability. Explore focused consultancy sessions with Dhiraj Kumar on Topmate.",
+  alternates: { canonical: "/services" },
+  openGraph: { title: "OMNeXa Services & Consultancy", description: "Practical AI, AML/KYC training, human capability and sustainability consultancy with Dhiraj Kumar.", url: "https://www.omnexagoc.com/services", type: "website" }
+};
 
 const serviceLenses = [
   {
@@ -41,6 +49,7 @@ export default function ServicesPage() {
           functional banking, risk and controls, AI readiness, education, sustainability and human capability.
         </p>
         <div className="work-hero-actions">
+          <a className="button primary" href="/consultancy">Explore consultancy &amp; book on Topmate →</a>
           <a className="button secondary" href="/work">See products aligned to these services →</a>
         </div>
       </section>

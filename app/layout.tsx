@@ -157,6 +157,8 @@ const entityGraph = {
         "SwayamITR",
         "Lotus Karmic Balance"
       ],
+      sameAs: ["https://sg.linkedin.com/company/https-www.omnexagoc.com"],
+      hasOfferCatalog: { "@id": `${siteUrl}/consultancy#catalog` },
       areaServed: "Global"
     },
     {
