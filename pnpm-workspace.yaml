@@ -1,3 +1,4 @@
-# Required by the tsx test runner; approve only this package's install script.
+# Explicit install-script allowlist: tsx runner and Next.js image processing.
 allowBuilds:
   esbuild: true
+  sharp: true
