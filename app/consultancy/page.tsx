@@ -1,3 +1,4 @@
+import { ConsultancyCurrency, ConsultancyPrice } from "@/components/ConsultancyCurrency";
 import type { Metadata } from "next";
 import { companyLinkedIn, consultancyContact, consultancyFaqs, consultancySessions, discoveryBookingUrl } from "@/lib/consultancy";
 import "./consultancy.css";
@@ -81,11 +82,11 @@ export default function ConsultancyPage() {
 
       <section className="section-shell aligned-section" aria-labelledby="session-heading">
         <div className="section-heading"><p className="eyebrow">Choose your focus</p><h2 id="session-heading">Clear scope. Tangible session outputs.</h2></div>
-        <p>Individual session fees are shown in USD. Team engagements and implementation are quoted separately. Start with a free introduction to confirm fit and scope.</p>
-        <div className="consultancy-grid">
+        <p>Individual session fees are set in USD. You can view an estimate in your preferred currency. Team engagements and implementation are quoted separately. Start with a free introduction to confirm fit and scope.</p>
+        <ConsultancyCurrency><div className="consultancy-grid">
           {consultancySessions.map((session) => (
             <article className="service-card consultancy-card" id={session.id} key={session.id}>
-              <p className="eyebrow">{session.minutes}-minute online session · USD {session.priceCents / 100}</p>
+              <p className="eyebrow">{session.minutes}-minute online session · <ConsultancyPrice cents={session.priceCents} base={session.currency} /></p>
               <h3>{session.title}</h3>
               <p><strong>For:</strong> {session.audience}.</p>
               <p>{session.summary}</p>
@@ -95,7 +96,7 @@ export default function ConsultancyPage() {
               <a className="button secondary" href={`/consultancy/book?service=${session.id}`}>Prepare and book this session →</a>
             </article>
           ))}
-        </div>
+        </div></ConsultancyCurrency>
       </section>
 
       <section className="band">

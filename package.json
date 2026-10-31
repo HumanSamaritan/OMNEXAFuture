@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:consultancy": "node --import tsx --test tests/consultancy-payments.test.ts tests/discovery.test.ts"
+    "test:consultancy": "node --import tsx --test tests/consultancy-payments.test.ts tests/discovery.test.ts tests/consultancy-currency.test.ts"
   },
   "dependencies": {
     "@upstash/redis": "^1.40.0",

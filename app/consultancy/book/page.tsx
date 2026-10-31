@@ -1,3 +1,4 @@
+import { ConsultancyCurrency, ConsultancyPrice } from "@/components/ConsultancyCurrency";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -24,13 +25,13 @@ export default async function ConsultancyBookingPage({ searchParams }: { searchP
       <a href="/consultancy">← All consultancy services</a>
       <p className="eyebrow">Work directly with OMNeXa</p>
       <h1>{session?.title || "A clear next step starts with a conversation."}</h1>
-      {session ? <>
+      {session ? <ConsultancyCurrency>
         <p>{session.summary}</p>
-        <p><strong>{session.minutes} minutes · USD {session.priceCents / 100}</strong> · Online, with Dhiraj Kumar</p>
+        <p><strong>{session.minutes} minutes · <ConsultancyPrice cents={session.priceCents} base={session.currency} /></strong> · Online, with Dhiraj Kumar</p>
         <h2>What you will leave with</h2><ul>{session.outcomes.map(outcome => <li key={outcome}>{outcome}</li>)}</ul>
         <p>{session.scope}</p>
         <ConsultancyCheckout serviceId={session.id} recaptchaSiteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""} termsUrl={paymentsPublicTerms()} available={!!paidBookingConfigured()} />
-      </> : <>
+      </ConsultancyCurrency> : <>
         <p className="discovery-lead">A complimentary 15-minute introduction to understand your goal, explore the right consultancy segment and agree a useful next step.</p>
         <div className="discovery-layout">
           <aside className="discovery-intro" aria-label="Your consultant and session details">
