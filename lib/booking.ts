@@ -26,7 +26,9 @@ export type BookingIdentity = {
   focus: string;
 };
 
-type SessionPayload = BookingIdentity & {
+export type SessionPayload = BookingIdentity & {
+  consultancyService?: string;
+  paymentOrderId?: string;
   v: 1;
   nonce: string;
   iat: number;
@@ -102,7 +104,7 @@ function googlePrivateKey(): string {
   return (process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || "").replace(/\\n/g, "\n");
 }
 
-function officeConfig() {
+function officeConfig(durationOverride?: number) {
   const duration = intFromEnv(
     "BOOKING_DURATION_MINUTES",
     DEFAULT_DURATION_MINUTES,
@@ -126,7 +128,7 @@ function officeConfig() {
   );
   const buffer = intFromEnv("BOOKING_BUFFER_MINUTES", 0, 0, 60);
 
-  return { duration, step, open, close, minNoticeHours, horizonDays, buffer };
+  return { duration: durationOverride ?? duration, step, open, close, minNoticeHours, horizonDays, buffer };
 }
 
 function singaporeDateFromInstant(date: Date): string {
@@ -480,10 +482,12 @@ export async function verifyRecaptcha(
   return true;
 }
 
-export function createBookingSession(identity: BookingIdentity): string {
+export function createBookingSession(identity: BookingIdentity, consultancyService?: string, paymentOrderId?: string): string {
   const now = Math.floor(Date.now() / 1000);
   const payload: SessionPayload = {
     ...identity,
+    ...(consultancyService ? { consultancyService } : {}),
+    ...(paymentOrderId ? { paymentOrderId } : {}),
     v: 1,
     nonce: randomUUID(),
     iat: now,
@@ -525,8 +529,8 @@ export function readBookingSession(token: string): SessionPayload | null {
   }
 }
 
-export function bookingPublicConfig() {
-  const config = officeConfig();
+export function bookingPublicConfig(duration?: number) {
+  const config = officeConfig(duration);
   return {
     configured: googleConfigured(),
     durationMinutes: config.duration,
@@ -539,10 +543,10 @@ export function bookingPublicConfig() {
   };
 }
 
-export async function availableSlotsForDate(date: string): Promise<BookingSlot[]> {
+export async function availableSlotsForDate(date: string, duration?: number): Promise<BookingSlot[]> {
   if (!isDateShape(date)) throw new Error("Invalid booking date.");
 
-  const config = officeConfig();
+  const config = officeConfig(duration);
   const day = calendarDay(date);
   if (day === 0 || day === 6) return [];
 
@@ -588,11 +592,11 @@ export async function availableSlotsForDate(date: string): Promise<BookingSlot[]
   return slots;
 }
 
-export async function validateRequestedSlot(startIso: string): Promise<BookingSlot | null> {
+export async function validateRequestedSlot(startIso: string, duration?: number): Promise<BookingSlot | null> {
   const start = new Date(startIso);
   if (Number.isNaN(start.getTime())) return null;
 
-  const config = officeConfig();
+  const config = officeConfig(duration);
   const date = singaporeDateFromInstant(start);
   const minute = singaporeMinutesFromInstant(start);
   const day = calendarDay(date);
@@ -601,25 +605,26 @@ export async function validateRequestedSlot(startIso: string): Promise<BookingSl
   if (minute < config.open || minute + config.duration > config.close) return null;
   if ((minute - config.open) % config.step !== 0) return null;
 
-  const slots = await availableSlotsForDate(date);
+  const slots = await availableSlotsForDate(date, duration);
   return slots.find((slot) => slot.start === start.toISOString()) || null;
 }
 
 export async function createGoogleCalendarBooking(
   session: SessionPayload,
-  slot: BookingSlot
+  slot: BookingSlot,
+  title?: string
 ): Promise<{ eventId: string; htmlLink?: string; meetLink?: string }> {
   const token = await getGoogleAccessToken();
   const calendarId = bookingCalendarId();
 
   // Deterministic event ID makes simultaneous attempts for the same start time collide at Google.
   const eventId = createHash("sha256")
-    .update(`${calendarId}|${slot.start}`)
+    .update(session.paymentOrderId ? `${calendarId}|order|${session.paymentOrderId}` : `${calendarId}|${slot.start}`)
     .digest("hex")
     .slice(0, 32);
 
   const description = [
-    "Booked via omnexagoc.com/connect",
+    session.consultancyService ? "Booked via omnexagoc.com/consultancy" : "Booked via omnexagoc.com/connect",
     "",
     `Organisation: ${session.company}`,
     `Role: ${session.jobTitle}`,
@@ -631,7 +636,7 @@ export async function createGoogleCalendarBooking(
 
   const body = {
     id: eventId,
-    summary: `OMNeXa introductory conversation — ${session.name}`,
+    summary: `${title || "OMNeXa introductory conversation"} — ${session.name}`,
     description,
     start: { dateTime: slot.start, timeZone: BOOKING_TIME_ZONE },
     end: { dateTime: slot.end, timeZone: BOOKING_TIME_ZONE },
@@ -645,7 +650,7 @@ export async function createGoogleCalendarBooking(
     extendedProperties: {
       private: {
         source: "omnexa-connect",
-        bookingNonce: session.nonce
+        bookingNonce: session.paymentOrderId || session.nonce
       }
     }
   };
@@ -655,6 +660,7 @@ export async function createGoogleCalendarBooking(
     "?conferenceDataVersion=1&sendUpdates=all";
 
   const response = await fetch(url, {
+    signal: AbortSignal.timeout(15000),
     method: "POST",
     headers: {
       authorization: `Bearer ${token}`,
@@ -664,9 +670,19 @@ export async function createGoogleCalendarBooking(
     cache: "no-store"
   });
 
-  if (response.status === 409) {
+  if (response.status === 409 && session.paymentOrderId) {
+    const existing = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${eventId}`, {
+      headers: { authorization: `Bearer ${token}` }, cache: "no-store"
+    });
+    if (existing.ok) {
+      const event = await existing.json();
+      if (event.extendedProperties?.private?.bookingNonce === session.paymentOrderId && event.status !== "cancelled") {
+        return { eventId, htmlLink: event.htmlLink, meetLink: event.hangoutLink };
+      }
+    }
     throw new Error("SLOT_TAKEN");
   }
+  if (response.status === 409) throw new Error("SLOT_TAKEN");
 
   if (!response.ok) {
     const detail = await response.text();
@@ -695,4 +711,20 @@ export async function createGoogleCalendarBooking(
     htmlLink: event.htmlLink,
     meetLink
   };
+}
+
+// Recover an order's existing event before retrying an ambiguous network response.
+export async function existingPaidCalendarBooking(session: SessionPayload, slot: BookingSlot) {
+  if (!session.paymentOrderId) return null;
+  const calendarId = bookingCalendarId();
+  const eventId = createHash("sha256").update(`${calendarId}|order|${session.paymentOrderId}`).digest("hex").slice(0, 32);
+  const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${eventId}`, {
+    headers: { authorization: `Bearer ${await getGoogleAccessToken()}` }, cache: "no-store", signal: AbortSignal.timeout(15000)
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error("CALENDAR_LOOKUP_FAILED");
+  const event = await response.json();
+  if (event.extendedProperties?.private?.bookingNonce !== session.paymentOrderId || event.status === "cancelled" ||
+      Date.parse(event.start?.dateTime) !== Date.parse(slot.start) || Date.parse(event.end?.dateTime) !== Date.parse(slot.end)) throw new Error("CALENDAR_RECONCILIATION_REQUIRED");
+  return { eventId, meetLink: event.hangoutLink as string | undefined };
 }

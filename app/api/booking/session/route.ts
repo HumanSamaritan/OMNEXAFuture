@@ -57,13 +57,22 @@ export async function POST(request: Request) {
       );
     }
 
+    const consultancyService = body.consultancyService ? String(body.consultancyService) : undefined;
+    if (consultancyService && consultancyService !== "discovery") {
+      return NextResponse.json({ error: "Paid sessions require verified payment before scheduling." }, { status: 403 });
+    }
     const identity = sanitizeBookingIdentity(body);
+    if (consultancyService === "discovery") {
+      identity.company ||= "Individual";
+      identity.jobTitle ||= "Discovery call participant";
+      if (identity.focus.length < 10) return NextResponse.json({ error: "Please share your service segment and main question." }, { status: 400 });
+    }
     const validationError = validateBookingIdentity(identity);
     if (validationError) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
-    if (requireWorkEmail() && isPersonalEmail(identity.email)) {
+    if (!consultancyService && requireWorkEmail() && isPersonalEmail(identity.email)) {
       return NextResponse.json(
         { error: "Please use your work email address for partnership and business bookings." },
         { status: 400 }
@@ -94,11 +103,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const token = createBookingSession(identity);
+    const token = createBookingSession(identity, consultancyService);
     return NextResponse.json({
       ok: true,
       token,
-      booking: bookingPublicConfig()
+      booking: bookingPublicConfig(consultancyService === "discovery" ? 15 : undefined)
     });
   } catch (error) {
     console.error(

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { reservationStoreConfigured, reserveBooking, releaseUnsubmittedReservation } from "@/lib/consultancy-payments";
 import { Resend } from "resend";
 import {
+  bookingPublicConfig,
   createGoogleCalendarBooking,
   getClientKey,
   rateLimited,
@@ -89,6 +91,9 @@ export async function POST(request: Request) {
       );
     }
 
+    if (session.paymentOrderId || (session.consultancyService && session.consultancyService !== "discovery")) {
+      return NextResponse.json({ error: "Use the paid consultancy booking flow." }, { status: 403 });
+    }
     const length = Number(request.headers.get("content-length") || 0);
     if (Number.isFinite(length) && length > MAX_BODY_BYTES) {
       return NextResponse.json({ error: "Request is too large." }, { status: 413 });
@@ -96,7 +101,8 @@ export async function POST(request: Request) {
 
     const body = (await request.json()) as { start?: unknown };
     const start = String(body.start || "").trim();
-    const slot = await validateRequestedSlot(start);
+    const duration = session.consultancyService === "discovery" ? 15 : bookingPublicConfig().durationMinutes;
+    const slot = await validateRequestedSlot(start, duration);
 
     // Availability is re-checked server-side immediately before insertion.
     if (!slot) {
@@ -106,9 +112,18 @@ export async function POST(request: Request) {
       );
     }
 
+    // When paid booking is configured, free and legacy meetings share its atomic
+    // interval ledger so a 60-minute session cannot race a shorter meeting.
+    if (reservationStoreConfigured()) {
+      await reserveBooking(`free:${session.nonce}`, slot, session.email);
+      if (!(await validateRequestedSlot(start, duration))) {
+        await releaseUnsubmittedReservation(`free:${session.nonce}`, slot);
+        return NextResponse.json({ error: "That time is no longer available. Please choose another slot." }, { status: 409 });
+      }
+    }
     let booking;
     try {
-      booking = await createGoogleCalendarBooking(session, slot);
+      booking = await createGoogleCalendarBooking(session, slot, session.consultancyService === "discovery" ? "OMNeXa free 15-minute discovery call" : undefined);
     } catch (error) {
       if (error instanceof Error && error.message === "SLOT_TAKEN") {
         return NextResponse.json(
@@ -133,7 +148,7 @@ export async function POST(request: Request) {
       booking: {
         start: slot.start,
         end: slot.end,
-        durationMinutes: 30,
+        durationMinutes: duration,
         timeZone: "Asia/Singapore",
         email: session.email,
         eventId: booking.eventId,

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 const questions = [
   {
     question: "How can I book OMNeXa consultancy or AML/KYC training?",
-    answer: "Dhiraj Kumar offers focused OMNeXa consultancy through Topmate at https://topmate.io/dhiraj_kumar007. Sessions cover practical AI, prototype planning, responsible AI, career readiness, NeXaAML demos, AML/KYC training and Australian Tranche 2 operational change planning, HMS wellbeing reflection, and sustainability action planning. Explore scope and outputs at https://www.omnexagoc.com/consultancy or email Dhiraj.kumar@omnexagoc.com for team engagements."
+    answer: "Dhiraj Kumar offers focused consultancy directly through OMNeXa at https://www.omnexagoc.com/consultancy, with a free 15-minute discovery call for every segment. Sessions cover practical AI, prototype planning, responsible AI, career readiness, NeXaAML demos, AML/KYC training and Australian Tranche 2 operational change planning, HMS wellbeing reflection, and sustainability action planning. Explore scope and outputs at https://www.omnexagoc.com/consultancy or email Dhiraj.kumar@omnexagoc.com for team engagements."
   },
   {
     question: "What is OMNeXa?",
@@ -102,7 +102,7 @@ export default async function KnowledgePage() {
       <section className="page-hero section-shell aligned-section">
         <p className="eyebrow">Official OMNeXa knowledge guide</p>
         <h1>What is OMNeXa?</h1>
-        <div className="hero-actions"><a className="button secondary" href="/consultancy">Consultancy, training &amp; Topmate booking →</a></div>
+        <div className="hero-actions"><a className="button secondary" href="/consultancy">Consultancy, training &amp; free discovery calls →</a></div>
         <p>
           OMNeXa™ is the brand of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation
           ecosystem founded by Dhiraj Kumar. This page is the canonical source for concise facts about

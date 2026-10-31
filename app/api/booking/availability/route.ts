@@ -33,7 +33,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const config = bookingPublicConfig();
+    const config = bookingPublicConfig(session.consultancyService === "discovery" ? 15 : undefined);
     if (!config.configured) {
       return NextResponse.json(
         { error: "Online scheduling is temporarily unavailable." },
@@ -42,7 +42,7 @@ export async function GET(request: Request) {
     }
 
     const date = new URL(request.url).searchParams.get("date") || "";
-    const slots = await availableSlotsForDate(date);
+    const slots = await availableSlotsForDate(date, config.durationMinutes);
 
     return NextResponse.json({
       ok: true,

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { companyLinkedIn, consultancyContact, consultancyFaqs, consultancySessions, topmateProfile } from "@/lib/consultancy";
+import { companyLinkedIn, consultancyContact, consultancyFaqs, consultancySessions, discoveryBookingUrl } from "@/lib/consultancy";
 import "./consultancy.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 const pageUrl = `${siteUrl}/consultancy`;
-const description = "Book OMNeXa consultancy with Dhiraj Kumar on Topmate: practical AI, prototype roadmaps, responsible AI, NeXaAML demos, AML/KYC and Tranche 2 training, HMS wellbeing and sustainability action.";
+const description = "Explore OMNeXa consultancy with Dhiraj Kumar: practical AI, prototype roadmaps, responsible AI, NeXaAML demos, AML/KYC and Tranche 2 training, HMS wellbeing and sustainability action. Start with a free 15-minute discovery call.";
 
 export const metadata: Metadata = {
   title: "Consultancy & 1:1 Sessions with Dhiraj Kumar",
@@ -28,7 +28,7 @@ const services = consultancySessions.map((session) => ({
   description: `${session.summary} Session outputs: ${session.outcomes.join("; ")}. ${session.scope}`,
   url: `${pageUrl}#${session.id}`,
   provider: { "@id": `${siteUrl}/#organization` },
-  availableChannel: { "@type": "ServiceChannel", serviceUrl: `${topmateProfile}/${session.bookingId}` },
+  availableChannel: { "@type": "ServiceChannel", serviceUrl: `${pageUrl}/book?service=${session.id}` },
   audience: { "@type": "Audience", audienceType: session.audience },
   areaServed: "Global"
 }));
@@ -39,7 +39,7 @@ const schema = {
     {
       "@type": "CollectionPage", "@id": `${pageUrl}#webpage`, url: pageUrl,
       name: "OMNeXa Consultancy & 1:1 Sessions with Dhiraj Kumar", description,
-      dateModified: "2026-10-28", isPartOf: { "@id": `${siteUrl}/#website` },
+      dateModified: "2026-10-31", isPartOf: { "@id": `${siteUrl}/#website` },
       about: { "@id": `${siteUrl}/#organization` },
       mainEntity: { "@id": `${pageUrl}#catalog` }
     },
@@ -67,30 +67,32 @@ export default function ConsultancyPage() {
     <main className="consultancy-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
       <section className="page-hero section-shell aligned-section">
-        <p className="eyebrow">OMNeXa consultancy · Book through Topmate</p>
+        <p className="eyebrow">OMNeXa consultancy · Work directly with Dhiraj</p>
         <h1>Bring one real challenge. Leave with a practical next step.</h1>
         <p>Work directly with Dhiraj Kumar, Founder &amp; CEO of OMNeXa Pte. Ltd., Singapore. Choose a focused session in practical AI, product planning, governance, AML/KYC, wellbeing or sustainability.</p>
         <p>Banking, financial crime and transformation experience meets hands-on learning from developing OMNeXa products. Each session has a defined output we work on together.</p>
         <div className="hero-actions">
-          <a className="button primary" href={topmateProfile} target="_blank" rel="noopener noreferrer">View sessions on Topmate ↗</a>
+          <a className="button primary" href={discoveryBookingUrl}>Book a free 15-minute discovery call</a>
+          <a className="button secondary" href="#session-heading">Explore all seven services</a>
           <a className="button secondary" href={`mailto:${consultancyContact}`}>Discuss a team engagement</a>
         </div>
-        <p className="consultancy-note">Topmate and LinkedIn links open external websites in a new tab. Current prices, availability and booking terms are shown on Topmate. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
+        <p className="consultancy-note">The free introduction is available for every service, with no obligation. Paid sessions are currently available by request; scope, fees and terms are agreed before payment. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
       </section>
 
       <section className="section-shell aligned-section" aria-labelledby="session-heading">
         <div className="section-heading"><p className="eyebrow">Choose your focus</p><h2 id="session-heading">Clear scope. Tangible session outputs.</h2></div>
+        <p>Individual session fees are shown in USD. Team engagements and implementation are quoted separately. Start with a free introduction to confirm fit and scope.</p>
         <div className="consultancy-grid">
           {consultancySessions.map((session) => (
             <article className="service-card consultancy-card" id={session.id} key={session.id}>
-              <p className="eyebrow">{session.minutes}-minute online session</p>
+              <p className="eyebrow">{session.minutes}-minute online session · USD {session.priceCents / 100}</p>
               <h3>{session.title}</h3>
               <p><strong>For:</strong> {session.audience}.</p>
               <p>{session.summary}</p>
               <h4>What you will leave with</h4>
               <ul>{session.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
               <p className="consultancy-scope">{session.scope}</p>
-              <a className="button secondary" href={`${topmateProfile}/${session.bookingId}`} target="_blank" rel="noopener noreferrer" aria-label={`Book ${session.title} on Topmate (opens in a new tab)`}>View details &amp; book ↗</a>
+              <a className="button secondary" href={`/consultancy/book?service=${session.id}`}>Request this session →</a>
             </article>
           ))}
         </div>
@@ -115,7 +117,7 @@ export default function ConsultancyPage() {
       <section className="section-shell aligned-section consultancy-end">
         <h2>Start with one session. Scope larger work around the need.</h2>
         <p>For team training, workshops or an implementation engagement, contact OMNeXa to agree the audience, deliverables, timing and scope.</p>
-        <div className="hero-actions"><a className="button primary" href={topmateProfile} target="_blank" rel="noopener noreferrer">Book with Dhiraj on Topmate ↗</a><a className="button secondary" href={companyLinkedIn} target="_blank" rel="noopener noreferrer">Follow OMNeXa on LinkedIn ↗</a><a className="button secondary" href="/dhiraj-kumar">Meet Dhiraj Kumar</a></div>
+        <div className="hero-actions"><a className="button primary" href={discoveryBookingUrl}>Book a free 15-minute introduction</a><a className="button secondary" href={companyLinkedIn} target="_blank" rel="noopener noreferrer">Follow OMNeXa on LinkedIn ↗</a><a className="button secondary" href="/dhiraj-kumar">Meet Dhiraj Kumar</a></div>
       </section>
     </main>
   );

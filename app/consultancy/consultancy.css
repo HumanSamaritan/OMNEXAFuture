@@ -9,3 +9,9 @@
 .consultancy-page a { overflow-wrap: anywhere; }
 .consultancy-end { padding-top: 32px; padding-bottom: 64px; }
 @media (max-width: 760px) { .consultancy-grid { grid-template-columns: 1fr; } .consultancy-card { padding: 22px; } }
+.consultancy-booking { max-width: 900px; padding-top: 50px; padding-bottom: 70px; }
+.consultancy-form { display: grid; gap: 16px; max-width: 640px; padding: 24px; background: var(--surface, #fffaf0); border: 1px solid #d8d4c8; border-radius: 16px; margin: 24px 0; }
+.consultancy-form label { display: grid; gap: 6px; }
+.consultancy-form input, .consultancy-form textarea, .consultancy-form select { padding: 12px; border: 1px solid #aaa; border-radius: 8px; font: inherit; color: #14223b; background: white; max-width: 100%; }
+.consultancy-error { color: #9b2525; }
+.consultancy-slots { display: flex; gap: 12px; flex-wrap: wrap; }

@@ -136,7 +136,7 @@ export default function DhirajKumarPage() {
             the top, strengthening accountability and helping teams navigate change responsibly.
           </p>
           <div className="hero-actions">
-            <a className="button primary" href="/consultancy">Explore consultancy &amp; Topmate sessions</a>
+            <a className="button primary" href="/consultancy">Explore consultancy &amp; free discovery calls</a>
             <a className="button secondary" href="/contact">Start a conversation</a>
             <a
               className="button secondary"

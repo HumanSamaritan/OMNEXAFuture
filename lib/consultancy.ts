@@ -1,4 +1,6 @@
 export const consultancyContact = "Dhiraj.kumar@omnexagoc.com";
+export const consultancyUrl = "https://www.omnexagoc.com/consultancy";
+export const discoveryBookingUrl = "/consultancy/book?service=discovery";
 export const topmateProfile = "https://topmate.io/dhiraj_kumar007";
 export const companyLinkedIn = "https://sg.linkedin.com/company/https-www.omnexagoc.com";
 
@@ -9,6 +11,8 @@ export const consultancySessions = [
     audience: "Professionals, founders and small-business owners",
     minutes: 60,
     bookingId: "2379400",
+    priceCents: 5000,
+    currency: "usd",
     summary: "Bring one recurring task in research, writing, planning or reporting. Map the task, develop a reusable prompt and identify the checks that keep human judgement central.",
     outcomes: ["One AI-assisted workflow outline", "A reusable prompt tested during the session", "A short action and verification checklist"],
     scope: "Guided working session using tools you can access. Custom software implementation and paid tool subscriptions are separate."
@@ -19,6 +23,8 @@ export const consultancySessions = [
     audience: "Founders, domain experts and first-time AI product builders",
     minutes: 60,
     bookingId: "2379401",
+    priceCents: 7500,
+    currency: "usd",
     summary: "Clarify one user problem, map the core journey, identify where AI adds value and define a small minimum viable product with acceptance checks.",
     outcomes: ["A one-page product brief", "A prioritised prototype roadmap", "Key assumptions, dependencies and next build steps"],
     scope: "Planning and guidance. A finished application, production deployment and ongoing development need a separate scope."
@@ -29,6 +35,8 @@ export const consultancySessions = [
     audience: "Business leaders, founders, product owners and transformation teams",
     minutes: 60,
     bookingId: "2379402",
+    priceCents: 7500,
+    currency: "usd",
     summary: "Review one AI assistant, agent or workflow for purpose, allowed actions, data sensitivity, human approvals, failure handling and escalation.",
     outcomes: ["An initial use-case risk map", "A human-oversight checklist", "Prioritised next steps for a governed pilot"],
     scope: "Initial advisory review, not certification, legal advice, a penetration test or a comprehensive model audit."
@@ -39,6 +47,8 @@ export const consultancySessions = [
     audience: "Working professionals, career changers and early-career talent",
     minutes: 60,
     bookingId: "2379404",
+    priceCents: 4000,
+    currency: "usd",
     summary: "Connect your existing experience to relevant AI skills, a proof-of-work project and a credible professional story. Review a LinkedIn headline or CV summary within the session.",
     outcomes: ["A focused 30-day learning and action plan", "One relevant proof-of-work project idea", "Practical professional-positioning feedback"],
     scope: "Mentoring and positioning guidance. Full CV rewriting, placement and job guarantees are not included."
@@ -49,6 +59,8 @@ export const consultancySessions = [
     audience: "Students, professionals and leaders",
     minutes: 30,
     bookingId: "2015615",
+    priceCents: 2000,
+    currency: "usd",
     summary: "Use Human + Machine Sadhana (HMS) thinking to explore one recurring habit or focus challenge: pause, notice patterns, choose, practise and review. Technology can surface observations; the human retains context and choice.",
     outcomes: ["A personal trigger–response pattern map", "One brief pause-and-reflection practice", "A seven-day behaviour experiment and reflection prompt"],
     scope: "Educational wellbeing mentoring, not medical advice, diagnosis, psychotherapy or clinical counselling. HMS is in development; app access is not included."
@@ -59,6 +71,8 @@ export const consultancySessions = [
     audience: "Individuals, founders, educators, HR teams and sustainability champions",
     minutes: 30,
     bookingId: "2015613",
+    priceCents: 5000,
+    currency: "usd",
     summary: "Apply HMS reflection to one issue in consumption, waste, resource use or employee participation. Connect personal awareness to a practical environmental or organisational action, with ownership and a review date.",
     outcomes: ["A one-page sustainability action canvas", "One proposed behaviour-change experiment", "Two or three simple measures for a 30-day review"],
     scope: "Awareness and action planning, not a carbon inventory, ESG audit, certification or regulatory reporting service. Personal reflection alone is not evidence of emissions reduction."
@@ -69,6 +83,8 @@ export const consultancySessions = [
     audience: "New entrants, analysts, banking and fintech teams, and professionals working on Australian Tranche 2 change",
     minutes: 30,
     bookingId: "2015605",
+    priceCents: 5000,
+    currency: "usd",
     summary: "Choose a training, NeXaAML demo or Tranche 2 change-planning focus. Use a fictional case to explore source-of-wealth evidence, customer-risk capture and RM–maker–checker review. Connect the workflow to a practical learning or change priority.",
     outcomes: ["One NeXaAML case walkthrough matched to your level", "A practical evidence, review and escalation checklist", "A learning plan or prioritised Tranche 2 change-action outline"],
     scope: "NeXaAML is an active product build. The guided demonstration uses fictional data; AI and external integrations depend on the demo environment. Tranche 2 discussion is operational planning, not legal advice, AUSTRAC endorsement or a compliance guarantee."
@@ -78,7 +94,15 @@ export const consultancySessions = [
 export const consultancyFaqs = [
   {
     question: "How do I book OMNeXa consultancy with Dhiraj Kumar?",
-    answer: "Choose a session on this page and book through Dhiraj Kumar’s Topmate profile at https://topmate.io/dhiraj_kumar007. Topmate shows current prices, available times and booking terms. For team workshops or a larger engagement, email Dhiraj.kumar@omnexagoc.com."
+    answer: "Explore the sessions and request consultancy directly from OMNeXa. A free 15-minute discovery call is available for every segment, with no payment or obligation. Paid online checkout is being prepared; until it is available, request a written scope, fee and payment instructions from Dhiraj.kumar@omnexagoc.com. A paid appointment is confirmed only after OMNeXa verifies receipt of payment."
+  },
+  {
+    question: "Is there a free introductory call for every segment?",
+    answer: "Yes. Book one free 15-minute discovery call for practical AI, AI products, responsible AI, career readiness, NeXaAML and AML/KYC, HMS wellbeing, or sustainability. We clarify your goal and whether a paid session is suitable. The introduction does not include a full consultation, detailed product demo or implementation, and there is no automatic paid follow-up."
+  },
+  {
+    question: "How will payment and calendar confirmation work?",
+    answer: "The free introduction needs no payment. For paid sessions, fees and terms must be agreed first, and payment receipt must be verified before a calendar invitation is issued. Online paid checkout is not yet available. Do not send money using bank details from an unverified message; request official OMNeXa instructions."
   },
   {
     question: "What will I receive in a consultancy session?",
@@ -105,3 +129,7 @@ export const consultancyFaqs = [
     answer: "Bring one clear question, your current situation and the result you want. For a demo or process review, use anonymised or synthetic examples. Do not submit customer identifiers, confidential bank records, credentials or medical records."
   }
 ];
+
+export function findConsultancyService(id: string) {
+  return consultancySessions.find((service) => service.id === id);
+}

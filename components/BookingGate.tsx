@@ -141,10 +141,13 @@ function formatConfirmation(iso: string): string {
 }
 
 export default function BookingGate({
-  recaptchaSiteKey
+  recaptchaSiteKey,
+  consultancyDiscovery = false
 }: {
   recaptchaSiteKey: string;
+  consultancyDiscovery?: boolean;
 }) {
+  const duration = consultancyDiscovery ? 15 : 30;
   const dates = useMemo(() => upcomingDates(10), []);
   const [step, setStep] = useState<Step>("details");
   const [form, setForm] = useState<FormState>(initialForm);
@@ -254,7 +257,7 @@ export default function BookingGate({
       const response = await fetch("/api/booking/session", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...form, captchaToken })
+        body: JSON.stringify({ ...form, captchaToken, ...(consultancyDiscovery ? { consultancyService: "discovery" } : {}) })
       });
       const data = (await response.json()) as {
         error?: string;
@@ -349,7 +352,7 @@ export default function BookingGate({
         </p>
 
         <div className={styles.confirmationPanel}>
-          <span>30-minute introductory conversation</span>
+          <span>{duration}-minute {consultancyDiscovery ? "free discovery call" : "introductory conversation"}</span>
           <strong>{formatConfirmation(confirmation.start)}</strong>
           <small>Singapore Time · Google Meet</small>
         </div>
@@ -384,7 +387,7 @@ export default function BookingGate({
             </div>
             <h2 id="booking-schedule-title">Choose a time.</h2>
             <p className={styles.scheduleIntro}>
-              Select a 30-minute slot that works for you.
+              Select a {duration}-minute slot that works for you.
             </p>
           </div>
           <button
@@ -406,7 +409,7 @@ export default function BookingGate({
         <div className={styles.meetingMeta} aria-label="Meeting details">
           <span>Google Meet</span>
           <span aria-hidden="true">•</span>
-          <span>{bookingConfig?.durationMinutes || 30} min</span>
+          <span>{bookingConfig?.durationMinutes || duration} min</span>
           <span aria-hidden="true">•</span>
           <span>Singapore time (UTC+8)</span>
         </div>
@@ -462,7 +465,7 @@ export default function BookingGate({
               <p className={styles.sectionLabel}>Available times</p>
               <strong>{formatDate(selectedDate)}</strong>
             </div>
-            <span>{bookingConfig?.durationMinutes || 30}-minute meeting</span>
+            <span>{bookingConfig?.durationMinutes || duration}-minute meeting</span>
           </div>
 
           {error ? <div className={styles.errorBox}>{error}</div> : null}
@@ -528,12 +531,13 @@ export default function BookingGate({
         strategy="afterInteractive"
       />
 
-      <p className={styles.kicker}>30-minute conversation</p>
-      <h2 id="booking-gate-title">Book a conversation.</h2>
+      <p className={styles.kicker}>{duration}-minute {consultancyDiscovery ? "free discovery call" : "conversation"}</p>
+      <h2 id="booking-gate-title">{consultancyDiscovery ? "Start with a free introduction." : "Book a conversation."}</h2>
       <p className={styles.copy}>
         Share a few details to view available times. You can complete the booking here without leaving OMNeXa.
       </p>
 
+      {consultancyDiscovery ? <p className={styles.privacyNote}>For every service segment. Clarify your goal and fit in 15 minutes. No payment, obligation or automatic paid follow-up. Detailed advice and demos are separately scoped.</p> : null}
       <form className={styles.form} onSubmit={startScheduling}>
         <div className={styles.fieldGrid}>
           <label>
@@ -558,23 +562,23 @@ export default function BookingGate({
             />
           </label>
           <label>
-            Company / organisation
+            Company / organisation {consultancyDiscovery ? "(optional)" : ""}
             <input
               value={form.company}
               onChange={(event) => updateField("company", event.target.value)}
               autoComplete="organization"
               maxLength={160}
-              required
+              required={!consultancyDiscovery}
             />
           </label>
           <label>
-            Role / job title
+            Role / job title {consultancyDiscovery ? "(optional)" : ""}
             <input
               value={form.jobTitle}
               onChange={(event) => updateField("jobTitle", event.target.value)}
               autoComplete="organization-title"
               maxLength={120}
-              required
+              required={!consultancyDiscovery}
             />
           </label>
         </div>
@@ -591,13 +595,15 @@ export default function BookingGate({
         </label>
 
         <label>
-          <span className={styles.labelText}>What would you like to discuss? <span className={styles.optional}>Optional</span></span>
+          <span className={styles.labelText}>What would you like to discuss? <span className={styles.optional}>{consultancyDiscovery ? "Required" : "Optional"}</span></span>
           <textarea
             value={form.focus}
             onChange={(event) => updateField("focus", event.target.value)}
+            required={consultancyDiscovery}
+            minLength={consultancyDiscovery ? 10 : undefined}
             rows={3}
             maxLength={1200}
-            placeholder="Partnership, product pilot, responsible AI, education or transformation."
+            placeholder={consultancyDiscovery ? "Choose your segment and share one question: AI workflows, products, governance, career, NeXaAML / AML / KYC, HMS wellbeing, or sustainability." : "Partnership, product pilot, responsible AI, education or transformation."}
           />
         </label>
 
