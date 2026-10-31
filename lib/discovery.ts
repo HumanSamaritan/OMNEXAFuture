@@ -75,17 +75,17 @@ export async function withCalendarLock<T>(operation: () => Promise<T>): Promise<
     await calendarRequest(`/${lockId}?sendUpdates=none`, { method: "PATCH", headers: { "If-Match": locked.etag }, body: JSON.stringify({ extendedProperties: { private: { source: "omnexa-booking-lock", lease: "0", owner: "" } } }) }).catch(() => undefined);
   }
 }
-export function manageToken(eventId: string, expires: number) {
-  const payload = Buffer.from(JSON.stringify({ eventId, expires, scope: "discovery-manage" })).toString("base64url");
+export function manageToken(eventId: string, expires: number, scope: "discovery-manage" | "paid-manage" = "discovery-manage") {
+  const payload = Buffer.from(JSON.stringify({ eventId, expires, scope })).toString("base64url");
   return `${payload}.${createHmac("sha256", secret()).update(payload).digest("base64url")}`;
 }
-export function readManageToken(token: string): { eventId: string; expires: number } | null {
+export function readManageToken(token: string): { eventId: string; expires: number; scope: "discovery-manage" | "paid-manage" } | null {
   try {
     const parts = token.split("."); if (parts.length !== 2 || token.length > 1500) return null;
     const actual = Buffer.from(parts[1]); const expected = Buffer.from(createHmac("sha256", secret()).update(parts[0]).digest("base64url"));
     if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) return null;
     const payload = JSON.parse(Buffer.from(parts[0], "base64url").toString());
-    if (payload.scope !== "discovery-manage" || !/^[a-v0-9]{5,1024}$/.test(payload.eventId) || payload.expires <= Date.now()) return null;
+    if (!(["discovery-manage", "paid-manage"].includes(payload.scope)) || !/^[a-v0-9]{5,1024}$/.test(payload.eventId) || payload.expires <= Date.now()) return null;
     return payload;
   } catch { return null; }
 }
@@ -94,7 +94,16 @@ export async function readManagedEvent(token: string) {
   const response = await calendarRequest(`/${access.eventId}`);
   if (!response.ok) throw new Error("INVALID_LINK");
   const event = await response.json() as CalendarEvent;
-  if (event.status === "cancelled" || event.extendedProperties?.private?.consultancyService !== "discovery") throw new Error("INVALID_LINK");
+  if (event.status === "cancelled") throw new Error("INVALID_LINK");
+  const props = event.extendedProperties?.private;
+  if (access.scope === "paid-manage") {
+    if (!props?.paymentOrderId || props.bookingNonce !== props.paymentOrderId) throw new Error("INVALID_LINK");
+    const { getOrder, verifyOrderPayment } = await import("./consultancy-payments");
+    const order = await getOrder(props.paymentOrderId);
+    if (!order) throw new Error("INVALID_LINK");
+    await verifyOrderPayment(order);
+    if ((Date.parse(event.end?.dateTime || "") - Date.parse(event.start?.dateTime || "")) / 60000 !== order.minutes) throw new Error("INVALID_LINK");
+  } else if (props?.consultancyService !== "discovery" || props.paymentOrderId) throw new Error("INVALID_LINK");
   return event;
 }
 export function discoveryError(error: unknown) {

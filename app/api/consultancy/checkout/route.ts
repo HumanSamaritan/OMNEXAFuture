@@ -1,3 +1,4 @@
+import { preparationFocus } from "@/lib/consultancy-preparation";
 import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { bookingPublicConfig, getClientKey, rateLimited, sameOriginRequest, sanitizeBookingIdentity, validateBookingIdentity, verifyRecaptcha } from "@/lib/booking";
@@ -20,6 +21,8 @@ export async function POST(request: Request) {
     const service = findConsultancyService(String(body.serviceId || ""));
     if (!service || body.companyWebsite || body.acceptTerms !== true) return NextResponse.json({ error: "Choose a service and accept the payment terms." }, { status: 400 });
     const identity = sanitizeBookingIdentity(body);
+    try { identity.focus = preparationFocus(service.id, String(body.focus || ""), body.preparation); }
+    catch { return NextResponse.json({ error: "Please answer each preparation question and enter your session goal within the character limits." }, { status: 400 }); }
     identity.company ||= "Individual"; identity.jobTitle ||= "Consultancy participant";
     const validation = validateBookingIdentity(identity);
     if (validation || identity.focus.length < 10) return NextResponse.json({ error: validation || "Describe your main question." }, { status: 400 });

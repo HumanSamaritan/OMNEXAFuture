@@ -76,7 +76,7 @@ export default function ConsultancyPage() {
           <a className="button secondary" href="#session-heading">Explore all seven services</a>
           <a className="button secondary" href={`mailto:${consultancyContact}`}>Discuss a team engagement</a>
         </div>
-        <p className="consultancy-note">The free introduction is available for every service, with no obligation. Paid sessions are currently available by request; scope, fees and terms are agreed before payment. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
+        <p className="consultancy-note">The free introduction is available for every service, with no obligation. For detailed sessions, open your service page, complete the preparation questions and pay securely when checkout is available. Calendar selection follows verified payment. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
       </section>
 
       <section className="section-shell aligned-section" aria-labelledby="session-heading">
@@ -92,7 +92,7 @@ export default function ConsultancyPage() {
               <h4>What you will leave with</h4>
               <ul>{session.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
               <p className="consultancy-scope">{session.scope}</p>
-              <a className="button secondary" href={`/consultancy/book?service=${session.id}`}>Request this session →</a>
+              <a className="button secondary" href={`/consultancy/book?service=${session.id}`}>Prepare and book this session →</a>
             </article>
           ))}
         </div>

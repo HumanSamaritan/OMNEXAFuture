@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./BookingGate.module.css";
-type Booking = { start: string; end: string; meetLink?: string; completed: boolean };
+type Booking = { start: string; end: string; meetLink?: string; completed: boolean; minutes?: number };
 type Slot = { start: string; end: string };
 const format = (value: string, zone: string) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(value));
 export default function ManageDiscovery() {
@@ -31,13 +31,13 @@ export default function ManageDiscovery() {
     finally { setBusy(false); }
   }
   return <div className={styles.card}>
-    <p className={styles.kicker}>Your discovery appointment</p>
+    <p className={styles.kicker}>Your OMNeXa appointment</p>
     <h2>{updated ? "Your new time is confirmed." : "Plans change. Your booking can too."}</h2>
-    <p>Keep this private link. You can return to it to change your upcoming appointment without booking another discovery call.</p>
+    <p>Keep this private link. You can return to it to change your upcoming appointment without creating another booking or paying again.</p>
     {!token ? <p>Open the complete management link from your original calendar invitation. For help, contact <a href="mailto:dhiraj.kumar@omnexagoc.com">dhiraj.kumar@omnexagoc.com</a>.</p> : null}
     {error ? <p className={styles.errorBox} role="alert">{error}</p> : null}
     {booking ? <>
-      <div className={styles.confirmationPanel}><span>15 minutes · Google Meet</span><strong>{format(booking.start, zone)}</strong><small>Your time zone: {zone}</small></div>
+      <div className={styles.confirmationPanel}><span>{booking.minutes || 15} minutes · Google Meet</span><strong>{format(booking.start, zone)}</strong><small>Your time zone: {zone}</small></div>
       {booking.completed ? <p>This appointment has started or has already taken place. For further consultancy, contact dhiraj.kumar@omnexagoc.com.</p> : <>
         <label className={styles.copy}>Choose another date (Singapore calendar date)<input type="date" value={date} onChange={event => { setDate(event.target.value); setUpdated(false); }} /></label>
         <p>Available times below are displayed in {zone}. Your existing appointment stays in place until a replacement is confirmed.</p>

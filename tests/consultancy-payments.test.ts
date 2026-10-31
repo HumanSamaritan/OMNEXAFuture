@@ -53,3 +53,42 @@ test("discovery duration flag is signed; changing it invalidates the session", (
   const [encoded, signature] = token.split("."); const payload = JSON.parse(Buffer.from(encoded, "base64url").toString()); payload.consultancyService = "aml-kyc-training";
   assert.equal(readBookingSession(`${Buffer.from(JSON.stringify(payload)).toString("base64url")}.${signature}`), null);
 });
+
+import { preparationFocus, preparationQuestions } from "../lib/consultancy-preparation";
+import { manageToken, readManageToken } from "../lib/discovery";
+import { createGoogleCalendarBooking } from "../lib/booking";
+test("all service intake questions survive checkout preparation and reject missing or oversized answers", () => {
+  for (const [id, questions] of Object.entries(preparationQuestions)) {
+    const answers = Object.fromEntries(questions.map(q => [q.id, "x".repeat(180)]));
+    const focus = preparationFocus(id, "x".repeat(400), answers);
+    assert.ok(focus.length < 2200);
+    for (const q of questions) assert.ok(focus.includes(q.label));
+    assert.throws(() => preparationFocus(id, "Specific session goal", {}));
+    assert.throws(() => preparationFocus(id, "Specific session goal", { ...answers, [questions[0].id]: "x".repeat(181) }));
+  }
+});
+test("paid management links are distinct from discovery and cannot have their scope changed", () => {
+  const signed = manageToken("abcdef12345", Date.now() + 60000, "paid-manage");
+  assert.equal(readManageToken(signed)?.scope, "paid-manage");
+  const [encoded, signature] = signed.split(".");
+  const payload = JSON.parse(Buffer.from(encoded, "base64url").toString()); payload.scope = "discovery-manage";
+  assert.equal(readManageToken(`${Buffer.from(JSON.stringify(payload)).toString("base64url")}.${signature}`), null);
+});
+test("paid calendar invitations carry order metadata and the same private rescheduling flow", async () => {
+  const original = globalThis.fetch; let sent: any;
+  process.env.GOOGLE_CALENDAR_CLIENT_ID = "test"; process.env.GOOGLE_CALENDAR_CLIENT_SECRET = "test";
+  process.env.GOOGLE_CALENDAR_REFRESH_TOKEN = "test"; process.env.OMNEXA_BOOKING_CALENDAR_ID = "primary";
+  globalThis.fetch = async (url, init) => {
+    if (String(url).includes("oauth2")) return Response.json({ access_token: "test-local-token", expires_in: 3600 });
+    sent = JSON.parse(String(init?.body));
+    return Response.json({ id: sent.id, hangoutLink: "https://meet.google.com/test" });
+  };
+  try {
+    const session = readBookingSession(createBookingSession(identity, "aml-kyc-training", "test-order"))!;
+    await createGoogleCalendarBooking(session, { start: "2027-01-04T01:00:00.000Z", end: "2027-01-04T01:30:00.000Z" }, "AML training");
+    assert.equal(sent.extendedProperties.private.paymentOrderId, "test-order");
+    const token = sent.description.split("/consultancy/manage#")[1];
+    assert.equal(readManageToken(token)?.scope, "paid-manage");
+    assert.equal(readManageToken(token)?.eventId, sent.id);
+  } finally { globalThis.fetch = original; }
+});

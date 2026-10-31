@@ -1,3 +1,4 @@
+import { withCalendarLock } from "@/lib/discovery";
 import { NextResponse } from "next/server";
 import { createBookingSession, createGoogleCalendarBooking, existingPaidCalendarBooking, readBookingSession, validateRequestedSlot } from "@/lib/booking";
 import { authorisedOrder, publicPaymentError } from "@/lib/consultancy-http";
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
     const raw = await request.text();
     if (Buffer.byteLength(raw) > 1024) return NextResponse.json({ error: "Request too large." }, { status: 413 });
     const { start } = JSON.parse(raw);
-    const booking = await withBookingLock(order.id, async () => {
+    const booking = await withBookingLock(order.id, () => withCalendarLock(async () => {
       const existing = await bookingRecord(order.id);
       if (existing?.status === "confirmed") return existing;
       let reserved = existing;
@@ -34,7 +35,7 @@ export async function POST(request: Request) {
       const confirmed = { ...reserved, status: "confirmed" as const, eventId: event.eventId, meetLink: event.meetLink };
       await confirmBookingRecord(confirmed);
       return confirmed;
-    });
+    }));
     return NextResponse.json({ booking });
   } catch (error) { const result = publicPaymentError(error); return NextResponse.json({ error: result.error }, { status: result.status }); }
 }

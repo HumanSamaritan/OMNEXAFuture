@@ -634,7 +634,7 @@ export async function createGoogleCalendarBooking(
     `Role: ${session.jobTitle}`,
     session.phone ? `Phone: ${session.phone}` : "",
     session.focus ? `Focus: ${session.focus}` : "",
-    session.consultancyService === "discovery" ? `Change your time securely: https://www.omnexagoc.com/consultancy/manage#${manageToken(eventId, Date.parse(slot.end) + 180 * 86400000)}` : ""
+    (session.consultancyService === "discovery" || session.paymentOrderId) ? `Change your time securely: https://www.omnexagoc.com/consultancy/manage#${manageToken(eventId, Date.parse(slot.end) + 180 * 86400000, session.paymentOrderId ? "paid-manage" : "discovery-manage")}` : ""
   ]
     .filter(Boolean)
     .join("\n");
@@ -656,6 +656,7 @@ export async function createGoogleCalendarBooking(
       private: {
         source: "omnexa-connect",
         bookingNonce: session.paymentOrderId || session.nonce,
+        ...(session.paymentOrderId ? { paymentOrderId: session.paymentOrderId, consultancyService: session.consultancyService || "paid" } : {}),
         ...(session.consultancyService === "discovery" ? { consultancyService: "discovery", discoveryEmail: identityHash(normaliseEmail(session.email)), discoveryPhone: identityHash(normalisePhone(session.phone)) } : {})
       }
     }

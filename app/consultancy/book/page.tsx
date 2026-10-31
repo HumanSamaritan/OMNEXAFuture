@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BookingGate from "@/components/BookingGate";
 import ConsultancyCheckout from "@/components/ConsultancyCheckout";
-import { consultancyContact, consultancySessions, findConsultancyService } from "@/lib/consultancy";
+import { findConsultancyService } from "@/lib/consultancy";
 import { paidBookingConfigured, paymentsPublicTerms } from "@/lib/consultancy-payments";
 import "../consultancy.css";
 
@@ -19,8 +19,6 @@ export default async function ConsultancyBookingPage({ searchParams }: { searchP
   const { service: id = "discovery" } = await searchParams;
   const session = findConsultancyService(id);
   if (id !== "discovery" && !session) notFound();
-  const subject = session ? `Consultancy request: ${session.title}` : "OMNeXa consultancy discovery call";
-  const body = `Hello Dhiraj,\n\nI would like to discuss ${session?.title || "OMNeXa consultancy"}.\nMy main challenge:\nMy intended outcome:\nMy time zone and preferred dates:\n\nPlease confirm the scope, fee, cancellation terms and official payment instructions before any payment.`;
   return <main className="consultancy-page">
     <section className="section-shell aligned-section consultancy-booking">
       <a href="/consultancy">← All consultancy services</a>
@@ -31,11 +29,7 @@ export default async function ConsultancyBookingPage({ searchParams }: { searchP
         <p><strong>{session.minutes} minutes · USD {session.priceCents / 100}</strong> · Online, with Dhiraj Kumar</p>
         <h2>What you will leave with</h2><ul>{session.outcomes.map(outcome => <li key={outcome}>{outcome}</li>)}</ul>
         <p>{session.scope}</p>
-        {paidBookingConfigured() ? <ConsultancyCheckout serviceId={session.id} recaptchaSiteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""} termsUrl={paymentsPublicTerms()} /> : <>
-          <h2>Request this session</h2>
-          <p>Online paid checkout is being prepared. Contact OMNeXa to agree the scope, fee, timing and cancellation terms. A paid calendar invitation will be issued only after receipt of payment has been verified.</p>
-          <div className="hero-actions"><a className="button primary" href={`mailto:${consultancyContact}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}>Request session by email</a><a className="button secondary" href="/consultancy/book?service=discovery">Book a free 15-minute introduction</a></div>
-        </>}
+        <ConsultancyCheckout serviceId={session.id} recaptchaSiteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""} termsUrl={paymentsPublicTerms()} available={!!paidBookingConfigured()} />
       </> : <>
         <p className="discovery-lead">A complimentary 15-minute introduction to understand your goal, explore the right consultancy segment and agree a useful next step.</p>
         <div className="discovery-layout">

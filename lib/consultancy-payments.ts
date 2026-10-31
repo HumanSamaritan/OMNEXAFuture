@@ -145,3 +145,26 @@ export async function releaseUnsubmittedReservation(orderId: string, slot: Booki
   const member = JSON.stringify({ startMs: Date.parse(slot.start) - buffer, endMs: Date.parse(slot.end) + buffer, orderId });
   await redis().eval("redis.call('DEL', KEYS[2]); return redis.call('ZREM', KEYS[1], ARGV[1])", ["consultancy:calendar:reservations", `consultancy:booking:${orderId}`], [member]);
 }
+
+// Reconcile after a calendar update, including a retry after a lost response.
+// Rebuild this order's interval atomically so the old time becomes available.
+export async function syncPaidCalendarRecord(orderId: string, event: { id: string; start?: { dateTime?: string }; end?: { dateTime?: string }; hangoutLink?: string }) {
+  const start = event.start?.dateTime; const end = event.end?.dateTime;
+  if (!start || !end || !Number.isFinite(Date.parse(start)) || !Number.isFinite(Date.parse(end))) throw new Error("CALENDAR_RECONCILIATION_REQUIRED");
+  const record = await bookingRecord(orderId);
+  if (!record) throw new Error("CALENDAR_RECONCILIATION_REQUIRED");
+  if (record.status === "confirmed" && Date.parse(record.start) === Date.parse(start) && Date.parse(record.end) === Date.parse(end)) return;
+  const buffer = Math.max(0, Math.min(60, Number(process.env.BOOKING_BUFFER_MINUTES) || 0)) * 60000;
+  const member = JSON.stringify({ startMs: Date.parse(start) - buffer, endMs: Date.parse(end) + buffer, orderId });
+  const updated = { ...record, start, end, eventId: event.id, meetLink: event.hangoutLink, status: "confirmed" };
+  await redis().eval(`
+    local entries = redis.call('ZRANGE', KEYS[1], 0, -1)
+    for _, entry in ipairs(entries) do
+      local b = cjson.decode(entry)
+      if b.orderId == ARGV[1] then redis.call('ZREM', KEYS[1], entry) end
+    end
+    redis.call('ZADD', KEYS[1], ARGV[2], ARGV[3])
+    redis.call('SET', KEYS[2], ARGV[4], 'EX', ARGV[5])
+    return 1
+  `, ["consultancy:calendar:reservations", `consultancy:booking:${orderId}`], [orderId, Date.parse(end) + buffer, member, JSON.stringify(updated), ORDER_TTL]);
+}

@@ -94,7 +94,7 @@ export const consultancySessions = [
 export const consultancyFaqs = [
   {
     question: "How do I book OMNeXa consultancy with Dhiraj Kumar?",
-    answer: "Explore the sessions and request consultancy directly from OMNeXa. A free 15-minute discovery call is available for every segment, with no payment or obligation. Paid online checkout is being prepared; until it is available, request a written scope, fee and payment instructions from Dhiraj.kumar@omnexagoc.com. A paid appointment is confirmed only after OMNeXa verifies receipt of payment."
+    answer: "Explore the sessions and open your chosen service page to complete its preparation questions. A free 15-minute discovery call is available for every segment, with no payment or obligation. Paid online checkout is being prepared; the service page will show when secure checkout is available. A paid appointment is confirmed only after OMNeXa verifies receipt of payment."
   },
   {
     question: "Is there a free introductory call for every segment?",
@@ -102,7 +102,7 @@ export const consultancyFaqs = [
   },
   {
     question: "How will payment and calendar confirmation work?",
-    answer: "The free introduction needs no payment. For paid sessions, fees and terms must be agreed first, and payment receipt must be verified before a calendar invitation is issued. Online paid checkout is not yet available. Do not send money using bank details from an unverified message; request official OMNeXa instructions."
+    answer: "The free introduction needs no payment. For paid sessions, fees and terms must be agreed first, and payment receipt must be verified before a calendar invitation is issued. The service page collects relevant preparation details before Stripe payment. Paid checkout remains unavailable until production setup and verification are complete."
   },
   {
     question: "What will I receive in a consultancy session?",
