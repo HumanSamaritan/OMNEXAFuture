@@ -1,4 +1,3 @@
+# Required by the tsx test runner; approve only this package's install script.
 allowBuilds:
-  sharp: true
-onlyBuiltDependencies:
-  - sharp
+  esbuild: true
