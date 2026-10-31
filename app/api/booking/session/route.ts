@@ -1,3 +1,4 @@
+import { assertDiscoveryEligible, normalisePhone, discoveryError } from "@/lib/discovery";
 import { NextResponse } from "next/server";
 import {
   bookingPublicConfig,
@@ -63,6 +64,8 @@ export async function POST(request: Request) {
     }
     const identity = sanitizeBookingIdentity(body);
     if (consultancyService === "discovery") {
+      identity.phone = normalisePhone(identity.phone);
+      if (!/^\+[1-9]\d{7,14}$/.test(identity.phone)) return NextResponse.json({ error: "Enter your phone number with country code, for example +65 8123 4567." }, { status: 400 });
       identity.company ||= "Individual";
       identity.jobTitle ||= "Discovery call participant";
       if (identity.focus.length < 10) return NextResponse.json({ error: "Please share your service segment and main question." }, { status: 400 });
@@ -103,6 +106,7 @@ export async function POST(request: Request) {
       );
     }
 
+    if (consultancyService === "discovery") await assertDiscoveryEligible(identity);
     const token = createBookingSession(identity, consultancyService);
     return NextResponse.json({
       ok: true,
@@ -110,6 +114,8 @@ export async function POST(request: Request) {
       booking: bookingPublicConfig(consultancyService === "discovery" ? 15 : undefined)
     });
   } catch (error) {
+    const known = discoveryError(error);
+    if (known) return NextResponse.json({ error: known.error }, { status: known.status });
     console.error(
       "Booking session error",
       error instanceof Error ? error.message : "Unknown booking session error"

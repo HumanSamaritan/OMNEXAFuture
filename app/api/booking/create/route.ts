@@ -1,3 +1,4 @@
+import { assertDiscoveryEligible, discoveryError, manageToken, withCalendarLock } from "@/lib/discovery";
 import { NextResponse } from "next/server";
 import { reservationStoreConfigured, reserveBooking, releaseUnsubmittedReservation } from "@/lib/consultancy-payments";
 import { Resend } from "resend";
@@ -102,38 +103,15 @@ export async function POST(request: Request) {
     const body = (await request.json()) as { start?: unknown };
     const start = String(body.start || "").trim();
     const duration = session.consultancyService === "discovery" ? 15 : bookingPublicConfig().durationMinutes;
-    const slot = await validateRequestedSlot(start, duration);
-
-    // Availability is re-checked server-side immediately before insertion.
-    if (!slot) {
-      return NextResponse.json(
-        { error: "That time is no longer available. Please choose another slot." },
-        { status: 409 }
-      );
-    }
-
-    // When paid booking is configured, free and legacy meetings share its atomic
-    // interval ledger so a 60-minute session cannot race a shorter meeting.
-    if (reservationStoreConfigured()) {
-      await reserveBooking(`free:${session.nonce}`, slot, session.email);
-      if (!(await validateRequestedSlot(start, duration))) {
-        await releaseUnsubmittedReservation(`free:${session.nonce}`, slot);
-        return NextResponse.json({ error: "That time is no longer available. Please choose another slot." }, { status: 409 });
-      }
-    }
-    let booking;
-    try {
-      booking = await createGoogleCalendarBooking(session, slot, session.consultancyService === "discovery" ? "OMNeXa free 15-minute discovery call" : undefined);
-    } catch (error) {
-      if (error instanceof Error && error.message === "SLOT_TAKEN") {
-        return NextResponse.json(
-          { error: "That time was just booked. Please choose another slot." },
-          { status: 409 }
-        );
-      }
-      throw error;
-    }
-
+    const result = await withCalendarLock(async () => {
+      if (session.consultancyService === "discovery") await assertDiscoveryEligible(session);
+      const slot = await validateRequestedSlot(start, duration);
+      if (!slot) throw new Error("SLOT_TAKEN");
+      if (reservationStoreConfigured()) await reserveBooking(`free:${session.nonce}`, slot, session.email);
+      const booking = await createGoogleCalendarBooking(session, slot, session.consultancyService === "discovery" ? "OMNeXa free 15-minute discovery call" : undefined);
+      return { slot, booking };
+    });
+    const { slot, booking } = result;
     await notifyOwner({
       name: session.name,
       email: session.email,
@@ -152,10 +130,14 @@ export async function POST(request: Request) {
         timeZone: "Asia/Singapore",
         email: session.email,
         eventId: booking.eventId,
-        meetLink: booking.meetLink || null
+        meetLink: booking.meetLink || null,
+        manageUrl: session.consultancyService === "discovery" ? `/consultancy/manage#${manageToken(booking.eventId, Date.parse(slot.end) + 180 * 86400000)}` : null
       }
     });
   } catch (error) {
+    const known = discoveryError(error);
+    if (known) return NextResponse.json({ error: known.error }, { status: known.status });
+    if (error instanceof Error && error.message === "SLOT_TAKEN") return NextResponse.json({ error: "That time is no longer available. Please select another." }, { status: 409 });
     console.error(
       "Booking creation error",
       error instanceof Error ? error.message : "Unknown booking error"

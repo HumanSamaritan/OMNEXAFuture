@@ -1,3 +1,4 @@
+import { identityHash, normaliseEmail, normalisePhone, manageToken } from "./discovery";
 import {
   createHash,
   createHmac,
@@ -96,7 +97,7 @@ function sessionSecret(): string {
   return secret;
 }
 
-function bookingCalendarId(): string {
+export function bookingCalendarId(): string {
   return process.env.OMNEXA_BOOKING_CALENDAR_ID || "primary";
 }
 
@@ -200,6 +201,7 @@ async function googleTokenFromRefreshToken(): Promise<GoogleTokenCache> {
   });
 
   const response = await fetch("https://oauth2.googleapis.com/token", {
+    signal: AbortSignal.timeout(12000),
     method: "POST",
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: params,
@@ -258,6 +260,7 @@ async function googleTokenFromServiceAccount(): Promise<GoogleTokenCache> {
   });
 
   const response = await fetch("https://oauth2.googleapis.com/token", {
+    signal: AbortSignal.timeout(12000),
     method: "POST",
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: params,
@@ -283,7 +286,7 @@ async function googleTokenFromServiceAccount(): Promise<GoogleTokenCache> {
   };
 }
 
-async function getGoogleAccessToken(): Promise<string> {
+export async function getGoogleAccessToken(): Promise<string> {
   const cached = globalState.__omnexaBookingGoogleToken;
   if (cached && cached.expiresAt > Date.now()) return cached.token;
 
@@ -305,6 +308,7 @@ async function getBusyPeriods(timeMin: string, timeMax: string): Promise<BusyPer
   const calendarId = bookingCalendarId();
 
   const response = await fetch("https://www.googleapis.com/calendar/v3/freeBusy", {
+    signal: AbortSignal.timeout(12000),
     method: "POST",
     headers: {
       authorization: `Bearer ${token}`,
@@ -619,7 +623,7 @@ export async function createGoogleCalendarBooking(
 
   // Deterministic event ID makes simultaneous attempts for the same start time collide at Google.
   const eventId = createHash("sha256")
-    .update(session.paymentOrderId ? `${calendarId}|order|${session.paymentOrderId}` : `${calendarId}|${slot.start}`)
+    .update(session.paymentOrderId ? `${calendarId}|order|${session.paymentOrderId}` : session.consultancyService === "discovery" ? `${calendarId}|discovery|${session.nonce}` : `${calendarId}|${slot.start}`)
     .digest("hex")
     .slice(0, 32);
 
@@ -629,7 +633,8 @@ export async function createGoogleCalendarBooking(
     `Organisation: ${session.company}`,
     `Role: ${session.jobTitle}`,
     session.phone ? `Phone: ${session.phone}` : "",
-    session.focus ? `Focus: ${session.focus}` : ""
+    session.focus ? `Focus: ${session.focus}` : "",
+    session.consultancyService === "discovery" ? `Change your time securely: https://www.omnexagoc.com/consultancy/manage#${manageToken(eventId, Date.parse(slot.end) + 180 * 86400000)}` : ""
   ]
     .filter(Boolean)
     .join("\n");
@@ -650,7 +655,8 @@ export async function createGoogleCalendarBooking(
     extendedProperties: {
       private: {
         source: "omnexa-connect",
-        bookingNonce: session.paymentOrderId || session.nonce
+        bookingNonce: session.paymentOrderId || session.nonce,
+        ...(session.consultancyService === "discovery" ? { consultancyService: "discovery", discoveryEmail: identityHash(normaliseEmail(session.email)), discoveryPhone: identityHash(normalisePhone(session.phone)) } : {})
       }
     }
   };

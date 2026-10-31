@@ -1,6 +1,7 @@
 "use client";
 
-import Script from "next/script";
+import HumanVerification from "./HumanVerification";
+import { consultancySessions } from "@/lib/consultancy";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import styles from "./BookingGate.module.css";
 
@@ -24,6 +25,7 @@ type Confirmation = {
   end: string;
   email: string;
   meetLink?: string | null;
+  manageUrl?: string | null;
 };
 
 type Step = "details" | "schedule" | "confirmed";
@@ -36,13 +38,14 @@ type FormState = {
   phone: string;
   focus: string;
   companyWebsite: string;
+  segment: string;
 };
 
 declare global {
   interface Window {
     omnexaRecaptchaSuccess?: (token: string) => void;
     omnexaRecaptchaExpired?: () => void;
-    grecaptcha?: { enterprise?: { reset: () => void } };
+    grecaptcha?: { enterprise?: { reset: (widgetId?: number) => void; ready?: (callback: () => void) => void; render?: (element: HTMLElement, options: Record<string, unknown>) => number } };
   }
 }
 
@@ -53,7 +56,8 @@ const initialForm: FormState = {
   jobTitle: "",
   phone: "",
   focus: "",
-  companyWebsite: ""
+  companyWebsite: "",
+  segment: ""
 };
 
 function singaporeTodayParts(): { year: number; month: number; day: number } {
@@ -152,6 +156,7 @@ export default function BookingGate({
   const [step, setStep] = useState<Step>("details");
   const [form, setForm] = useState<FormState>(initialForm);
   const [captchaToken, setCaptchaToken] = useState("");
+  const [verificationReset, setVerificationReset] = useState(0);
   const [sessionToken, setSessionToken] = useState("");
   const [bookingConfig, setBookingConfig] = useState<BookingConfig | null>(null);
   const [selectedDate, setSelectedDate] = useState(dates[0] || "");
@@ -236,17 +241,13 @@ export default function BookingGate({
 
   function resetCaptcha() {
     setCaptchaToken("");
-    try {
-      window.grecaptcha?.enterprise?.reset();
-    } catch {
-      // Google may not have initialized the widget yet.
-    }
+    setVerificationReset(value => value + 1);
   }
 
   async function startScheduling(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!captchaToken) {
-      setError("Please complete the reCAPTCHA verification.");
+      setError("Please tick ‘I’m not a robot’ below, then continue to available times.");
       return;
     }
 
@@ -257,7 +258,7 @@ export default function BookingGate({
       const response = await fetch("/api/booking/session", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...form, captchaToken, ...(consultancyDiscovery ? { consultancyService: "discovery" } : {}) })
+        body: JSON.stringify({ ...form, focus: consultancyDiscovery ? `${form.segment}: ${form.focus}` : form.focus, captchaToken, ...(consultancyDiscovery ? { consultancyService: "discovery" } : {}) })
       });
       const data = (await response.json()) as {
         error?: string;
@@ -345,7 +346,7 @@ export default function BookingGate({
     return (
       <div className={styles.card} aria-live="polite">
         <div className={styles.successMark} aria-hidden="true">✓</div>
-        <p className={styles.kicker}>Booking confirmed</p>
+        <p className={styles.kicker}>Step 3 of 3 · Booking confirmed</p>
         <h2>Your conversation is on the calendar.</h2>
         <p className={styles.copy}>
           A calendar invitation has been sent to <strong>{confirmation.email}</strong>.
@@ -368,6 +369,7 @@ export default function BookingGate({
           </a>
         ) : null}
 
+        {confirmation.manageUrl ? <a className={styles.secondaryAction} href={confirmation.manageUrl}>Manage or reschedule this appointment →</a> : null}
         <p className={styles.privacyNote}>
           Need to change the meeting? Reply to the calendar invitation or email{" "}
           <a href="mailto:dhiraj.kumar@omnexagoc.com">dhiraj.kumar@omnexagoc.com</a>.
@@ -383,7 +385,7 @@ export default function BookingGate({
           <div>
             <div className={styles.verifiedLine}>
               <span aria-hidden="true">✓</span>
-              Verification complete
+              Step 2 of 3 · Verification complete
             </div>
             <h2 id="booking-schedule-title">Choose a time.</h2>
             <p className={styles.scheduleIntro}>
@@ -468,7 +470,7 @@ export default function BookingGate({
             <span>{bookingConfig?.durationMinutes || duration}-minute meeting</span>
           </div>
 
-          {error ? <div className={styles.errorBox}>{error}</div> : null}
+          {error ? <div className={styles.errorBox} role="alert">{error}<br /><a href="mailto:dhiraj.kumar@omnexagoc.com">Need help? Contact Dhiraj</a></div> : null}
 
           {loadingSlots ? (
             <div className={styles.loadingState}>Checking availability…</div>
@@ -526,19 +528,18 @@ export default function BookingGate({
 
   return (
     <div className={styles.card} aria-labelledby="booking-gate-title">
-      <Script
-        src="https://www.google.com/recaptcha/enterprise.js"
-        strategy="afterInteractive"
-      />
 
+
+      <div className={styles.journeySteps} aria-label="Booking progress"><span aria-current="step">01 · Your details</span><span>02 · Choose a time</span><span>03 · Confirmation</span></div>
       <p className={styles.kicker}>{duration}-minute {consultancyDiscovery ? "free discovery call" : "conversation"}</p>
       <h2 id="booking-gate-title">{consultancyDiscovery ? "Start with a free introduction." : "Book a conversation."}</h2>
       <p className={styles.copy}>
-        Share a few details to view available times. You can complete the booking here without leaving OMNeXa.
+        Share your details and choose a live calendar slot. Your invitation includes Google Meet and a private link to change your time.
       </p>
 
-      {consultancyDiscovery ? <p className={styles.privacyNote}>For every service segment. Clarify your goal and fit in 15 minutes. No payment, obligation or automatic paid follow-up. Detailed advice and demos are separately scoped.</p> : null}
+      {consultancyDiscovery ? <p className={styles.privacyNote}>For every service segment. Clarify your goal and fit in 15 minutes. One complimentary introduction per person across all segments. No payment, obligation or automatic paid follow-up. Detailed advice and demos are separately scoped.</p> : null}
       <form className={styles.form} onSubmit={startScheduling}>
+        {consultancyDiscovery ? <label>Your focus<select required value={form.segment} onChange={event => updateField("segment", event.target.value)}><option value="">Choose a consultancy segment</option>{consultancySessions.map(service => <option value={service.title} key={service.id}>{service.title}</option>)}</select></label> : null}
         <div className={styles.fieldGrid}>
           <label>
             Full name
@@ -571,6 +572,7 @@ export default function BookingGate({
               required={!consultancyDiscovery}
             />
           </label>
+          {!consultancyDiscovery ? <>
           <label>
             Role / job title {consultancyDiscovery ? "(optional)" : ""}
             <input
@@ -581,12 +583,15 @@ export default function BookingGate({
               required={!consultancyDiscovery}
             />
           </label>
+          </> : null}
         </div>
 
         <label>
-          <span className={styles.labelText}>Phone number <span className={styles.optional}>Optional</span></span>
+          <span className={styles.labelText}>Phone number <span className={styles.optional}>{consultancyDiscovery ? "With country code · Required" : "Optional"}</span></span>
           <input
             type="tel"
+            required={consultancyDiscovery}
+            placeholder={consultancyDiscovery ? "+65 8123 4567" : undefined}
             value={form.phone}
             onChange={(event) => updateField("phone", event.target.value)}
             autoComplete="tel"
@@ -617,16 +622,10 @@ export default function BookingGate({
           />
         </label>
 
+        <p className={styles.privacyNote}>Complete “I’m not a robot” below to unlock live availability. If verification does not load, reload this page or contact <a href="mailto:dhiraj.kumar@omnexagoc.com">Dhiraj</a>.</p>
         <div className={styles.recaptchaWrap}>
           {recaptchaSiteKey ? (
-            <div
-              className="g-recaptcha"
-              data-sitekey={recaptchaSiteKey}
-              data-callback="omnexaRecaptchaSuccess"
-              data-expired-callback="omnexaRecaptchaExpired"
-              data-theme="light"
-              data-size="normal"
-            />
+            <HumanVerification key={verificationReset} siteKey={recaptchaSiteKey} onToken={setCaptchaToken} />
           ) : (
             <div className={styles.verificationUnavailable}>
               Human verification is temporarily unavailable. Please try again shortly.
@@ -634,7 +633,7 @@ export default function BookingGate({
           )}
         </div>
 
-        {error ? <div className={styles.errorBox}>{error}</div> : null}
+        {error ? <div className={styles.errorBox} role="alert">{error}<br /><a href="mailto:dhiraj.kumar@omnexagoc.com">Need help? Contact Dhiraj</a></div> : null}
 
         <p className={styles.consent}>
           By continuing, you agree to OMNeXa&apos;s <a href="/privacy">privacy policy</a>. We use
@@ -644,7 +643,7 @@ export default function BookingGate({
         <button
           className={styles.continueButton}
           type="submit"
-          disabled={loading || !captchaToken || !recaptchaSiteKey}
+          disabled={loading || !recaptchaSiteKey}
         >
           {loading ? "Checking…" : "Continue to available times"}
         </button>
