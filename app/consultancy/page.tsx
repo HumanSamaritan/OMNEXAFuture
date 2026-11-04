@@ -88,11 +88,19 @@ export default function ConsultancyPage() {
             <article className="service-card consultancy-card" id={session.id} key={session.id}>
               <p className="eyebrow">{session.minutes}-minute online session · <ConsultancyPrice cents={session.priceCents} base={session.currency} /></p>
               <h3>{session.title}</h3>
-              <p><strong>For:</strong> {session.audience}.</p>
-              <p>{session.summary}</p>
-              <h4>What you will leave with</h4>
-              <ul>{session.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
-              <p className="consultancy-scope">{session.scope}</p>
+              <p className="consultancy-card-preview">{session.id === "aml-kyc-training"
+                ? "Explore practical AML/KYC training and a guided NeXaAML demonstration."
+                : session.summary.split(". ")[0] + (session.summary.includes(". ") ? "." : "")}</p>
+              <details className="consultancy-card-details">
+                <summary>View service details</summary>
+                <div className="consultancy-card-detail-body">
+                  <p><strong>For:</strong> {session.audience}.</p>
+                  <p>{session.summary}</p>
+                  <h4>What you will leave with</h4>
+                  <ul>{session.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
+                  <p className="consultancy-scope">{session.scope}</p>
+                </div>
+              </details>
               <a className="button secondary" href={discoveryBookingUrl}>Book a free consultation →</a>
             </article>
           ))}
