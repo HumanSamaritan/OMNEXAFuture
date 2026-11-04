@@ -79,7 +79,7 @@ export const consultancySessions = [
   },
   {
     id: "aml-kyc-training",
-    title: "NeXaAML Demo, AML/KYC Training & Tranche 2",
+    title: "NeXaAML Demo & AML/KYC Training",
     audience: "New entrants, analysts, banking and fintech teams, and professionals working on Australian Tranche 2 change",
     minutes: 30,
     bookingId: "2015605",
