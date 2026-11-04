@@ -533,6 +533,87 @@ export const canonicalIssues: ConvergenceIssue[] = [
       }
     ]
     , "linkedinUrl": "https://www.linkedin.com/pulse/ai-divide-becoming-learning-dhiraj-kumar-i56hf"
+  },
+  {
+    "issue": "Issue 08",
+    "slug": "issue-08",
+    "title": "An AI Agent Needs More Than a Login",
+    "subtitle": "Access is a technical capability. Authority is a human and institutional decision.",
+    "summary": "As AI agents move from answering questions to taking actions, a valid login does not establish a legitimate business mandate. Issue 08 examines human intent, bounded delegation, evidence, decision rights, controls, accountability and recovery.",
+    "themes": [
+      "Agentic AI",
+      "Human authority",
+      "AI governance",
+      "Bounded delegation",
+      "Identity and access management",
+      "Human–agent accountability"
+    ],
+    "seoKeywords": [
+      "AI agent authority",
+      "AI agent login versus authorisation",
+      "agentic AI governance",
+      "bounded AI delegation",
+      "AI agent accountability",
+      "human-agent authority",
+      "OViA assurance"
+    ],
+    "questions": [
+      {
+        "question": "Does an AI agent's login authorise business decisions?",
+        "answer": "No. Identity and software access differ from a business mandate that defines who may decide, which actions are allowed and how they are governed."
+      },
+      {
+        "question": "How should agents act within delegated authority?",
+        "answer": "Define authorised objectives and boundaries. Within the mandate an agent may proceed; if the mandate must change it should seek approval; outside it the agent should stop."
+      },
+      {
+        "question": "How can an organisation trace AI-agent authority?",
+        "answer": "Record the original human intent, authoriser, scope, policy and evidence checks, resulting actions, outcomes and intervention or recovery mechanisms."
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The convergence question",
+        "body": "If an AI agent can sign in to a system, does that mean it should be allowed to make a business decision? Identity answers who is connected. Authority answers what the agent may legitimately do, within which boundaries, for whose purpose and with what evidence."
+      },
+      {
+        "heading": "From the learning divide to legitimate agent action",
+        "body": "Issue 06 asked what humans learn when AI does the work. Issue 07 examined the difference between AI-assisted learning and AI-substituted learning. Issue 08 extends the same human-agency question from understanding to action: capability or access alone does not create authority."
+      },
+      {
+        "heading": "The access-versus-authority mistake",
+        "body": "A service account can permit reading records or calling tools, yet a business mandate is different. It must define the purpose, authorised outcome, permission scope, affected parties, spending and time limits, approvals and stopping conditions. A technically valid API call can still be an unauthorised decision."
+      },
+      {
+        "heading": "Bounded delegation: go, ask or stop",
+        "body": "Autonomy need not require a human approval for every small action, but its boundaries must survive subtasks and agent hand-offs. OMNeXa illustrates the principle as WITHIN MANDATE → GO; MANDATE MUST CHANGE → ASK; OUTSIDE MANDATE → STOP. This practitioner proposition does not replace existing security controls or legal requirements."
+      },
+      {
+        "heading": "What must travel with every consequential action?",
+        "body": "A trustworthy operating model should preserve the original objective, authoriser, scope, relevant evidence and policy, action taken, observed outcome and route to challenge or recover. The original human intention must remain traceable across systems, tools and agents."
+      },
+      {
+        "heading": "A human–agent authority workflow",
+        "body": "An illustrative sequence runs human intent → agent identity → authority gate → evidence and policy → execute and record → verify and recover. Each stage protects the legitimacy and reversibility of consequential actions, rather than trusting credentials alone."
+      },
+      {
+        "heading": "From OMNeXa practice to the broader question",
+        "body": "NeXaAML explores evidence and control boundaries in financial-crime workflows; Human + Machine Sadhana explores awareness and purposeful AI use; NeXaSetu remains work in progress around intent-to-impact assurance. These are design lenses, not claims of deployed or certified standards. Human Defines the Loop → Machine Amplifies the Loop → Human Manages and Ends the Loop."
+      },
+      {
+        "heading": "The strongest counterargument",
+        "body": "Established identity and access management, least privilege, approval workflows and audit logs already provide substantial safeguards. The challenge is applying these proven controls consistently to autonomous, probabilistic and multi-step execution while preserving the business mandate they protect."
+      },
+      {
+        "heading": "The OViA assurance lens",
+        "body": "INTENT → EVIDENCE → UNDERSTANDING → AUTHORITY → OUTCOME → CORRECTION is an OMNeXa practitioner lens for legitimate, explainable and correctable decisions. It is not an externally certified standard."
+      },
+      {
+        "heading": "The question we leave with leaders",
+        "body": "If your most capable AI agent received access tomorrow, could your organisation prove which decisions it was authorised to make, and who would stop it when that authority no longer applies? Human wisdom leads. Technology supports. Human agency remains in control."
+      }
+    ],
+    "linkedinUrl": "https://www.linkedin.com/pulse/ai-agent-needs-more-than-login-dhiraj-kumar-kvepf"
   }
 ];
 
