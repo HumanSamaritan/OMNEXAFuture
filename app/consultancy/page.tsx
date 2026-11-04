@@ -77,12 +77,12 @@ export default function ConsultancyPage() {
           <a className="button secondary" href="#session-heading">Explore all seven services</a>
           <a className="button secondary" href={`mailto:${consultancyContact}`}>Discuss a team engagement</a>
         </div>
-        <p className="consultancy-note">The free introduction is available for every service, with no obligation. For detailed sessions, open your service page, complete the preparation questions and pay securely when checkout is available. Calendar selection follows verified payment. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
+        <p className="consultancy-note">Start with a complimentary 15-minute exploratory consultation. We confirm your needs and recommend the appropriate service; all listed session fees are fixed and non-negotiable. Following the discussion, OMNeXa will provide official payment instructions via an available method such as Stripe, Revolut, Razorpay or verified bank transfer. The exploratory call is free, with no obligation to purchase. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
       </section>
 
       <section className="section-shell aligned-section" aria-labelledby="session-heading">
         <div className="section-heading"><p className="eyebrow">Choose your focus</p><h2 id="session-heading">Clear scope. Tangible session outputs.</h2></div>
-        <p>Individual session fees are set in USD. You can view an estimate in your preferred currency. Team engagements and implementation are quoted separately. Start with a free introduction to confirm fit and scope.</p>
+        <p>Browse the services and fixed USD fees below. View an approximate amount in another currency if helpful. Your first 15-minute consultation is complimentary; after discussing your requirements you can choose whether to proceed with a paid session. Custom projects and team engagements outside the listed sessions require a separate proposal.</p>
         <ConsultancyCurrency><div className="consultancy-grid">
           {consultancySessions.map((session) => (
             <article className="service-card consultancy-card" id={session.id} key={session.id}>
@@ -93,7 +93,7 @@ export default function ConsultancyPage() {
               <h4>What you will leave with</h4>
               <ul>{session.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
               <p className="consultancy-scope">{session.scope}</p>
-              <a className="button secondary" href={`/consultancy/book?service=${session.id}`}>Prepare and book this session →</a>
+              <a className="button secondary" href={discoveryBookingUrl}>Book a free consultation →</a>
             </article>
           ))}
         </div></ConsultancyCurrency>
@@ -116,8 +116,8 @@ export default function ConsultancyPage() {
       </section>
 
       <section className="section-shell aligned-section consultancy-end">
-        <h2>Start with one session. Scope larger work around the need.</h2>
-        <p>For team training, workshops or an implementation engagement, contact OMNeXa to agree the audience, deliverables, timing and scope.</p>
+        <h2>Let's discuss your challenge before getting started.</h2>
+        <p>Book a complimentary introduction to confirm the appropriate fixed-fee session and next steps. For team training, workshops or custom implementation beyond the listed services, contact OMNeXa for a separate proposal.</p>
         <div className="hero-actions"><a className="button primary" href={discoveryBookingUrl}>Book a free 15-minute introduction</a><a className="button secondary" href={companyLinkedIn} target="_blank" rel="noopener noreferrer">Follow OMNeXa on LinkedIn ↗</a><a className="button secondary" href="/dhiraj-kumar">Meet Dhiraj Kumar</a></div>
       </section>
     </main>
