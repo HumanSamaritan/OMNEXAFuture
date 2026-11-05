@@ -62,6 +62,7 @@ export const canonicalIssues: ConvergenceIssue[] = [
     issue: "Issue 02",
     slug: "issue-02",
     title: "Who Defines the AI Loop?",
+    publishedAt: "2026-08-22",
     summary:
       "A leadership and governance perspective on purpose, decision rights, escalation, accountability, employability and the human value choices that should be defined before intelligent systems scale.",
     themes: [
@@ -87,14 +88,15 @@ export const canonicalIssues: ConvergenceIssue[] = [
           "The design of the loop also shapes work and employability. Leaders should decide how people learn, how released capacity is redirected and how technology strengthens rather than silently erodes human capability."
       }
     ],
-    linkedinUrl: process.env.OMNEXA_ISSUE_02_LINKEDIN_URL || linkedInArticlesHub
+    linkedinUrl: process.env.OMNEXA_ISSUE_02_LINKEDIN_URL ||
+      "https://www.linkedin.com/pulse/who-defines-ai-loop-human-oversight-decision-rights-d%E2%84%8Eiraj-kumar-oqlcf"
   },
   {
     issue: "Issue 03",
     slug: "issue-03",
     title: "When the Screen Stops Being the Product",
     subtitle: "From fixed interfaces to agentic interaction and outcome-led experience",
-    publishedAt: "2026-09-01",
+    publishedAt: "2026-08-31",
     summary:
       "A practical perspective on how agentic AI changes the role of the user interface: people increasingly express intent while agents navigate systems, tools and workflows, making visibility, supervision, exception handling and outcome design more important than screen flow alone.",
     themes: [
@@ -149,7 +151,7 @@ export const canonicalIssues: ConvergenceIssue[] = [
     ],
     linkedinUrl:
       process.env.OMNEXA_ISSUE_03_LINKEDIN_URL ||
-      "https://www.linkedin.com/feed/update/urn:li:ugcPost:7500053384427900928/"
+      "https://www.linkedin.com/pulse/issue-03-when-screen-stops-being-product-dhiraj-kumar-lvlqf"
   },
   {
     issue: "Issue 04",
