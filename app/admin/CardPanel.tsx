@@ -8,6 +8,33 @@ function qrUrl(value: string): string {
   return `https://quickchart.io/qr?text=${encodeURIComponent(value)}&size=300&margin=1&ecLevel=M&dark=07152b&light=ffffff`;
 }
 
+function vCardEscape(value: string): string {
+  return String(value || "").replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/;/g, "\\;").replace(/,/g, "\\,");
+}
+
+function employeeVCard(employee: Employee): string {
+  const name = String(employee.full_name || "").trim();
+  const parts = name.split(/\s+/);
+  const family = parts.length > 1 ? parts.pop() || "" : "";
+  const given = parts.join(" ") || (family ? "" : name);
+  const rows = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${vCardEscape(family)};${vCardEscape(given)};;;`,
+    `FN:${vCardEscape(name)}`,
+    "ORG:OMNeXa Pte. Ltd.",
+    `TITLE:${vCardEscape(employee.role || "")}`,
+    employee.phone_number ? `TEL;TYPE=WORK,VOICE:${vCardEscape(employee.phone_number)}` : "",
+    employee.whatsapp_number && cleanPhone(employee.whatsapp_number) !== cleanPhone(employee.phone_number || "")
+      ? `TEL;TYPE=CELL:${vCardEscape(employee.whatsapp_number)}` : "",
+    employee.work_email ? `EMAIL;TYPE=WORK:${vCardEscape(employee.work_email)}` : "",
+    "URL:https://www.omnexagoc.com",
+    employee.linkedin_url ? `URL:${vCardEscape(employee.linkedin_url)}` : "",
+    "END:VCARD"
+  ];
+  return rows.filter(Boolean).join("\\r\\n") + "\\r\\n";
+}
+
 function linkedInDisplay(value?: string | null): string {
   return String(value || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 }
@@ -18,6 +45,7 @@ function linkedInMark(): string {
 
 export default function CardPanel({ employee }: { employee: Employee }) {
   const linkedinQr = employee.linkedin_url ? qrUrl(employee.linkedin_url) : "";
+  const contactQr = qrUrl(employeeVCard(employee));
   const whatsappLink = employee.whatsapp_number ? `https://wa.me/${cleanPhone(employee.whatsapp_number)}` : "";
   const whatsappQr = whatsappLink ? qrUrl(whatsappLink) : "";
   const contactRows = [
@@ -27,6 +55,18 @@ export default function CardPanel({ employee }: { employee: Employee }) {
     employee.work_email ? `<div class="contact"><b>@</b><span>${escapeHtml(employee.work_email)}</span></div>` : "",
     employee.linkedin_url ? `<div class="contact linkedin">${linkedInMark()}<span>${escapeHtml(linkedInDisplay(employee.linkedin_url))}</span></div>` : ""
   ].filter(Boolean).join("");
+
+  function saveContactFile() {
+    const blob = new Blob([employeeVCard(employee)], { type: "text/vcard;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${employee.full_name.trim().replace(/[^a-z0-9_-]+/gi, "-") || "omnexa-employee"}.vcf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 
   function printCard() {
     const frame = document.createElement("iframe");
@@ -87,7 +127,7 @@ export default function CardPanel({ employee }: { employee: Employee }) {
       .site{text-align:center;font-size:6pt;color:#f2ce78;margin:2mm 0 0;letter-spacing:.03em}
     </style></head><body>
       <section class="sheet"><div class="card front"><div class="brand"><img src="${location.origin}/omnexa-logo.png" alt="OMNeXa"></div><div class="identity"><h1>${escapeHtml(employee.full_name)}</h1><h2>${escapeHtml(employee.role)}</h2><p class="company">OMNeXa Pte. Ltd.</p><div class="rule"></div><div class="contacts">${contactRows}</div></div></div></section>
-      <section class="sheet"><div class="card back"><div class="backbrand"><img src="${location.origin}/omnexa-logo.png" alt="OMNeXa"><strong>Where Consciousness Meets Intelligence</strong></div><div class="connect"><h3>Connect with ${escapeHtml(employee.full_name.split(/\s+/)[0] || employee.full_name)}</h3><div class="qrs"><div class="qr">${linkedinQr ? `<img src="${linkedinQr}" alt="LinkedIn QR">` : `<div class="placeholder">Add LinkedIn</div>`}<b>LinkedIn</b><span>Scan to connect</span></div><div class="qr">${whatsappQr ? `<img src="${whatsappQr}" alt="WhatsApp QR">` : `<div class="placeholder">Add WhatsApp</div>`}<b>WhatsApp</b><span>Scan to message</span></div></div><p class="site">www.omnexagoc.com</p></div></div></section>
+      <section class="sheet"><div class="card back"><div class="backbrand"><img src="${location.origin}/omnexa-logo.png" alt="OMNeXa"><strong>Where Consciousness Meets Intelligence</strong></div><div class="connect"><h3>Connect with ${escapeHtml(employee.full_name.split(/\s+/)[0] || employee.full_name)}</h3><div class="qrs"><div class="qr">${linkedinQr ? `<img src="${linkedinQr}" alt="LinkedIn QR">` : `<div class="placeholder">Add LinkedIn</div>`}<b>LinkedIn</b><span>Scan to connect</span></div><div class="qr"><img src="${contactQr}" alt="Save contact QR"><b>Save Contact</b><span>Scan to add to phone</span></div></div><p class="site">www.omnexagoc.com</p></div></div></section>
     </body></html>`);
     doc.close();
 
@@ -144,6 +184,12 @@ export default function CardPanel({ employee }: { employee: Employee }) {
         <div><p className={styles.eyebrow}>Standard OMNeXa identity</p><h1>Visiting card</h1></div>
         <button type="button" className={styles.primaryButton} onClick={printCard}>Save / Print card PDF</button>
       </div>
+      <div className={styles.buttonRow}>
+        <button type="button" className={styles.secondaryButton} onClick={saveContactFile}>Download contact (.vcf)</button>
+        {whatsappLink && <a className={styles.secondaryButton} href={whatsappLink} target="_blank" rel="noopener noreferrer">Open WhatsApp</a>}
+        {employee.linkedin_url && <a className={styles.secondaryButton} href={employee.linkedin_url} target="_blank" rel="noopener noreferrer">Open LinkedIn</a>}
+      </div>
+      <p className={styles.helper}>Scan the Save Contact QR on the card to add the employee’s work contact details to a phone. The .vcf file works as an alternative for devices that do not recognise contact QR codes. QR images are served by QuickChart, so the selected public-facing contact details are transmitted to that provider.</p>
       <p className={styles.helper}>The print file uses two A4 pages with front and back centred at true 90 × 54 mm card size. Print at 100% scale and use duplex, flip on the long edge, for aligned two-sided cards.</p>
       <div className={styles.cardGallery}>
         <div className={`${styles.businessCard} ${styles.cardFront}`}>
@@ -163,7 +209,7 @@ export default function CardPanel({ employee }: { employee: Employee }) {
           <div className={styles.backBrand}><img src="/omnexa-logo.png" alt="OMNeXa official logo" /><strong>Where Consciousness Meets Intelligence</strong></div>
           <div className={styles.qrGrid} style={{ gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "4%", minWidth: 0 }}>
             <div style={{ minWidth: 0 }}>{linkedinQr ? <img src={linkedinQr} alt="LinkedIn QR code" /> : <div className={styles.qrPlaceholder}>Add LinkedIn</div>}<strong>LinkedIn</strong><span>Scan to connect</span></div>
-            <div style={{ minWidth: 0 }}>{whatsappQr ? <img src={whatsappQr} alt="WhatsApp QR code" /> : <div className={styles.qrPlaceholder}>Add WhatsApp</div>}<strong>WhatsApp</strong><span>Scan to message</span></div>
+            <div style={{ minWidth: 0 }}><img src={contactQr} alt={`Save ${employee.full_name} to contacts QR code`} /><strong>Save Contact</strong><span>Scan to add to phone</span></div>
           </div>
           <p className={styles.cardWebsite}>www.omnexagoc.com</p>
         </div>
