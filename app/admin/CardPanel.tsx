@@ -32,7 +32,7 @@ function employeeVCard(employee: Employee): string {
     employee.linkedin_url ? `URL:${vCardEscape(employee.linkedin_url)}` : "",
     "END:VCARD"
   ];
-  return rows.filter(Boolean).join("\\r\\n") + "\\r\\n";
+  return rows.filter(Boolean).join("\r\n") + "\r\n";
 }
 
 function linkedInDisplay(value?: string | null): string {
@@ -47,7 +47,6 @@ export default function CardPanel({ employee }: { employee: Employee }) {
   const linkedinQr = employee.linkedin_url ? qrUrl(employee.linkedin_url) : "";
   const contactQr = qrUrl(employeeVCard(employee));
   const whatsappLink = employee.whatsapp_number ? `https://wa.me/${cleanPhone(employee.whatsapp_number)}` : "";
-  const whatsappQr = whatsappLink ? qrUrl(whatsappLink) : "";
   const contactRows = [
     employee.phone_number ? `<div class="contact"><b>☎</b><span>${escapeHtml(employee.phone_number)}</span></div>` : "",
     employee.whatsapp_number ? `<div class="contact"><b>◉</b><span>${escapeHtml(employee.whatsapp_number)}</span></div>` : "",
