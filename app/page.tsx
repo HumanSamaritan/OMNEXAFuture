@@ -89,6 +89,17 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section-shell aligned-section" aria-labelledby="physical-ai-home-title">
+        <div className="section-heading">
+          <p className="eyebrow">Proposed India learning initiative</p>
+          <h2 id="physical-ai-home-title">Physical AI (Robots). Humanity at the Centre.</h2>
+          <p>OMNeXa is exploring a student-focused robotics and human-centred AI experience for Rourkela and Bhubaneswar. No event venue or date has been confirmed. Parents and guardians can express interest to receive verified future details.</p>
+          <div className="hero-actions">
+            <a className="button primary" href="https://omnexa-career.omnexagoc.com/physical-ai-robots">Explore Physical AI (Robots) & register interest</a>
+          </div>
+        </div>
+      </section>
+
       <section className="section-shell aligned-section home-first-section">
         <div className="section-heading">
           <p className="eyebrow">What OMNeXa brings together</p>
