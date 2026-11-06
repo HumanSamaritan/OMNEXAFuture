@@ -87,7 +87,7 @@ export function isAllowedAdmin(emailInput: string): boolean {
 
 export function isAllowedHrApprover(emailInput: string): boolean {
   const email = emailInput.trim().toLowerCase();
-  const allowList = (process.env.OMNEXA_HR_APPROVER_EMAILS || "dhiraj.kums@gmail.com")
+  const allowList = (process.env.OMNEXA_HR_APPROVER_EMAILS || "dhiraj.kums@gmail.com,dhiraj.kumar@omnexagoc.com")
     .split(",")
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean);
