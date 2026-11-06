@@ -19,6 +19,8 @@ export type EmployeeRecord = {
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
   approval_by?: string | null;
   approval_at?: string | null;
+  approval_note?: string | null;
+  approval_dual_role?: boolean;
   engagement_type: "employee" | "intern";
   internship_paid: boolean;
   compensation_amount?: number | null;
@@ -415,6 +417,8 @@ export async function createEmployee(input: Partial<EmployeeRecord>): Promise<Em
     approval_status: input.approval_status,
     approval_by: input.approval_by,
     approval_at: input.approval_at,
+    approval_note: input.approval_note,
+    approval_dual_role: input.approval_dual_role,
     engagement_type: input.engagement_type === "intern" ? "intern" : "employee",
     internship_paid: Boolean(input.internship_paid),
     compensation_amount: input.compensation_amount ?? null,
