@@ -44,17 +44,20 @@ export async function POST(request: Request) {
     if ([employee.work_email, employee.personal_email].some((value) => String(value || "").toLowerCase() === reviewer.toLowerCase()) || (employee.full_name.trim().toLowerCase() === "dhiraj kumar" && reviewer.toLowerCase() === "dhiraj.kums@gmail.com")) {
       return NextResponse.json({ error: "A reviewer cannot approve their own employee record. Another authorised reviewer is required." }, { status: 403 });
     }
-    if (decision === "reject" && !note) return NextResponse.json({ error: "Add a reason before returning the profile for follow-up." }, { status: 400 });
+    if (!note) return NextResponse.json({ error: "Record a decision justification before approving or returning a profile." }, { status: 400 });
+    const dualRole = (employee.screening_checks || []).some((check) => String((check as { checked_by?: string }).checked_by || "").toLowerCase() === reviewer.toLowerCase());
 
     const approved = decision === "approve";
     const updated = await updateEmployee(id, {
       approval_status: approved ? "approved" : "rejected",
       approval_by: reviewer,
       approval_at: new Date().toISOString(),
+      approval_note: note,
+      approval_dual_role: dualRole,
       workflow_stage: approved ? "approved" : "review_required",
       status: approved ? "active" : employee.status
     });
-    await recordHrAuditEvent(id, approved ? "hr_approved" : "hr_returned_for_follow_up", reviewer, ["approval_status", "approval_by", "workflow_stage", "status"]);
+    await recordHrAuditEvent(id, approved ? "hr_approved" : "hr_returned_for_follow_up", reviewer, ["approval_status", "approval_by", "approval_at", "approval_note", "approval_dual_role", "workflow_stage", "status"]);
     return NextResponse.json({ ok: true, employee: { id: updated.id, workflow_stage: updated.workflow_stage, approval_status: updated.approval_status } });
   } catch (error) {
     console.error("HR approval action error", error instanceof Error ? error.message : "Unknown error");
