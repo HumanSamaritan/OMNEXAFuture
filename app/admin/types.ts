@@ -33,11 +33,13 @@ export type Employee = {
   approval_status?: "not_requested" | "pending" | "approved" | "rejected";
   approval_by?: string | null;
   approval_at?: string | null;
+  approval_note?: string | null;
+  approval_dual_role?: boolean;
   created_at: string;
   updated_at: string;
 };
 
-export type Tab = "employees" | "screening" | "payroll" | "card" | "nda" | "offer" | "exit" | "promotion";
+export type Tab = "employees" | "screening" | "approvals" | "payroll" | "card" | "nda" | "offer" | "exit" | "promotion";
 
 export type EmployeeForm = {
   full_name: string;
