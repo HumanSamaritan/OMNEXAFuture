@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import CardPanel from "./CardPanel";
 import DocumentPanel from "./DocumentPanel";
 import HrWorkflowPanel from "./HrWorkflowPanel";
+import { ApprovalQueue } from "./HrApprovalPortal";
 import PayrollPanel from "./PayrollPanel";
 import styles from "./admin.module.css";
 import { api, suggestEmail } from "./admin-utils";
@@ -11,7 +12,8 @@ import { blankEmployee, Employee, EmployeeForm, Tab } from "./types";
 
 const tabs: { id: Tab; label: string }[] = [
   { id: "employees", label: "Employees" },
-  { id: "screening", label: "Screening & approval" },
+  { id: "screening", label: "Screening checks" },
+  { id: "approvals", label: "Pending Approvals" },
   { id: "payroll", label: "Payroll" },
   { id: "card", label: "Visiting Card" },
   { id: "nda", label: "NDA" },
@@ -219,6 +221,7 @@ export default function AdminDashboard({ adminEmail, onLogout }: { adminEmail: s
         )}
 
         {tab === "screening" && <HrWorkflowPanel employees={employees} onEmployeeUpdate={updateEmployeeInState} />}
+        {tab === "approvals" && <ApprovalQueue reviewer={adminEmail} onDecision={loadEmployees} />}
         {tab === "payroll" && <PayrollPanel employees={employees} />}
         {tab === "card" && selected && selected.status === "active" && <CardPanel employee={selected} />}
         {tab === "card" && selected && selected.status !== "active" && <section className={styles.emptyPanel}>Visiting cards are available after HR approval.</section>}
