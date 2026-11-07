@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./home-updates.module.css";
+import VideoPoster from "@/components/VideoPoster";
 import ImageLightbox from "@/components/ImageLightbox";
 import { services, testimonials } from "@/lib/site-data";
 
@@ -56,13 +57,12 @@ export default function Home() {
       <section className="section-shell home-hero">
         <div className="home-hero-copy">
           <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
-          <h1>Human-centred AI. Risk-aware transformation. Leadership for what comes next.</h1>
+          <h1>Turn complex change into clear, practical action.</h1>
           <p className="hero-copy">
-            OMNeXa™ connects responsible AI, enterprise transformation, banking and risk, and human capability
-            to turn complex change into practical, governed outcomes.
+            Founder-led consultancy across responsible AI, banking and risk, and human capability. OMNeXa helps you define the problem, choose a practical path and build with accountability.
           </p>
           <div className="hero-actions">
-            <a className="button primary" href="/work">Explore our work</a>
+            <a className="button primary" href="/consultancy">Explore consultancy →</a>
             <a className="button secondary" href="/services">Explore services</a>
           </div>
         </div>
@@ -74,6 +74,8 @@ export default function Home() {
           />
         </div>
       </section>
+
+      <div className={`section-shell ${styles.credentials}`} aria-label="OMNeXa expertise"><span>Founder-led advisory</span><span>Banking & risk expertise</span><span>Responsible AI</span><span>Singapore · Global perspective</span></div>
 
       <section className={`section-shell aligned-section ${styles.latest}`} aria-labelledby="latest-title">
         <div className={styles.sectionTop}>
@@ -89,7 +91,7 @@ export default function Home() {
               <a className="button primary" href={`/videos/${featured.slug}`}>Watch the film →</a>
             </div>
             <a className={styles.filmLink} href={`/videos/${featured.slug}`} aria-label={`Watch ${featured.title}`}>
-              <img src={`https://i.ytimg.com/vi/${featured.id}/hqdefault.jpg`} alt={featured.title} width="480" height="360" loading="lazy" />
+              <VideoPoster id={featured.id} title={featured.title} />
               <span>▶ Watch the film · {featured.length}</span>
             </a>
           </article>

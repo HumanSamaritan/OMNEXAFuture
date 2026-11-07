@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
-import { navItems } from "@/lib/site-data";
+import { useState, type ReactNode } from "react";
+import styles from "./SiteShell.module.css";
 import TiltCards from "./TiltCards";
 import WhatsAppLead from "./WhatsAppLead";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const active = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)) ? "page" as const : undefined;
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
 
   if (isAdmin) {
@@ -17,7 +19,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <header className="site-header">
+      <header className={`site-header ${styles.header}`}>
         <a className="brand" href="/" aria-label="OMNeXa home">
           <span className="brand-logo-wrap">
             <Image
@@ -35,16 +37,15 @@ export default function SiteShell({ children }: { children: ReactNode }) {
           </span>
         </a>
 
-        <nav aria-label="Main navigation">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              aria-current={(item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`)) ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
+        <button className={styles.menuButton} type="button" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close menu ×" : "Menu ☰"}</button>
+        <nav id="site-navigation" aria-label="Main navigation" className={`${styles.navigation} ${menuOpen ? styles.open : ""}`} onClick={(event) => { if ((event.target as HTMLElement).closest("a")) setMenuOpen(false); }}>
+          <a href="/" aria-current={active("/")}>Home</a>
+          <a href="/services" aria-current={active("/services")}>Services</a>
+          <a href="/work" aria-current={active("/work")}>Our Work</a>
+          <details className={styles.group}><summary>Knowledge <span aria-hidden="true">⌄</span></summary><div className={styles.submenu}><a href="/knowledge" aria-current={active("/knowledge")}>Knowledge guide</a><a href="/convergence-brief" aria-current={active("/convergence-brief")}>The Convergence Brief</a><a href="/videos" aria-current={active("/videos")}>Videos</a><a href="/ai-readiness" aria-current={active("/ai-readiness")}>AI Readiness</a></div></details>
+          <details className={styles.group}><summary>About <span aria-hidden="true">⌄</span></summary><div className={styles.submenu}><a href="/about" aria-current={active("/about")}>About OMNeXa</a><a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}>Founder</a><a href="/media" aria-current={active("/media")}>Media & brand assets</a></div></details>
+          <a href="/contact" aria-current={active("/contact")}>Contact</a>
+          <a href="/consultancy" className={styles.consultancy} aria-current={active("/consultancy")}>Discuss your needs →</a>
         </nav>
       </header>
 
@@ -52,11 +53,14 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       {children}
       <WhatsAppLead />
 
-      <footer className="site-footer">
-        <p>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
-        <p>
-          OMNeXa™ — Where Consciousness Meets Intelligence · <a href="/services">Services</a> · <a href="/work">Our Work</a> · <a href="/consultancy">Consultancy &amp; discovery calls</a> · <a href="/videos">Videos</a> · <a href="/media">Media & brand assets</a> · <a href="/dhiraj-kumar">Founder</a> · <a href="/ai-readiness">AI Readiness</a> · <a href="/privacy">Privacy</a>
-        </p>
+      <footer className={`site-footer ${styles.footer}`}>
+        <div className={styles.footerGrid}>
+          <div><strong>OMNeXa Pte. Ltd.</strong><p>Where Consciousness Meets Intelligence.</p><p>Singapore · Human-centred transformation</p></div>
+          <div><h2>Work with us</h2><a href="/services">Services</a><a href="/consultancy">Consultancy & discovery calls</a><a href="/work">Products & initiatives</a><a href="/contact">Partnership enquiries</a></div>
+          <div><h2>Explore</h2><a href="/knowledge">Knowledge</a><a href="/convergence-brief">The Convergence Brief</a><a href="/videos">Videos</a><a href="/ai-readiness">AI Readiness</a></div>
+          <div><h2>Company</h2><a href="/about">About OMNeXa</a><a href="/dhiraj-kumar">Founder</a><a href="/media">Media & brand assets</a><a href="/privacy">Privacy</a></div>
+        </div>
+        <p className={styles.copyright}>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
       </footer>
     </>
   );
