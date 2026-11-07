@@ -40,7 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [
         `${siteUrl}/dhiraj-founder.png`,
         `${siteUrl}/omnexa-logo.png`,
-        `${siteUrl}/omnexa-mark.svg`,
         `${siteUrl}/omnexa-driver-home.jpg`,
         ...canonicalIssues.map(
           (issue) => `${siteUrl}/convergence-brief/${issue.slug}/opengraph-image`

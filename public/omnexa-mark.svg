@@ -1,6 +1,0 @@
-<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="128" height="128" rx="28" fill="#121826"/>
-  <path d="M22 86V42H36L49 66L62 42H76V86H64V60L53 80H45L34 60V86H22Z" fill="#F7C66B"/>
-  <path d="M82 42H96L106 57L116 42H128L113 64L128 86H114L105 71L95 86H82L98 63L82 42Z" fill="#37B6A8" transform="translate(-6 0)"/>
-  <text x="64" y="111" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="2" fill="#F8FAFC">OMX</text>
-</svg>
