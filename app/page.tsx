@@ -47,7 +47,7 @@ export default function Home() {
       />
       <section className="section-shell home-hero">
         <div className="home-hero-copy">
-          <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
+          <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global perspective</p>
           <h1>AI and robotics. Guided by human purpose.</h1>
           <p className="hero-copy">
             Strategy and transformation advisory connecting responsible AI and robotics, banking and risk, sustainability, human capability and wellbeing. Define your opportunity, design the right controls and move forward with a practical plan.
@@ -66,7 +66,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div className={`section-shell ${styles.credentials}`} aria-label="OMNeXa expertise"><span>Strategy & transformation advisory</span><span>Banking, risk & controls</span><span>Responsible AI & robotics</span><span>Sustainability & ESG</span><span>Human-centred transformation & wellbeing</span><span>Singapore · Global perspective</span></div>
 
       <section className="section-shell aligned-section home-first-section">
         <div className="section-heading">
