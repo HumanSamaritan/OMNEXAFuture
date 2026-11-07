@@ -7,6 +7,7 @@ import "./professional.css";
 import "./refinement.css";
 import "./work.css";
 import "./mobile-safety.css";
+import "./consulting.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 

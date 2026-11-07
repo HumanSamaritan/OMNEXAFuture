@@ -2,14 +2,22 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./SiteShell.module.css";
-import TiltCards from "./TiltCards";
 import WhatsAppLead from "./WhatsAppLead";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const dismiss = (event: PointerEvent) => { if (!headerRef.current?.contains(event.target as Node)) { setOpenGroup(null); setMenuOpen(false); } };
+    const escape = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpenGroup(null); setMenuOpen(false); } };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    return () => { document.removeEventListener("pointerdown", dismiss); document.removeEventListener("keydown", escape); };
+  }, []);
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)) ? "page" as const : undefined;
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
 
@@ -18,8 +26,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
-      <header className={`site-header ${styles.header}`}>
+    <div className="consulting-site">
+      <header ref={headerRef} className={`site-header ${styles.header}`}>
         <a className="brand" href="/" aria-label="OMNeXa home">
           <span className="brand-logo-wrap">
             <Image
@@ -38,18 +46,17 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </a>
 
         <button className={styles.menuButton} type="button" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close menu ×" : "Menu ☰"}</button>
-        <nav id="site-navigation" aria-label="Main navigation" className={`${styles.navigation} ${menuOpen ? styles.open : ""}`} onClick={(event) => { if ((event.target as HTMLElement).closest("a")) setMenuOpen(false); }}>
+        <nav id="site-navigation" aria-label="Main navigation" className={`${styles.navigation} ${menuOpen ? styles.open : ""}`} onClick={(event) => { if ((event.target as HTMLElement).closest("a")) { setMenuOpen(false); setOpenGroup(null); } }}>
           <a href="/" aria-current={active("/")}>Home</a>
           <a href="/services" aria-current={active("/services")}>Services</a>
           <a href="/work" aria-current={active("/work")}>Our Work</a>
-          <details className={styles.group}><summary>Knowledge <span aria-hidden="true">⌄</span></summary><div className={styles.submenu}><a href="/knowledge" aria-current={active("/knowledge")}>Knowledge guide</a><a href="/convergence-brief" aria-current={active("/convergence-brief")}>The Convergence Brief</a><a href="/videos" aria-current={active("/videos")}>Videos</a><a href="/ai-readiness" aria-current={active("/ai-readiness")}>AI Readiness</a></div></details>
-          <details className={styles.group}><summary>About <span aria-hidden="true">⌄</span></summary><div className={styles.submenu}><a href="/about" aria-current={active("/about")}>About OMNeXa</a><a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}>Founder</a><a href="/media" aria-current={active("/media")}>Media & brand assets</a></div></details>
+          <details className={styles.group} open={openGroup === "knowledge"}><summary onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "knowledge" ? null : "knowledge"); }}>Knowledge <span aria-hidden="true">⌄</span></summary><div className={styles.submenu}><a href="/knowledge" aria-current={active("/knowledge")}>Knowledge guide</a><a href="/convergence-brief" aria-current={active("/convergence-brief")}>The Convergence Brief</a><a href="/videos" aria-current={active("/videos")}>Videos</a><a href="/ai-readiness" aria-current={active("/ai-readiness")}>AI Readiness</a></div></details>
+          <details className={styles.group} open={openGroup === "about"}><summary onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "about" ? null : "about"); }}>About <span aria-hidden="true">⌄</span></summary><div className={styles.submenu}><a href="/about" aria-current={active("/about")}>About OMNeXa</a><a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}>Founder</a><a href="/media" aria-current={active("/media")}>Media & brand assets</a></div></details>
           <a href="/contact" aria-current={active("/contact")}>Contact</a>
           <a href="/consultancy" className={styles.consultancy} aria-current={active("/consultancy")}>Discuss your needs →</a>
         </nav>
       </header>
 
-      <TiltCards />
       {children}
       <WhatsAppLead />
 
@@ -62,6 +69,6 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </div>
         <p className={styles.copyright}>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
       </footer>
-    </>
+    </div>
   );
 }

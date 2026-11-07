@@ -163,7 +163,7 @@ export default function MediaPage() {
                     width={asset.width}
                     height={asset.height}
                     sizes="(max-width: 720px) 100vw, 50vw"
-                    
+
                   />
                 </div>
                 <figcaption>

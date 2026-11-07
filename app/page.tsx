@@ -14,18 +14,18 @@ export const metadata: Metadata = {
 const focusAreas = [
   {
     index: "01",
-    title: "AI, technology & transformation",
-    description: "Responsible AI, automation and transformation built with governance from the start."
+    title: "AI strategy & governance",
+    description: "Prioritise practical use cases, clarify human decision rights and plan responsible AI adoption."
   },
   {
     index: "02",
-    title: "Banking, risk & controls",
-    description: "Payments, onboarding, financial crime, controls and multi-market change."
+    title: "Risk & operating-model change",
+    description: "Bring banking, financial-crime controls and transformation experience to complex operating challenges."
   },
   {
     index: "03",
-    title: "Human capability & sustainable progress",
-    description: "Education, employability, leadership, sustainability and well-being."
+    title: "Physical AI & human capability",
+    description: "Explore robotics education, future skills and human-centred learning with institutions and delivery partners."
   }
 ];
 
@@ -57,9 +57,9 @@ export default function Home() {
       <section className="section-shell home-hero">
         <div className="home-hero-copy">
           <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
-          <h1>Turn complex change into clear, practical action.</h1>
+          <h1>AI and robotics. Guided by human purpose.</h1>
           <p className="hero-copy">
-            Founder-led consultancy across responsible AI, banking and risk, and human capability. OMNeXa helps you define the problem, choose a practical path and build with accountability.
+            Founder-led advisory and learning initiatives at the intersection of responsible AI, risk and human capability. Define your opportunity, design the right controls and move forward with a practical plan.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="/consultancy">Explore consultancy →</a>
@@ -76,6 +76,23 @@ export default function Home() {
       </section>
 
       <div className={`section-shell ${styles.credentials}`} aria-label="OMNeXa expertise"><span>Founder-led advisory</span><span>Banking & risk expertise</span><span>Responsible AI</span><span>Singapore · Global perspective</span></div>
+
+      <section className="section-shell aligned-section home-first-section">
+        <div className="section-heading">
+          <p className="eyebrow">Consulting priorities</p>
+          <h2>Where ambition becomes a practical plan.</h2>
+          <p>Start with the decision you need to make. Align the technology, people and controls around it.</p>
+        </div>
+        <div className="home-focus-grid">
+          {focusAreas.map((area) => (
+            <article key={area.index}>
+              <span className="focus-index">{area.index}</span>
+              <h3>{area.title}</h3>
+              <p>{area.description}</p><a href={area.index === "01" ? "/ai-readiness" : area.index === "02" ? "/services#banking-transformation-risk-control" : "/robotics-with-human-values"}>Explore this focus →</a>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className={`section-shell aligned-section ${styles.latest}`} aria-labelledby="latest-title">
         <div className={styles.sectionTop}>
@@ -102,34 +119,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell aligned-section home-first-section">
-        <div className="section-heading">
-          <p className="eyebrow">What OMNeXa brings together</p>
-          <h2>Three lenses. One transformation mindset.</h2>
-          <p>Technology, business, controls and people — designed as one system.</p>
-        </div>
-        <div className="home-focus-grid">
-          {focusAreas.map((area) => (
-            <article key={area.index}>
-              <span className="focus-index">{area.index}</span>
-              <h3>{area.title}</h3>
-              <p>{area.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell split-section aligned-section">
-        <div>
-          <p className="eyebrow">Why OMNeXa</p>
-          <h2>Design around the outcome — not the tool.</h2>
-        </div>
-        <div className="copy-stack">
-          <p>
-            OMNeXa brings AI, risk, privacy, cybersecurity, operating models and human adoption together from
-            the beginning, so transformation stays practical and accountable.
-          </p>
-        </div>
+      <section className="section-shell aligned-section preview-section">
+        <div className="section-heading"><p className="eyebrow">How we work</p><h2>Clarity first. A defined next step.</h2><p>Every engagement starts with the problem, the people affected and the boundaries that matter. Scope and deliverables are agreed before work begins.</p></div>
+        <div className="service-preview-grid"><article className="service-card"><p className="eyebrow">01 · Discover</p><h3>Understand the challenge.</h3><p>Discuss your context, goals, constraints and decision needs.</p></article><article className="service-card"><p className="eyebrow">02 · Define</p><h3>Agree the right scope.</h3><p>Set priorities, responsibilities and practical outputs for the engagement.</p></article><article className="service-card"><p className="eyebrow">03 · Move forward</p><h3>Make the next decision.</h3><p>Use a focused assessment, advisory session or learning plan to guide action.</p></article></div>
       </section>
 
       <section className="section-shell company-founder-callout aligned-section">
