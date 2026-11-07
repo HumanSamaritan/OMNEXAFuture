@@ -48,3 +48,9 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
 
 /* Keep concept-panel text readable even before decorative layers paint. */
 .consulting-site .product-detail-page .product-detail-visual{background:#102b32}
+
+/* Bright, consistent action links on public content surfaces. */
+.consulting-site main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card){color:#075cdb;text-decoration:underline;text-decoration-color:#8bb6f4;text-decoration-thickness:1px;text-underline-offset:4px;font-weight:600;transition:color .16s ease,text-decoration-color .16s ease}
+.consulting-site main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card):hover{color:#0043a8;text-decoration-color:currentColor;text-decoration-thickness:2px}
+.consulting-site main a:focus-visible{outline:3px solid #2878eb;outline-offset:4px;border-radius:3px}
+@media(prefers-reduced-motion:reduce){.consulting-site main a{transition:none!important}}
