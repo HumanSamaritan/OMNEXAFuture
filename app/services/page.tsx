@@ -54,6 +54,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="section-shell aligned-section preview-section" aria-labelledby="consultancy-title"><p className="eyebrow">Focused advisory</p><h2 id="consultancy-title">Consultancy: a clear starting point.</h2><p>Bring a specific challenge in responsible AI, banking and risk, education and careers, sustainability or human capability. Explore the available consultancy sessions and discovery-call options before choosing your next step.</p><a className="button primary" href="/consultancy">View consultancy options →</a></section>
+
       <section className="section-shell service-lead-grid" aria-label="OMNeXa service lenses">
         {serviceLenses.map((lens) => (
           <article key={lens.title}>

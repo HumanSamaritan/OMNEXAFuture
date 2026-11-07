@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { navItems } from "@/lib/site-data";
 import TiltCards from "./TiltCards";
 import WhatsAppLead from "./WhatsAppLead";
 
@@ -36,18 +35,11 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </a>
 
         <nav aria-label="Main navigation">
-          {navItems.slice(0, 2).map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
+          <a href="/services">Services</a>
           <a href="/work">Our Work</a>
-          {navItems.slice(2).map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
           <a href="/knowledge">Knowledge</a>
+          <a href="/about">About OMNeXa</a>
+          <a href="/contact">Contact</a>
         </nav>
       </header>
 
@@ -58,7 +50,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} OMNeXa Pte. Ltd. All rights reserved.</p>
         <p>
-          OMNeXa™ — Where Consciousness Meets Intelligence · <a href="/work">Our Work</a> · <a href="/consultancy">Consultancy &amp; discovery calls</a> · <a href="/videos">Videos</a> · <a href="/media">Media & brand assets</a> · <a href="/privacy">Privacy</a>
+          OMNeXa™ — Where Consciousness Meets Intelligence · <a href="/services">Services</a> · <a href="/work">Our Work</a> · <a href="/consultancy">Consultancy &amp; discovery calls</a> · <a href="/videos">Videos</a> · <a href="/media">Media & brand assets</a> · <a href="/dhiraj-kumar">Founder</a> · <a href="/ai-readiness">AI Readiness</a> · <a href="/privacy">Privacy</a>
         </p>
       </footer>
     </>
