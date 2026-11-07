@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getProductVideo } from "@/lib/videos";
 import { notFound } from "next/navigation";
 import { getProduct, getProductsByService, getServiceSegment, products } from "@/lib/product-data";
 import "./detail-refine.css";
@@ -49,6 +50,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   if (!product) notFound();
 
   const service = getServiceSegment(product.serviceSlug);
+  const video = getProductVideo(product.slug);
   const siblings = getProductsByService(product.serviceSlug).filter((item) => item.slug !== product.slug);
   const isLive = product.status === "Live";
 
@@ -156,6 +158,19 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           </div>
         </div>
       </section>
+
+      {video ? (
+        <section id="introduction-video" className="section-shell aligned-section product-introduction-video" aria-labelledby="introduction-video-title" style={{paddingBlock:"3rem",scrollMarginTop:"7rem"}}>
+          <p className="eyebrow">Watch the introduction</p>
+          <h2 id="introduction-video-title">{video.title}</h2>
+          <p>{video.description}</p>
+          <div className="video-frame" style={{maxWidth:960,marginTop:"1.5rem",borderRadius:8,overflow:"hidden"}}>
+            <iframe loading="lazy" src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?playsinline=1&controls=1&fs=1&rel=0`} title={video.title} allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+          </div>
+          <p style={{fontSize:".85rem",marginTop:"1rem"}}>Published introduction. Product screens and availability may evolve.</p>
+          <p><a href={`/videos/${video.slug}`}>Video details →</a> · <a href={`https://www.youtube.com/watch?v=${video.youtubeId}`} target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></p>
+        </section>
+      ) : null}
 
       {product.slug === "human-machine-sadhana" ? <section className="section-shell aligned-section" style={{paddingBottom:"2rem"}}><p className="eyebrow">Dussehra 2026 · HMS launch story</p><h2>Conquer Your Inner Ravan. Awaken the Ram Within.</h2><p>Discover the philosophy behind HMS through the Ramayana, human agency and responsible AI.</p><a className="button secondary" href="/insights/dussehra-human-machine-sadhana">Read the story and watch the film →</a></section> : null}
       <section className="section-shell aligned-section product-detail-story">

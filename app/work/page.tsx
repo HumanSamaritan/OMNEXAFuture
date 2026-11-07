@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getProductVideo } from "@/lib/videos";
 import { products, serviceSegments } from "@/lib/product-data";
 import "./work-refine.css";
 
@@ -209,6 +210,7 @@ export default function WorkPage() {
 
         <div className="work-card-grid">
           {products.map((product, index) => {
+            const video = getProductVideo(product.slug);
             const segment = serviceSegments.find((item) => item.slug === product.serviceSlug);
             return (
               <article className={`work-card segment-${product.serviceSlug}`} key={product.slug}>
@@ -232,6 +234,7 @@ export default function WorkPage() {
                   <p>{product.oneLiner}</p>
                   <div className="work-card-links">
                     <a href={`/work/${product.slug}`}>Explore {product.name} →</a>
+                    {video ? <a href={`/work/${product.slug}#introduction-video`}>Watch introduction →</a> : null}
                     {product.status === "Live" && product.externalUrl ? (
                       product.slug === "human-machine-sadhana" ? <a href="/pilot?product=human-machine-sadhana">Register for pilot ↗</a> : <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
                     ) : null}

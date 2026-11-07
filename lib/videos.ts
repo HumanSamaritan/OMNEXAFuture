@@ -79,3 +79,13 @@ export const videos = [
   }
 ] as const;
 export const videoCategories = ["Skills, Jobs & Career Opportunities", "Human + Machine Sadhana"] as const;
+
+// Published introductions, shared by portfolio links and product pages.
+const productVideoSlugs: Record<string, string> = {
+  "human-machine-sadhana": "everyday-life-challenges",
+  "nexavirama": "nexavirama-intelligent-pause",
+  "nexakriya": "nexakriya-daily-commitments"
+};
+export function getProductVideo(productSlug: string) {
+  return videos.find((video) => video.slug === productVideoSlugs[productSlug]);
+}
