@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { navItems } from "@/lib/site-data";
 import TiltCards from "./TiltCards";
 import WhatsAppLead from "./WhatsAppLead";
 
@@ -35,11 +36,15 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </a>
 
         <nav aria-label="Main navigation">
-          <a href="/services">Services</a>
-          <a href="/work">Our Work</a>
-          <a href="/knowledge">Knowledge</a>
-          <a href="/about">About OMNeXa</a>
-          <a href="/contact">Contact</a>
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              aria-current={(item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`)) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
       </header>
 
