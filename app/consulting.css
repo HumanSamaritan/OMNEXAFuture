@@ -29,3 +29,22 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
 @media(max-width:900px){.consulting-site .home-hero{grid-template-columns:1fr;gap:32px;padding-top:40px}.consulting-site .home-hero h1{max-width:22ch}.consulting-site .home-hero-visual{max-width:600px}.consulting-site .home-hero-image-button img{min-height:0;aspect-ratio:16/10;object-fit:cover}}
 @media(max-width:600px){.consulting-site .section-shell{width:calc(100% - 40px)}.consulting-site .home-hero{padding-top:32px;padding-bottom:28px}.consulting-site h1{font-size:2.1rem;line-height:1.12}.consulting-site .home-hero h1{font-size:2.6rem;max-width:18ch}.consulting-site h2{font-size:1.65rem}.consulting-site .page-hero{padding-top:30px}.consulting-site .home-hero .hero-copy{font-size:1rem}.consulting-site .hero-actions{gap:10px;align-items:stretch}.consulting-site .hero-actions .button{width:100%;text-align:center}.consulting-site .home-focus-grid article{padding:24px}.consulting-site .band{margin:32px 0;padding:32px 0}}
 @media(prefers-reduced-motion:reduce){.consulting-site *{scroll-behavior:auto!important;transition:none!important}}
+
+/* Pair light section surfaces with explicit readable foregrounds. */
+.consulting-site .band{color:#132a30}
+.consulting-site .band :is(h1,h2,h3,h4){color:#132a30}
+.consulting-site .band p,.consulting-site .band .section-heading p{color:#465b62}
+.consulting-site .band p.eyebrow{color:#255d49}
+.consulting-site .market-list span{background:#fff;border:1px solid #cbdad2;color:#205541;font-weight:650}
+.consulting-site .education-focus-grid article{background:#fff;border:1px solid #d4e0d9;border-radius:8px}
+.consulting-site .education-focus-grid p{color:#465b62}
+.consulting-site :is(.profile-card,.service-visual-card){background:#142a30;color:#fff}
+.consulting-site :is(.profile-card,.service-visual-card) :is(h2,h3){color:#fff}
+.consulting-site :is(.profile-card,.service-visual-card) p{color:#e0e8e7}
+.consulting-site :is(.profile-card,.service-visual-card) .eyebrow{color:#f2cd83}
+
+.consulting-site{--teal:#16654f}
+.consulting-site label small,.consulting-site label span{color:#52635d}
+
+/* Keep concept-panel text readable even before decorative layers paint. */
+.consulting-site .product-detail-page .product-detail-visual{background:#102b32}
