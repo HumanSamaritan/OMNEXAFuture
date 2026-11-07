@@ -140,6 +140,8 @@ export default function MediaPage() {
         </p>
       </section>
 
+      <section className="section-shell aligned-section preview-section"><h2>Official OMNeXa videos</h2><p>Watch our videos on skills, career opportunities, Human + Machine Sadhana, NeXaVirama and NeXaKriya, with summaries and social publication links.</p><a href="/videos">Explore the OMNeXa video hub</a></section>
+
       <section className="section-shell media-guidance aligned-section">
         <div>
           <p className="eyebrow">Accurate naming</p>

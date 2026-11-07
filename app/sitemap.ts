@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { canonicalIssues } from "@/lib/publications";
 import { products } from "@/lib/product-data";
 
+import { videos } from "@/lib/videos";
+
 const siteUrl = "https://www.omnexagoc.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -82,6 +84,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: page.priority,
       images: page.images
     })),
+    {url: `${siteUrl}/videos`, lastModified: new Date("2026-11-07"), changeFrequency: "weekly", priority: 0.9},
+    ...videos.map(video => ({url: `${siteUrl}/videos/${video.slug}`, lastModified: new Date("2026-11-07"), changeFrequency: "monthly" as const, priority: 0.8})),
     ...issuePages,
     ...productPages
   ];
