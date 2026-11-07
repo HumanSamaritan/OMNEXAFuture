@@ -12,21 +12,12 @@ export const metadata: Metadata = {
 };
 
 const focusAreas = [
-  {
-    index: "01",
-    title: "AI strategy & governance",
-    description: "Prioritise practical use cases, clarify human decision rights and plan responsible AI adoption."
-  },
-  {
-    index: "02",
-    title: "Risk & operating-model change",
-    description: "Bring banking, financial-crime controls and transformation experience to complex operating challenges."
-  },
-  {
-    index: "03",
-    title: "Physical AI & human capability",
-    description: "Explore robotics education, future skills and human-centred learning with institutions and delivery partners."
-  }
+  { index: "01", title: "AI strategy & governance", description: "Prioritise practical use cases, clarify human decision rights and plan responsible AI adoption.", href: "/ai-readiness" },
+  { index: "02", title: "Banking, risk & controls", description: "Connect banking transformation, financial-crime controls and operating-model change with clear accountability.", href: "/services#banking-transformation-risk-control" },
+  { index: "03", title: "Physical AI & robotics", description: "Explore robotics education, future skills and responsible physical AI with institutions and delivery partners.", href: "/robotics-with-human-values" },
+  { index: "04", title: "Sustainability & ESG", description: "Turn sustainability priorities into employee engagement, practical action plans and meaningful measures of progress.", href: "/services#sustainability-esg-corporate-alignment" },
+  { index: "05", title: "Human-centred transformation", description: "Design change around people, connecting education, employability, leadership and human judgement with technology.", href: "/humans-defining-the-loop" },
+  { index: "06", title: "Wellbeing & conscious leadership", description: "Support reflection, resilience and everyday wellbeing through conscious leadership and human-centred learning initiatives.", href: "/services#well-being-conscious-leadership" }
 ];
 
 const homePageSchema = {
@@ -59,7 +50,7 @@ export default function Home() {
           <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global</p>
           <h1>AI and robotics. Guided by human purpose.</h1>
           <p className="hero-copy">
-            Founder-led advisory and learning initiatives at the intersection of responsible AI, risk and human capability. Define your opportunity, design the right controls and move forward with a practical plan.
+            Strategy and transformation advisory connecting responsible AI and robotics, banking and risk, sustainability, human capability and wellbeing. Define your opportunity, design the right controls and move forward with a practical plan.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="/consultancy">Explore consultancy →</a>
@@ -75,20 +66,20 @@ export default function Home() {
         </div>
       </section>
 
-      <div className={`section-shell ${styles.credentials}`} aria-label="OMNeXa expertise"><span>Founder-led advisory</span><span>Banking & risk expertise</span><span>Responsible AI</span><span>Singapore · Global perspective</span></div>
+      <div className={`section-shell ${styles.credentials}`} aria-label="OMNeXa expertise"><span>Strategy & transformation advisory</span><span>Banking, risk & controls</span><span>Responsible AI & robotics</span><span>Sustainability & ESG</span><span>Human-centred transformation & wellbeing</span><span>Singapore · Global perspective</span></div>
 
       <section className="section-shell aligned-section home-first-section">
         <div className="section-heading">
-          <p className="eyebrow">Consulting priorities</p>
-          <h2>Where ambition becomes a practical plan.</h2>
-          <p>Start with the decision you need to make. Align the technology, people and controls around it.</p>
+          <p className="eyebrow">Our consulting pillars</p>
+          <h2>Integrated expertise for human-centred transformation.</h2>
+          <p>Connecting AI and robotics, banking and risk, sustainability, human capability and wellbeing to help organisations move from strategy to implementation.</p>
         </div>
         <div className="home-focus-grid">
           {focusAreas.map((area) => (
             <article key={area.index}>
               <span className="focus-index">{area.index}</span>
               <h3>{area.title}</h3>
-              <p>{area.description}</p><a href={area.index === "01" ? "/ai-readiness" : area.index === "02" ? "/services#banking-transformation-risk-control" : "/robotics-with-human-values"}>Explore this focus →</a>
+              <p>{area.description}</p><a href={area.href}>Explore this focus →</a>
             </article>
           ))}
         </div>
@@ -135,7 +126,7 @@ export default function Home() {
           />
         </figure>
         <div>
-          <p className="eyebrow">Founder-led transformation</p>
+          <p className="eyebrow">Leadership & experience</p>
           <h2>Dhiraj Kumar connects banking depth, technology leadership and governance-first AI.</h2>
           <p>Experience across banking technology, payments, financial crime, risk, controls and global transformation.</p>
           <a href="/dhiraj-kumar">Founder profile</a>
