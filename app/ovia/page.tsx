@@ -36,6 +36,11 @@ const principles = [
       "Make decision rights, escalation, ownership and the boundaries of AI-assisted action explicit before scale."
   },
   {
+    title: "Context and status validation",
+    description:
+      "Before presenting a product, pilot, feature or service as available, verify its current build and deployment, audience, access conditions and initiative context. Distinguish live, preview, pilot, in-development and planned states; never apply one product’s status to the whole ecosystem. Ensure copy describes what is actually available and what registration or access does and does not provide."
+  },
+  {
     title: "Publication integrity",
     description:
       "Preserve source quality, licensing discipline, traceability and a clear distinction between evidence and editorial positioning."
@@ -80,6 +85,11 @@ export default function OviaPage() {
               Defining the Loop, Robotics with Human Values, risk-aware transformation and responsible AI.
             </p>
           </div>
+          <p>
+            Context validation applies to product pages, pilot forms, previews and public announcements.
+            Review the specific product and environment before release, and re-check the wording whenever
+            access, deployment or pilot arrangements change.
+          </p>
           <div className="hero-actions">
             <a className="button primary" href="/convergence-brief">The Convergence Brief</a>
             <a className="button secondary" href="/humans-defining-the-loop">Humans Defining the Loop</a>
