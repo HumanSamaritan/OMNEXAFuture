@@ -54,3 +54,12 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
 .consulting-site main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card):hover{color:#0043a8;text-decoration-color:currentColor;text-decoration-thickness:2px}
 .consulting-site main a:focus-visible{outline:3px solid #2878eb;outline-offset:4px;border-radius:3px}
 @media(prefers-reduced-motion:reduce){.consulting-site main a{transition:none!important}}
+
+/* Distinguish service categories from individual portfolio destinations. */
+.consulting-site .work-page .work-segment-heading h3{color:#18342f;font-size:1.15rem;margin-bottom:6px}
+.consulting-site .work-page .work-segment-heading .work-area-link{display:inline-block;font-size:.83rem;font-weight:600;margin-bottom:8px}
+.consulting-site .work-page .work-segment-products .work-product-link{display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:relative;padding:16px 40px 16px 18px;border:1px solid #dce5e1;background:#fff;border-radius:6px;text-decoration:none;color:#075cdb}
+.consulting-site .work-page .work-product-link strong{font-size:.94rem;font-weight:650}
+.consulting-site .work-page .work-product-link span{font-size:.75rem;color:#52665e;font-weight:400}
+.consulting-site .work-page .work-segment-products .work-product-link::after{position:absolute;right:16px;top:50%;transform:translateY(-50%);content:"→";color:#075cdb}
+.consulting-site .work-page .work-segment-products .work-product-link:hover{background:#f0f6ff;border-color:#83adea;text-decoration:none}

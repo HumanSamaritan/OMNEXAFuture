@@ -173,7 +173,8 @@ export default function WorkPage() {
                 <div className="work-segment-heading">
                   <span className="work-segment-index" aria-hidden="true">{String(segmentIndex + 1).padStart(2, "0")}</span>
                   <div>
-                    <h3><a href={segment.href}>{segment.shortTitle}</a></h3>
+                    <h3>{segment.shortTitle}</h3>
+                    <a className="work-area-link" href={segment.href}>Explore service area →</a>
                     <p className="work-segment-count">
                       {relatedProducts.length > 0
                         ? `${relatedProducts.length} ${relatedProducts.length === 1 ? "initiative" : "initiatives"}`
@@ -184,7 +185,7 @@ export default function WorkPage() {
                 {relatedProducts.length > 0 ? (
                   <div className="work-segment-products">
                     {relatedProducts.map((product) => (
-                      <a href={`/work/${product.slug}`} key={product.slug}>{product.name}</a>
+                      <a className="work-product-link" href={`/work/${product.slug}`} key={product.slug}><strong>{product.name}</strong><span>View initiative</span></a>
                     ))}
                   </div>
                 ) : (
