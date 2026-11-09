@@ -90,52 +90,54 @@ export default async function ConvergenceBriefPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
 
-      <section className="page-hero section-shell aligned-section">
-        <p className="eyebrow">OMNeXa thought leadership</p>
-        <h1>The Convergence Brief</h1>
-        <p>
-          The Convergence Brief turns questions encountered while OMNeXa builds AI products into practical
-          perspectives for the wider industry — connecting architecture, human agency, decision rights,
-          experience, engineering, assurance and accountable agentic AI.
-        </p>
-        <p>
-          <strong>Where Consciousness Meets Intelligence:</strong> human purpose, exploration and advancement
-          remain part of the transformation while intelligent systems expand what people and organisations can do.
-        </p>
+      <section className="cb-hero">
+        <div className="section-shell cb-hero-inner">
+          <div className="cb-hero-copy">
+            <p className="eyebrow">OMNeXa thought leadership</p>
+            <h1>The Convergence Brief</h1>
+            <p className="cb-lede">
+              Practical perspectives on how AI is changing work, decisions and human capability.
+            </p>
+            <p className="cb-intro">
+              Grounded in questions emerging as OMNeXa builds AI products, this series connects
+              architecture, human agency, decision rights, experience, engineering and accountable
+              agentic AI.
+            </p>
+            <a className="cb-text-link" href="#published-issues">Explore the issues <span aria-hidden="true">↓</span></a>
+          </div>
+          <aside className="cb-principle">
+            <span className="cb-principle-label">The OMNeXa principle</span>
+            <p><strong>Where Consciousness Meets Intelligence</strong></p>
+            <p>Human purpose, exploration and advancement belong in the transformation as intelligent systems expand what people and organisations can do.</p>
+          </aside>
+        </div>
       </section>
 
-      <section className="section-shell split-section aligned-section">
-        <div>
+      <section className="section-shell cb-journey">
+        <div className="cb-journey-heading">
           <p className="eyebrow">The journey so far</p>
           <h2>From AI capability to the future of human capability.</h2>
+          <p>Eight connected questions trace the changing relationship between people and intelligent systems.</p>
         </div>
-        <div className="copy-stack">
-          <p>
-            <strong>Issue 01</strong> asks whether organisations are building a parallel AI technology universe.{" "}
-            <strong>Issue 02</strong> moves to decision rights and who defines the AI loop.{" "}
-            <strong>Issue 03</strong> turns to experience when the screen stops being the product.{" "}
-            <strong>Issue 04</strong> follows human intent through testing, assurance, traceability and defect prevention.{" "}
-            <strong>Issue 05</strong> follows that authority across organisational boundaries as multiple agents and providers coordinate an outcome.{" "}
-            <strong>Issue 06</strong> moves from continuity of human authority to continuity of human capability: if AI performs more of the work through which people once learned, how do people continue developing the judgement required to direct and challenge it?{" "}
-            <strong>Issue 07</strong> extends this into the learning divide: as AI becomes more accessible, do people use it to develop independent understanding or substitute it for learning?{" "}
-            <strong>Issue 08</strong> moves from learning to legitimate AI-agent action: why technical access is not sufficient authority to decide or act.
-          </p>
-          <p>
-            The issues are not intended as abstract predictions. They are shaped by practical questions, design
-            choices and lessons emerging from OMNeXa&apos;s own AI product-creation journey, then tested as
-            potential lessons and ways forward for broader industry practice.
-          </p>
-          <p>
-            The connecting principle is not simply &quot;human first&quot;. It is preserving <strong>human agency,
-            exploration and advancement</strong> while building a productive partnership with an increasingly
-            agentic AI universe — the practical path behind OMNeXa&apos;s <strong>Where Consciousness Meets Intelligence</strong>.
-          </p>
-          <p>
-            OVIA — the OMNeXa Verification & Integrity Assistant — provides publication-integrity controls
-            behind the series, including evidence checks, counter-evidence, risk and controls, prior-art
-            review and accountable human decision-making.
-          </p>
-          <a href="/ovia">Explore the OVIA framework</a>
+        <div className="cb-issue-journey">
+          <article><span>01</span><h3>Two technology universes</h3><p>Are organisations duplicating effort across traditional and AI delivery?</p></article>
+          <article><span>02</span><h3>Decision rights</h3><p>Who defines the AI loop, its purpose and its limits?</p></article>
+          <article><span>03</span><h3>Experience beyond screens</h3><p>What changes when the interface is no longer the product?</p></article>
+          <article><span>04</span><h3>Intent through testing</h3><p>How can teams trace intent through assurance and agent execution?</p></article>
+          <article><span>05</span><h3>Authority across boundaries</h3><p>How does human authority travel as agents coordinate an outcome?</p></article>
+          <article><span>06</span><h3>Learning through work</h3><p>How do people build judgement when AI performs more of the work?</p></article>
+          <article><span>07</span><h3>The learning divide</h3><p>Does AI strengthen independent understanding or replace learning?</p></article>
+          <article><span>08</span><h3>Legitimate agent action</h3><p>Why does technical access alone not grant authority to decide or act?</p></article>
+        </div>
+        <div className="cb-integrity-note">
+          <div>
+            <p className="eyebrow">Publication integrity</p>
+            <h3>Ideas shaped by practice, checked with care.</h3>
+          </div>
+          <div>
+            <p>The issues grow from practical questions and design choices in OMNeXa's product-creation journey, then examine what may apply more broadly. OVIA supports the series with evidence checks, counter-evidence, risk and control review, prior-art review and accountable human decisions.</p>
+            <a href="/ovia">Explore the OVIA framework <span aria-hidden="true">→</span></a>
+          </div>
         </div>
       </section>
 
