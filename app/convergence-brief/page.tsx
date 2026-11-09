@@ -142,7 +142,7 @@ export default async function ConvergenceBriefPage() {
         </div>
       </section>
 
-      <section className="band">
+      <section id="published-issues" className="band">
         <div className="section-shell aligned-section">
           <div className="section-heading">
             <p className="eyebrow">Published issues</p>
