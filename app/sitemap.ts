@@ -49,6 +49,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/ai-readiness", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/humans-defining-the-loop", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/robotics-with-human-values", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
+    { path: "/india", priority: 0.9, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-logo.png`] },
+    { path: "/india/odisha/robotics", priority: 0.95, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-logo.png`] },
     { path: "/convergence-brief", priority: 0.95, changeFrequency: "weekly" as const, images: [] },
     { path: "/consultancy", priority: 0.9, changeFrequency: "monthly" as const, images: [`${siteUrl}/dhiraj-founder.png`] },
     { path: "/services", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
