@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const focusAreas = [
   { index: "01", title: "AI strategy & governance", description: "Prioritise practical use cases, clarify human decision rights and plan responsible AI adoption.", href: "/ai-readiness" },
   { index: "02", title: "Banking, risk & controls", description: "Connect banking transformation, financial-crime controls and operating-model change with clear accountability.", href: "/services#banking-transformation-risk-control" },
-  { index: "03", title: "Physical AI & robotics", description: "Explore robotics education, future skills and responsible physical AI with institutions and delivery partners.", href: "/robotics-with-human-values" },
+  { index: "03", title: "Physical AI & robotics", description: "Explore robotics education, future skills and responsible physical AI, including student outreach in Rourkela and Bhubaneswar, Odisha.", href: "/india/odisha/robotics" },
   { index: "04", title: "Sustainability & ESG", description: "Turn sustainability priorities into employee engagement, practical action plans and meaningful measures of progress.", href: "/services#sustainability-esg-corporate-alignment" },
   { index: "05", title: "Human-centred transformation", description: "Design change around people, connecting education, employability, leadership and human judgement with technology.", href: "/humans-defining-the-loop" },
   { index: "06", title: "Wellbeing & conscious leadership", description: "Support reflection, resilience and everyday wellbeing through conscious leadership and human-centred learning initiatives.", href: "/services#well-being-conscious-leadership" }
