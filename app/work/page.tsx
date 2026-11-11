@@ -158,13 +158,17 @@ export default function WorkPage() {
 
       <section className="section-shell aligned-section" aria-labelledby="robotics-learning-title">
         <div className="section-heading">
-          <p className="eyebrow">Education &amp; future skills · Partner-led initiative</p>
-          <h2 id="robotics-learning-title">Robotics Learning Programme — Odisha</h2>
+          <p className="eyebrow">Regional learning &amp; partner programmes</p>
+          <h2 id="robotics-learning-title">OMNeXa India Initiatives</h2>
           <p>
-            Explore OMNeXa's proposed Physical AI and robotics learning roadshow with its robotics partners,
-            focusing on students in Grades 6–12 in Rourkela and Bhubaneswar, Odisha.
-            Parents and guardians may register interest free of charge; dates and venues are not yet confirmed.
+            OMNeXa works with partners on India-focused learning and innovation initiatives. Our current
+            proposed Odisha outreach introduces students in Grades 6–12 to robotics, Physical AI and
+            human-centred technology in Rourkela and Bhubaneswar.
           </p>
+        </div>
+        <div className="copy-stack">
+          <h3>Robotics Learning Programme — Odisha</h3>
+          <p>Explore the proposed roadshow with robotics partners. Parents and guardians can register interest free of charge; event dates and venues are yet to be confirmed.</p>
         </div>
         <div className="hero-actions">
           <a className="button primary" href="/india/odisha/robotics">Explore Odisha robotics programme</a>
