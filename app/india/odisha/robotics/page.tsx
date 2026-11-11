@@ -37,12 +37,12 @@ export default function OdishaRoboticsPage() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <section className="page-hero section-shell aligned-section">
-        <p className="eyebrow">OMNeXa India · Odisha · Student learning</p>
+        <p className="eyebrow">OMNeXa · Our Work · Partner-led robotics learning in Odisha</p>
         <h1>Explore robotics and Physical AI in Odisha.</h1>
         <p>
           OMNeXa is developing a student-focused introduction to robotics and human-centred AI for
-          students in Grades 6–12 and institutions in Rourkela and Bhubaneswar. Discover the initiative and
-          parents or guardians can register interest free of charge to receive verified programme details.
+          students in Grades 6–12 and institutions in Rourkela and Bhubaneswar. Discover the initiative.
+          Parents or guardians can register interest free of charge to receive verified programme details.
         </p>
         <div className="hero-actions">
           <a className="button primary" href={registration}>Explore programme &amp; register interest</a>
@@ -100,7 +100,7 @@ export default function OdishaRoboticsPage() {
         </div>
         <div className="hero-actions">
           <a className="button primary" href={registration}>Visit Physical AI (Robots) registration</a>
-          <a className="button secondary" href="/india">Explore OMNeXa in India</a>
+          <a className="button secondary" href="/work">Explore Our Work</a>
         </div>
       </section>
     </main>
