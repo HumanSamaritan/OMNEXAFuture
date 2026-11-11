@@ -41,14 +41,14 @@ export default function OdishaRoboticsPage() {
         <h1>Explore robotics and Physical AI in Odisha.</h1>
         <p>
           OMNeXa is developing a student-focused introduction to robotics and human-centred AI for
-          learners and institutions in Rourkela and Bhubaneswar. Discover the initiative and
-          register interest to receive verified programme details.
+          students in Grades 6–12 and institutions in Rourkela and Bhubaneswar. Discover the initiative and
+          parents or guardians can register interest free of charge to receive verified programme details.
         </p>
         <div className="hero-actions">
           <a className="button primary" href={registration}>Explore programme &amp; register interest</a>
           <a className="button secondary" href="/contact">Enquire as a school or institution</a>
         </div>
-        <p>Event dates, venues and participation arrangements are subject to confirmation. Registration of interest is not a confirmed event booking.</p>
+        <p>Event dates, venues and participation arrangements are subject to confirmation. Free expression-of-interest registration is for parents or guardians. It does not confirm a seat or scheduled event.</p>
       </section>
       <section className="section-shell aligned-section">
         <div className="section-heading">
@@ -79,6 +79,17 @@ export default function OdishaRoboticsPage() {
             <p>Physical AI connects computation with real-world sensing and action. Responsible robotics also asks who decides what a machine may do, how safety is managed and how people remain accountable.</p>
             <p>OMNeXa's education outreach is guided by its <a href="/robotics-with-human-values">Robotics with Human Values</a> principle. Programme activities and delivery details will be confirmed through the registration channel.</p>
           </div>
+        </div>
+      </section>
+      <section className="section-shell aligned-section">
+        <div className="section-heading">
+          <p className="eyebrow">Official roadshow introduction</p>
+          <h2>This winter, meet new friends — and robots.</h2>
+          <p>Watch OMNeXa's official short video about the proposed Physical AI and Robotics Roadshow. Students in Grades 6–12 can explore robotics, creativity and human + AI collaboration. Dates and venues have not been confirmed.</p>
+        </div>
+        <div className="hero-actions">
+          <a className="button primary" href="https://www.instagram.com/reel/Dfg2dQxJ0Fy/" target="_blank" rel="noopener noreferrer">Watch the Instagram video</a>
+          <a className="button secondary" href="https://www.facebook.com/reel/1177825658137562/" target="_blank" rel="noopener noreferrer">Watch on OMNeXa Facebook</a>
         </div>
       </section>
       <section className="section-shell aligned-section">
