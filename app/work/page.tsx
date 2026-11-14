@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/work" },
   openGraph: {
     title: "Our Work | OMNeXa Products & Platforms",
-    description:
-      "A connected portfolio of OMNeXa products being developed across human-centred AI, education, sustainability and well-being.",
+  description:
+    "Explore live and developing OMNeXa products across human-centred AI, education, sustainability and well-being.",
     url: `${siteUrl}/work`,
     type: "website",
     images: [
@@ -51,19 +51,19 @@ export const metadata: Metadata = {
 
 const workFaqs = [
   {
-    question: "What products is OMNeXa developing?",
+    question: "What products and platforms are part of OMNeXa?",
     answer:
-      "OMNeXa is developing work across education and future careers, banking and responsible AI, sustainability, and wellbeing. Current initiatives include NeXaCareer, NeXaLead, PSLE Practice Space, NeXaAML, NeXaSetu, NeXaForge, NeXaKriya, NeXaVirama, Human Machine Sadhana (HMS), Sahaay Setu, SwayamITR and Lotus Karmic Balance."
+      "OMNeXa's portfolio includes the live NeXaCareer, NeXaKriya, NeXaVirama and Human Machine Sadhana products, alongside developing initiatives across education, banking and responsible AI, sustainability, and wellbeing. Each product page shows its current availability."
   },
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "Human Machine Sadhana, NeXaKriya and NeXaVirama are live at their official app links. Other products have different availability and development status; check each initiative page for current details."
+      "NeXaCareer, Human Machine Sadhana, NeXaKriya and NeXaVirama are live at their official app links. NeXaCareer is available in production for B2C and B2B; it is not offered as a B2B product pilot. Other products have different availability and development status; check each initiative page for current details."
   },
   {
     question: "How can I register interest in a pilot?",
     answer:
-      "For live products, use the official app link on the initiative page. Pilot application availability for other offerings is shown on their respective pages."
+      "For live products, use the official app link on the initiative page. NeXaCareer is live in production and is not listed as a product pilot. The separate Physical AI (Robots) learning initiative has its own interest-registration route."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -86,7 +86,7 @@ const collectionSchema = {
       url: `${siteUrl}/work`,
       name: "OMNeXa Products & Platforms",
       description:
-        "OMNeXa coming-soon product portfolio across responsible innovation, education, sustainability and well-being.",
+        "OMNeXa's live and developing products across responsible innovation, education, sustainability and well-being.",
       about: { "@id": `${siteUrl}/#organization` },
       mainEntity: {
         "@type": "ItemList",
@@ -248,7 +248,7 @@ export default function WorkPage() {
 
                 <div className="work-card-copy">
                   <div className="work-card-meta">
-                    <span className="work-status">{product.status === "Live" ? "Live" : "Coming Soon"}</span>
+                    <span className="work-status">{product.slug === "educareer" ? "Live · B2C / B2B" : product.status === "Live" ? "Live" : "Coming Soon"}</span>
                     <a href={segment?.href ?? "/services"}>{segment?.shortTitle}</a>
                   </div>
                   <h3><a href={`/work/${product.slug}`}>{product.name}</a></h3>

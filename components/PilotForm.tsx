@@ -225,9 +225,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           <ul className="pilot-journey"><li><span>01</span>Tell us about your experience</li><li><span>02</span>Review and sign the NDA</li><li><span>03</span>Send one support notification</li><li><span>04</span>Wait for a pilot invitation</li></ul>
           <p className="pilot-fine">{product?.slug === "human-machine-sadhana"
             ? "Human Machine Sadhana is live. This application is for pilot participation; submitting it does not enrol you or activate a subscription. We’ll review your application and send product-specific next steps."
-            : product?.slug === "educareer"
-              ? "NeXaCareer is in development. This application records your interest in helping shape its pilot; it does not provide access to an unfinished application. We’ll contact you with next steps."
-              : "Availability and pilot access vary by product. Submitting an application records your interest; it does not by itself grant pilot access or activate a subscription. We’ll contact you with product-specific next steps."}</p>
+            : "Availability and pilot access vary by product. Submitting an application records your interest; it does not by itself grant pilot access or activate a subscription. We’ll contact you with product-specific next steps."}</p>
           <a href="mailto:support@omnexagoc.com">Questions? Contact support →</a>
         </aside>
       </div>

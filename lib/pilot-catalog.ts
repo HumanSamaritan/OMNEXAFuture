@@ -13,7 +13,6 @@ export type PilotProduct = {
 const audiences: Record<string, PilotAudience> = {
   "sahaay-setu": "B2C",
   swayamitr: "B2C",
-  educareer: "B2C",
   "psle-practice-space": "B2C",
   "human-machine-sadhana": "B2C",
   nexakriya: "B2C",
@@ -26,7 +25,7 @@ const audiences: Record<string, PilotAudience> = {
 };
 
 export const pilotProducts: PilotProduct[] = products
-  .filter((product) => ["human-machine-sadhana", "educareer", "nexavirama", "nexakriya"].includes(product.slug))
+  .filter((product) => ["human-machine-sadhana", "nexavirama", "nexakriya"].includes(product.slug))
   .map((product) => ({
     slug: product.slug,
     name: product.name,
