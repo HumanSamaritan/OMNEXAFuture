@@ -223,7 +223,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           {product ? <><span className={`pilot-type ${product.audience.toLowerCase()}`}>{b2b ? "Organisation / B2B" : "Individual / B2C"}</span><p>{product.initiativeName}</p></> : <p>Explore individual products and organisational pilots across the OMNeXa ecosystem.</p>}
           <div className="pilot-aside-benefit"><strong>{b2b ? "A pilot built around your organisation" : "6 months of free subscription"}</strong><p>{b2b ? "Scope, access and commercial terms are agreed separately. The individual subscription offer does not apply." : "For users who participate in a B2C product pilot and provide the agreed feedback. Applies to the product tested, once its subscription service becomes available."}</p></div>
           <ul className="pilot-journey"><li><span>01</span>Tell us about your experience</li><li><span>02</span>Review and sign the NDA</li><li><span>03</span>Send one support notification</li><li><span>04</span>Wait for a pilot invitation</li></ul>
-          <p className="pilot-fine">All products remain Coming Soon. Registration does not provide access to unfinished applications.</p>
+          <p className="pilot-fine">Pilot applications are open for the listed products. Registration does not grant access; wait for a pilot invitation.</p>
           <a href="mailto:support@omnexagoc.com">Questions? Contact support →</a>
         </aside>
       </div>
