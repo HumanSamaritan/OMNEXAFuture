@@ -70,7 +70,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     {
       question: `Is ${product.name} available now?`,
       answer: isLive
-        ? `${product.name} is live. Open the official application at ${product.externalUrl}. Some features may continue to evolve.`
+        ? product.slug === "educareer"
+          ? "NeXaCareer is live in production for individual and organisational use. B2C learners can start in the app. B2B organisations can explore the production platform; NeXaCareer itself is not offered as a B2B product pilot. A separate, proposed Physical AI (Robots) learning initiative has its own interest-registration route."
+          : `${product.name} is live. Open the official application at ${product.externalUrl}. Some features may continue to evolve.`
         : `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
   ];
@@ -135,15 +137,17 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">{isLive ? "Live" : "Coming Soon"}</span>
+              <span className="work-status large">{product.slug === "educareer" ? "Live · B2C / B2B" : isLive ? "Live" : "Coming Soon"}</span>
               {isLive && product.externalUrl ? (
                 <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open Live App →</a>
               ) : null}
             </div>
             <p>
-              {isLive
-                ? "The app is available now. Features may continue to evolve."
-                : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
+              {product.slug === "educareer"
+                ? "Live in production for B2C and B2B. The individual and organisational experience is available through the official NeXaCareer platform. NeXaCareer is not being recruited as a B2B product pilot."
+                : isLive
+                  ? "The app is available now. Features may continue to evolve."
+                  : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
             </p>
           </div>
 
@@ -178,8 +182,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           <p>{product.problem}</p>
         </article>
         <article>
-          <p className="eyebrow">What we are building</p>
-          <h2>The direction</h2>
+          <p className="eyebrow">{product.slug === "educareer" ? "How it connects" : "What we are building"}</p>
+          <h2>{product.slug === "educareer" ? "From learning to opportunity." : "The direction"}</h2>
           <p>{product.description}</p>
         </article>
       </section>
@@ -187,9 +191,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       <section className="band product-capability-band">
         <div className="section-shell aligned-section">
           <div className="section-heading compact-heading">
-            <p className="eyebrow">Planned capability direction</p>
-            <h2>What the product is being designed to support.</h2>
-            <p>These are development intentions, not claims of completed or validated outcomes.</p>
+            <p className="eyebrow">{product.slug === "educareer" ? "Explore the live platform" : "Planned capability direction"}</p>
+            <h2>{product.slug === "educareer" ? "One connected education and career journey." : "What the product is being designed to support."}</h2>
+            <p>{product.slug === "educareer" ? "Explore the live NeXaCareer experience for individuals and organisations. Capabilities and partner services continue to evolve." : "These are development intentions, not claims of completed or validated outcomes."}</p>
           </div>
           <div className="product-capability-grid">
             {product.capabilities.map((capability, index) => (
@@ -201,6 +205,20 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           </div>
         </div>
       </section>
+
+      {product.slug === "educareer" ? (
+        <section className="section-shell aligned-section" aria-labelledby="nexacareer-feature-pilot" style={{ paddingBlock: "2rem 3rem" }}>
+          <article className="work-card" style={{ padding: "clamp(1.25rem, 3vw, 2rem)" }}>
+            <p className="eyebrow">A focused learning initiative</p>
+            <h2 id="nexacareer-feature-pilot">Physical AI (Robots): Humanity at the Centre</h2>
+            <p>A proposed, student-focused robotics and human-centred AI learning programme connected to NeXaCareer. This is a specific programme interest opportunity, not a pilot of the live NeXaCareer B2B product. Dates and venues remain subject to confirmation.</p>
+            <div className="hero-actions">
+              <a className="button primary" href="/india/odisha/robotics">Explore the proposed initiative →</a>
+              <a className="button secondary" href="https://omnexa-career.omnexagoc.com/physical-ai-robots" target="_blank" rel="noopener noreferrer">Register programme interest ↗</a>
+            </div>
+          </article>
+        </section>
+      ) : null}
 
       <section className="section-shell aligned-section product-service-fit">
         <div>
