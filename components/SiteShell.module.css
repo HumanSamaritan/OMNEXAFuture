@@ -58,3 +58,17 @@
 }
 @media(max-width:520px){.megaPanel{margin-inline:6px;padding:15px}.megaLinks>a{grid-template-columns:30px minmax(0,1fr) 15px;gap:9px}.megaIndex{width:27px;height:27px}}
 @media(prefers-reduced-motion:reduce){.megaPanel{animation:none}.group>summary,.megaLinks>a,.megaExplore span,.megaArrow{transition:none}}
+
+.socialLinks{margin-top:24px}.socialLinks h2{margin-bottom:10px}.socialLinks a{display:inline-flex;align-items:center;gap:6px;margin:0 8px 8px 0;padding:7px 10px;border:1px solid #ffffff36;border-radius:999px;color:#f4f7f5;font-size:.78rem;font-weight:650;text-decoration:none;transition:background .16s ease,border-color .16s ease,transform .16s ease}.socialLinks a:hover,.socialLinks a:focus-visible{transform:translateY(-1px);border-color:#d8bd7c;background:#ffffff12;text-decoration:none}.socialLinks a span{color:#e6ca8c}
+@media(max-width:520px){.socialLinks a{margin-right:5px;padding:7px 9px;font-size:.75rem}}
+
+/* Minimal active marker for desktop navigation, replacing dropdown chevrons with an editorial underline. */
+@media(min-width:1151px){
+ .navigation>a:not(.consultancy),.group>summary{position:relative;border-radius:0;background:transparent!important}
+ .navigation>a:not(.consultancy)::after,.group>summary::after{content:"";position:absolute;left:10px;right:10px;bottom:3px;height:2px;background:#17634e;transform:scaleX(0);transform-origin:left center;transition:transform .18s ease}
+ .navigation>a:not(.consultancy):hover::after,.navigation>a:not(.consultancy):focus-visible::after,.navigation>a[aria-current=page]::after,.group>summary:hover::after,.group>summary:focus-visible::after,.groupOpen>summary::after,.groupActive>summary::after{transform:scaleX(1)}
+ .navigation>a[aria-current=page],.groupOpen>summary,.groupActive>summary{color:#145943;background:transparent}
+ .group>summary{gap:0;padding-inline:11px}
+}
+@media(prefers-reduced-motion:reduce){.navigation>a:not(.consultancy)::after,.group>summary::after{transition:none}}
+.header{z-index:30}

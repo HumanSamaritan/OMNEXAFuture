@@ -130,7 +130,7 @@ export default function MediaPage() {
         </p>
       </section>
 
-      <section className="section-shell aligned-section preview-section"><h2>Official OMNeXa videos</h2><p>Watch our videos on skills, career opportunities, Human + Machine Sadhana, NeXaVirama and NeXaKriya, with summaries and social publication links.</p><a href="/videos">Explore the OMNeXa video hub</a></section>
+      <section className="section-shell aligned-section preview-section"><h2>Follow OMNeXa’s official channels</h2><p>Find OMNeXa Pte. Ltd., Singapore, across our official social profiles. For the founder’s professional profile, visit Dhiraj Kumar on LinkedIn.</p><p><a href="https://sg.linkedin.com/company/https-www.omnexagoc.com" target="_blank" rel="noopener noreferrer">OMNeXa Pte. Ltd. on LinkedIn</a> · <a href="https://sg.linkedin.com/in/dhiraj-kumar-a9763616" target="_blank" rel="noopener noreferrer">Dhiraj Kumar on LinkedIn</a> · <a href="https://www.instagram.com/omnexagoc/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="https://www.facebook.com/reel/2334629940690089" target="_blank" rel="noopener noreferrer">Facebook</a> · <a href="https://x.com/OMNeXaGoc" target="_blank" rel="noopener noreferrer">X</a></p><h2>Official OMNeXa videos</h2><p>Watch videos on skills, career opportunities, responsible AI, Human + Machine Sadhana, NeXaVirama and NeXaKriya, with summaries and social publication links.</p><a href="/videos">Explore the OMNeXa video hub</a></section>
 
       <section className="section-shell media-guidance aligned-section">
         <div>

@@ -21,6 +21,13 @@ export const metadata: Metadata = {
     "Official website of OMNeXa Pte. Ltd., Singapore, founded by Dhiraj Kumar. OMNeXa connects responsible AI, technology and banking transformation, risk and governance, education, sustainability and human capability.",
   keywords: [
     "OMNeXa",
+    "OMNeXa Pte. Ltd.",
+    "OMNeXa Singapore",
+    "Dhiraj Kumar Singapore",
+    "OMNeXa robotics",
+    "OMNeXa human-centred AI",
+    "OMNeXa responsible AI",
+    "human-centric artificial intelligence",
     "agentic AI",
     "responsible AI",
     "AI testing",
@@ -145,6 +152,11 @@ const entityGraph = {
         "Human-in-the-Loop AI",
         "Humans Defining the Loop",
         "Robotics with Human Values",
+        "Human-centred artificial intelligence",
+        "Human-centric artificial intelligence",
+        "Responsible AI consulting in Singapore",
+        "Robotics education and Physical AI",
+        "OMNeXa in India",
         "AI governance",
         "Risk and controls",
         "AML/KYC and sanctions",
@@ -163,7 +175,9 @@ const entityGraph = {
       sameAs: [
         "https://sg.linkedin.com/company/https-www.omnexagoc.com",
         "https://www.youtube.com/@OMNeXa-v1",
-        "https://www.instagram.com/omnexagoc/"
+        "https://www.instagram.com/omnexagoc/",
+        "https://www.facebook.com/reel/2334629940690089",
+        "https://x.com/OMNeXaGoc"
       ],
       hasOfferCatalog: { "@id": `${siteUrl}/consultancy#catalog` },
       areaServed: "Global"

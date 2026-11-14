@@ -131,7 +131,7 @@ export default function IndiaPage() {
           <span className="india-aside-kicker">The OMNeXa approach</span>
           <h2>Make progress practical. Keep people accountable.</h2>
           <p>Technology creates value when people can understand it, guide it and build capability alongside it.</p>
-          <a href="/ovia">Our grounding principles <span aria-hidden="true">↗</span></a>
+          <a href="/ovia">Our grounding principles <span aria-hidden="true">→</span></a>
         </aside>
       </section>
 
