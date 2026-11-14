@@ -63,3 +63,246 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
 .consulting-site .work-page .work-product-link span{font-size:.75rem;color:#52665e;font-weight:400}
 .consulting-site .work-page .work-segment-products .work-product-link::after{position:absolute;right:16px;top:50%;transform:translateY(-50%);content:"→";color:#075cdb}
 .consulting-site .work-page .work-segment-products .work-product-link:hover{background:#f0f6ff;border-color:#83adea;text-decoration:none}
+
+
+/* Hanuman visual refresh: executive typography, tactile surfaces and pointer-aware depth. */
+.consulting-site {
+  --bg: #f5f6f8;
+  --ink: #142439;
+  --muted: #4c5c70;
+  --panel: #ffffff;
+  --panel-soft: #eef2f5;
+  --line: #d3dce5;
+  --gold: #c49a4d;
+  --teal: #17634e;
+  --charcoal: #142439;
+  --executive-shadow: 0 2px 5px rgba(17, 33, 52, .04), 0 14px 32px rgba(17, 33, 52, .08);
+  --executive-shadow-hover: 0 4px 10px rgba(17, 33, 52, .08), 0 24px 48px rgba(17, 33, 52, .16);
+  color: var(--ink);
+  font-family: Inter, "Aptos", "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.62;
+}
+.consulting-site :is(h1,h2,h3,h4) {
+  color: #142439;
+  font-family: Inter, "Aptos Display", "Segoe UI", Arial, sans-serif;
+  font-weight: 760;
+  text-wrap: balance;
+}
+.consulting-site h1 {
+  font-size: clamp(2.55rem, 4.8vw, 4.45rem);
+  font-weight: 790;
+  line-height: 1.03;
+  letter-spacing: -.038em;
+}
+.consulting-site h2 {
+  font-size: clamp(1.8rem, 3vw, 2.85rem);
+  font-weight: 750;
+  line-height: 1.12;
+  letter-spacing: -.026em;
+}
+.consulting-site h3 { font-size: 1.12rem; font-weight: 720; line-height: 1.32; }
+.consulting-site p { color: var(--muted); line-height: 1.68; }
+.consulting-site .page-hero { padding-top: clamp(52px, 7vw, 88px); padding-bottom: 44px; }
+.consulting-site .eyebrow { color: #17634e; font-weight: 800; letter-spacing: .14em; }
+.consulting-site .section-heading { margin-bottom: 34px; }
+.consulting-site .button {
+  min-height: 50px;
+  border-radius: 9px;
+  font-weight: 700;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+.consulting-site .button.primary,
+.consulting-site .contact-form button {
+  border-color: #154e3f;
+  background: linear-gradient(145deg, #17634e, #104837);
+  box-shadow: 0 3px 0 #0a3529, 0 9px 18px rgba(14, 64, 48, .18);
+}
+.consulting-site .button.primary:hover,
+.consulting-site .contact-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 #0a3529, 0 14px 24px rgba(14, 64, 48, .22);
+}
+.consulting-site .button.secondary { border-color: #bdcbd7; border-radius: 9px; }
+.consulting-site .band {
+  background: linear-gradient(135deg, #f4f6f8, #edf2f4);
+  border-color: #d8e0e6;
+}
+.consulting-site :is(.pillar-card,.service-card,.principle-card,.video-media-card,.media-card,.home-focus-grid article,.knowledge-link-card,.publication-card,.service-lead-grid article,.faq-grid article,.faq-list article,.contact-card,.contact-form,.track-record-grid article,.education-grid article,.entity-facts-grid article,.market-list span,.education-focus-grid article,.testimonial-grid figure,.proof-grid li,.timeline > div,.format-grid article,.work-segment-grid,.work-card,.product-detail-story article,.product-capability-grid article,.sibling-product-grid > a,.issue-card,.robotics-page .pillar-card) {
+  border: 1px solid #d3dce5;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: var(--executive-shadow);
+  transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms cubic-bezier(.2,.75,.25,1), background-color 180ms ease;
+}
+.consulting-site .home-focus-grid article {
+  position: relative;
+  border-top: 3px solid #b68d48;
+  padding: 27px;
+}
+.consulting-site .home-focus-grid article:nth-child(3n + 2) { border-top-color: #17634e; }
+.consulting-site .home-focus-grid article:nth-child(3n) { border-top-color: #456b91; }
+.consulting-site .home-focus-grid article h3 { color: #142439; }
+.consulting-site .work-card { border-radius: 15px; }
+.consulting-site .work-card-copy { background: #fff; }
+.consulting-site .work-segment-grid { overflow: hidden; border-radius: 16px; }
+.consulting-site .work-segment-card { background: transparent; }
+.consulting-site .testimonial-grid figure {
+  border-left: 3px solid #b68d48;
+  background: linear-gradient(145deg, #fff, #f7f9fa);
+}
+.consulting-site .testimonial-grid figcaption { color: #355c4d; }
+.consulting-site .work-status { border-color: #c9d6cc; background: #edf6ef; color: #16513d; }
+.consulting-site .work-status::before { background: #27825c; box-shadow: 0 0 0 3px rgba(39,130,92,.12); }
+.consulting-site .band :is(.pillar-card,.service-card,.principle-card,.faq-grid article) { background: #fff; }
+.consulting-site main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card) { text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.consulting-site main a:not(.button):hover { text-decoration-color: currentColor; }
+
+/* Cursor-tracked highlight and restrained 3D movement for cards, matrices and tables. */
+.consulting-site main :is(.tilt-card,.service-row,.service-card,.pillar-card,.principle-card,.work-card,.work-segment-card,.knowledge-link-card,.publication-card,.testimonial-grid figure,.track-record-grid article,.route-list span,.stats-strip div,.timeline > div,.format-grid article,.education-grid article,.entity-facts-grid article,.market-list span,.education-focus-grid article,.proof-grid li,.service-lead-grid article,[class*="issueCard"],table tr,.robotics-hero) {
+  transform-style: preserve-3d;
+  transition: transform 220ms cubic-bezier(.2,.75,.25,1), box-shadow 220ms ease, border-color 180ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .consulting-site main :is(.tilt-card,.service-row,.service-card,.pillar-card,.principle-card,.work-card,.work-segment-card,.knowledge-link-card,.publication-card,.testimonial-grid figure,.track-record-grid article,.route-list span,.stats-strip div,.timeline > div,.format-grid article,.education-grid article,.entity-facts-grid article,.market-list span,.education-focus-grid article,.proof-grid li,.service-lead-grid article,[class*="issueCard"]) {
+    --pointer-hue: 153;
+  }
+  .consulting-site main :is(.tilt-card,.service-row,.service-card,.pillar-card,.principle-card,.work-card,.work-segment-card,.knowledge-link-card,.publication-card,.testimonial-grid figure,.track-record-grid article,.route-list span,.stats-strip div,.timeline > div,.format-grid article,.education-grid article,.entity-facts-grid article,.market-list span,.education-focus-grid article,.proof-grid li,.service-lead-grid article,[class*="issueCard"])[data-pointer-active="true"] {
+    transform: perspective(1100px) rotateX(calc(var(--tilt-y, 0deg) * -1)) rotateY(var(--tilt-x, 0deg)) translateY(-3px) !important;
+    border-color: hsla(var(--pointer-hue,153), 48%, 43%, .52);
+    box-shadow: 0 3px 6px rgba(17,33,52,.06), 0 23px 42px rgba(17,33,52,.15), 0 0 0 1px hsla(var(--pointer-hue,153), 55%, 48%, .16);
+  }
+  .consulting-site main table tbody tr[data-pointer-active="true"] {
+    transform: perspective(900px) translateZ(5px);
+    background: linear-gradient(100deg, hsla(var(--pointer-hue,153), 55%, 95%, .96), #fff);
+    box-shadow: 0 5px 14px rgba(17,33,52,.12);
+  }
+}
+.consulting-site main table {
+  width: 100%;
+  border: 1px solid #d3dce5;
+  border-radius: 12px;
+  border-spacing: 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--executive-shadow);
+}
+.consulting-site main table th {
+  padding: 14px 16px;
+  border-bottom: 1px solid #cbd6df;
+  background: #172b42;
+  color: #fff;
+  font-size: .86rem;
+  font-weight: 750;
+  text-align: left;
+}
+.consulting-site main table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid #e5eaf0;
+  color: #405166;
+  vertical-align: top;
+}
+.consulting-site main table tbody tr:last-child td { border-bottom: 0; }
+.consulting-site main table tbody tr { transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease; }
+
+/* A restrained robotics sensor motif that follows the pointer on the robotics welcome panel. */
+.robotics-page .robotics-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #d4dce3;
+  border-top: 3px solid #b7904e;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #fff 0%, #fff 62%, #f3f7f5 100%);
+  box-shadow: 0 4px 12px rgba(17,33,52,.05), 0 20px 42px rgba(17,33,52,.09);
+}
+.robotics-page .robotics-hero::after {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: clamp(18px, 5vw, 70px);
+  width: clamp(180px, 23vw, 290px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(23,99,78,.16);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(196,154,77,.24), transparent 38%),
+    radial-gradient(circle, transparent 0 27%, rgba(23,99,78,.13) 27.3% 27.7%, transparent 28% 47%, rgba(23,99,78,.12) 47.3% 47.7%, transparent 48%),
+    conic-gradient(from 0deg, transparent 0 78%, rgba(23,99,78,.15) 84%, transparent 91%);
+  content: "";
+  opacity: .78;
+  pointer-events: none;
+  transform: translateY(-50%);
+  animation: robot-scan 12s linear infinite;
+}
+.robotics-page .robotics-hero::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: calc(clamp(18px, 5vw, 70px) + clamp(180px, 23vw, 290px) / 2 - 5px);
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #c49a4d;
+  box-shadow: 0 0 0 5px rgba(196,154,77,.18), 0 0 22px rgba(196,154,77,.45);
+  content: "";
+  transform: translateY(-50%);
+  animation: robot-pulse 2.4s ease-in-out infinite;
+}
+.robotics-page .robotics-hero > * { position: relative; z-index: 1; }
+.robotics-page .robotics-hero h1,
+.robotics-page .robotics-hero > p:not(.eyebrow) { max-width: 68%; }
+@keyframes robot-scan { to { transform: translateY(-50%) rotate(360deg); } }
+@keyframes robot-pulse { 50% { box-shadow: 0 0 0 9px rgba(196,154,77,.10), 0 0 28px rgba(196,154,77,.35); } }
+
+/* Focus cues, visible keyboard states and restrained motion on touch and reduced-motion systems. */
+.consulting-site :is(button,a,input,select,textarea,summary):focus-visible {
+  outline: 3px solid #b7904e;
+  outline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .consulting-site .agent-build-panel { grid-template-columns: 1fr; gap: 24px; }
+  .consulting-site .agent-build-steps { grid-template-columns: 1fr; }
+  .robotics-page .robotics-hero { padding: 32px 22px !important; }
+  .robotics-page .robotics-hero h1,
+  .robotics-page .robotics-hero > p:not(.eyebrow) { max-width: 100%; }
+  .robotics-page .robotics-hero::before,
+  .robotics-page .robotics-hero::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .consulting-site main :is(.tilt-card,.service-row,.service-card,.pillar-card,.principle-card,.work-card,.work-segment-card,.knowledge-link-card,.publication-card,.testimonial-grid figure,.track-record-grid article,.route-list span,.stats-strip div,.timeline > div,.format-grid article,.education-grid article,.entity-facts-grid article,.market-list span,.education-focus-grid article,.proof-grid li,[class*="issueCard"],table tr,.robotics-hero) {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .robotics-page .robotics-hero::before,
+  .robotics-page .robotics-hero::after { animation: none !important; }
+}
+
+/* Human expertise and agent-assisted execution, presented as a transparent delivery model. */
+.consulting-site .agent-build-story { padding-top: 18px; padding-bottom: 52px; }
+.consulting-site .agent-build-panel {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(380px, .92fr); gap: clamp(30px, 5vw, 72px);
+  align-items: center; padding: clamp(30px, 5vw, 64px); border: 1px solid #cbd5df;
+  border-top: 4px solid var(--gold); border-radius: 16px;
+  background: radial-gradient(ellipse at 96% 4%, rgba(196,154,77,.13), transparent 30%), linear-gradient(130deg,#f7f8fa,#edf2f4);
+  box-shadow: 0 4px 9px rgba(17,33,52,.04), 0 22px 54px rgba(17,33,52,.10);
+}
+.consulting-site .agent-build-copy h2 { max-width: 18ch; margin: 10px 0 18px; }
+.consulting-site .agent-build-copy > p:not(.eyebrow) { max-width: 58ch; }
+.consulting-site .agent-build-steps { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.consulting-site .agent-build-step {
+  min-height: 158px; padding: 20px; border: 1px solid #d3dce5; border-radius: 12px;
+  background: rgba(255,255,255,.94); box-shadow: 0 3px 6px rgba(17,33,52,.04), 0 10px 20px rgba(17,33,52,.06);
+}
+.consulting-site .agent-build-step span { color:#17634e; font-size:.68rem; font-weight:800; letter-spacing:.11em; }
+.consulting-site .agent-build-step h3 { margin: 12px 0 6px; font-size:1rem; }
+.consulting-site .agent-build-step p { margin:0; font-size:.88rem; line-height:1.5; }
+.consulting-site .agent-build-step[data-pointer-active="true"] {
+  transform: perspective(1000px) rotateX(calc(var(--tilt-y,0deg) * -1)) rotateY(var(--tilt-x,0deg)) translateY(-3px);
+  border-color: hsla(var(--pointer-hue,153),48%,43%,.6);
+  box-shadow: 0 4px 8px rgba(17,33,52,.06),0 20px 38px rgba(17,33,52,.15),0 0 0 1px hsla(var(--pointer-hue,153),55%,48%,.15);
+}
+@media(max-width:900px){.consulting-site .agent-build-panel{grid-template-columns:1fr}.consulting-site .agent-build-copy h2{max-width:24ch}}
+@media(max-width:600px){.consulting-site .agent-build-story{padding-top:0;padding-bottom:32px}.consulting-site .agent-build-panel{padding:25px 20px}.consulting-site .agent-build-steps{grid-template-columns:1fr}.consulting-site .agent-build-step{min-height:0}}

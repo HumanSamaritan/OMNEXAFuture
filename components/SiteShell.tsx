@@ -18,6 +18,45 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     document.addEventListener("keydown", escape);
     return () => { document.removeEventListener("pointerdown", dismiss); document.removeEventListener("keydown", escape); };
   }, []);
+  useEffect(() => {
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches === false ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const selector = ".consulting-site main .tilt-card, .consulting-site main .service-row, .consulting-site main .service-card, .consulting-site main .pillar-card, .consulting-site main .principle-card, .consulting-site main .work-card, .consulting-site main .work-segment-card, .consulting-site main .knowledge-link-card, .consulting-site main .publication-card, .consulting-site main .testimonial-grid figure, .consulting-site main .track-record-grid article, .consulting-site main .route-list span, .consulting-site main .stats-strip div, .consulting-site main .timeline > div, .consulting-site main .format-grid article, .consulting-site main .education-grid article, .consulting-site main .entity-facts-grid article, .consulting-site main .market-list span, .consulting-site main .education-focus-grid article, .consulting-site main .proof-grid li, .consulting-site main .service-lead-grid article, .consulting-site main [class*='issueCard'], .consulting-site main table tr, .consulting-site main .robotics-hero, .consulting-site main .agent-build-step";
+    const move = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || !(event.target instanceof Element)) return;
+      const card = event.target.closest<HTMLElement>(selector);
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+      card.dataset.pointerActive = "true";
+      card.style.setProperty("--pointer-x", `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty("--pointer-y", `${(y * 100).toFixed(1)}%`);
+      card.style.setProperty("--tilt-x", `${((x - .5) * 5).toFixed(2)}deg`);
+      card.style.setProperty("--tilt-y", `${((y - .5) * 4).toFixed(2)}deg`);
+      card.style.setProperty("--pointer-hue", String(Math.round(145 + x * 38)));
+    };
+    const leave = (event: PointerEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const card = event.target.closest<HTMLElement>(selector);
+      const next = event.relatedTarget instanceof Element ? event.relatedTarget.closest(selector) : null;
+      if (!card || card === next) return;
+      card.dataset.pointerActive = "false";
+      card.style.removeProperty("--tilt-x");
+      card.style.removeProperty("--tilt-y");
+      card.style.removeProperty("--pointer-x");
+      card.style.removeProperty("--pointer-y");
+      card.style.removeProperty("--pointer-hue");
+    };
+    document.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerout", leave, { passive: true });
+    return () => {
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerout", leave);
+    };
+  }, []);
+
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)) ? "page" as const : undefined;
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
 

@@ -34,9 +34,9 @@ const structuredData = {
 
 export default function OdishaRoboticsPage() {
   return (
-    <main>
+    <main className="robotics-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <section className="page-hero section-shell aligned-section">
+      <section className="page-hero section-shell aligned-section robotics-hero">
         <p className="eyebrow">OMNeXa · Our Work · Partner-led robotics learning in Odisha</p>
         <h1>Explore robotics and Physical AI in Odisha.</h1>
         <p>

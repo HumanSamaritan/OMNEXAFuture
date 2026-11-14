@@ -66,6 +66,39 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section-shell agent-build-story" aria-labelledby="agent-build-title">
+        <div className="agent-build-panel">
+          <div className="agent-build-copy">
+            <p className="eyebrow">Human expertise · Agent-assisted building</p>
+            <h2 id="agent-build-title">From compliance leader to builder—with agents at every step.</h2>
+            <p>
+              OMNeXa brings banking risk, financial-crime and control discipline into digital products,
+              working with AI agents to accelerate research, design and implementation. People set the
+              direction, challenge the output and stay accountable for what reaches users.
+            </p>
+            <div className="hero-actions">
+              <a className="button primary" href="/work">Explore what we are building →</a>
+              <a className="button secondary" href="/robotics-with-human-values">Our robotics principles</a>
+            </div>
+          </div>
+          <div className="agent-build-steps" aria-label="Our human and agent build approach">
+            <article className="agent-build-step">
+              <span>01 · HUMAN INTENT</span><h3>Define the challenge.</h3><p>Set the purpose, people affected and boundaries.</p>
+            </article>
+            <article className="agent-build-step">
+              <span>02 · AGENT SUPPORT</span><h3>Accelerate the build.</h3><p>Explore options, shape content and develop working interfaces.</p>
+            </article>
+            <article className="agent-build-step">
+              <span>03 · HUMAN REVIEW</span><h3>Challenge the output.</h3><p>Review evidence, experience, privacy and controls.</p>
+            </article>
+            <article className="agent-build-step">
+              <span>04 · PREVIEW FIRST</span><h3>Release with intent.</h3><p>Review the working preview before a production release.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+
 
       <section className="section-shell aligned-section home-first-section">
         <div className="section-heading">
