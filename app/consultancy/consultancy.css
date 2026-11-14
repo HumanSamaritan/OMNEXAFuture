@@ -22,3 +22,27 @@
 
 /* Compact consultancy listings: retain detailed scope on demand. */
 .consultancy-card-preview{margin:8px 0 12px;line-height:1.6}.consultancy-card-details{margin:0 0 20px}.consultancy-card-details>summary{cursor:pointer;color:#075f65;font-weight:700;list-style-position:inside;padding:8px 0}.consultancy-card-details>summary:hover,.consultancy-card-details>summary:focus-visible{text-decoration:underline}.consultancy-card-detail-body{padding:10px 0 4px}.consultancy-card-detail-body h4{margin-top:14px}.consultancy-card .button{margin-top:auto}
+
+.consultancy-page .page-hero{max-width:1120px}
+.consultancy-page .consultancy-lead{max-width:850px;font-size:clamp(1.15rem,1.55vw,1.38rem);line-height:1.58;color:#34475e}
+.consultancy-page .consultancy-note{max-width:1000px;margin-top:28px;padding:18px 22px;border:1px solid #d4dee6;border-left:4px solid #b7904e;border-radius:10px;background:linear-gradient(105deg,#f4f6f8,#fbfaf6);color:#304258}
+.consultancy-page .consultancy-advantage{padding-top:20px;padding-bottom:56px}
+.consultancy-page .consultancy-advantage .section-heading h2{max-width:22ch}
+.consultancy-page .consultancy-advantage-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.consultancy-page .consultancy-advantage-grid article{min-height:220px;padding:26px;border:1px solid #d3dce5;border-top:3px solid #b7904e;border-radius:14px;background:linear-gradient(145deg,#fff,#f7f9fa);box-shadow:0 3px 7px rgba(17,33,52,.04),0 14px 30px rgba(17,33,52,.07)}
+.consultancy-page .consultancy-advantage-grid article:nth-child(2){border-top-color:#17634e}
+.consultancy-page .consultancy-advantage-grid article:nth-child(3){border-top-color:#456b91}
+.consultancy-page .consultancy-advantage-grid article h3{font-size:1.2rem;margin:12px 0 8px}
+.consultancy-page .consultancy-advantage-grid article p:last-child{margin:0;line-height:1.62}
+.consultancy-page .consultancy-grid{gap:20px}
+.consultancy-page .consultancy-card{min-height:320px;padding:28px;border-radius:14px;border:1px solid #d3dce5;box-shadow:0 3px 7px rgba(17,33,52,.04),0 14px 30px rgba(17,33,52,.07)}
+.consultancy-page .consultancy-card .eyebrow{color:#17634e;font-weight:800;letter-spacing:.12em}
+.consultancy-page .consultancy-card h3{max-width:32ch;margin:6px 0 10px}
+.consultancy-page .consultancy-card-preview{max-width:58ch}
+.consultancy-page .consultancy-card-details{margin:4px 0 20px}
+.consultancy-page .consultancy-card-details>summary{display:inline-flex;align-items:center;gap:8px;padding:9px 0}
+.consultancy-page .consultancy-card .button{margin-top:auto}
+.consultancy-page .consultancy-end{padding:44px clamp(24px,4vw,52px) 60px;border:1px solid #d3dce5;border-top:3px solid #b7904e;border-radius:16px;background:linear-gradient(125deg,#f4f6f8,#fbfaf6);box-shadow:0 8px 26px rgba(17,33,52,.07);margin-bottom:50px}
+@media(max-width:850px){.consultancy-page .consultancy-advantage-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.consultancy-page .consultancy-advantage-grid{grid-template-columns:1fr}.consultancy-page .consultancy-advantage-grid article{min-height:0;padding:22px}.consultancy-page .consultancy-card{min-height:0;padding:22px}.consultancy-page .consultancy-end{padding:28px 22px;margin-bottom:30px}}
+@media(prefers-reduced-motion:reduce){.consultancy-page .consultancy-advantage-grid article,.consultancy-page .consultancy-card{transition:none!important}}

@@ -306,3 +306,8 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
 }
 @media(max-width:900px){.consulting-site .agent-build-panel{grid-template-columns:1fr}.consulting-site .agent-build-copy h2{max-width:24ch}}
 @media(max-width:600px){.consulting-site .agent-build-story{padding-top:0;padding-bottom:32px}.consulting-site .agent-build-panel{padding:25px 20px}.consulting-site .agent-build-steps{grid-template-columns:1fr}.consulting-site .agent-build-step{min-height:0}}
+
+/* Consistent card framing on pages with card-style content. */
+.consulting-site main :is(article[class],[class*="card"],[class*="Card"]){border-radius:14px;transform-style:preserve-3d;transition:transform 220ms cubic-bezier(.2,.75,.25,1),box-shadow 220ms ease,border-color 180ms ease}
+@media(hover:hover) and (pointer:fine){.consulting-site main :is(article[class],[class*="card"],[class*="Card"])[data-pointer-active="true"]{transform:perspective(1050px) rotateX(calc(var(--tilt-y,0deg) * -1)) rotateY(var(--tilt-x,0deg)) translateY(-3px);border-color:hsla(var(--pointer-hue,153),48%,43%,.56);box-shadow:0 3px 6px rgba(17,33,52,.06),0 22px 40px rgba(17,33,52,.15),0 0 0 1px hsla(var(--pointer-hue,153),55%,48%,.15)}}
+@media(prefers-reduced-motion:reduce){.consulting-site main :is(article[class],[class*="card"],[class*="Card"]){transform:none!important;transition:none!important}}

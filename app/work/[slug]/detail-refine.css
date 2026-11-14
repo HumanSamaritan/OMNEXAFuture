@@ -122,19 +122,19 @@
 }
 
 .product-detail-page .product-detail-story article {
-  padding: 24px 0 0;
-  border: 0;
-  border-top: 2px solid var(--detail-accent);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  min-width:0;padding:clamp(24px,3vw,36px);border:1px solid var(--detail-rule);
+  border-top:4px solid var(--detail-accent);border-radius:16px;
+  background:linear-gradient(145deg,#fff,#f7f9fa);
+  box-shadow:0 3px 8px rgba(17,33,52,.05),0 16px 36px rgba(17,33,52,.08);
+  transition:transform 220ms cubic-bezier(.2,.75,.25,1),box-shadow 220ms ease,border-color 180ms ease;
 }
-
 .product-detail-page .product-detail-story article h2 {
-  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  max-width:18ch;margin:0 0 14px;font-size:clamp(1.65rem,2.25vw,2.25rem);line-height:1.12;
 }
+.product-detail-page .product-detail-story article p{max-width:62ch;margin-bottom:0;line-height:1.7}
+@media(hover:hover) and (pointer:fine){.product-detail-page .product-detail-story article[data-pointer-active="true"]{transform:perspective(1050px) rotateX(calc(var(--tilt-y,0deg) * -1)) rotateY(var(--tilt-x,0deg)) translateY(-3px);border-color:color-mix(in srgb,var(--detail-accent),#fff 30%);box-shadow:0 4px 10px rgba(17,33,52,.07),0 24px 44px rgba(17,33,52,.15)}}
 
-/* Capability section: no beige block, no boxes, no yellow numbering. */
+/* Capability section: framed cards with breathing room and consistent hierarchy. */
 .product-detail-page .product-capability-band {
   margin: 0;
   padding: 68px 0 72px;
@@ -152,14 +152,8 @@
   gap: clamp(24px, 3vw, 42px);
 }
 
-.product-detail-page .product-capability-grid article {
-  min-height: 0;
-  padding: 18px 4px 2px;
-  border: 0;
-  border-top: 2px solid var(--detail-accent);
-  border-radius: 0;
-  background: transparent;
-}
+.product-detail-page .product-capability-grid article{min-height:0;padding:24px;border:1px solid var(--detail-rule);border-top:3px solid var(--detail-accent);border-radius:14px;background:#fff;box-shadow:0 3px 8px rgba(17,33,52,.04),0 12px 26px rgba(17,33,52,.06);transition:transform 220ms cubic-bezier(.2,.75,.25,1),box-shadow 220ms ease,border-color 180ms ease}
+@media(hover:hover) and (pointer:fine){.product-detail-page .product-capability-grid article[data-pointer-active="true"]{transform:perspective(1000px) rotateX(calc(var(--tilt-y,0deg) * -1)) rotateY(var(--tilt-x,0deg)) translateY(-3px);box-shadow:0 4px 8px rgba(17,33,52,.06),0 20px 36px rgba(17,33,52,.13)}}
 
 .product-detail-page .product-capability-grid article span {
   color: var(--detail-accent);
@@ -209,29 +203,15 @@
   content: "•";
 }
 
-/* Related products and FAQs: use lines and space, not repeated containers. */
+/* Related products and FAQs use the same rounded, readable card language. */
 .product-detail-page .sibling-product-grid {
   gap: clamp(20px, 3vw, 34px);
 }
 
-.product-detail-page .sibling-product-grid > a {
-  min-height: 0;
-  padding: 20px 0 0;
-  border: 0;
-  border-top: 1px solid var(--detail-rule);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
+.product-detail-page .sibling-product-grid > a{min-height:0;padding:22px;border:1px solid var(--detail-rule);border-radius:14px;background:#fff;box-shadow:0 3px 8px rgba(17,33,52,.04),0 12px 26px rgba(17,33,52,.06);transition:transform 220ms ease,box-shadow 220ms ease,border-color 180ms ease}
 
-.product-detail-page .faq-grid article {
-  padding: 24px 0;
-  border: 0;
-  border-top: 1px solid var(--detail-rule);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
+.product-detail-page .faq-grid article{padding:22px 24px;border:1px solid var(--detail-rule);border-radius:14px;background:#fff;box-shadow:0 3px 8px rgba(17,33,52,.04),0 12px 26px rgba(17,33,52,.06)}
+.product-detail-page .product-service-fit aside{padding:24px;border:1px solid var(--detail-rule);border-left:4px solid var(--detail-accent);border-radius:14px;background:linear-gradient(145deg,#fff,#f7f9fa);box-shadow:0 3px 8px rgba(17,33,52,.04),0 12px 26px rgba(17,33,52,.06)}
 
 /* Responsive rule: stack before a long product name can collide with the visual. */
 @media (max-width: 1080px) {
