@@ -14,3 +14,47 @@
 .submenu span{font-weight:400;font-size:.76rem;color:#566a61}
 .submenu a:hover,.submenu a:focus-visible{background:#edf4ef;color:#164c3a}
 @media(max-width:1150px){.group>summary{justify-content:space-between}.submenu{min-width:0;width:calc(100% - 24px);max-width:none;margin:0 12px 8px;padding:4px 0;border-top:0;border-left:2px solid #bbd0c3;box-shadow:none}.submenu a{padding:12px 14px}.submenu strong{font-size:.9rem}}
+
+/* Full-width, editorial navigation panels inspired by enterprise consulting sites. */
+.header{position:sticky;overflow:visible}
+.navigation{position:static}
+.group{position:static}
+.group>summary{position:relative;z-index:2;gap:7px;transition:background .18s ease,color .18s ease}
+.group>summary svg{transition:transform .18s ease}
+.groupOpen>summary{color:#145943;background:#edf5f0}
+.groupOpen>summary svg{transform:rotate(180deg)}
+.megaPanel{position:absolute;top:calc(100% + 1px);left:clamp(22px,4vw,72px);right:clamp(22px,4vw,72px);z-index:1;display:grid;grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);gap:clamp(34px,6vw,92px);padding:clamp(28px,4vw,52px);border:1px solid #d7e1dc;border-top:3px solid #c8a454;border-radius:0 0 18px 18px;background:linear-gradient(135deg,#fff 0%,#fbfcfa 100%);box-shadow:0 28px 70px rgba(14,32,43,.2);animation:mega-reveal .2s ease-out both}
+.megaIntro{max-width:390px;align-self:center}
+.megaEyebrow{display:block;margin-bottom:13px;color:#12664f;font-size:.72rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase}
+.megaIntro h2{max-width:14ch;margin:0 0 12px;color:#142638;font-size:clamp(1.55rem,2.2vw,2.05rem);line-height:1.13;letter-spacing:-.035em}
+.megaIntro p{max-width:40ch;margin:0;color:#5b6c78;font-size:.94rem;line-height:1.65}
+.megaExplore{display:inline-flex;align-items:center;gap:11px;margin-top:22px;color:#075f65;font-size:.9rem;font-weight:800}
+.megaExplore span{transition:transform .18s ease}
+.megaExplore:hover span{transform:translateX(4px)}
+.megaLinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-content:center}
+.megaLinksThree{grid-template-columns:repeat(2,minmax(0,1fr))}
+.megaLinks>a{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) 17px;gap:11px;align-items:start;min-height:84px;padding:15px 14px;border:1px solid transparent;border-radius:11px;color:#18352f;transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}
+.megaLinks>a:hover,.megaLinks>a:focus-visible,.megaLinks>a[aria-current=page]{transform:translateY(-2px);border-color:#dbe7df;background:#f1f7f2;box-shadow:0 8px 20px rgba(16,54,42,.07);outline:none}
+.megaIndex{display:grid;width:30px;height:30px;place-items:center;border-radius:8px;background:#edf4ef;color:#1a654f;font-size:.69rem;font-weight:850;letter-spacing:.04em}
+.megaLinks strong,.megaLinks small{display:block}
+.megaLinks strong{margin:1px 0 5px;color:#18352f;font-size:.91rem;font-weight:800;line-height:1.25}
+.megaLinks small{color:#5a6c64;font-size:.78rem;line-height:1.45}
+.megaArrow{color:#788c82;font-size:.9rem;transition:transform .18s ease,color .18s ease}
+.megaLinks>a:hover .megaArrow,.megaLinks>a:focus-visible .megaArrow{transform:translate(2px,-2px);color:#14654e}
+.menuBackdrop{position:fixed;inset:var(--site-header-height,74px) 0 0;z-index:19;border:0;background:rgba(15,28,39,.18);backdrop-filter:blur(1px);cursor:default}
+@keyframes mega-reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1150px){
+ .header{position:sticky}
+ .group{position:relative}
+ .megaPanel{position:static;left:auto;right:auto;display:grid;grid-template-columns:1fr;gap:14px;margin:0 12px 12px;padding:18px;border:1px solid #dbe5df;border-top:2px solid #c8a454;border-radius:12px;background:#fbfcfa;box-shadow:none;animation:none}
+ .megaIntro{max-width:none}
+ .megaEyebrow{margin-bottom:7px;font-size:.67rem}
+ .megaIntro h2{max-width:24ch;font-size:1.3rem}
+ .megaIntro p{font-size:.88rem}
+ .megaExplore{margin-top:11px;font-size:.86rem}
+ .megaLinks,.megaLinksThree{grid-template-columns:1fr;gap:4px}
+ .megaLinks>a{min-height:68px;padding:11px 8px}
+ .menuBackdrop{display:none}
+}
+@media(max-width:520px){.megaPanel{margin-inline:6px;padding:15px}.megaLinks>a{grid-template-columns:30px minmax(0,1fr) 15px;gap:9px}.megaIndex{width:27px;height:27px}}
+@media(prefers-reduced-motion:reduce){.megaPanel{animation:none}.group>summary,.megaLinks>a,.megaExplore span,.megaArrow{transition:none}}
