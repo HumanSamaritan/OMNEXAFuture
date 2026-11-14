@@ -25,7 +25,7 @@ const homePageSchema = {
   "@type": "WebPage",
   "@id": "https://www.omnexagoc.com/#webpage",
   url: "https://www.omnexagoc.com/",
-  name: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
+  name: "Official OMNeXa Pte. Ltd. Singapore website | Where Consciousness Meets Intelligence",
   description:
     "Official website of OMNeXa Pte. Ltd., a Singapore-based transformation and innovation company founded by Dhiraj Kumar.",
   isPartOf: { "@id": "https://www.omnexagoc.com/#website" },
@@ -47,7 +47,7 @@ export default function Home() {
       />
       <section className="section-shell home-hero">
         <div className="home-hero-copy">
-          <p className="eyebrow">OMNeXa Pte. Ltd. · Singapore · Global perspective</p>
+          <p className="eyebrow">Official OMNeXa · OMNeXa Pte. Ltd. · Singapore</p>
           <h1>AI and robotics. Guided by human purpose.</h1>
           <p className="hero-copy">
             Strategy and transformation advisory connecting responsible AI and robotics, banking and risk, sustainability, human capability and wellbeing. Define your opportunity, design the right controls and move forward with a practical plan.
