@@ -128,7 +128,10 @@ export default function ConsultancyPage() {
       <section className="section-shell aligned-section" aria-labelledby="consultancy-faq">
         <div className="section-heading"><p className="eyebrow">Before you book</p><h2 id="consultancy-faq">Consultancy questions, answered.</h2></div>
         <p>For Australian regulatory context, see <a href="https://www.austrac.gov.au/industry-and-business/about-amlctf-reforms/about-reforms" target="_blank" rel="noopener noreferrer">AUSTRAC’s official AML/CTF reform guidance ↗</a>. Regulatory context checked 28 October 2026.</p>
-        <div className="faq-list">{consultancyFaqs.map((faq) => <article key={faq.question}><h3>{faq.question}</h3><p>{faq.answer}</p></article>)}</div>
+        <div className="faq-list">{consultancyFaqs.map((faq, index) => <details className="faq-item" key={faq.question}>
+          <summary><span className="faq-index">{String(index + 1).padStart(2, "0")}</span><span className="faq-question">{faq.question}</span><span className="faq-toggle" aria-hidden="true" /></summary>
+          <div className="faq-answer"><p>{faq.answer}</p></div>
+        </details>)}</div>
       </section>
 
       <section className="section-shell aligned-section consultancy-end">
