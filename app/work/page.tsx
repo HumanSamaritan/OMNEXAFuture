@@ -58,12 +58,12 @@ const workFaqs = [
   {
     question: "Are OMNeXa products available now?",
     answer:
-      "HMS is accepting controlled pilot applications; registration does not automatically grant access. Other products may have different availability and development status."
+      "Human Machine Sadhana, NeXaKriya and NeXaVirama are live at their official app links. Other products have different availability and development status; check each initiative page for current details."
   },
   {
     question: "How can I register interest in a pilot?",
     answer:
-      "HMS and NeXaCareer pilot applications can be submitted through the OMNeXa registration form. Applicants must verify their email and accept the terms."
+      "For live products, use the official app link on the initiative page. Pilot application availability for other offerings is shown on their respective pages."
   },
   {
     question: "How are OMNeXa products connected to its services?",
@@ -73,7 +73,7 @@ const workFaqs = [
   {
     question: "What is Human Machine Sadhana (HMS)?",
     answer:
-      "Human Machine Sadhana (HMS) is a wellbeing reflection application currently offered through a controlled pilot application and approval process, with human choice central."
+      "Human Machine Sadhana (HMS) is a live wellbeing reflection application designed to support awareness while keeping human choice central."
   }
 ];
 
@@ -257,7 +257,7 @@ export default function WorkPage() {
                     <a href={`/work/${product.slug}`}>Explore {product.name} →</a>
                     {video ? <a href={`/work/${product.slug}#introduction-video`}>Watch introduction →</a> : null}
                     {product.status === "Live" && product.externalUrl ? (
-                      product.slug === "human-machine-sadhana" ? <a href="/pilot?product=human-machine-sadhana">Register for pilot ↗</a> : <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
+                      <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open live app ↗</a>
                     ) : null}
                   </div>
                 </div>

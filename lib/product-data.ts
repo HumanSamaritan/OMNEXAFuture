@@ -200,7 +200,7 @@ export const products: ProductEntry[] = [
     name: "NeXaKriya",
     alternateNames: ["NeXa Kriya", "NeXaKriya by OMNeXa", "ActionLoop"],
     serviceSlug: "well-being-conscious-leadership",
-    status: "Currently under construction",
+    status: "Live",
     externalUrl: "https://nexakriya.omnexagoc.com",
     oneLiner: "A practical companion for capturing commitments, keeping follow-ups visible and closing the loop.",
     description:
@@ -221,7 +221,7 @@ export const products: ProductEntry[] = [
     name: "NeXaVirama",
     alternateNames: ["NeXa Virama", "NeXaVirama by OMNeXa", "ClearLoop"],
     serviceSlug: "well-being-conscious-leadership",
-    status: "Currently under construction",
+    status: "Live",
     externalUrl: "https://nexavirama.omnexagoc.com",
     oneLiner: "A digital pause-and-reset experience that helps people create space before the next action.",
     description:
