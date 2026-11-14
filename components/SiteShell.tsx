@@ -89,12 +89,38 @@ export default function SiteShell({ children }: { children: ReactNode }) {
           <a href="/" aria-current={active("/")}>Home</a>
           <a href="/services" aria-current={active("/services")}>Services</a>
           <a href="/work" aria-current={active("/work")}>Our Work</a>
-          <details className={styles.group} open={openGroup === "knowledge"}><summary onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "knowledge" ? null : "knowledge"); }}>Knowledge <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 4.5 3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><div className={styles.submenu}><a href="/knowledge" aria-current={active("/knowledge")}><strong>Knowledge guide</strong><span>Company facts and practical answers</span></a><a href="/convergence-brief" aria-current={active("/convergence-brief")}><strong>The Convergence Brief</strong><span>Perspectives on AI, work and governance</span></a><a href="/videos" aria-current={active("/videos")}><strong>Videos</strong><span>Films and product introductions</span></a><a href="/ai-readiness" aria-current={active("/ai-readiness")}><strong>AI Readiness</strong><span>Explore your next step with AI</span></a></div></details>
-          <details className={styles.group} open={openGroup === "about"}><summary onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "about" ? null : "about"); }}>About <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 4.5 3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><div className={styles.submenu}><a href="/about" aria-current={active("/about")}><strong>About OMNeXa</strong><span>Our purpose and approach</span></a><a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}><strong>Founder</strong><span>Meet Dhiraj Kumar</span></a><a href="/media" aria-current={active("/media")}><strong>Media & brand assets</strong><span>Approved logo, images and media</span></a></div></details>
+          <details className={`${styles.group} ${openGroup === "knowledge" ? styles.groupOpen : ""}`} open={openGroup === "knowledge"}>
+            <summary aria-expanded={openGroup === "knowledge"} onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "knowledge" ? null : "knowledge"); }}>Knowledge <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 4.5 3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+            <div className={styles.megaPanel} aria-label="Knowledge and insights">
+              <div className={styles.megaIntro}><span className={styles.megaEyebrow}>Knowledge & insights</span><h2>Ideas for the decisions ahead.</h2><p>Grounded perspectives on responsible AI, human capability, work and governance.</p><a className={styles.megaExplore} href="/knowledge">Explore the knowledge guide <span aria-hidden="true">→</span></a></div>
+              <div className={styles.megaLinks}>
+                <a href="/knowledge" aria-current={active("/knowledge")}><span className={styles.megaIndex}>01</span><span><strong>Knowledge guide</strong><small>Company facts and practical answers</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/convergence-brief" aria-current={active("/convergence-brief")}><span className={styles.megaIndex}>02</span><span><strong>The Convergence Brief</strong><small>Perspectives on AI, work and governance</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/videos" aria-current={active("/videos")}><span className={styles.megaIndex}>03</span><span><strong>Videos</strong><small>Films and product introductions</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/ai-readiness" aria-current={active("/ai-readiness")}><span className={styles.megaIndex}>04</span><span><strong>AI readiness</strong><small>Explore a practical next step with AI</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </details>
+          <details className={`${styles.group} ${openGroup === "about" ? styles.groupOpen : ""}`} open={openGroup === "about"}>
+            <summary aria-expanded={openGroup === "about"} onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "about" ? null : "about"); }}>About <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 4.5 3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+            <div className={styles.megaPanel} aria-label="About OMNeXa">
+              <div className={styles.megaIntro}><span className={styles.megaEyebrow}>About OMNeXa</span><h2>Human purpose. Practical transformation.</h2><p>Learn about the people, principles and partnerships behind OMNeXa Pte. Ltd.</p><a className={styles.megaExplore} href="/about">Discover OMNeXa <span aria-hidden="true">→</span></a></div>
+              <div className={`${styles.megaLinks} ${styles.megaLinksThree}`}>
+                <a href="/about" aria-current={active("/about")}><span className={styles.megaIndex}>01</span><span><strong>About OMNeXa</strong><small>Our purpose, approach and company</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}><span className={styles.megaIndex}>02</span><span><strong>Founder</strong><small>Meet Dhiraj Kumar</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/media" aria-current={active("/media")}><span className={styles.megaIndex}>03</span><span><strong>Media & brand assets</strong><small>Approved identity and media resources</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/india" aria-current={active("/india")}><span className={styles.megaIndex}>04</span><span><strong>OMNeXa in India</strong><small>Services and initiatives for India</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/ecosystem-collaboration" aria-current={active("/ecosystem-collaboration")}><span className={styles.megaIndex}>05</span><span><strong>Ecosystem collaboration</strong><small>Build future-ready work together</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/privacy" aria-current={active("/privacy")}><span className={styles.megaIndex}>06</span><span><strong>Privacy</strong><small>How we handle information</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </details>
           <a href="/contact" aria-current={active("/contact")}>Contact</a>
           <a href="/consultancy" className={styles.consultancy} aria-current={active("/consultancy")}>Discuss your needs →</a>
         </nav>
       </header>
+
+      {openGroup && !menuOpen && <button className={styles.menuBackdrop} type="button" aria-label="Close navigation menu" onClick={() => setOpenGroup(null)} />}
 
       {children}
       <WhatsAppLead />
