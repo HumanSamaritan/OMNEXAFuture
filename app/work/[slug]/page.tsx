@@ -23,8 +23,8 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const service = getServiceSegment(product.serviceSlug);
   const isLive = product.status === "Live";
   return {
-    title: `${product.name} | ${product.slug === "human-machine-sadhana" ? "Pilot Registration" : isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
-    description: `${product.oneLiner} ${product.slug === "human-machine-sadhana" ? "Apply for the controlled HMS pilot; access requires approval." : isLive ? "Open the live application." : "Coming soon from OMNeXa."}`,
+    title: `${product.name} | ${isLive ? "Live App" : "Coming Soon"} | OMNeXa`,
+    description: `${product.oneLiner} ${isLive ? "Open the live application." : "Coming soon from OMNeXa."}`,
     keywords: [product.name, ...product.alternateNames, ...product.seoTerms],
     alternates: { canonical: `/work/${product.slug}` },
     openGraph: {
@@ -69,9 +69,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     {
       question: `Is ${product.name} available now?`,
-      answer: product.slug === "human-machine-sadhana"
-        ? "HMS currently accepts applications for its controlled pilot. Apply at https://www.omnexagoc.com/pilot?product=human-machine-sadhana. Submitting an application does not grant access; approved applicants receive separate onboarding instructions."
-        : isLive
+      answer: isLive
         ? `${product.name} is live. Open the official application at ${product.externalUrl}. Some features may continue to evolve.`
         : `${product.name} is coming soon. This page describes its intended direction and planned capabilities; public product access is not available yet.`
     }
@@ -137,14 +135,14 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <h1>{product.name}</h1>
             <p className="product-detail-lead">{product.oneLiner}</p>
             <div className="product-detail-actions">
-              <span className="work-status large">{product.slug === "human-machine-sadhana" ? "Pilot applications open" : isLive ? "Live" : "Coming Soon"}</span>
+              <span className="work-status large">{isLive ? "Live" : "Coming Soon"}</span>
               {isLive && product.externalUrl ? (
-                product.slug === "human-machine-sadhana" ? <a className="button" href="/pilot?product=human-machine-sadhana">Register for HMS Pilot →</a> : <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open App →</a>
+                <a className="button" href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open Live App →</a>
               ) : null}
             </div>
             <p>
               {isLive
-                ? product.slug === "human-machine-sadhana" ? "HMS is accepting pilot applications. Applicants verify their email, review privacy and participation terms, and receive an acknowledgement after successful submission." : "The app is available now. Features may continue to improve."
+                ? "The app is available now. Features may continue to evolve."
                 : "OMNeXa is currently building and validating this product. This public page explains what it is intended to do; access to the unfinished application is not being provided from the OMNeXa website."}
             </p>
           </div>
