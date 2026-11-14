@@ -78,7 +78,7 @@ export default async function ConvergenceBriefPage() {
               A leadership question for the agentic era: how should accountability be understood when AI takes action?
             </p>
             <a className={styles.primaryLink} href={latestNewsletterUrl} target="_blank" rel="noopener noreferrer">
-              Read on LinkedIn <span aria-hidden="true">↗</span>
+              Read the newsletter on LinkedIn
             </a>
           </article>
         </div>
@@ -135,7 +135,7 @@ export default async function ConvergenceBriefPage() {
                   </a>
                   {issue.linkedinUrl ? (
                     <a className={styles.cardLink} href={issue.linkedinUrl} target="_blank" rel="noopener noreferrer">
-                      Read on LinkedIn <span aria-hidden="true">↗</span>
+                      Read on LinkedIn
                     </a>
                   ) : null}
                 </div>
