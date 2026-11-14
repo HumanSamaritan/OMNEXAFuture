@@ -1,0 +1,23 @@
+name: Notify search engines of changed pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  submit-changed-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the pushed revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Submit changed public pages through IndexNow
+        env:
+          INDEXNOW_BEFORE: ${{ github.event.before }}
+          INDEXNOW_AFTER: ${{ github.sha }}
+        run: node scripts/submit-indexnow.mjs
