@@ -59,6 +59,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)) ? "page" as const : undefined;
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const knowledgeActive = ["/knowledge", "/convergence-brief", "/videos", "/ai-readiness"].some((href) => pathname === href || pathname.startsWith(`${href}/`));
+  const aboutActive = ["/about", "/dhiraj-kumar", "/media", "/india", "/ecosystem-collaboration", "/privacy"].some((href) => pathname === href || pathname.startsWith(`${href}/`));
 
   if (isAdmin) {
     return <>{children}</>;
@@ -89,29 +91,29 @@ export default function SiteShell({ children }: { children: ReactNode }) {
           <a href="/" aria-current={active("/")}>Home</a>
           <a href="/services" aria-current={active("/services")}>Services</a>
           <a href="/work" aria-current={active("/work")}>Our Work</a>
-          <details className={`${styles.group} ${openGroup === "knowledge" ? styles.groupOpen : ""}`} open={openGroup === "knowledge"}>
-            <summary aria-expanded={openGroup === "knowledge"} onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "knowledge" ? null : "knowledge"); }}>Knowledge <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 4.5 3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+          <details className={`${styles.group} ${openGroup === "knowledge" ? styles.groupOpen : ""} ${knowledgeActive ? styles.groupActive : ""}`} open={openGroup === "knowledge"}>
+            <summary aria-expanded={openGroup === "knowledge"} onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "knowledge" ? null : "knowledge"); }} aria-current={knowledgeActive ? "page" : undefined}>Knowledge</summary>
             <div className={styles.megaPanel} aria-label="Knowledge and insights">
-              <div className={styles.megaIntro}><span className={styles.megaEyebrow}>Knowledge & insights</span><h2>Ideas for the decisions ahead.</h2><p>Grounded perspectives on responsible AI, human capability, work and governance.</p><a className={styles.megaExplore} href="/knowledge">Explore the knowledge guide <span aria-hidden="true">→</span></a></div>
+              <div className={styles.megaIntro}><span className={styles.megaEyebrow}>Knowledge & insights</span><h2>Ideas for the decisions ahead.</h2><p>Explore OMNeXa’s company guide, leadership perspectives, videos and AI readiness resources. Each offers a practical lens on responsible adoption, human capability and governance.</p><a className={styles.megaExplore} href="/knowledge">Explore the knowledge guide <span aria-hidden="true">→</span></a></div>
               <div className={styles.megaLinks}>
-                <a href="/knowledge" aria-current={active("/knowledge")}><span className={styles.megaIndex}>01</span><span><strong>Knowledge guide</strong><small>Company facts and practical answers</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/convergence-brief" aria-current={active("/convergence-brief")}><span className={styles.megaIndex}>02</span><span><strong>The Convergence Brief</strong><small>Perspectives on AI, work and governance</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/videos" aria-current={active("/videos")}><span className={styles.megaIndex}>03</span><span><strong>Videos</strong><small>Films and product introductions</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/ai-readiness" aria-current={active("/ai-readiness")}><span className={styles.megaIndex}>04</span><span><strong>AI readiness</strong><small>Explore a practical next step with AI</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/knowledge" aria-current={active("/knowledge")}><span className={styles.megaIndex}>01</span><span><strong>Knowledge guide</strong><small>Company identity, services, products and practical answers</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/convergence-brief" aria-current={active("/convergence-brief")}><span className={styles.megaIndex}>02</span><span><strong>The Convergence Brief</strong><small>A leadership series on human agency, work and agentic AI</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/videos" aria-current={active("/videos")}><span className={styles.megaIndex}>03</span><span><strong>Videos</strong><small>Product introductions, learning initiatives and OMNeXa perspectives</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/ai-readiness" aria-current={active("/ai-readiness")}><span className={styles.megaIndex}>04</span><span><strong>AI readiness</strong><small>A practical starting point for AI opportunity, readiness and oversight</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
               </div>
             </div>
           </details>
-          <details className={`${styles.group} ${openGroup === "about" ? styles.groupOpen : ""}`} open={openGroup === "about"}>
-            <summary aria-expanded={openGroup === "about"} onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "about" ? null : "about"); }}>About <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 4.5 3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+          <details className={`${styles.group} ${openGroup === "about" ? styles.groupOpen : ""} ${aboutActive ? styles.groupActive : ""}`} open={openGroup === "about"}>
+            <summary aria-expanded={openGroup === "about"} onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === "about" ? null : "about"); }} aria-current={aboutActive ? "page" : undefined}>About</summary>
             <div className={styles.megaPanel} aria-label="About OMNeXa">
-              <div className={styles.megaIntro}><span className={styles.megaEyebrow}>About OMNeXa</span><h2>Human purpose. Practical transformation.</h2><p>Learn about the people, principles and partnerships behind OMNeXa Pte. Ltd.</p><a className={styles.megaExplore} href="/about">Discover OMNeXa <span aria-hidden="true">→</span></a></div>
+              <div className={styles.megaIntro}><span className={styles.megaEyebrow}>About OMNeXa</span><h2>Human purpose. Practical transformation.</h2><p>Understand OMNeXa’s purpose, Singapore identity and human-defined approach to transformation. Explore the people and partnerships shaping our work across technology, business and human capability.</p><a className={styles.megaExplore} href="/about">Discover OMNeXa <span aria-hidden="true">→</span></a></div>
               <div className={`${styles.megaLinks} ${styles.megaLinksThree}`}>
-                <a href="/about" aria-current={active("/about")}><span className={styles.megaIndex}>01</span><span><strong>About OMNeXa</strong><small>Our purpose, approach and company</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}><span className={styles.megaIndex}>02</span><span><strong>Founder</strong><small>Meet Dhiraj Kumar</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/media" aria-current={active("/media")}><span className={styles.megaIndex}>03</span><span><strong>Media & brand assets</strong><small>Approved identity and media resources</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/india" aria-current={active("/india")}><span className={styles.megaIndex}>04</span><span><strong>OMNeXa in India</strong><small>Services and initiatives for India</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/ecosystem-collaboration" aria-current={active("/ecosystem-collaboration")}><span className={styles.megaIndex}>05</span><span><strong>Ecosystem collaboration</strong><small>Build future-ready work together</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
-                <a href="/privacy" aria-current={active("/privacy")}><span className={styles.megaIndex}>06</span><span><strong>Privacy</strong><small>How we handle information</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/about" aria-current={active("/about")}><span className={styles.megaIndex}>01</span><span><strong>About OMNeXa</strong><small>Our purpose, company identity and way of working</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/dhiraj-kumar" aria-current={active("/dhiraj-kumar")}><span className={styles.megaIndex}>02</span><span><strong>Founder</strong><small>Experience across banking, risk and transformation</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/media" aria-current={active("/media")}><span className={styles.megaIndex}>03</span><span><strong>Media & brand assets</strong><small>Approved identity materials and resources for media and partners</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/india" aria-current={active("/india")}><span className={styles.megaIndex}>04</span><span><strong>OMNeXa in India</strong><small>India-focused services, education and robotics initiatives</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/ecosystem-collaboration" aria-current={active("/ecosystem-collaboration")}><span className={styles.megaIndex}>05</span><span><strong>Ecosystem collaboration</strong><small>Partnerships connecting educators, employers and innovation</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
+                <a href="/privacy" aria-current={active("/privacy")}><span className={styles.megaIndex}>06</span><span><strong>Privacy</strong><small>Our privacy approach and information practices</small></span><span className={styles.megaArrow} aria-hidden="true">→</span></a>
               </div>
             </div>
           </details>
@@ -127,7 +129,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
       <footer className={`site-footer ${styles.footer}`}>
         <div className={styles.footerGrid}>
-          <div><strong>OMNeXa Pte. Ltd.</strong><p>Where Consciousness Meets Intelligence.</p><p>Singapore · Human-centred transformation</p></div>
+          <div className={styles.footerIdentity}><strong>OMNeXa Pte. Ltd.</strong><p>Where Consciousness Meets Intelligence.</p><p>Singapore · Human-centred transformation</p><div className={styles.socialLinks} aria-label="Follow OMNeXa"><h2>Follow OMNeXa</h2><a href="https://www.instagram.com/omnexagoc/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">→</span></a><a href="https://www.facebook.com/reel/2334629940690089" target="_blank" rel="noopener noreferrer">Facebook <span aria-hidden="true">→</span></a><a href="https://x.com/OMNeXaGoc" target="_blank" rel="noopener noreferrer">X · @OMNeXaGoc <span aria-hidden="true">→</span></a></div></div>
           <div><h2>Work with us</h2><a href="/services">Services</a><a href="/consultancy">Consultancy & discovery calls</a><a href="/work">Products & initiatives</a><a href="/india">OMNeXa in India</a><a href="/ecosystem-collaboration">Ecosystem collaboration</a><a href="https://omnexa-career.omnexagoc.com/partners" target="_blank" rel="noopener noreferrer">Partner portal</a><a href="/india/odisha/robotics">Odisha robotics learning programme</a><a href="/contact">Contact OMNeXa</a></div>
           <div><h2>Explore</h2><a href="/knowledge">Knowledge</a><a href="/convergence-brief">The Convergence Brief</a><a href="/videos">Videos</a><a href="/ai-readiness">AI Readiness</a></div>
           <div><h2>Company</h2><a href="/about">About OMNeXa</a><a href="/dhiraj-kumar">Founder</a><a href="/media">Media & brand assets</a><a href="/privacy">Privacy</a></div>

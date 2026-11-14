@@ -163,7 +163,8 @@ const entityGraph = {
       sameAs: [
         "https://sg.linkedin.com/company/https-www.omnexagoc.com",
         "https://www.youtube.com/@OMNeXa-v1",
-        "https://www.instagram.com/omnexagoc/"
+        "https://www.instagram.com/omnexagoc/",
+        "https://x.com/OMNeXaGoc"
       ],
       hasOfferCatalog: { "@id": `${siteUrl}/consultancy#catalog` },
       areaServed: "Global"

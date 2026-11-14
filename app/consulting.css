@@ -50,8 +50,8 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
 .consulting-site .product-detail-page .product-detail-visual{background:#102b32}
 
 /* Bright, consistent action links on public content surfaces. */
-.consulting-site main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card){color:#075cdb;text-decoration:underline;text-decoration-color:#8bb6f4;text-decoration-thickness:1px;text-underline-offset:4px;font-weight:600;transition:color .16s ease,text-decoration-color .16s ease}
-.consulting-site main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card):hover{color:#0043a8;text-decoration-color:currentColor;text-decoration-thickness:2px}
+.consulting-site :where(main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card)){color:#145943;text-decoration:underline;text-decoration-color:#9bb8aa;text-decoration-thickness:1px;text-underline-offset:4px;font-weight:600;transition:color .16s ease,text-decoration-color .16s ease}
+.consulting-site :where(main a:not(.button):not(:has(img)):not(.work-card-visual):not(.work-service-card):hover){color:#0e4938;text-decoration-color:currentColor;text-decoration-thickness:2px}
 .consulting-site main a:focus-visible{outline:3px solid #2878eb;outline-offset:4px;border-radius:3px}
 @media(prefers-reduced-motion:reduce){.consulting-site main a{transition:none!important}}
 
@@ -83,8 +83,8 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
   font-size: 16px;
   line-height: 1.62;
 }
-.consulting-site :is(h1,h2,h3,h4) {
-  color: #142439;
+.consulting-site :where(:is(h1,h2,h3,h4)) {
+  color: inherit;
   font-family: Inter, "Aptos Display", "Segoe UI", Arial, sans-serif;
   font-weight: 760;
   text-wrap: balance;
@@ -102,7 +102,7 @@ body:has(.consulting-site){background:#fff;background-image:none;background-size
   letter-spacing: -.026em;
 }
 .consulting-site h3 { font-size: 1.12rem; font-weight: 720; line-height: 1.32; }
-.consulting-site p { color: var(--muted); line-height: 1.68; }
+.consulting-site :where(p) { color: var(--muted); line-height: 1.68; }
 .consulting-site .page-hero { padding-top: clamp(52px, 7vw, 88px); padding-bottom: 44px; }
 .consulting-site .eyebrow { color: #17634e; font-weight: 800; letter-spacing: .14em; }
 .consulting-site .section-heading { margin-bottom: 34px; }
