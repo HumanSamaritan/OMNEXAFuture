@@ -7,6 +7,7 @@ import {
   services,
   targetMarkets
 } from "@/lib/site-data";
+import "../ecosystem-collaboration/ecosystem-collaboration.css";
 
 export const metadata: Metadata = {
   title: "Consultancy, Training & Transformation Services",
@@ -93,6 +94,20 @@ export default function ServicesPage() {
               <p>{partner.description}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="band ecosystem-promo-band">
+        <div className="section-shell aligned-section ecosystem-promo">
+          <div>
+            <p className="eyebrow">Build with an ecosystem</p>
+            <h2>Bring complementary partners around a shared outcome.</h2>
+            <p>Explore how OMNeXa approaches future-of-work collaboration across education, skills, opportunity, well-being and responsible technology—and how organisations can start a partnership conversation.</p>
+          </div>
+          <div className="hero-actions">
+            <a className="button primary" href="/ecosystem-collaboration">Explore ecosystem collaboration →</a>
+            <a className="button secondary" href="https://omnexa-career.omnexagoc.com/partners" target="_blank" rel="noopener noreferrer">Open the partner portal ↗</a>
+          </div>
         </div>
       </section>
 

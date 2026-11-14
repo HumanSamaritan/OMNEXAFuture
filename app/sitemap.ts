@@ -54,6 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/convergence-brief", priority: 0.95, changeFrequency: "weekly" as const, images: [] },
     { path: "/consultancy", priority: 0.9, changeFrequency: "monthly" as const, images: [`${siteUrl}/dhiraj-founder.png`] },
     { path: "/services", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
+    { path: "/ecosystem-collaboration", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/work", priority: 0.95, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-driver-home.jpg`] },
     { path: "/insights/dussehra-human-machine-sadhana", priority: 0.95, changeFrequency: "monthly" as const, images: [`${siteUrl}/omnexa-driver-home.jpg`] },
     { path: "/contact", priority: 0.6, changeFrequency: "monthly" as const, images: [] }
