@@ -68,21 +68,29 @@ export default function ConsultancyPage() {
     <main className="consultancy-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
       <section className="page-hero section-shell aligned-section">
-        <p className="eyebrow">OMNeXa consultancy · Work directly with Dhiraj</p>
-        <h1>Bring one real challenge. Leave with a practical next step.</h1>
-        <p>Work directly with Dhiraj Kumar, Founder &amp; CEO of OMNeXa Pte. Ltd., Singapore. Choose a focused session in practical AI, product planning, governance, AML/KYC, wellbeing or sustainability.</p>
-        <p>Banking, financial crime and transformation experience meets hands-on learning from developing OMNeXa products. Each session has a defined output we work on together.</p>
+        <p className="eyebrow">OMNeXa consultancy · Focused advice, useful outputs</p>
+        <h1>Turn a complex challenge into a clear next move.</h1>
+        <p className="consultancy-lead">Work directly with Dhiraj Kumar on a focused question in practical AI, product strategy, responsible AI, banking risk and controls, AML/KYC, careers, sustainability or human capability.</p>
+        <p>Bring your operating context. Leave with a defined session output, a clearer decision and a practical next step—grounded in banking, financial-crime and transformation experience, with a builder's perspective on AI-enabled products.</p>
         <div className="hero-actions">
           <a className="button primary" href={discoveryBookingUrl}>Book a free 15-minute discovery call</a>
           <a className="button secondary" href="#session-heading">Explore all seven services</a>
           <a className="button secondary" href={`mailto:${consultancyContact}`}>Discuss a team engagement</a>
         </div>
-        <p className="consultancy-note">Start with a complimentary 15-minute exploratory consultation. We confirm your needs and recommend the appropriate service; all listed session fees are fixed and non-negotiable. Following the discussion, OMNeXa will provide official payment instructions via an available method such as Stripe, Revolut, Razorpay or verified bank transfer. The exploratory call is free, with no obligation to purchase. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
+        <p className="consultancy-note"><strong>Start with a complimentary 15-minute discovery call.</strong> There is no obligation to book a paid session. If you decide to proceed, we confirm the selected scope and fixed USD fee before arranging payment. Team engagements and custom implementation can be scoped separately. Contact: <a href={`mailto:${consultancyContact}`}>{consultancyContact}</a></p>
+      </section>
+
+      <section className="section-shell aligned-section consultancy-advantage" aria-labelledby="consultancy-advantage-title">
+        <div className="section-heading"><p className="eyebrow">Why OMNeXa</p><h2 id="consultancy-advantage-title">Experience that moves from the control room to the build room.</h2><p>Advice shaped by real operating constraints and by the work of turning ideas into usable digital products.</p></div>
+        <div className="consultancy-advantage-grid">
+          <article><p className="eyebrow">01 · Operational depth</p><h3>Start with how work really happens.</h3><p>Connect your question to the people, processes, risks and decision rights that shape the outcome.</p></article>
+          <article><p className="eyebrow">02 · Builder's perspective</p><h3>Make the next step tangible.</h3><p>Translate an idea into a workflow, review checklist, product brief or roadmap matched to the session you choose.</p></article>
+          <article><p className="eyebrow">03 · Grounded judgement</p><h3>Keep evidence and people in view.</h3><p>Separate what is known from what needs testing. AI can support the work; human judgement stays accountable.</p></article>
+        </div>
       </section>
 
       <section className="section-shell aligned-section" aria-labelledby="session-heading">
-        <div className="section-heading"><p className="eyebrow">Choose your focus</p><h2 id="session-heading">Clear scope. Tangible session outputs.</h2></div>
-        <p>Browse the services and fixed USD fees below. View an approximate amount in another currency if helpful. Your first 15-minute consultation is complimentary; after discussing your requirements you can choose whether to proceed with a paid session. Custom projects and team engagements outside the listed sessions require a separate proposal.</p>
+        <div className="section-heading"><p className="eyebrow">Seven focused sessions · 30 or 60 minutes</p><h2 id="session-heading">Choose the outcome you need.</h2><p>Every listing shows its audience, scope and intended outputs. Compare fixed USD fees, with an estimated currency conversion if useful. Start with the free discovery call; custom projects and team engagements can be scoped separately.</p></div>
         <ConsultancyCurrency><div className="consultancy-grid">
           {consultancySessions.map((session) => (
             <article className="service-card consultancy-card" id={session.id} key={session.id}>
@@ -101,7 +109,7 @@ export default function ConsultancyPage() {
                   <p className="consultancy-scope">{session.scope}</p>
                 </div>
               </details>
-              <a className="button secondary" href={discoveryBookingUrl}>Book a free consultation →</a>
+              <a className="button secondary" href={discoveryBookingUrl}>Start with a free discovery call →</a>
             </article>
           ))}
         </div></ConsultancyCurrency>
