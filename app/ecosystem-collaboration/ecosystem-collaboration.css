@@ -1,0 +1,32 @@
+.ecosystem-page .ecosystem-hero > p:not(.eyebrow) { max-width:860px; }
+.ecosystem-page .ecosystem-qualification { margin-top:20px; color:#617083; font-size:.83rem; line-height:1.6; }
+.ecosystem-page .ecosystem-belief-band { background:linear-gradient(135deg,#f4f7f8 0%,#f8f9fb 60%,#eef5f3 100%); }
+.ecosystem-page .ecosystem-principle-grid article,
+.ecosystem-page .ecosystem-lane-grid article { min-height:100%; }
+.ecosystem-page .ecosystem-step-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.ecosystem-page .ecosystem-step-grid article { min-height:100%; }
+.ecosystem-page .ecosystem-step-grid article > span { display:inline-flex; margin-bottom:12px; color:#c09a44; font-size:.78rem; font-weight:850; letter-spacing:.12em; }
+.ecosystem-page .ecosystem-portal-section { padding-block:4.5rem; }
+.ecosystem-page .ecosystem-portal-card { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(230px,.7fr); align-items:center; gap:40px; padding:clamp(26px,5vw,58px); border:1px solid #263c57; border-top:4px solid #c9a34e; border-radius:22px; background:linear-gradient(125deg,#102238,#1c3553); color:#fff; box-shadow:0 22px 54px rgba(11,27,45,.16); }
+.ecosystem-page .ecosystem-portal-card .eyebrow { color:#e5c572; }
+.ecosystem-page .ecosystem-portal-card h2 { max-width:700px; color:#fff; }
+.ecosystem-page .ecosystem-portal-card p:not(.eyebrow) { max-width:760px; color:#d5e0ec; line-height:1.75; }
+.ecosystem-page .ecosystem-portal-actions { display:grid; justify-items:start; gap:16px; }
+.ecosystem-page .ecosystem-portal-actions .button.primary { background:#f2dca6; border-color:#f2dca6; color:#13263d; }
+.ecosystem-page .ecosystem-portal-actions .button.primary:hover { background:#ffe8b6; border-color:#ffe8b6; }
+.ecosystem-page .ecosystem-portal-actions .button.secondary { border-color:#8ea2b9; color:#fff; }
+.ecosystem-page .ecosystem-work-link { color:#e5c572; font-size:.9rem; font-weight:750; }
+.ecosystem-promo-band { background:#f4f7f8; }
+.ecosystem-promo { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr); gap:32px; align-items:center; padding-block:50px; }
+.ecosystem-promo h2 { max-width:780px; }
+.ecosystem-promo p:not(.eyebrow) { max-width:760px; line-height:1.7; color:#47576b; }
+.ecosystem-promo .hero-actions { align-items:flex-start; justify-content:flex-start; }
+@media(max-width:800px) {
+  .ecosystem-page .ecosystem-step-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .ecosystem-page .ecosystem-portal-card,.ecosystem-promo { grid-template-columns:minmax(0,1fr); }
+  .ecosystem-page .ecosystem-portal-actions { justify-items:stretch; }
+  .ecosystem-page .ecosystem-portal-actions .button { width:100%; }
+}
+@media(max-width:560px) {
+  .ecosystem-page .ecosystem-step-grid { grid-template-columns:minmax(0,1fr); }
+}

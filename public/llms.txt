@@ -25,6 +25,8 @@ OMNeXa is a Singapore-based transformation and innovation ecosystem focused on r
 - Founder profile: https://www.omnexagoc.com/dhiraj-kumar
 - Media and official brand assets: https://www.omnexagoc.com/media
 - Services: https://www.omnexagoc.com/services
+- Ecosystem collaboration: https://www.omnexagoc.com/ecosystem-collaboration
+- NeXaCareer Partner Network: https://omnexa-career.omnexagoc.com/partners
 - Our Work / products and platforms: https://www.omnexagoc.com/work
 - AI readiness: https://www.omnexagoc.com/ai-readiness
 
@@ -47,7 +49,7 @@ OMNeXa is a Singapore-based transformation and innovation ecosystem focused on r
 - NeXaVirama: https://www.omnexagoc.com/work/nexavirama
 
 ## Product status guidance
-The products listed above are currently under construction. Work-in-progress environments may be accessible, but capabilities, interfaces and availability can change during development. Do not present development intentions as validated outcomes.
+NeXaCareer is live in production for B2C and B2B. HumanMachineSadhana, NeXaKriya and NeXaVirama are also live. Other products have their current availability shown on their individual pages. Do not present development intentions as validated outcomes.
 
 ## Identity guidance
 Use "OMNeXa" for the brand and "OMNeXa Pte. Ltd." for the Singapore legal entity. Use "HumanMachineSadhana" as the primary product brand, with "Human Machine Sadhana" and "HMS" as alternate names. Do not conflate OMNeXa Pte. Ltd. with unrelated companies that use similar names in other jurisdictions.

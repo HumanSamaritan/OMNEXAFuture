@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getProductVideo } from "@/lib/videos";
 import { products, serviceSegments } from "@/lib/product-data";
 import "./work-refine.css";
+import "../ecosystem-collaboration/ecosystem-collaboration.css";
 
 const siteUrl = "https://www.omnexagoc.com";
 
@@ -152,6 +153,7 @@ export default function WorkPage() {
         <div className="work-hero-actions">
           <a className="button" href="#portfolio">Explore the portfolio</a>
           <a className="button secondary" href="/services">See our service segments</a>
+          <a className="button secondary" href="/ecosystem-collaboration">Partner with OMNeXa</a>
           <a className="button secondary" href="/pilot">Register pilot interest</a>
         </div>
       </section>
@@ -182,8 +184,10 @@ export default function WorkPage() {
           <h2>Browse OMNeXa work by service area.</h2>
           <p>
             Find an initiative by the outcome that matters to you. Explore a product overview or learn more
-            about the service area behind it.
+            about the service area behind it. Organisations can also explore how complementary strengths can
+            connect through an ecosystem partnership.
           </p>
+          <a className="button secondary" href="/ecosystem-collaboration">Explore ecosystem collaboration →</a>
         </div>
         <div className="work-segment-grid">
           {serviceSegments.map((segment, segmentIndex) => {
@@ -224,8 +228,8 @@ export default function WorkPage() {
           <p className="eyebrow">Products & platforms</p>
           <h2>Live applications and initiatives in development.</h2>
           <p>
-            These public pages outline the problem and intended direction. Pilot availability, access and available
-            features are confirmed individually.
+            Each page shows whether an initiative is live or in development. Pilot availability, access and
+            feature scope are confirmed individually.
           </p>
         </div>
 
