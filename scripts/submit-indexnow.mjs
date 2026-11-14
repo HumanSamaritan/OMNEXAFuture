@@ -37,7 +37,7 @@ const corePages = [
 
 for (const changedPath of changedPaths()) {
   const normalized = changedPath.replaceAll("\\", "/");
-  if (/^(app\/(layout|robots|sitemap)\.tsx?|lib\/(publications|product-data|site-data)\.ts)$/.test(normalized)) {
+  if (/^(app\/(layout|robots|sitemap)\.tsx?|lib\/(publications|product-data|site-data)\.ts|\.github\/workflows\/indexnow\.yml)$/.test(normalized)) {
     corePages.forEach((page) => submitted.add(page));
     continue;
   }
