@@ -134,6 +134,12 @@ export default function AboutPage() {
         <article><span>Founder & CEO</span><strong><a href="/dhiraj-kumar">Dhiraj Kumar</a></strong></article>
       </section>
 
+      <section className="section-shell aligned-section" aria-labelledby="omnexa-brand-status" style={{ paddingTop: 18, paddingBottom: 24 }}>
+        <div style={{ padding: "16px 18px", borderLeft: "3px solid #c8a454", background: "#f4f6f7", color: "#536578", lineHeight: 1.65 }}>
+          <strong id="omnexa-brand-status">OMNeXa brand status:</strong> OMNeXa has informed us that a trademark application has been filed. Filing does not mean the mark is registered. The relevant jurisdiction, application number and current status should be checked with the official registry before relying on market-specific protection claims.
+        </div>
+      </section>
+
       <section className="section-shell split-section aligned-section">
         <div>
           <p className="eyebrow">Why OMNeXa exists</p>

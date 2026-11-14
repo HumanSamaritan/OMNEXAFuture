@@ -81,7 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...pages.map((page) => ({
       url: `${siteUrl}${page.path}`,
-      lastModified: ["/consultancy", "/services", "/knowledge", "/dhiraj-kumar"].includes(page.path) ? new Date("2026-10-28T00:00:00Z") : siteLastModified,
+      lastModified: page.path === "/india" ? new Date("2026-11-14T00:00:00Z") : ["/consultancy", "/services", "/knowledge", "/dhiraj-kumar"].includes(page.path) ? new Date("2026-10-28T00:00:00Z") : siteLastModified,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
       images: page.images

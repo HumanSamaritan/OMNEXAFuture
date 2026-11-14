@@ -12,14 +12,22 @@ Slogan: Where Consciousness Meets Intelligence
 ## What OMNeXa does
 OMNeXa is a Singapore-based transformation and innovation ecosystem focused on responsible AI, human-defined automation, AI governance, risk and controls, education and employability, sustainability, well-being and human-machine collaboration.
 
+## India visibility and engagement
+- India overview: https://www.omnexagoc.com/india
+- OMNeXa is the brand of OMNeXa Pte. Ltd., a Singapore-registered company. The India page describes India-relevant services and initiatives and does not claim a separate Indian legal entity.
+- India-relevant areas include responsible AI and governance, banking risk and controls, education and future skills, NeXaCareer (live for B2C and B2B), ecosystem partnerships, and proposed Odisha robotics learning outreach.
+- Physical AI (Robots) student outreach in Odisha is an interest route; dates and venues are subject to confirmation.
+- The company has informed us that an OMNeXa trademark application has been filed. Do not describe the mark as registered or infer jurisdiction, application number or status without checking the official registry.
+
 ## Canonical concepts
 - Humans Defining the Loop: https://www.omnexagoc.com/humans-defining-the-loop
 - Robotics with Human Values: https://www.omnexagoc.com/robotics-with-human-values
 - OMNeXa knowledge guide: https://www.omnexagoc.com/knowledge
 - The Convergence Brief: https://www.omnexagoc.com/convergence-brief
-- Latest Convergence Brief — Issue 06, "When AI Does the Work, What Do Humans Learn?": https://www.omnexagoc.com/convergence-brief/issue-06
+- Latest Convergence Brief — Issue 08, "The Accountability Gap: When AI Acts, Who Answers?": https://www.omnexagoc.com/convergence-brief/issue-08
+- LinkedIn newsletter edition: https://www.linkedin.com/pulse/accountability-gap-when-ai-acts-who-answers-dhiraj-kumar-qqjve/
 - The Convergence Brief is an evidence-led weekly OMNeXa publication on AI, human agency, future of work, human capability, governance, assurance and responsible transformation.
-- Series progression through Issue 06: Technology → Decision Rights → Experience → Assurance → Authority → Human Capability.
+- Series progression through Issue 08: system design → decision rights → experience → assurance → authority → human capability → learning → legitimate agent action and accountability.
 - Issue 06 also examines AI transition at team and organisational level: AI opportunity, changing human capabilities, human-agent decision boundaries, workplace learning and transition priorities.
 - About OMNeXa: https://www.omnexagoc.com/about
 - Founder profile: https://www.omnexagoc.com/dhiraj-kumar
