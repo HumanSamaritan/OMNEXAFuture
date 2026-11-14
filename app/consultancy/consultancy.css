@@ -5,7 +5,22 @@
 .consultancy-card ul { padding-left: 22px; line-height: 1.65; }
 .consultancy-card .button { align-self: flex-start; margin-top: auto; }
 .consultancy-scope, .consultancy-note { font-size: .92rem; line-height: 1.6; }
-.consultancy-page .faq-list { display: grid; gap: 16px; }
+.consultancy-page .faq-list { display: grid; gap: 14px; }
+.consultancy-page .faq-item { overflow: hidden; border: 1px solid #d3dce5; border-radius: 14px; background: linear-gradient(135deg,#fff 0%,#fbfcfd 100%); box-shadow: 0 3px 7px rgba(17,33,52,.035),0 12px 26px rgba(17,33,52,.055); transition: border-color .18s ease,box-shadow .18s ease,transform .18s ease; }
+.consultancy-page .faq-item:hover,.consultancy-page .faq-item[open] { border-color: #b8cbbf; box-shadow: 0 8px 22px rgba(17,33,52,.09); }
+.consultancy-page .faq-item:hover { transform: translateY(-1px); }
+.consultancy-page .faq-item>summary { display: grid; grid-template-columns: 38px minmax(0,1fr) 24px; align-items: center; gap: 14px; min-height: 82px; padding: 17px 22px; cursor: pointer; list-style: none; color: #142638; font-weight: 800; font-size: 1.02rem; line-height: 1.45; }
+.consultancy-page .faq-item>summary::-webkit-details-marker { display: none; }
+.consultancy-page .faq-item>summary:focus-visible { outline: 3px solid rgba(22,99,78,.38); outline-offset: -4px; border-radius: 13px; }
+.consultancy-page .faq-index { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #d9e5dd; border-radius: 10px; background: #eff5f0; color: #17634e; font-size: .72rem; letter-spacing: .08em; }
+.consultancy-page .faq-toggle { position: relative; width: 22px; height: 22px; border: 1px solid #d2ddd6; border-radius: 50%; background: #f4f7f4; transition: transform .18s ease,background .18s ease; }
+.consultancy-page .faq-toggle::before,.consultancy-page .faq-toggle::after { position: absolute; top: 10px; left: 6px; width: 8px; height: 1.5px; border-radius: 2px; background: #17634e; content: ""; }
+.consultancy-page .faq-toggle::after { transform: rotate(90deg); transition: transform .18s ease; }
+.consultancy-page .faq-item[open] .faq-toggle { background: #eaf3ed; transform: rotate(180deg); }
+.consultancy-page .faq-item[open] .faq-toggle::after { transform: rotate(0); }
+.consultancy-page .faq-answer { padding: 0 60px 22px 74px; border-top: 1px solid #edf0f2; animation: faq-reveal .18s ease-out; }
+.consultancy-page .faq-answer p { max-width: 100ch; margin: 16px 0 0; color: #53657a; line-height: 1.7; }
+@keyframes faq-reveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 .consultancy-page a { overflow-wrap: anywhere; }
 .consultancy-end { padding-top: 32px; padding-bottom: 64px; }
 @media (max-width: 760px) { .consultancy-grid { grid-template-columns: 1fr; } .consultancy-card { padding: 22px; } }
@@ -45,4 +60,5 @@
 .consultancy-page .consultancy-end{padding:44px clamp(24px,4vw,52px) 60px;border:1px solid #d3dce5;border-top:3px solid #b7904e;border-radius:16px;background:linear-gradient(125deg,#f4f6f8,#fbfaf6);box-shadow:0 8px 26px rgba(17,33,52,.07);margin-bottom:50px}
 @media(max-width:850px){.consultancy-page .consultancy-advantage-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.consultancy-page .consultancy-advantage-grid{grid-template-columns:1fr}.consultancy-page .consultancy-advantage-grid article{min-height:0;padding:22px}.consultancy-page .consultancy-card{min-height:0;padding:22px}.consultancy-page .consultancy-end{padding:28px 22px;margin-bottom:30px}}
-@media(prefers-reduced-motion:reduce){.consultancy-page .consultancy-advantage-grid article,.consultancy-page .consultancy-card{transition:none!important}}
+@media(max-width:600px){.consultancy-page .faq-item>summary{grid-template-columns:32px minmax(0,1fr) 22px;gap:10px;min-height:72px;padding:15px}.consultancy-page .faq-index{width:30px;height:30px}.consultancy-page .faq-answer{padding:0 18px 18px 57px}}
+@media(prefers-reduced-motion:reduce){.consultancy-page .consultancy-advantage-grid article,.consultancy-page .consultancy-card,.consultancy-page .faq-item,.consultancy-page .faq-toggle,.consultancy-page .faq-toggle::after{transition:none!important}.consultancy-page .faq-answer{animation:none}}
