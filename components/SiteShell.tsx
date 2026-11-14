@@ -102,7 +102,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       <footer className={`site-footer ${styles.footer}`}>
         <div className={styles.footerGrid}>
           <div><strong>OMNeXa Pte. Ltd.</strong><p>Where Consciousness Meets Intelligence.</p><p>Singapore · Human-centred transformation</p></div>
-          <div><h2>Work with us</h2><a href="/services">Services</a><a href="/consultancy">Consultancy & discovery calls</a><a href="/work">Products & initiatives</a><a href="/ecosystem-collaboration">Ecosystem collaboration</a><a href="https://omnexa-career.omnexagoc.com/partners" target="_blank" rel="noopener noreferrer">Partner portal</a><a href="/india/odisha/robotics">Odisha robotics learning programme</a><a href="/contact">Contact OMNeXa</a></div>
+          <div><h2>Work with us</h2><a href="/services">Services</a><a href="/consultancy">Consultancy & discovery calls</a><a href="/work">Products & initiatives</a><a href="/india">OMNeXa in India</a><a href="/ecosystem-collaboration">Ecosystem collaboration</a><a href="https://omnexa-career.omnexagoc.com/partners" target="_blank" rel="noopener noreferrer">Partner portal</a><a href="/india/odisha/robotics">Odisha robotics learning programme</a><a href="/contact">Contact OMNeXa</a></div>
           <div><h2>Explore</h2><a href="/knowledge">Knowledge</a><a href="/convergence-brief">The Convergence Brief</a><a href="/videos">Videos</a><a href="/ai-readiness">AI Readiness</a></div>
           <div><h2>Company</h2><a href="/about">About OMNeXa</a><a href="/dhiraj-kumar">Founder</a><a href="/media">Media & brand assets</a><a href="/privacy">Privacy</a></div>
         </div>
