@@ -14,11 +14,11 @@ const siteUrl = "https://www.omnexagoc.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "OMNeXa Pte. Ltd. | Where Consciousness Meets Intelligence",
+    default: "OMNeXa Pte. Ltd., Singapore | Where Consciousness Meets Intelligence",
     template: "%s | OMNeXa Pte. Ltd."
   },
   description:
-    "OMNeXa Pte. Ltd. is a Singapore-based transformation and innovation ecosystem founded by Dhiraj Kumar, focused on responsible and agentic AI, AI testing and assurance, quality engineering, defect prevention, human-defined automation, risk and governance, education, sustainability and well-being.",
+    "Official website of OMNeXa Pte. Ltd., Singapore, founded by Dhiraj Kumar. OMNeXa connects responsible AI, technology and banking transformation, risk and governance, education, sustainability and human capability.",
   keywords: [
     "OMNeXa",
     "agentic AI",
@@ -85,6 +85,8 @@ const entityGraph = {
       name: "OMNeXa Pte. Ltd.",
       legalName: "OMNeXa Pte. Ltd.",
       alternateName: ["OMNeXa"],
+      disambiguatingDescription:
+        "OMNeXa Pte. Ltd. is the Singapore-registered transformation and innovation company founded by Dhiraj Kumar and represented by omnexagoc.com.",
       url: siteUrl,
       logo: {
         "@type": "ImageObject",

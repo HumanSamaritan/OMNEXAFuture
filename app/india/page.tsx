@@ -104,11 +104,6 @@ const answers = [
     question: "Is the Odisha robotics roadshow confirmed?",
     answer:
       "The Physical AI (Robots) learning initiative is an interest route. Event dates, venues and delivery arrangements are subject to confirmation; registering interest is not a confirmed booking."
-  },
-  {
-    question: "What is the status of the OMNeXa trademark?",
-    answer:
-      "OMNeXa has informed us that a trademark application has been filed. Filing is not the same as registration. The application jurisdiction, number and current registry status should be confirmed from the relevant official trademark registry before making a market-specific claim."
   }
 ];
 
@@ -119,7 +114,7 @@ export default function IndiaPage() {
 
       <section className="india-hero">
         <div className="india-hero-inner">
-          <p className="eyebrow">OMNeXa Pte. Ltd. <span>·</span> Singapore-based <span>·</span> India engagement</p>
+          <p className="eyebrow">Official India overview <span>·</span> OMNeXa Pte. Ltd. <span>·</span> Singapore</p>
           <h1>Building responsible AI capability and future-ready organisations in India.</h1>
           <p className="india-hero-lead">
             From banking risk and AI governance to career pathways and robotics learning, OMNeXa connects technology choices to accountable business and human outcomes.
@@ -191,7 +186,6 @@ export default function IndiaPage() {
           <div className="india-answer-list">
             {answers.map((item) => <article key={item.question}><h3>{item.question}</h3><p>{item.answer}</p></article>)}
           </div>
-          <p className="india-trademark-note">Trademark status can differ by country. OMNeXa uses the brand name in line with the information currently provided by the company; no statement of registration is made here.</p>
         </div>
       </section>
 
