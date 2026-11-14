@@ -37,23 +37,13 @@ const brandAssets = [
     downloadName: "dhiraj-founder.png"
   },
   {
-    name: "OMNeXa — official logo",
+    name: "OMNeXa — official logo and brand mark",
     src: "/omnexa-logo.png",
     width: 1522,
     height: 852,
-    alt: "Official OMNeXa Pte. Ltd. logo",
+    alt: "Official OMNeXa Pte. Ltd. logo and brand mark",
     caption: "OMNeXa Pte. Ltd. — Where Consciousness Meets Intelligence",
     downloadName: "omnexa-logo.png"
-  },
-  {
-    name: "OMNeXa — official brand mark",
-    src: "/omnexa-mark.svg",
-    width: 512,
-    height: 512,
-    alt: "Official OMNeXa brand mark",
-    caption: "OMNeXa official brand mark",
-    downloadName: "omnexa-mark.svg",
-    unoptimized: true
   },
   {
     name: "OMNeXa — human capability and intelligent technology",
@@ -136,9 +126,11 @@ export default function MediaPage() {
         <h1>OMNeXa media and brand assets.</h1>
         <p>
           Use these assets when referring to OMNeXa Pte. Ltd. or its founder. The captions below preserve
-          the correct company identity, name spelling and relationship between Dhiraj Kumar and OMNeXa.
+          the correct company identity, name spelling and relationship between Dhiraj Kumar and OMNeXa. The OMNeXa logo is also the company’s brand mark.
         </p>
       </section>
+
+      <section className="section-shell aligned-section preview-section"><h2>Official OMNeXa videos</h2><p>Watch our videos on skills, career opportunities, Human + Machine Sadhana, NeXaVirama and NeXaKriya, with summaries and social publication links.</p><a href="/videos">Explore the OMNeXa video hub</a></section>
 
       <section className="section-shell media-guidance aligned-section">
         <div>
@@ -171,7 +163,7 @@ export default function MediaPage() {
                     width={asset.width}
                     height={asset.height}
                     sizes="(max-width: 720px) 100vw, 50vw"
-                    unoptimized={asset.unoptimized}
+
                   />
                 </div>
                 <figcaption>

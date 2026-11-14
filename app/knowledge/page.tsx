@@ -94,6 +94,7 @@ export default async function KnowledgePage() {
 
   return (
     <main>
+      <section className="section-shell aligned-section preview-section"><p className="eyebrow">Knowledge & insights</p><h2>Ideas, evidence and practical perspectives.</h2><p><a href="/convergence-brief">Read The Convergence Brief →</a> · <a href="/videos">Explore OMNeXa videos →</a> · <a href="/ai-readiness">Assess AI readiness →</a></p></section>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

@@ -60,3 +60,6 @@ Use "OMNeXa" for the brand and "OMNeXa Pte. Ltd." for the Singapore legal entity
 - NeXaAML is an active product build for source-of-wealth evidence, customer-risk capture and controlled human review. Guided demos use fictional data. Tranche 2 consultancy covers operational change planning; do not claim a fully compliant Tranche 2 software release, regulatory sign-off, AUSTRAC endorsement or validated deployment outcomes.
 - A free 15-minute discovery call is available for every segment at https://www.omnexagoc.com/consultancy/book?service=discovery. Paid sessions are currently requested directly; a paid calendar invitation requires verified receipt of payment. Larger team engagements: Dhiraj.kumar@omnexagoc.com
 - OMNeXa LinkedIn company page: https://sg.linkedin.com/company/https-www.omnexagoc.com
+
+## Official videos
+- [OMNeXa video hub](https://www.omnexagoc.com/videos): Skills, Jobs & Career Opportunities; Human + Machine Sadhana; HMS, NeXaVirama and NeXaKriya video summaries and watch pages.

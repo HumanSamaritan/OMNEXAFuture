@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { canonicalIssues } from "@/lib/publications";
 import { products } from "@/lib/product-data";
 
+import { videos } from "@/lib/videos";
+
 const siteUrl = "https://www.omnexagoc.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -38,7 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [
         `${siteUrl}/dhiraj-founder.png`,
         `${siteUrl}/omnexa-logo.png`,
-        `${siteUrl}/omnexa-mark.svg`,
         `${siteUrl}/omnexa-driver-home.jpg`,
         ...canonicalIssues.map(
           (issue) => `${siteUrl}/convergence-brief/${issue.slug}/opengraph-image`
@@ -48,6 +49,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/ai-readiness", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/humans-defining-the-loop", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
     { path: "/robotics-with-human-values", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
+    { path: "/india", priority: 0.9, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-logo.png`] },
+    { path: "/india/odisha/robotics", priority: 0.95, changeFrequency: "weekly" as const, images: [`${siteUrl}/omnexa-logo.png`] },
     { path: "/convergence-brief", priority: 0.95, changeFrequency: "weekly" as const, images: [] },
     { path: "/consultancy", priority: 0.9, changeFrequency: "monthly" as const, images: [`${siteUrl}/dhiraj-founder.png`] },
     { path: "/services", priority: 0.9, changeFrequency: "monthly" as const, images: [] },
@@ -82,6 +85,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: page.priority,
       images: page.images
     })),
+    {url: `${siteUrl}/videos`, lastModified: new Date("2026-11-07"), changeFrequency: "weekly", priority: 0.9},
+    ...videos.map(video => ({url: `${siteUrl}/videos/${video.slug}`, lastModified: new Date("2026-11-07"), changeFrequency: "monthly" as const, priority: 0.8})),
     ...issuePages,
     ...productPages
   ];

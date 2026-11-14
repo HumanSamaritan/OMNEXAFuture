@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getProductVideo } from "@/lib/videos";
 import { products, serviceSegments } from "@/lib/product-data";
 import "./work-refine.css";
 
@@ -155,6 +156,26 @@ export default function WorkPage() {
         </div>
       </section>
 
+      <section className="section-shell aligned-section" aria-labelledby="robotics-learning-title">
+        <div className="section-heading">
+          <p className="eyebrow">Regional learning &amp; partner programmes</p>
+          <h2 id="robotics-learning-title">OMNeXa India Initiatives</h2>
+          <p>
+            OMNeXa works with partners on India-focused learning and innovation initiatives. Our current
+            proposed Odisha outreach introduces students in Grades 6–12 to robotics, Physical AI and
+            human-centred technology in Rourkela and Bhubaneswar.
+          </p>
+        </div>
+        <div className="copy-stack">
+          <h3>Robotics Learning Programme — Odisha</h3>
+          <p>Explore the proposed roadshow with robotics partners. Parents and guardians can register interest free of charge; event dates and venues are yet to be confirmed.</p>
+        </div>
+        <div className="hero-actions">
+          <a className="button primary" href="/india/odisha/robotics">Explore Odisha robotics programme</a>
+          <a className="button secondary" href="https://omnexa-career.omnexagoc.com/physical-ai-robots">Register interest</a>
+        </div>
+      </section>
+
       <section className="section-shell aligned-section work-service-map" aria-label="OMNeXa service segments and related products">
         <div className="section-heading compact-heading">
           <p className="eyebrow">One ecosystem</p>
@@ -172,7 +193,8 @@ export default function WorkPage() {
                 <div className="work-segment-heading">
                   <span className="work-segment-index" aria-hidden="true">{String(segmentIndex + 1).padStart(2, "0")}</span>
                   <div>
-                    <h3><a href={segment.href}>{segment.shortTitle}</a></h3>
+                    <h3>{segment.shortTitle}</h3>
+                    <a className="work-area-link" href={segment.href}>Explore service area →</a>
                     <p className="work-segment-count">
                       {relatedProducts.length > 0
                         ? `${relatedProducts.length} ${relatedProducts.length === 1 ? "initiative" : "initiatives"}`
@@ -183,7 +205,7 @@ export default function WorkPage() {
                 {relatedProducts.length > 0 ? (
                   <div className="work-segment-products">
                     {relatedProducts.map((product) => (
-                      <a href={`/work/${product.slug}`} key={product.slug}>{product.name}</a>
+                      <a className="work-product-link" href={`/work/${product.slug}`} key={product.slug}><strong>{product.name}</strong><span>View initiative</span></a>
                     ))}
                   </div>
                 ) : (
@@ -209,6 +231,7 @@ export default function WorkPage() {
 
         <div className="work-card-grid">
           {products.map((product, index) => {
+            const video = getProductVideo(product.slug);
             const segment = serviceSegments.find((item) => item.slug === product.serviceSlug);
             return (
               <article className={`work-card segment-${product.serviceSlug}`} key={product.slug}>
@@ -232,6 +255,7 @@ export default function WorkPage() {
                   <p>{product.oneLiner}</p>
                   <div className="work-card-links">
                     <a href={`/work/${product.slug}`}>Explore {product.name} →</a>
+                    {video ? <a href={`/work/${product.slug}#introduction-video`}>Watch introduction →</a> : null}
                     {product.status === "Live" && product.externalUrl ? (
                       product.slug === "human-machine-sadhana" ? <a href="/pilot?product=human-machine-sadhana">Register for pilot ↗</a> : <a href={product.externalUrl} target="_blank" rel="noopener noreferrer">Open app ↗</a>
                     ) : null}
