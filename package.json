@@ -7,6 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "seo:indexnow": "node scripts/submit-indexnow.mjs",
     "lint": "next lint",
     "test:consultancy": "node --import tsx --test tests/consultancy-payments.test.ts tests/discovery.test.ts tests/consultancy-currency.test.ts"
   },
