@@ -22,17 +22,6 @@ export default async function PilotPage({ searchParams }: { searchParams: Promis
         <h1>Your experience can shape what comes next.</h1>
         <p>Choose an available product pilot and tell us about your experience. Live products are not listed as pilots.</p>
       </section>
-      <section className="pilot-feature-callout" aria-labelledby="physical-ai-pilot-title">
-        <div>
-          <p className="eyebrow">Focused programme interest</p>
-          <h2 id="physical-ai-pilot-title">Physical AI (Robots): Humanity at the Centre</h2>
-          <p>This proposed student learning initiative is connected to the live NeXaCareer ecosystem. It is a programme interest route, not a NeXaCareer product pilot. Dates and venues are subject to confirmation.</p>
-        </div>
-        <div className="pilot-feature-actions">
-          <a className="button secondary" href="/india/odisha/robotics">Explore the Robotics Roadshow →</a>
-          <a className="button primary pilot-primary" href="https://omnexa-career.omnexagoc.com/physical-ai-robots" target="_blank" rel="noopener noreferrer">Register interest</a>
-        </div>
-      </section>
       <PilotForm products={pilotProducts} initialProduct={initialProduct} preview={pilotIsPreview()} ready={pilotReady()} recaptchaSiteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""} />
     </main>
   );

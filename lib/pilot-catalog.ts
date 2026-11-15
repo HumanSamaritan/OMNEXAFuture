@@ -25,7 +25,8 @@ const audiences: Record<string, PilotAudience> = {
 };
 
 export const pilotProducts: PilotProduct[] = products
-  .filter((product) => ["human-machine-sadhana", "nexavirama", "nexakriya"].includes(product.slug))
+  .filter((product) => ["nexavirama", "nexakriya", "human-machine-sadhana"].includes(product.slug))
+  .sort((a, b) => ["nexavirama", "nexakriya", "human-machine-sadhana"].indexOf(a.slug) - ["nexavirama", "nexakriya", "human-machine-sadhana"].indexOf(b.slug))
   .map((product) => ({
     slug: product.slug,
     name: product.name,

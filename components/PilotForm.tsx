@@ -3,7 +3,7 @@
 import Script from "next/script";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { PilotProduct } from "@/lib/pilot-catalog";
-import { AVAILABILITY_OPTIONS, EXPERIENCE_LEVELS, type PilotApplication } from "@/lib/pilot-types";
+import { AVAILABILITY_OPTIONS, type PilotApplication } from "@/lib/pilot-types";
 import { B2C_BENEFIT, B2B_BENEFIT, PILOT_AGREEMENT_VERSION, PILOT_PRIVACY_NOTICE, PILOT_TERMS, pilotAgreementText } from "@/lib/pilot-agreement";
 
 declare global {
@@ -25,6 +25,44 @@ function countryPrivacyNote(country: string): string {
   return "Local privacy requirements may apply in your country. This consent covers only pilot administration, not in-app wellbeing processing; OMNeXa will assess relevant local restrictions before product access.";
 }
 const steps = ["Choose a pilot", "Your experience", "Review & sign"];
+type ExperienceChoice = { label: string; level: string };
+const experienceChoices: Record<string, ExperienceChoice[]> = {
+  nexavirama: [
+    { label: "I am new to pause, reset or habit-support tools.", level: "New to this area" },
+    { label: "I have personal experience with pauses, resets or habit change.", level: "Personal or lived experience" },
+    { label: "I support someone building healthier routines.", level: "Personal or lived experience" },
+    { label: "I work professionally in wellbeing or behaviour support (under 2 years).", level: "Less than 2 years professionally" },
+    { label: "I work professionally in wellbeing or behaviour support (2–5 years).", level: "2–5 years professionally" },
+    { label: "I work professionally in wellbeing or behaviour support (over 5 years).", level: "More than 5 years professionally" },
+    { label: "I review or design digital wellbeing products.", level: "Personal or lived experience" }
+  ],
+  nexakriya: [
+    { label: "I am new to task, calendar or commitment tools.", level: "New to this area" },
+    { label: "I use task or calendar tools to manage my own commitments.", level: "Personal or lived experience" },
+    { label: "I coordinate tasks or commitments for a family or team.", level: "Personal or lived experience" },
+    { label: "I work professionally in productivity or workflow support (under 2 years).", level: "Less than 2 years professionally" },
+    { label: "I work professionally in productivity or workflow support (2–5 years).", level: "2–5 years professionally" },
+    { label: "I work professionally in productivity or workflow support (over 5 years).", level: "More than 5 years professionally" },
+    { label: "I review or design digital task and calendar products.", level: "Personal or lived experience" }
+  ],
+  "human-machine-sadhana": [
+    { label: "I am new to daily wellbeing or reflection tools.", level: "New to this area" },
+    { label: "I use routines or reflection to support my own wellbeing.", level: "Personal or lived experience" },
+    { label: "I support someone with everyday wellbeing routines.", level: "Personal or lived experience" },
+    { label: "I work professionally in wellbeing or coaching (under 2 years).", level: "Less than 2 years professionally" },
+    { label: "I work professionally in wellbeing or coaching (2–5 years).", level: "2–5 years professionally" },
+    { label: "I work professionally in wellbeing or coaching (over 5 years).", level: "More than 5 years professionally" },
+    { label: "I review or design digital wellbeing products.", level: "Personal or lived experience" }
+  ]
+};
+const goalChoices: Record<string, string[]> = {
+  nexavirama: ["How clear and easy the pause-and-reset journey feels.", "Whether the experience helps me pause before acting on an urge.", "How useful the prompts and progress feedback are.", "How privacy and sign-in expectations are explained.", "Other aspect of NeXaVirama I would like to improve."],
+  nexakriya: ["How quickly I can capture a task or commitment.", "How useful calendar and follow-up views are.", "How easy it is to coordinate tasks with family or a team.", "How clear reminders and task status feel.", "Other aspect of NeXaKriya I would like to improve."],
+  "human-machine-sadhana": ["How easy daily wellbeing reflection is to complete.", "How useful the routine and pattern summaries are.", "How clear and supportive the next-step suggestions feel.", "How privacy and wellbeing-data boundaries are explained.", "Other aspect of HMS I would like to improve."]
+};
+
+function selectedAnswer(value: string) { return value.split("\nAdditional detail: ")[0] || ""; }
+function answerDetail(value: string) { return value.includes("\nAdditional detail: ") ? value.split("\nAdditional detail: ").slice(1).join("\nAdditional detail: ") : ""; }
 
 function downloadText(text: string, filename: string) {
   const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
@@ -43,7 +81,6 @@ async function post(path: string, body: unknown) {
 export default function PilotForm({ products, initialProduct, preview, ready, recaptchaSiteKey }: { products: PilotProduct[]; initialProduct: string; preview: boolean; ready: boolean; recaptchaSiteKey: string }) {
   const initial = products.find((item) => item.slug === initialProduct);
   const [step, setStep] = useState(0);
-  const [audienceFilter, setAudienceFilter] = useState("all");
   const [application, setApplication] = useState<PilotApplication>({ productSlug: initialProduct, initiativeSlug: initial?.initiativeSlug || "", fullName: "", email: "", country: "", organisation: "", role: "", experienceLevel: "", experience: "", goals: "", availability: "" });
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [adultConsent, setAdultConsent] = useState(false);
@@ -65,8 +102,9 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const product = products.find((item) => item.slug === application.productSlug);
   const b2b = product?.audience === "B2B";
   const captchaRequired = !preview;
-  const initiatives = Array.from(new Map(products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter).map((item) => [item.initiativeSlug, item.initiativeName])).entries());
-  const choices = products.filter((item) => item.initiativeSlug === application.initiativeSlug && (audienceFilter === "all" || item.audience === audienceFilter));
+  const choices = products;
+  const relevantExperienceChoices = experienceChoices[product?.slug || ""] || [];
+  const testingChoices = goalChoices[product?.slug || ""] || [];
 
   useEffect(() => {
     window.omnexaPilotCaptchaSuccess = (token) => { setCaptchaToken(token); setError(""); };
@@ -141,12 +179,8 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <p className="pilot-step-label">Step 01 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Find the right pilot for you.</h2>
             <p className="pilot-lead">Choose one product per application. You can apply separately for another product.</p>
-            <fieldset className="pilot-route-choice"><legend>I want to explore</legend>
-              {[["all", "All pilots"], ["B2C", "Individual / B2C"], ["B2B", "Organisation / B2B"]].map(([value, label]) => <label key={value}><input type="radio" name="audience" value={value} checked={audienceFilter === value} onChange={() => { setAudienceFilter(value); setApplication((old) => ({ ...old, initiativeSlug: "", productSlug: "" })); }} /><span>{label}</span></label>)}
-            </fieldset>
-            <label className="pilot-field">Initiative / service area<select value={application.initiativeSlug} onChange={(event) => setApplication((old) => ({ ...old, initiativeSlug: event.target.value, productSlug: "" }))} required><option value="">Choose an initiative</option>{initiatives.map(([slug, name]) => <option key={slug} value={slug}>{name}</option>)}</select></label>
             <fieldset className="pilot-product-choice"><legend>Product to test</legend>
-              {choices.length ? choices.map((item) => <label key={item.slug} className={product?.slug === item.slug ? "is-selected" : ""}><input type="radio" name="product" value={item.slug} checked={application.productSlug === item.slug} onChange={() => update("productSlug", item.slug)} required /><span><strong>{item.name}</strong><small>{item.audience === "B2C" ? "Individual pilot · 6-month subscription benefit" : "Organisation pilot · separate terms"}</small></span><span className={`pilot-type ${item.audience.toLowerCase()}`}>{item.audience}</span></label>) : <p className="pilot-empty">Select an initiative to see its products.</p>}
+              {choices.map((item) => <label key={item.slug} className={product?.slug === item.slug ? "is-selected" : ""}><input type="radio" name="product" value={item.slug} checked={application.productSlug === item.slug} onChange={() => { setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, productSlug: item.slug, initiativeSlug: item.initiativeSlug, experienceLevel: "", experience: "", goals: "" })); }} required /><span><strong>{item.name}</strong><small>Individual pilot · 6-month subscription benefit</small></span><span className={`pilot-type ${item.audience.toLowerCase()}`}>{item.audience}</span></label>)}
             </fieldset>
             {product ? <p className="pilot-benefit-note">{b2b ? B2B_BENEFIT : B2C_BENEFIT}</p> : null}
             <div className="pilot-actions"><button className="pilot-primary" type="submit" disabled={!product}>Continue to your experience <span aria-hidden="true">→</span></button></div>
@@ -169,10 +203,11 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
               <label className="pilot-field">Country / region<select value={application.country} onChange={(e) => update("country", e.target.value)} required><option value="">Select your country</option>{countryNames.map(name=><option key={name} value={name}>{name}</option>)}</select></label>
               <label className="pilot-field">{b2b ? "Job title / role" : "Your role or perspective"}<input value={application.role} onChange={(e) => update("role", e.target.value)} placeholder={b2b ? "e.g. Product lead" : "e.g. Parent, learner, caregiver"} minLength={2} maxLength={120} required /></label>
             </div>
-            <label className="pilot-field">Organisation {b2b ? "" : "(optional)"}<input value={application.organisation} onChange={(e) => update("organisation", e.target.value)} autoComplete="organization" maxLength={160} minLength={b2b ? 2 : undefined} required={b2b} /></label>
-            <label className="pilot-field">Experience in this area<select value={application.experienceLevel} onChange={(e) => update("experienceLevel", e.target.value)} required><option value="">Choose your experience level</option>{EXPERIENCE_LEVELS.map((item) => <option key={item}>{item}</option>)}</select></label>
-            <label className="pilot-field">Tell us about your relevant experience<textarea value={application.experience} onChange={(e) => update("experience", e.target.value)} rows={4} minLength={20} maxLength={2000} placeholder="Share the situations, skills or everyday experience that relate to this product." required /><small>20–2,000 characters. Please leave out medical, financial, identity and confidential employer/client details.</small></label>
-            <label className="pilot-field">What would you like to test or help improve?<textarea value={application.goals} onChange={(e) => update("goals", e.target.value)} rows={3} minLength={20} maxLength={1600} required /></label>
+            {b2b ? <label className="pilot-field">Organisation<input value={application.organisation} onChange={(e) => update("organisation", e.target.value)} autoComplete="organization" maxLength={160} minLength={2} required /></label> : null}
+            <label className="pilot-field">Tell us about your relevant experience with {product?.name}<select value={selectedAnswer(application.experience)} onChange={(e) => { const choice = relevantExperienceChoices.find((item) => item.label === e.target.value); if (choice) { setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, experience: choice.label, experienceLevel: choice.level })); } }} required><option value="">Choose the option that fits best</option>{relevantExperienceChoices.map((item) => <option key={item.label} value={item.label}>{item.label}</option>)}</select><small>Please leave out medical, financial, identity and confidential employer/client details.</small></label>
+            <label className="pilot-field">Anything else about your experience? <span>(optional)</span><textarea value={answerDetail(application.experience)} onChange={(e) => update("experience", `${selectedAnswer(application.experience)}${e.target.value ? `\nAdditional detail: ${e.target.value}` : ""}`)} rows={2} maxLength={1000} placeholder="Add a short detail if useful." /></label>
+            <label className="pilot-field">What would you like to test or help improve with {product?.name}?<select value={selectedAnswer(application.goals)} onChange={(e) => update("goals", `${e.target.value}${answerDetail(application.goals) ? `\nAdditional detail: ${answerDetail(application.goals)}` : ""}`)} required><option value="">Choose one area</option>{testingChoices.map((item) => <option key={item}>{item}</option>)}</select></label>
+            <label className="pilot-field">Anything else you would like us to test? <span>(optional)</span><textarea value={answerDetail(application.goals)} onChange={(e) => update("goals", `${selectedAnswer(application.goals)}${e.target.value ? `\nAdditional detail: ${e.target.value}` : ""}`)} rows={2} maxLength={1000} placeholder="Add a short suggestion if useful." /></label>
             <label className="pilot-field">Time you could contribute<select value={application.availability} onChange={(e) => update("availability", e.target.value)} required><option value="">Choose your availability</option>{AVAILABILITY_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
             {application.country ? <p className="pilot-benefit-note" role="note"><strong>Privacy for {application.country}:</strong> {countryPrivacyNote(application.country)}</p> : null}
             <details className="pilot-disclosure"><summary>How we use your application details</summary><p>{PILOT_PRIVACY_NOTICE}</p><a href="/privacy" target="_blank" rel="noreferrer">Read the privacy notice ↗</a></details>
