@@ -616,6 +616,67 @@ export const canonicalIssues: ConvergenceIssue[] = [
       }
     ],
     "linkedinUrl": "https://www.linkedin.com/pulse/ai-agent-needs-more-than-login-dhiraj-kumar-kvepf"
+  },
+  {
+    "issue": "Issue 09",
+    "slug": "issue-09",
+    "title": "The Accountability Gap: When AI Acts, Who Answers?",
+    "subtitle": "When a machine makes a decision, who can explain it — and who can put it right?",
+    "publishedAt": "2026-11-10",
+    "summary": "Even an authorised AI action can be wrong. Issue 09 examines the accountability gap between agent identity, delegated authority and responsibility for consequential outcomes, including evidence trails, meaningful human intervention, proportional controls and a route to challenge or remedy decisions.",
+    "themes": [
+      "Agentic AI",
+      "Human accountability",
+      "Responsible AI governance",
+      "Decision traceability",
+      "Human oversight",
+      "Contestability and remedy"
+    ],
+    "seoKeywords": [
+      "AI accountability gap",
+      "AI agent accountability",
+      "human oversight AI",
+      "responsible agentic AI",
+      "AI decision appeals",
+      "AI governance OMNeXa"
+    ],
+    "questions": [
+      {
+        "question": "Who is accountable when an AI agent makes a consequential mistake?",
+        "answer": "An organisation must identify the responsible human or function, preserve evidence and provide appropriate investigation, explanation and remedy rather than attributing responsibility to the machine alone."
+      },
+      {
+        "question": "Is an audit trail enough for AI accountability?",
+        "answer": "No. Logs can help reconstruct events, but meaningful accountability also requires intervention, review and routes to challenge or correct an outcome."
+      }
+    ],
+    "sections": [
+      {
+        "heading": "The human consequence",
+        "body": "The published article opens with a hypothetical qualified graduate whose application is rejected by AI-assisted screening. It asks who can explain the result and how the candidate can seek correction."
+      },
+      {
+        "heading": "The next question after Issue 08",
+        "body": "Issue 08 distinguished technical access from legitimate authority. Issue 09 extends that question: an action can be authorised and still be mistaken. Identity, authorisation and accountability are related but distinct."
+      },
+      {
+        "heading": "Before, during and after action",
+        "body": "Define the purpose, boundaries and accountable owner before execution; preserve evidence and constrain access during execution; enable monitoring, investigation and correction afterward. Higher-impact or irreversible actions may require stronger review."
+      },
+      {
+        "heading": "Risk-proportionate controls",
+        "body": "A reminder is different from a rejected application or restricted bank account. Oversight should reflect consequences, reversibility, sensitivity and practical human recourse, without imposing identical gates on every action."
+      },
+      {
+        "heading": "OMNeXa and OViA",
+        "body": "NeXaSetu and NeXaAML provide conceptual and domain-specific lenses for authority and explainability; OViA guides evidence and publication integrity. These perspectives are not claims that a complete assurance architecture is deployed or independently certified."
+      },
+      {
+        "heading": "The question for leaders",
+        "body": "A record of what happened does not itself restore an opportunity or explain fairness. Meaningful accountability requires an answer and, where justified, a remedy. The issue asks whether an AI system allowed to act without asking should ever act without answering."
+      }
+    ],
+    "linkedinUrl": "https://www.linkedin.com/pulse/accountability-gap-when-ai-acts-who-answers-dhiraj-kumar-qqjve/"
   }
 ];
 
