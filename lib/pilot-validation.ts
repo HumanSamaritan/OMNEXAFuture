@@ -24,7 +24,7 @@ export function validatePilotApplication(value: unknown): PilotApplication {
     goals: field("goals", 1600, 20), availability: field("availability", 80, 1)
   };
   const product = pilotProducts.find((item) => item.slug === application.productSlug);
-  if (!product || product.initiativeSlug !== application.initiativeSlug || application.productSlug !== productSlugs[0]) throw new PilotInputError("Choose a valid initiative and product.");
+  if (!product || !pilotProducts.some((p) => p.initiativeSlug === application.initiativeSlug) || application.productSlug !== productSlugs[0]) throw new PilotInputError("Choose a valid initiative and product.");
   if (productSlugs.some((slug) => !pilotProducts.some((p) => p.slug === slug))) throw new PilotInputError("One or more selected pilot products are unavailable.");
   if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(application.email)) throw new PilotInputError("Enter a valid email address.");
   if (/[\r\n]/.test(application.fullName + application.country + application.organisation + application.role)) throw new PilotInputError("Use a single line for contact details.");
