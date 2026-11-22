@@ -14,6 +14,8 @@ declare global {
 }
 
 type Receipt = { reference: string; preview: boolean; agreementCopy: string; appUrl: string; appUrls?: { name: string; url: string }[] };
+type Entitlement = {slug:string;previouslyApplied:boolean;access:boolean;status:"eligible"|"under_review"|"not_found"};
+type EntitlementCheck = {source:"verified"|"unavailable";reason?:string;products:Entitlement[]};
 type SignPayload = { session: string; application: PilotApplication; signature: string; signatureActionTime: string; agreementVersion: string; ndaConsent: boolean; privacyConsent: boolean; adultConsent: boolean; benefitConsent: boolean; authorityConsent: boolean; captchaToken: string };
 const regionNames = new Intl.DisplayNames(["en"], {type: "region"});
 const countryNames = Array.from({length:26*26},(_,i)=>String.fromCharCode(65+Math.floor(i/26),65+i%26)).map(code=>regionNames.of(code) ?? code).filter((name,i)=>name.length>2 && name !== String.fromCharCode(65+Math.floor(i/26),65+i%26)).sort();
@@ -58,6 +60,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const [verificationCode, setVerificationCode] = useState("");
   const [challenge, setChallenge] = useState("");
   const [verifiedSession, setVerifiedSession] = useState("");
+  const [enrolment, setEnrolment] = useState<EntitlementCheck | null>(null);
   const signedRequest = useRef<SignPayload | null>(null);
   const stepHeading = useRef<HTMLHeadingElement>(null);
   const captchaContainer = useRef<HTMLDivElement>(null);
@@ -96,9 +99,9 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, captchaRequired]);
 
-  function update(key: keyof PilotApplication, value: string) { setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, [key]: value })); }
+  function update(key: keyof PilotApplication, value: string) { setEnrolment(null); setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, [key]: value })); }
   function toggleProduct(item: PilotProduct) {
-    setVerifiedSession(""); setChallenge("");
+    setEnrolment(null); setVerifiedSession(""); setChallenge("");
     setApplication((old) => {
       const current = old.productSlugs || (old.productSlug ? [old.productSlug] : []);
       const next = current.includes(item.slug) ? current.filter((slug) => slug !== item.slug) : [...current, item.slug];
@@ -127,12 +130,18 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
     try {
       const result = await post("/api/pilot/verify", { challenge, code: verificationCode });
       setVerifiedSession(result.session);
-      changeStep(2);
+      let status: EntitlementCheck = {source:"unavailable",reason:"Current enrolment could not be verified.",products:[]};
+      try { status = await post("/api/pilot/entitlements", {session:result.session}); } catch { /* Do not mistake unavailable eligibility for a new applicant. */ }
+      setEnrolment(status);
+      const allExisting = status.source === "verified" && status.products.length === selectedProducts.length && status.products.length > 0 && status.products.every((item)=>item.previouslyApplied);
+      changeStep(allExisting ? 4 : 2);
     } catch (e) { setError(e instanceof Error ? e.message : "Verification failed."); }
     finally { setBusy(false); }
   }
   async function submit(event?: FormEvent<HTMLFormElement>) {
-    event?.preventDefault(); setError(""); setBusy(true);
+    event?.preventDefault();
+    if(enrolment?.source === "verified" && enrolment.products.some((item)=>item.previouslyApplied)) { setError("You already have an enrolment for one or more selected products. Remove those products, then verify your email again before submitting new interests."); return; }
+    setError(""); setBusy(true);
     if (!signedRequest.current) signedRequest.current = { session: verifiedSession, application, signature, signatureActionTime: new Date().toISOString(), agreementVersion: PILOT_AGREEMENT_VERSION, ndaConsent, privacyConsent, adultConsent, benefitConsent, authorityConsent, captchaToken };
     try {
       const data: Receipt = await post("/api/pilot/apply", signedRequest.current);
@@ -209,6 +218,8 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <p className="pilot-step-label">Step 03 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Review the agreement and sign.</h2>
             <p className="pilot-lead">{preview ? "Try the NDA acceptance flow below. This preview acceptance is non-binding." : "Read the product-specific agreement before signing. Your request will be reviewed before any pilot access is granted."}</p>
+            {enrolment?.source === "unavailable" ? <div className="pilot-benefit-note" role="status">Existing pilot enrolments could not be checked at this time. This does not mean you are not enrolled. {enrolment.reason}</div> : null}
+            {enrolment?.source === "verified" && enrolment.products.some((item)=>item.previouslyApplied) ? <div className="pilot-benefit-note" role="status"><strong>Existing enrolment recognised</strong><p>One or more selected products already have a pilot record. You do not need to register again for these products. Edit your selection to remove them and verify your email again before applying for additional products.</p>{enrolment.products.filter((item)=>item.previouslyApplied).map((item)=><p key={item.slug}>{products.find((p)=>p.slug===item.slug)?.name || item.slug}: {item.access?"Access eligible":"Under review — no access yet"}</p>)}<button type="button" className="pilot-secondary" onClick={()=>{setEnrolment(null); setVerifiedSession(""); setChallenge("");changeStep(0);}}>Edit selected products</button></div> : null}
             <div className="pilot-review-overview"><div><span>Applicant</span><strong>{application.fullName}</strong></div><div><span>Verified email</span><strong>{application.email}</strong></div>{b2b ? <div><span>Organisation</span><strong>{application.organisation}</strong></div> : null}<div><span>Selected pilots</span><strong>{selectedProducts.length} across {categoryGroups.length} categor{categoryGroups.length === 1 ? "y" : "ies"}</strong></div></div>
             <section className="pilot-cart pilot-review-cart" aria-label="Final selected products">
               <header className="pilot-cart-header"><div><span className="pilot-cart-eyebrow">APPLICATION SUMMARY</span><h3>Confirm your selected products</h3><p>This is how your products will be grouped in your confirmation email.</p></div><strong className="pilot-count">{selectedProducts.length} selected</strong></header>
@@ -228,10 +239,18 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
               <label className="pilot-check"><input type="checkbox" checked={benefitConsent} onChange={(e) => setBenefitConsent(e.target.checked)} required /><span>{mixed ? "I understand the B2C benefit is per eligible product actually tested, while B2B pilots have separate organisational terms; registration does not grant access." : b2b ? "I understand B2B products have separate organisational terms and no individual six-month benefit." : "I understand the six-month benefit applies only to B2C products actually tested with the agreed feedback."}</span></label>
               {b2b ? <label className="pilot-check"><input type="checkbox" checked={authorityConsent} onChange={(e) => setAuthorityConsent(e.target.checked)} required /><span>I am authorised to represent the organisation named above for this pilot application and agreement.</span></label> : null}
             </fieldset>
-            <div className="pilot-actions"><button className="pilot-secondary" type="button" onClick={editDetails} disabled={busy}>Edit application</button><button className="pilot-primary" type="submit" disabled={busy || !ndaConsent || !benefitConsent || (b2b && !authorityConsent) || signature.trim().replace(/\s+/g, " ").toLowerCase() !== application.fullName.trim().replace(/\s+/g, " ").toLowerCase()}>{busy ? "Submitting…" : signedRequest.current ? "Retry this submission" : preview ? "Submit test acceptance & request" : "Sign agreement & submit request"}</button></div>
+            <div className="pilot-actions"><button className="pilot-secondary" type="button" onClick={editDetails} disabled={busy}>Edit application</button><button className="pilot-primary" type="submit" disabled={busy || (enrolment?.source === "verified" && enrolment.products.some((item)=>item.previouslyApplied)) || !ndaConsent || !benefitConsent || (b2b && !authorityConsent) || signature.trim().replace(/\s+/g, " ").toLowerCase() !== application.fullName.trim().replace(/\s+/g, " ").toLowerCase()}>{busy ? "Submitting…" : signedRequest.current ? "Retry this submission" : preview ? "Submit test acceptance & request" : "Sign agreement & submit request"}</button></div>
             <p className="pilot-fine">In preview, a test confirmation email goes to your verified address without storing a pilot registration. In production, the application and agreement record are processed for pilot onboarding.</p>
           </form> : null}
 
+          {step === 4 && enrolment?.source === "verified" ? <div className="pilot-success">
+            <span className="pilot-success-icon" aria-hidden="true">✓</span>
+            <p className="pilot-step-label">Existing pilot enrolment found</p>
+            <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>You're already registered for these products.</h2>
+            <p>We recognised your verified email in the pilot records. There is no need to register again. Access depends on each product's current eligibility status.</p>
+            <div className="pilot-cart">{categoryGroups.map((group)=><div className="pilot-category" key={group.slug}><div className="pilot-category-heading"><h4>{group.name}</h4></div>{group.items.map((item)=>{const status=enrolment.products.find((p)=>p.slug===item.slug);return <div className="pilot-table-row" key={item.slug}><div><strong>{item.name}</strong><span className={`pilot-type ${item.audience.toLowerCase()}`}>{item.audience}</span></div><div><p>{status?.access?"Eligible to use this product after sign-in":"Registration exists — access under review"}</p></div><div>{status?.access?<a href={item.browseUrl} target="_blank" rel="noopener noreferrer">Open product ↗</a>:<span>Await approval</span>}</div></div>})}</div>)}</div>
+            <div className="pilot-actions"><button type="button" className="pilot-secondary" onClick={()=>{setEnrolment(null);setVerifiedSession("");setChallenge("");changeStep(0);}}>Explore additional products</button></div>
+          </div> : null}
           {step === 3 && receipt ? <div className="pilot-success">
             <span className="pilot-success-icon" aria-hidden="true">✓</span><p className="pilot-step-label">{receipt.preview ? "Preview test complete" : "Application received"}</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>{receipt.preview ? "Your email-flow test is complete." : "Thank you for helping shape the product."}</h2>
