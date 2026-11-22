@@ -230,7 +230,7 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   const appUrls = selectedProducts.map((p) => ({ name:p.name, url:p.browseUrl, category:p.initiativeName, description:p.description, audience:p.audience, readiness:p.readiness }));
   const appUrl = appUrls[0]?.url || "";
   const htmlEscape = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  const categories = [...new Set(appUrls.map((p) => p.category))];
+  const categories = Array.from(new Set(appUrls.map((p) => p.category)));
   const productLinksHtml = categories.map((category) => {
     const rows = appUrls.filter((p) => p.category === category).map((p) =>
       `<tr><td style="padding:10px;border:1px solid #dce5e5"><strong>${htmlEscape(p.name)}</strong><br><small>${p.audience}</small></td><td style="padding:10px;border:1px solid #dce5e5">${htmlEscape(p.description)}${p.readiness === "review" ? "<br><small>Pilot readiness subject to review</small>" : ""}</td><td style="padding:10px;border:1px solid #dce5e5"><a href="${htmlEscape(p.url)}">Browse</a></td></tr>`
