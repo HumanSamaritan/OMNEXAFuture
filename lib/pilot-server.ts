@@ -193,7 +193,7 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
     verificationMethod: "Email one-time code", verifiedAt: verified.verifiedAt,
     signature, signatureActionTimeClient: signatureActionTime,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
-    declarations: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
+    declarations: { nda: true, privacy: true, adult: true, benefit: true, authority: hasB2B },
     agreement
   };
   const recordJson = JSON.stringify(record, null, 2);
@@ -208,7 +208,7 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
     status: autoApproved ? "approved" : "pending_review", ...(autoApproved ? { approvedAt, approvalMethod: "validated-pilot-submission" } : {}), createdAt: approvedAt,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
     recordSha256: recordHash,
-    consents: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
+    consents: { nda: true, privacy: true, adult: true, benefit: true, authority: hasB2B },
     application: application as unknown as Record<string, unknown>,
     firstUsedAt: null, lastUsedAt: null
   }, request);
