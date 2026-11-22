@@ -13,7 +13,7 @@ export function validatePilotApplication(value: unknown): PilotApplication {
     return text;
   };
   const requested = input.productSlugs === undefined ? [input.productSlug] : input.productSlugs;
-  if (!Array.isArray(requested) || requested.length < 1 || requested.length > 3 || requested.some((slug) => typeof slug !== "string")) throw new PilotInputError("Choose between one and three products.");
+  if (!Array.isArray(requested) || requested.length < 1 || requested.length > 12 || requested.some((slug) => typeof slug !== "string")) throw new PilotInputError("Choose between one and twelve products.");
   const productSlugs = requested as string[];
   if (new Set(productSlugs).size !== productSlugs.length) throw new PilotInputError("A product cannot be selected twice.");
   const application: PilotApplication = {
@@ -25,11 +25,10 @@ export function validatePilotApplication(value: unknown): PilotApplication {
   };
   const product = pilotProducts.find((item) => item.slug === application.productSlug);
   if (!product || product.initiativeSlug !== application.initiativeSlug || application.productSlug !== productSlugs[0]) throw new PilotInputError("Choose a valid initiative and product.");
-  if (productSlugs.some((slug) => !pilotProducts.some((p) => p.slug === slug && p.audience === product.audience && p.initiativeSlug === product.initiativeSlug))) throw new PilotInputError("Selected products must belong to the same pilot route.");
-  if (product.audience !== "B2C" && productSlugs.length > 1) throw new PilotInputError("Organisation pilots require separate applications.");
+  if (productSlugs.some((slug) => !pilotProducts.some((p) => p.slug === slug))) throw new PilotInputError("One or more selected pilot products are unavailable.");
   if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(application.email)) throw new PilotInputError("Enter a valid email address.");
   if (/[\r\n]/.test(application.fullName + application.country + application.organisation + application.role)) throw new PilotInputError("Use a single line for contact details.");
   if (!EXPERIENCE_LEVELS.includes(application.experienceLevel) || !AVAILABILITY_OPTIONS.includes(application.availability)) throw new PilotInputError("Choose your experience level and availability.");
-  if (product.audience === "B2B" && application.organisation.length < 2) throw new PilotInputError("Enter your organisation for a B2B pilot.");
+  if (productSlugs.some((slug) => pilotProducts.find((p) => p.slug === slug)?.audience === "B2B") && application.organisation.length < 2) throw new PilotInputError("Enter your organisation for a B2B pilot.");
   return application;
 }
