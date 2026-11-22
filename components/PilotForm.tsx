@@ -143,7 +143,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   return (
     <>
       {captchaRequired && recaptchaSiteKey ? <Script id="omnexa-pilot-recaptcha" src="https://www.google.com/recaptcha/enterprise.js?render=explicit" strategy="afterInteractive" onReady={renderCaptcha} /> : null}
-      {preview ? <div className="pilot-preview" role="note"><strong>Preview · Test applications only</strong><span>One support notification is sent for each submitted interest. No binding contract, pilot enrolment or subscription is activated in this preview.</span></div> : null}
+      {preview ? <div className="pilot-preview" role="note"><strong>Preview · Test applications only</strong><span>Preview tests email verification and confirmation without storing a pilot application. No binding contract, enrolment or subscription is activated.</span></div> : null}
       <ol className="pilot-steps" aria-label="Application progress">
         {steps.map((label, index) => <li key={label} className={step === index ? "is-current" : step > index ? "is-complete" : ""} aria-current={step === index ? "step" : undefined}><span>{step > index ? "✓" : index + 1}</span>{label}</li>)}
       </ol>
@@ -217,17 +217,17 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
               {b2b ? <label className="pilot-check"><input type="checkbox" checked={authorityConsent} onChange={(e) => setAuthorityConsent(e.target.checked)} required /><span>I am authorised to represent the organisation named above for this pilot application and agreement.</span></label> : null}
             </fieldset>
             <div className="pilot-actions"><button className="pilot-secondary" type="button" onClick={editDetails} disabled={busy}>Edit application</button><button className="pilot-primary" type="submit" disabled={busy || !ndaConsent || !benefitConsent || (b2b && !authorityConsent) || signature.trim().replace(/\s+/g, " ").toLowerCase() !== application.fullName.trim().replace(/\s+/g, " ").toLowerCase()}>{busy ? "Submitting…" : signedRequest.current ? "Retry this submission" : preview ? "Submit test acceptance & request" : "Sign agreement & submit request"}</button></div>
-            <p className="pilot-fine">Your application and agreement copy go to support@omnexagoc.com. A confirmation email will be sent to your verified address and a copy to OMNeXa support.</p>
+            <p className="pilot-fine">In preview, a test confirmation email goes to your verified address without storing a pilot registration. In production, the application and agreement record are processed for pilot onboarding.</p>
           </form> : null}
 
           {step === 3 && receipt ? <div className="pilot-success">
             <span className="pilot-success-icon" aria-hidden="true">✓</span><p className="pilot-step-label">{receipt.preview ? "Preview test complete" : "Application received"}</p>
-            <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>{receipt.preview ? "Your test request is with us." : "Thank you for helping shape the product."}</h2>
-            <p>Your {selectedProducts.map((p) => p.name).join(", ")} application has been sent to <strong>support@omnexagoc.com</strong>.</p>
+            <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>{receipt.preview ? "Your email-flow test is complete." : "Thank you for helping shape the product."}</h2>
+            <p>{receipt.preview ? "This was a preview-only email test. No application has been stored or sent to the pilot intake queue." : <>Your {selectedProducts.map((p) => p.name).join(", ")} application has been sent to <strong>support@omnexagoc.com</strong>.</>}</p>
             <p>A confirmation email with your reference and agreement copy will be sent to your verified address.</p>
             {!receipt.preview && (receipt.appUrls?.length ? receipt.appUrls : receipt.appUrl ? [{ name: product?.name || "Product", url: receipt.appUrl }] : []).map((item) => <p key={item.url}><a href={item.url} target="_blank" rel="noopener noreferrer">Visit {item.name} →</a></p>)}
             <div className="pilot-reference"><span>Application reference</span><strong>{receipt.reference}</strong></div>
-            <p>{receipt.preview ? "This test has not created a binding contract, enrolled you in a pilot or activated a subscription." : "OMNeXa will review your experience and contact you about suitability, timing and next steps. Please wait for an invitation before testing."}</p>
+            <p>{receipt.preview ? "This preview test has not stored an application, created a binding contract, enrolled you in a pilot or activated a subscription." : "OMNeXa will review your experience and contact you about suitability, timing and next steps. Please wait for an invitation before testing."}</p>
             <div className="pilot-actions"><button className="pilot-primary" type="button" onClick={() => downloadText(receipt.agreementCopy, `${receipt.reference}-agreement.txt`)}>Download your agreement copy ↓</button><a className="pilot-text-button" href="/work">Back to Our Work →</a></div>
           </div> : null}
         </section>
