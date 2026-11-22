@@ -42,7 +42,7 @@ async function token(request: Request): Promise<string> {
   return access.accessToken;
 }
 const collectionUrl=()=>{const c=env();return `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(c.project)}/databases/${encodeURIComponent(c.db)}/documents/omnexa_pilot_applications`;};
-export type PilotIntakeRecord={reference:string;productSlug:string;email:string;status:"pending_review"|"approved"|"invited"|"active"|"completed"|"declined"|"withdrawn";approvedAt?:string;approvalMethod?:string;createdAt:string;agreementVersion:string;agreementSha256:string;recordSha256:string;consents:Record<string,boolean>;application:Record<string,unknown>;firstUsedAt?:string|null;lastUsedAt?:string|null};
+export type PilotIntakeRecord={reference:string;productSlug:string;productSlugs?:string[];email:string;status:"pending_review"|"approved"|"invited"|"active"|"completed"|"declined"|"withdrawn";approvedAt?:string;approvalMethod?:string;createdAt:string;agreementVersion:string;agreementSha256:string;recordSha256:string;consents:Record<string,boolean>;application:Record<string,unknown>;firstUsedAt?:string|null;lastUsedAt?:string|null};
 export async function createPilotIntake(record:PilotIntakeRecord, request:Request){
   const url=collectionUrl()+"/"+encodeURIComponent(record.reference);
   const r=await fetch(url+"?currentDocument.exists=false",{method:"PATCH",headers:{Authorization:"Bearer "+await token(request),"Content-Type":"application/json"},body:JSON.stringify({fields:fields(record as unknown as Record<string,unknown>)}),cache:"no-store"});
