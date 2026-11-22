@@ -3,6 +3,8 @@ export const AVAILABILITY_OPTIONS = ["Up to 1 hour per week", "1–2 hours per w
 
 export type PilotApplication = {
   productSlug: string;
+  /** Selected B2C pilots; productSlug retained as the primary for legacy readers. */
+  productSlugs?: string[];
   initiativeSlug: string;
   fullName: string;
   email: string;
