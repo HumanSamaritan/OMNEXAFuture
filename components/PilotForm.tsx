@@ -24,7 +24,7 @@ function countryPrivacyNote(country: string): string {
   if (country === "Singapore") return "Singapore applicants: OMNeXa processes this pilot request under the Singapore PDPA. You can request access, correction or withdrawal subject to applicable law."; 
   return "Local privacy requirements may apply in your country. This consent covers only pilot administration, not in-app wellbeing processing; OMNeXa will assess relevant local restrictions before product access.";
 }
-const steps = ["Choose a pilot", "Your experience", "Review & sign"];
+const steps = ["Build your pilot cart", "Your experience", "Review & sign"];
 
 function downloadText(text: string, filename: string) {
   const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
@@ -64,7 +64,11 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const captchaWidget = useRef<number | null>(null);
   const product = products.find((item) => item.slug === application.productSlug);
   const selectedProducts = products.filter((item) => (application.productSlugs || [application.productSlug]).includes(item.slug));
-  const b2b = product?.audience === "B2B";
+  const b2b = selectedProducts.some((item) => item.audience === "B2B");
+  const b2c = selectedProducts.some((item) => item.audience === "B2C");
+  const mixed = b2b && b2c;
+  const agreementAudience = mixed ? "MIXED" : b2b ? "B2B" : "B2C";
+  const categoryGroups = Array.from(new Set(selectedProducts.map((item) => item.initiativeSlug))).map((slug) => ({ slug, name: selectedProducts.find((item) => item.initiativeSlug === slug)!.initiativeName, items: selectedProducts.filter((item) => item.initiativeSlug === slug) }));
   const captchaRequired = !preview;
   const choices = products.filter((item) => item.initiativeSlug === application.initiativeSlug && (audienceFilter === "all" || item.audience === audienceFilter));
   const initiatives = Array.from(new Map(products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter).map((item) => [item.initiativeSlug, item.initiativeName])).entries());
@@ -98,12 +102,9 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
     setApplication((old) => {
       const current = old.productSlugs || (old.productSlug ? [old.productSlug] : []);
       const next = current.includes(item.slug) ? current.filter((slug) => slug !== item.slug) : [...current, item.slug];
-      const valid = next.filter((slug) => {
-        const candidate = products.find((p) => p.slug === slug);
-        return candidate?.audience === item.audience && candidate.initiativeSlug === item.initiativeSlug;
-      });
+      const valid = next;
       const first = products.find((candidate) => candidate.slug === valid[0]);
-      return { ...old, productSlugs: valid, productSlug: first?.slug || "", initiativeSlug: first?.initiativeSlug || "" };
+      return { ...old, productSlugs: valid, productSlug: first?.slug || "", initiativeSlug: old.initiativeSlug || item.initiativeSlug };
     });
   }
   function changeStep(next: number) { setError(""); setCaptchaToken(""); setStep(next); }
@@ -154,16 +155,16 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           {step === 0 ? <form onSubmit={(event) => { event.preventDefault(); if (selectedProducts.length) changeStep(1); }}>
             <p className="pilot-step-label">Step 01 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Find the right pilot for you.</h2>
-            <p className="pilot-lead">Select one, two or all three individual products in a single application. Each pilot is subject to its own participation and feedback requirements for the six-month benefit.</p>
+            <p className="pilot-lead">Browse categories and select any number of available pilot interests. Your selections remain in the cart as you switch categories. Individual and organisational pilots have separate eligibility requirements.</p>
             <fieldset className="pilot-route-choice"><legend>I want to explore</legend>
-              {[["all", "All pilots"], ["B2C", "Individual / B2C"], ["B2B", "Organisation / B2B"]].map(([value, label]) => <label key={value}><input type="radio" name="audience" value={value} checked={audienceFilter === value} onChange={() => { setAudienceFilter(value); setApplication((old) => ({ ...old, initiativeSlug: "", productSlug: "", productSlugs: [] })); }} /><span>{label}</span></label>)}
+              {[["all", "All pilots"], ["B2C", "Individual / B2C"], ["B2B", "Organisation / B2B"]].map(([value, label]) => <label key={value}><input type="radio" name="audience" value={value} checked={audienceFilter === value} onChange={() => { setAudienceFilter(value); setApplication((old) => ({ ...old, initiativeSlug: old.initiativeSlug, productSlug: old.productSlug, productSlugs: old.productSlugs })); }} /><span>{label}</span></label>)}
             </fieldset>
             
-            <label className="pilot-field">Initiative / service area<select value={application.initiativeSlug} onChange={(event) => { setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, initiativeSlug: event.target.value, productSlug: "", productSlugs: [] })); }} required><option value="">Choose an initiative</option>{initiatives.map(([slug, name]) => <option key={slug} value={slug}>{name}</option>)}</select></label>
+            <label className="pilot-field">Initiative / service area<select value={application.initiativeSlug} onChange={(event) => { setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, initiativeSlug: event.target.value })); }} required><option value="">Choose an initiative</option>{initiatives.map(([slug, name]) => <option key={slug} value={slug}>{name}</option>)}</select></label>
             <fieldset className="pilot-product-choice"><legend>Products to test (choose one or more)</legend>
-              {choices.length ? choices.map((item) => <label key={item.slug} className={selectedProducts.some((p) => p.slug === item.slug) ? "is-selected" : ""}><input type="checkbox" name="products" value={item.slug} checked={selectedProducts.some((p) => p.slug === item.slug)} onChange={() => toggleProduct(item)} /><span><strong>{item.name}</strong><small>{item.audience === "B2C" ? "Individual pilot · 6-month subscription benefit" : "Organisation pilot · separate terms"}</small></span><span className={`pilot-type ${item.audience.toLowerCase()}`}>{item.audience}</span></label>) : <p className="pilot-empty">Select an initiative to see its products.</p>}
+              {choices.length ? choices.map((item) => <label key={item.slug} className={selectedProducts.some((p) => p.slug === item.slug) ? "is-selected" : ""}><input type="checkbox" name="products" value={item.slug} checked={selectedProducts.some((p) => p.slug === item.slug)} onChange={() => toggleProduct(item)} /><span><strong>{item.name}</strong><small>{item.description} · {item.audience === "B2C" ? "Individual / B2C" : "Organisation / B2B"}{item.readiness === "review" ? " · Pilot readiness under review" : ""}</small></span><span className={`pilot-type ${item.audience.toLowerCase()}`}>{item.audience}</span></label>) : <p className="pilot-empty">Select an initiative to see its products.</p>}
             </fieldset>
-            {product ? <p className="pilot-benefit-note">{b2b ? B2B_BENEFIT : B2C_BENEFIT}</p> : null}
+            {selectedProducts.length ? <div className="pilot-benefit-note"><strong>Selected pilot cart · {selectedProducts.length} product(s)</strong>{categoryGroups.map((group) => <div key={group.slug}><strong>{group.name}</strong><ul>{group.items.map((item) => <li key={item.slug}>{item.name} ({item.audience}) <button type="button" className="pilot-text-button" onClick={() => toggleProduct(item)}>Remove</button></li>)}</ul></div>)}{b2c ? <p>{B2C_BENEFIT}</p> : null}{b2b ? <p>{B2B_BENEFIT}</p> : null}</div> : null}
             <div className="pilot-actions"><button className="pilot-primary" type="submit" disabled={!selectedProducts.length}>Continue to your experience <span aria-hidden="true">→</span></button></div>
           </form> : null}
 
@@ -202,18 +203,18 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <p className="pilot-step-label">Step 03 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Review the agreement and sign.</h2>
             <p className="pilot-lead">{preview ? "Try the NDA acceptance flow below. This preview acceptance is non-binding." : "Read the product-specific agreement before signing. Your request will be reviewed before any pilot access is granted."}</p>
-            <dl className="pilot-review"><div><dt>Applicant</dt><dd>{application.fullName}</dd></div><div><dt>Email</dt><dd>{application.email}</dd></div><div><dt>Products</dt><dd>{selectedProducts.map((p) => p.name).join(", ")} · {product.audience}</dd></div>{b2b ? <div><dt>Organisation</dt><dd>{application.organisation}</dd></div> : null}</dl>
+            <dl className="pilot-review"><div><dt>Applicant</dt><dd>{application.fullName}</dd></div><div><dt>Email</dt><dd>{application.email}</dd></div><div><dt>Selected products by category</dt><dd>{categoryGroups.map((group) => <div key={group.slug}><strong>{group.name}</strong><ul>{group.items.map((item) => <li key={item.slug}>{item.name} ({item.audience}) — {item.description}</li>)}</ul></div>)}</dd></div>{b2b ? <div><dt>Organisation</dt><dd>{application.organisation}</dd></div> : null}</dl>
             <details className="pilot-disclosure"><summary>Review your experience and testing interests</summary><p><strong>{application.experienceLevel}</strong></p><p>{application.experience}</p><p>{application.goals}</p><p>Availability: {application.availability}</p><button className="pilot-text-button" type="button" disabled={busy} onClick={editDetails}>Edit details and verify again</button></details>
-            <p className="pilot-benefit-note">{b2b ? B2B_BENEFIT : B2C_BENEFIT} For multiple selected products, the benefit applies only to each product actually tested with the agreed feedback.</p>
+            <p className="pilot-benefit-note">{b2c ? B2C_BENEFIT : ""} {b2b ? B2B_BENEFIT : ""} Each selected product is assessed separately; selection does not imply approval, activation or availability.</p>
             <details className="pilot-nda" open>
-              <summary>Pilot Participation & Non-Disclosure Agreement <small>Version {PILOT_AGREEMENT_VERSION} · {selectedProducts.map((p) => p.name).join(", ")}</small></summary>
-              <div className="pilot-agreement-copy"><p><strong>Selected products:</strong> {selectedProducts.map((p) => p.name).join(", ")} ({product.audience})</p>{preview ? <p className="pilot-fine">Preview draft for testing; no binding contract is created.</p> : null}{PILOT_TERMS.map((term) => <section key={term.title}><h3>{term.title}</h3><p>{term.text}</p></section>)}</div>
+              <summary>Pilot Participation & Non-Disclosure Agreement <small>Version {PILOT_AGREEMENT_VERSION} · {selectedProducts.length} products</small></summary>
+              <div className="pilot-agreement-copy"><p><strong>Selected products:</strong> {selectedProducts.map((p) => p.name).join(", ")} ({mixed ? "B2C + B2B" : product.audience})</p>{preview ? <p className="pilot-fine">Preview draft for testing; no binding contract is created.</p> : null}{PILOT_TERMS.map((term) => <section key={term.title}><h3>{term.title}</h3><p>{term.text}</p></section>)}</div>
             </details>
-            <button className="pilot-text-button" type="button" onClick={() => downloadText(pilotAgreementText(selectedProducts.map((p) => p.name).join(", "), product.audience), `omnexa-selected-pilots-agreement-${PILOT_AGREEMENT_VERSION}.txt`)}>Download this agreement before signing ↓</button>
+            <button className="pilot-text-button" type="button" onClick={() => downloadText(pilotAgreementText(selectedProducts.map((p) => `${p.initiativeName}: ${p.name} (${p.audience})`).join("; "), agreementAudience), `omnexa-selected-pilots-agreement-${PILOT_AGREEMENT_VERSION}.txt`)}>Download this agreement before signing ↓</button>
             <fieldset className="pilot-signature" disabled={busy || !!signedRequest.current}><legend>Your electronic signature</legend>
               <label className="pilot-field">Type your full legal name<input value={signature} onChange={(e) => setSignature(e.target.value)} autoComplete="name" maxLength={100} required /><small>Enter {application.fullName}. Your typed name records your intention to sign.</small></label>
               <label className="pilot-check"><input type="checkbox" checked={ndaConsent} onChange={(e) => setNdaConsent(e.target.checked)} required /><span>{preview ? "I have reviewed the NDA and agree to test the electronic acceptance flow. I understand this preview is non-binding." : "I have read and agree to the Pilot Participation and Non-Disclosure Agreement, and intend my typed name and final submission to be my electronic signature."}</span></label>
-              <label className="pilot-check"><input type="checkbox" checked={benefitConsent} onChange={(e) => setBenefitConsent(e.target.checked)} required /><span>{b2b ? "I understand this B2B pilot does not include the six-month free individual subscription offer." : "I understand the six-month free subscription is for participants who take part in this B2C product pilot and provide the agreed feedback; registration alone does not qualify."}</span></label>
+              <label className="pilot-check"><input type="checkbox" checked={benefitConsent} onChange={(e) => setBenefitConsent(e.target.checked)} required /><span>{mixed ? "I understand the B2C benefit is per eligible product actually tested, while B2B pilots have separate organisational terms; registration does not grant access." : b2b ? "I understand B2B products have separate organisational terms and no individual six-month benefit." : "I understand the six-month benefit applies only to B2C products actually tested with the agreed feedback."}</span></label>
               {b2b ? <label className="pilot-check"><input type="checkbox" checked={authorityConsent} onChange={(e) => setAuthorityConsent(e.target.checked)} required /><span>I am authorised to represent the organisation named above for this pilot application and agreement.</span></label> : null}
             </fieldset>
             <div className="pilot-actions"><button className="pilot-secondary" type="button" onClick={editDetails} disabled={busy}>Edit application</button><button className="pilot-primary" type="submit" disabled={busy || !ndaConsent || !benefitConsent || (b2b && !authorityConsent) || signature.trim().replace(/\s+/g, " ").toLowerCase() !== application.fullName.trim().replace(/\s+/g, " ").toLowerCase()}>{busy ? "Submitting…" : signedRequest.current ? "Retry this submission" : preview ? "Submit test acceptance & request" : "Sign agreement & submit request"}</button></div>
@@ -236,7 +237,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           <p className="pilot-step-label">Your pilot journey</p>
           <h2>{selectedProducts.length ? selectedProducts.map((p) => p.name).join(", ") : "Choose where you can make a difference."}</h2>
           {product ? <><span className={`pilot-type ${product.audience.toLowerCase()}`}>{b2b ? "Organisation / B2B" : "Individual / B2C"}</span><p>{product.initiativeName}</p></> : <p>Explore individual products and organisational pilots across the OMNeXa ecosystem.</p>}
-          <div className="pilot-aside-benefit"><strong>{b2b ? "A pilot built around your organisation" : "6 months of free subscription"}</strong><p>{b2b ? "Scope, access and commercial terms are agreed separately. The individual subscription offer does not apply." : "For users who participate in a B2C product pilot and provide the agreed feedback. Applies to the product tested, once its subscription service becomes available."}</p></div>
+          <div className="pilot-aside-benefit"><strong>{mixed ? "B2C and B2B pilot terms" : b2b ? "A pilot built around your organisation" : "6 months of free subscription"}</strong><p>{mixed ? "Individual and organisational pilot interests are reviewed separately. The six-month benefit can only apply to eligible B2C products actually tested." : b2b ? "Organisational pilot scope, access and terms are agreed separately." : "For users who take part in a B2C pilot and provide agreed feedback. Applies only to the eligible product actually tested."}</p></div>
           <ul className="pilot-journey"><li><span>01</span>Tell us about your experience</li><li><span>02</span>Review and sign the NDA</li><li><span>03</span>Send one support notification</li><li><span>04</span>Wait for a pilot invitation</li></ul>
           <p className="pilot-fine">{product?.slug === "human-machine-sadhana"
             ? "Human Machine Sadhana is live. This application is for pilot participation; submitting it does not enrol you or activate a subscription. We’ll review your application and send product-specific next steps."
