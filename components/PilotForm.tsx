@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-type Receipt = { reference: string; preview: boolean; agreementCopy: string; appUrl: string };
+type Receipt = { reference: string; preview: boolean; agreementCopy: string; appUrl: string; appUrls?: { name: string; url: string }[] };
 type SignPayload = { session: string; application: PilotApplication; signature: string; signatureActionTime: string; agreementVersion: string; ndaConsent: boolean; privacyConsent: boolean; adultConsent: boolean; benefitConsent: boolean; authorityConsent: boolean; captchaToken: string };
 const regionNames = new Intl.DisplayNames(["en"], {type: "region"});
 const countryNames = Array.from({length:26*26},(_,i)=>String.fromCharCode(65+Math.floor(i/26),65+i%26)).map(code=>regionNames.of(code) ?? code).filter((name,i)=>name.length>2 && name !== String.fromCharCode(65+Math.floor(i/26),65+i%26)).sort();
@@ -66,7 +66,6 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const selectedProducts = products.filter((item) => (application.productSlugs || [application.productSlug]).includes(item.slug));
   const b2b = product?.audience === "B2B";
   const captchaRequired = !preview;
-  const initiatives = Array.from(new Map(products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter).map((item) => [item.initiativeSlug, item.initiativeName])).entries());
   const choices = products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter);
 
   useEffect(() => {
@@ -151,7 +150,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
           {step === 0 ? <form onSubmit={(event) => { event.preventDefault(); if (selectedProducts.length) changeStep(1); }}>
             <p className="pilot-step-label">Step 01 / 03</p>
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>Find the right pilot for you.</h2>
-            <p className="pilot-lead">Select one, two or all three individual products in a single application. Each pilot is assessed separately and benefits depend on actual participation and feedback.</p>
+            <p className="pilot-lead">Select one, two or all three individual products in a single application. Each pilot is subject to its own participation and feedback requirements for the six-month benefit.</p>
             <fieldset className="pilot-route-choice"><legend>I want to explore</legend>
               {[["all", "All pilots"], ["B2C", "Individual / B2C"], ["B2B", "Organisation / B2B"]].map(([value, label]) => <label key={value}><input type="radio" name="audience" value={value} checked={audienceFilter === value} onChange={() => { setAudienceFilter(value); setApplication((old) => ({ ...old, initiativeSlug: "", productSlug: "", productSlugs: [] })); }} /><span>{label}</span></label>)}
             </fieldset>
@@ -200,7 +199,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <p className="pilot-lead">{preview ? "Try the NDA acceptance flow below. This preview acceptance is non-binding." : "Read the product-specific agreement before signing. Your request will be reviewed before any pilot access is granted."}</p>
             <dl className="pilot-review"><div><dt>Applicant</dt><dd>{application.fullName}</dd></div><div><dt>Email</dt><dd>{application.email}</dd></div><div><dt>Products</dt><dd>{selectedProducts.map((p) => p.name).join(", ")} · {product.audience}</dd></div>{b2b ? <div><dt>Organisation</dt><dd>{application.organisation}</dd></div> : null}</dl>
             <details className="pilot-disclosure"><summary>Review your experience and testing interests</summary><p><strong>{application.experienceLevel}</strong></p><p>{application.experience}</p><p>{application.goals}</p><p>Availability: {application.availability}</p><button className="pilot-text-button" type="button" disabled={busy} onClick={editDetails}>Edit details and verify again</button></details>
-            <p className="pilot-benefit-note">{b2b ? B2B_BENEFIT : B2C_BENEFIT}</p>
+            <p className="pilot-benefit-note">{b2b ? B2B_BENEFIT : B2C_BENEFIT} For multiple selected products, the benefit applies only to each product actually tested with the agreed feedback.</p>
             <details className="pilot-nda" open>
               <summary>Pilot Participation & Non-Disclosure Agreement <small>Version {PILOT_AGREEMENT_VERSION} · {selectedProducts.map((p) => p.name).join(", ")}</small></summary>
               <div className="pilot-agreement-copy"><p><strong>Selected products:</strong> {selectedProducts.map((p) => p.name).join(", ")} ({product.audience})</p>{preview ? <p className="pilot-fine">Preview draft for testing; no binding contract is created.</p> : null}{PILOT_TERMS.map((term) => <section key={term.title}><h3>{term.title}</h3><p>{term.text}</p></section>)}</div>
@@ -221,7 +220,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
             <h2 id="pilot-step-title" ref={stepHeading} tabIndex={-1}>{receipt.preview ? "Your test request is with us." : "Thank you for helping shape the product."}</h2>
             <p>Your {selectedProducts.map((p) => p.name).join(", ")} application has been sent to <strong>support@omnexagoc.com</strong>.</p>
             <p>A confirmation email with your reference and agreement copy will be sent to your verified address.</p>
-            {!receipt.preview && receipt.appUrl ? <p><a href={receipt.appUrl} target="_blank" rel="noopener noreferrer">Visit the selected product website →</a></p> : null}
+            {!receipt.preview && (receipt.appUrls?.length ? receipt.appUrls : receipt.appUrl ? [{ name: product?.name || "Product", url: receipt.appUrl }] : []).map((item) => <p key={item.url}><a href={item.url} target="_blank" rel="noopener noreferrer">Visit {item.name} →</a></p>)}
             <div className="pilot-reference"><span>Application reference</span><strong>{receipt.reference}</strong></div>
             <p>{receipt.preview ? "This test has not created a binding contract, enrolled you in a pilot or activated a subscription." : "OMNeXa will review your experience and contact you about suitability, timing and next steps. Please wait for an invitation before testing."}</p>
             <div className="pilot-actions"><button className="pilot-primary" type="button" onClick={() => downloadText(receipt.agreementCopy, `${receipt.reference}-agreement.txt`)}>Download your agreement copy ↓</button><a className="pilot-text-button" href="/work">Back to Our Work →</a></div>
