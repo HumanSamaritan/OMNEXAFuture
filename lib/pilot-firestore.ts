@@ -42,7 +42,7 @@ async function token(request: Request): Promise<string> {
   return access.accessToken;
 }
 const collectionUrl=()=>{const c=env();return `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(c.project)}/databases/${encodeURIComponent(c.db)}/documents/omnexa_pilot_applications`;};
-export type PilotIntakeRecord={reference:string;productSlug:string;productSlugs?:string[];email:string;status:"pending_review"|"approved"|"invited"|"active"|"completed"|"declined"|"withdrawn";approvedAt?:string;approvalMethod?:string;createdAt:string;agreementVersion:string;agreementSha256:string;recordSha256:string;consents:Record<string,boolean>;application:Record<string,unknown>;firstUsedAt?:string|null;lastUsedAt?:string|null};
+export type PilotIntakeRecord={reference:string;productSlug:string;productSlugs?:string[];productAccess?:Record<string, "pending_review"|"approved"|"invited"|"active"|"completed"|"declined"|"withdrawn">;email:string;status:"pending_review"|"approved"|"invited"|"active"|"completed"|"declined"|"withdrawn";approvedAt?:string;approvalMethod?:string;createdAt:string;agreementVersion:string;agreementSha256:string;recordSha256:string;consents:Record<string,boolean>;application:Record<string,unknown>;firstUsedAt?:string|null;lastUsedAt?:string|null};
 export async function createPilotIntake(record:PilotIntakeRecord, request:Request){
   const url=collectionUrl()+"/"+encodeURIComponent(record.reference);
   const r=await fetch(url+"?currentDocument.exists=false",{method:"PATCH",headers:{Authorization:"Bearer "+await token(request),"Content-Type":"application/json"},body:JSON.stringify({fields:fields(record as unknown as Record<string,unknown>)}),cache:"no-store"});
@@ -57,4 +57,39 @@ export async function getPilotIntake(reference:string, request:Request):Promise<
   if(!r.ok)throw new Error("Pilot intake database read failed: "+r.status);
   const doc=await r.json() as {fields:Record<string,Value>};
   return Object.fromEntries(Object.entries(doc.fields).map(([k,v])=>[k,decode(v)])) as PilotIntakeRecord;
+}
+
+/**
+ * Server-side, verified-email lookup. Never return Firestore records or personal data
+ * to the browser. The caller must verify ownership of the email before using this.
+ * Preview requires a separately authorised read-only identity. Missing credentials
+ * must not be interpreted as no enrolment.
+ */
+export async function findPilotIntakesByVerifiedEmail(email:string, request:Request):Promise<PilotIntakeRecord[]> {
+  if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email) || email.length>254) throw new Error("Invalid verified email");
+  const c=env();
+  const url=`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(c.project)}/databases/${encodeURIComponent(c.db)}/documents:runQuery`;
+  const normalized=email.trim().toLowerCase();
+  const query={structuredQuery:{
+    from:[{collectionId:"omnexa_pilot_applications"}],
+    where:{fieldFilter:{field:{fieldPath:"email"},op:"EQUAL",value:{stringValue:normalized}}},
+    limit:100
+  }};
+  const r=await fetch(url,{method:"POST",headers:{Authorization:"Bearer "+await token(request),"Content-Type":"application/json"},body:JSON.stringify(query),cache:"no-store"});
+  if(!r.ok)throw new Error("Pilot eligibility read failed: "+r.status);
+  const results=await r.json() as Array<{document?:{fields:Record<string,Value>}}>;
+  const docs=results.filter((v)=>v.document?.fields).map((v)=>Object.fromEntries(Object.entries(v.document!.fields).map(([k,val])=>[k,decode(val)])) as PilotIntakeRecord);
+  // Fail closed rather than treating a truncated result set as no enrolment.
+  if(docs.length>=100)throw new Error("Pilot eligibility result limit exceeded");
+  return docs.filter((v)=>typeof v.email==="string" && v.email.toLowerCase()===normalized);
+}
+
+/** Explicit per-product statuses take priority; old global approvals are scoped to the primary slug only. */
+export function pilotProductStatus(record:PilotIntakeRecord, slug:string) {
+  const perProduct=record.productAccess?.[slug];
+  if(perProduct)return perProduct;
+  if(record.productSlug===slug)return record.status;
+  // Older multi-select requests never implied entitlement for every secondary product.
+  if(record.productSlugs?.includes(slug))return "pending_review";
+  return null;
 }
