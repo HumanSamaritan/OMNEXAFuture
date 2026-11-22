@@ -66,7 +66,8 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
   const selectedProducts = products.filter((item) => (application.productSlugs || [application.productSlug]).includes(item.slug));
   const b2b = product?.audience === "B2B";
   const captchaRequired = !preview;
-  const choices = products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter);
+  const choices = products.filter((item) => item.initiativeSlug === application.initiativeSlug && (audienceFilter === "all" || item.audience === audienceFilter));
+  const initiatives = Array.from(new Map(products.filter((item) => audienceFilter === "all" || item.audience === audienceFilter).map((item) => [item.initiativeSlug, item.initiativeName])).entries());
 
   useEffect(() => {
     window.omnexaPilotCaptchaSuccess = (token) => { setCaptchaToken(token); setError(""); };
@@ -97,7 +98,10 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
     setApplication((old) => {
       const current = old.productSlugs || (old.productSlug ? [old.productSlug] : []);
       const next = current.includes(item.slug) ? current.filter((slug) => slug !== item.slug) : [...current, item.slug];
-      const valid = next.filter((slug) => products.find((candidate) => candidate.slug === slug)?.audience === item.audience);
+      const valid = next.filter((slug) => {
+        const candidate = products.find((p) => p.slug === slug);
+        return candidate?.audience === item.audience && candidate.initiativeSlug === item.initiativeSlug;
+      });
       const first = products.find((candidate) => candidate.slug === valid[0]);
       return { ...old, productSlugs: valid, productSlug: first?.slug || "", initiativeSlug: first?.initiativeSlug || "" };
     });
@@ -155,6 +159,7 @@ export default function PilotForm({ products, initialProduct, preview, ready, re
               {[["all", "All pilots"], ["B2C", "Individual / B2C"], ["B2B", "Organisation / B2B"]].map(([value, label]) => <label key={value}><input type="radio" name="audience" value={value} checked={audienceFilter === value} onChange={() => { setAudienceFilter(value); setApplication((old) => ({ ...old, initiativeSlug: "", productSlug: "", productSlugs: [] })); }} /><span>{label}</span></label>)}
             </fieldset>
             
+            <label className="pilot-field">Initiative / service area<select value={application.initiativeSlug} onChange={(event) => { setVerifiedSession(""); setChallenge(""); setApplication((old) => ({ ...old, initiativeSlug: event.target.value, productSlug: "", productSlugs: [] })); }} required><option value="">Choose an initiative</option>{initiatives.map(([slug, name]) => <option key={slug} value={slug}>{name}</option>)}</select></label>
             <fieldset className="pilot-product-choice"><legend>Products to test (choose one or more)</legend>
               {choices.length ? choices.map((item) => <label key={item.slug} className={selectedProducts.some((p) => p.slug === item.slug) ? "is-selected" : ""}><input type="checkbox" name="products" value={item.slug} checked={selectedProducts.some((p) => p.slug === item.slug)} onChange={() => toggleProduct(item)} /><span><strong>{item.name}</strong><small>{item.audience === "B2C" ? "Individual pilot · 6-month subscription benefit" : "Organisation pilot · separate terms"}</small></span><span className={`pilot-type ${item.audience.toLowerCase()}`}>{item.audience}</span></label>) : <p className="pilot-empty">Select an initiative to see its products.</p>}
             </fieldset>
