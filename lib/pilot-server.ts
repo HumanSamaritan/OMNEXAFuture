@@ -5,7 +5,7 @@ import { getClientKey, verifyRecaptcha } from "./booking";
 import { pilotProducts } from "./pilot-catalog";
 import { PILOT_AGREEMENT_VERSION, PILOT_SUPPORT_EMAIL, B2C_BENEFIT, B2B_BENEFIT, pilotAgreementText } from "./pilot-agreement";
 import { PilotInputError, validatePilotApplication } from "./pilot-validation";
-import { createPilotIntake } from "./pilot-firestore";
+import { createPilotIntake, findPilotIntakesByVerifiedEmail, pilotProductStatus } from "./pilot-firestore";
 import type { PilotApplication } from "./pilot-types";
 
 type TokenData = {
@@ -201,10 +201,15 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   const integritySeal = createHmac("sha256", encryptionKey()).update(recordJson).digest("hex");
   const approvedAt = new Date().toISOString();
   const autoApproved = !preview && selectedProducts.length === 1 && !hasB2B;
+  if(!preview) {
+    const existing = await findPilotIntakesByVerifiedEmail(application.email,request);
+    const repeats = selectedProducts.filter((item)=>existing.some((record)=>Boolean(pilotProductStatus(record,item.slug))));
+    if(repeats.length)throw new PilotHttpError("Pilot enrolment already exists for: "+repeats.map((item)=>item.name).join(", ")+". Sign in to those products or remove them from your application and verify your email again.",409);
+  }
   // Preview is a non-binding email-flow test: never write applicant PII to production Firestore.
   // The preview branch has no independent pilot Firestore credentials configured.
   if (!preview) await createPilotIntake({
-    reference, productSlug: application.productSlug, productSlugs: application.productSlugs || [application.productSlug], email: application.email,
+    reference, productSlug: application.productSlug, productSlugs: application.productSlugs || [application.productSlug], productAccess: Object.fromEntries(selectedProducts.map((item)=>[item.slug,autoApproved?"approved":"pending_review"])), email: application.email,
     status: autoApproved ? "approved" : "pending_review", ...(autoApproved ? { approvedAt, approvalMethod: "validated-pilot-submission" } : {}), createdAt: approvedAt,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
     recordSha256: recordHash,
