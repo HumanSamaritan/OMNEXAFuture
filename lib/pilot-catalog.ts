@@ -7,6 +7,9 @@ export type PilotProduct = {
   initiativeSlug: string;
   initiativeName: string;
   audience: PilotAudience;
+  description: string;
+  browseUrl: string;
+  readiness: "live" | "review";
 };
 
 // Explicit eligibility: new products must be classified before accepting applications.
@@ -25,11 +28,14 @@ const audiences: Record<string, PilotAudience> = {
 };
 
 export const pilotProducts: PilotProduct[] = products
-  .filter((product) => ["human-machine-sadhana", "nexavirama", "nexakriya"].includes(product.slug))
+  .filter((product) => ["human-machine-sadhana", "nexavirama", "nexakriya", "sahaay-setu", "nexaaml"].includes(product.slug))
   .map((product) => ({
     slug: product.slug,
     name: product.name,
     initiativeSlug: product.serviceSlug,
     initiativeName: serviceSegments.find((segment) => segment.slug === product.serviceSlug)!.shortTitle,
-    audience: audiences[product.slug]
+    audience: audiences[product.slug],
+    description: product.oneLiner,
+    browseUrl: product.slug === "nexavirama" ? "https://nexavirama.omnexagoc.com/quest" : product.externalUrl || `https://www.omnexagoc.com/work/${product.slug}`,
+    readiness: product.status === "Live" ? "live" : "review"
   }));

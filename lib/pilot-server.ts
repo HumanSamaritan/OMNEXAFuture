@@ -138,11 +138,11 @@ export async function requestPilotCode(body: Record<string, unknown>, request: R
   const code = String(randomInt(100000, 1000000));
   const challenge: TokenData = { purpose: "challenge", application, reference: `OMX-${randomUUID()}`, version: PILOT_AGREEMENT_VERSION, preview: pilotIsPreview(), issuedAt: now, expiresAt: now + 10 * 60_000, code };
   const token = sealPilotToken(challenge);
-  const product = pilotProducts.find((item) => item.slug === application.productSlug)!;
+  const productNames = pilotProducts.filter((item) => (application.productSlugs || [application.productSlug]).includes(item.slug)).map((item) => item.name).join(", ");
   await sendPilotEmail({
     to: application.email, replyTo: PILOT_SUPPORT_EMAIL,
     subject: `${challenge.preview ? "[PREVIEW TEST] " : ""}Your OMNeXa pilot verification code`,
-    text: `Your verification code is ${code}.\n\nUse it within 10 minutes to continue your ${product.name} pilot application. This verifies your email; it does not sign the NDA or submit the application.\n\n${challenge.preview ? "This is a non-binding preview test. No pilot enrolment or subscription is activated.\n\n" : ""}If you did not request this code, ignore this email. Do not share the code.\n\nOMNeXa Pte. Ltd.\n${PILOT_SUPPORT_EMAIL}`
+    text: `Your verification code is ${code}.\n\nUse it within 10 minutes to continue your ${productNames} pilot application. This verifies your email; it does not sign the NDA or submit the application.\n\n${challenge.preview ? "This is a non-binding preview test. No pilot enrolment or subscription is activated.\n\n" : ""}If you did not request this code, ignore this email. Do not share the code.\n\nOMNeXa Pte. Ltd.\n${PILOT_SUPPORT_EMAIL}`
   }, `pilot-code-${challenge.reference}`);
   return { ok: true, challenge: token, expiresAt: new Date(challenge.expiresAt).toISOString() };
 }
@@ -170,71 +170,82 @@ export async function submitPilotApplication(body: Record<string, unknown>, requ
   if (JSON.stringify(verified.application) !== JSON.stringify(application)) {
     throw new PilotHttpError("Your application changed after email verification. Please verify again.", 401);
   }
-  const product = pilotProducts.find((item) => item.slug === application.productSlug)!;
+  const selectedProducts = pilotProducts.filter((item) => (application.productSlugs || [application.productSlug]).includes(item.slug));
+  const product = pilotProducts.find((p) => p.slug === application.productSlug)!;
+  const hasB2B = selectedProducts.some((p) => p.audience === "B2B");
+  const hasB2C = selectedProducts.some((p) => p.audience === "B2C");
+  const agreementAudience = hasB2B && hasB2C ? "MIXED" : hasB2B ? "B2B" : "B2C";
+  const productNames = selectedProducts.map((item) => item.name).join(", ");
   const signature = typeof body.signature === "string" ? body.signature.trim().replace(/\s+/g, " ") : "";
   if (signature.toLocaleLowerCase() !== application.fullName.replace(/\s+/g, " ").toLocaleLowerCase()) throw new PilotInputError("Type your full name exactly as shown in the application.");
-  if (body.ndaConsent !== true || body.privacyConsent !== true || body.adultConsent !== true || body.benefitConsent !== true || (product.audience === "B2B" && body.authorityConsent !== true)) throw new PilotInputError("Please accept the required pilot terms and declarations.");
+  if (body.ndaConsent !== true || body.privacyConsent !== true || body.adultConsent !== true || body.benefitConsent !== true || (hasB2B && body.authorityConsent !== true)) throw new PilotInputError("Please accept the required pilot terms and declarations.");
   if (body.agreementVersion !== PILOT_AGREEMENT_VERSION) throw new PilotHttpError("The agreement has changed. Please reload and review the latest terms.", 409);
   const signatureActionTime = typeof body.signatureActionTime === "string" ? body.signatureActionTime : "";
   const actionTime = Date.parse(signatureActionTime);
   if (!Number.isFinite(actionTime) || actionTime > Date.now() + 60_000) throw new PilotInputError("Your signing session has expired. Please review and submit again.");
   const reference = verified.reference;
   const preview = pilotIsPreview();
-  const agreement = pilotAgreementText(product.name, product.audience);
+  const agreement = pilotAgreementText(selectedProducts.map((p) => `${p.initiativeName}: ${p.name} (${p.audience})`).join("; "), agreementAudience);
   const agreementHash = createHash("sha256").update(agreement).digest("hex");
   const record = {
     reference, environment: preview ? "PREVIEW TEST — NON-BINDING" : "PRODUCTION",
-    application, product: product.name, audience: product.audience,
+    application, product: productNames, products: selectedProducts.map((p) => ({ slug:p.slug, name:p.name, category:p.initiativeName, audience:p.audience, description:p.description, browseUrl:p.browseUrl })), audience: agreementAudience,
     verificationMethod: "Email one-time code", verifiedAt: verified.verifiedAt,
     signature, signatureActionTimeClient: signatureActionTime,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
-    declarations: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
+    declarations: { nda: true, privacy: true, adult: true, benefit: true, authority: hasB2B },
     agreement
   };
   const recordJson = JSON.stringify(record, null, 2);
   const recordHash = createHash("sha256").update(recordJson).digest("hex");
   const integritySeal = createHmac("sha256", encryptionKey()).update(recordJson).digest("hex");
   const approvedAt = new Date().toISOString();
-  await createPilotIntake({
-    reference, productSlug: application.productSlug, email: application.email,
-    status: preview ? "pending_review" : "approved", ...(preview ? {} : { approvedAt, approvalMethod: "validated-pilot-submission" }), createdAt: approvedAt,
+  const autoApproved = !preview && selectedProducts.length === 1 && !hasB2B;
+  // Preview is a non-binding email-flow test: never write applicant PII to production Firestore.
+  // The preview branch has no independent pilot Firestore credentials configured.
+  if (!preview) await createPilotIntake({
+    reference, productSlug: application.productSlug, productSlugs: application.productSlugs || [application.productSlug], email: application.email,
+    status: autoApproved ? "approved" : "pending_review", ...(autoApproved ? { approvedAt, approvalMethod: "validated-pilot-submission" } : {}), createdAt: approvedAt,
     agreementVersion: PILOT_AGREEMENT_VERSION, agreementSha256: agreementHash,
     recordSha256: recordHash,
-    consents: { nda: true, privacy: true, adult: true, benefit: true, authority: product.audience === "B2B" },
+    consents: { nda: true, privacy: true, adult: true, benefit: true, authority: hasB2B },
     application: application as unknown as Record<string, unknown>,
     firstUsedAt: null, lastUsedAt: null
   }, request);
   const copy = [
     preview ? "PREVIEW TEST — NON-BINDING. No contract, pilot enrolment or subscription is activated." : "OMNeXa pilot application and electronic acceptance record",
     `Reference: ${reference}`, `Applicant: ${application.fullName}`, `Email: ${application.email}`,
-    `Organisation: ${application.organisation || "Individual"}`, `Product: ${product.name}`, `Route: ${product.audience}`,
+    `Organisation: ${application.organisation || "Individual"}`, `Products: ${selectedProducts.map((p) => `${p.initiativeName}: ${p.name} (${p.audience})`).join("; ")}`, `Route: ${agreementAudience}`,
     `Interest submitted (server UTC): ${new Date().toISOString()}`, `Signature action time (applicant device): ${signatureActionTime}`,
     `Typed signature: ${signature}`, `Agreement version: ${PILOT_AGREEMENT_VERSION}`,
-    "Declarations accepted: NDA, privacy processing, adult applicant, subscription eligibility" + (product.audience === "B2B" ? ", authority to represent the organisation" : ""),
+    "Declarations accepted: NDA, privacy processing, adult applicant, subscription eligibility" + (hasB2B ? ", authority to represent the organisation" : ""),
     `Agreement SHA-256: ${agreementHash}`, `Record SHA-256: ${recordHash}`, `Server integrity seal: ${integritySeal}`,
     "The email provider's message timestamp records when this copy was queued. The integrity seal is an internal record check, not an independently certified digital signature.",
     agreement
   ].join("\n\n");
   const prefix = preview ? "[PREVIEW TEST — NON-BINDING] " : "";
-  const benefit = product.audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT;
+  const benefit = (hasB2C ? B2C_BENEFIT : "") + (hasB2B ? " " + B2B_BENEFIT : "");
   const attachments = [{ filename: `${reference}-agreement.txt`, content: Buffer.from(copy).toString("base64") }];
   // Clean, verified applications are auto-approved; only unexpected failures are escalated to support.
-  const appUrl = application.productSlug === "human-machine-sadhana"
-    ? "https://www.omnexagoc.com/work/human-machine-sadhana"
-    : application.productSlug === "nexavirama"
-    ? "https://nexavirama.omnexagoc.com/quest"
-    : application.productSlug === "nexakriya"
-    ? "https://nexakriya.omnexagoc.com"
-    : "https://omnexa-career.omnexagoc.com";
+  const appUrls = selectedProducts.map((p) => ({ name:p.name, url:p.browseUrl, category:p.initiativeName, description:p.description, audience:p.audience, readiness:p.readiness }));
+  const appUrl = appUrls[0]?.url || "";
   const htmlEscape = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  const emailHtml = `<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:24px 10px;background:#f2f5f8;font-family:Arial,Helvetica,sans-serif;color:#15283a"><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;border-collapse:collapse"><tr><td style="background:#081b2a;padding:30px 32px;text-align:center;border-radius:16px 16px 0 0"><img alt="OMNeXa" src="https://www.omnexagoc.com/omnexa-logo.png" width="120" style="display:block;margin:0 auto 14px;max-width:120px;height:auto;border:0"><div style="color:#e9c978;font-size:27px;font-weight:bold;letter-spacing:1px">OMNeXa</div><div style="color:#e1ebf2;font-size:13px;margin-top:5px">Where Consciousness Meets Intelligence</div></td></tr><tr><td style="background:#ffffff;padding:32px;border:1px solid #e1e8eb"><div style="color:#117a76;font-size:12px;font-weight:bold;letter-spacing:1.7px">${preview ? "PREVIEW TEST" : "PILOT ACCESS APPROVED"}</div><h1 style="font-size:25px;line-height:1.3;margin:12px 0 16px;color:#102639">${preview ? "Preview application received" : "You’re approved for the pilot"}</h1><p style="font-size:16px;line-height:1.7">${preview ? "We received your preview application for" : "Your application for"} <strong>${htmlEscape(product.name)}</strong> ${preview ? "has been recorded." : "has passed the required email, consent, and signed-agreement checks. Your pilot access is approved."}</p><p style="font-size:15px;line-height:1.6">${preview ? "This is a preview test; no enrolment or product access is activated." : "Use the product link below and sign in with the same verified email address. For NeXaVirama, choose email PIN or Google sign-in with this email. Your six-month pilot benefit begins when access is first activated."}</p><table role="presentation" style="width:100%;background:#f2f8f7;border-collapse:collapse;margin:22px 0"><tr><td style="padding:15px 18px;font-size:13px;color:#536677">Application reference<br><strong style="color:#102639;font-size:15px;word-break:break-all">${htmlEscape(reference)}</strong></td></tr><tr><td style="padding:0 18px 17px;font-size:13px;color:#536677">Verified email<br><strong style="color:#102639;font-size:14px;word-break:break-all">${htmlEscape(application.email)}</strong></td></tr></table><p style="font-size:14px;line-height:1.6">Your agreement copy is attached for your records.</p><p style="margin:25px 0"><a href="${appUrl}" style="display:inline-block;background:#096d6b;color:#ffffff;padding:13px 20px;border-radius:8px;text-decoration:none;font-weight:bold">${application.productSlug === "human-machine-sadhana" ? "Read about the HMS pilot" : `Explore ${htmlEscape(product.name)}`}</a></p><p style="font-size:13px;line-height:1.6;color:#697a88">The product website is provided for information. Pilot access remains subject to eligibility and any applicable sign-in restrictions.</p></td></tr><tr><td style="background:#081b2a;border-radius:0 0 16px 16px;padding:20px 30px;text-align:center;color:#e0edf2;font-size:12px">OMNeXa Pte. Ltd. &nbsp;•&nbsp; <a href="mailto:support@omnexagoc.com" style="color:#e8cc7f">support@omnexagoc.com</a></td></tr></table></body></html>`;
+  const categories = Array.from(new Set(appUrls.map((p) => p.category)));
+  const productLinksHtml = categories.map((category) => {
+    const rows = appUrls.filter((p) => p.category === category).map((p) =>
+      `<tr><td style="padding:10px;border:1px solid #dce5e5"><strong>${htmlEscape(p.name)}</strong><br><small>${p.audience}</small></td><td style="padding:10px;border:1px solid #dce5e5">${htmlEscape(p.description)}${p.readiness === "review" ? "<br><small>Pilot readiness subject to review</small>" : ""}</td><td style="padding:10px;border:1px solid #dce5e5"><a href="${htmlEscape(p.url)}">Browse</a></td></tr>`
+    ).join("");
+    return `<h2 style="background:#103149;color:white;padding:12px;font-size:16px">${htmlEscape(category)}</h2><table role="presentation" style="border-collapse:collapse;width:100%"><tr style="background:#e6f2f1"><th align="left">Product</th><th align="left">Details</th><th align="left">Link</th></tr>${rows}</table>`;
+  }).join("");
+  const productionApproved = selectedProducts.length === 1 && !hasB2B;
+  const emailHtml = `<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:24px 10px;background:#f2f5f8;font-family:Arial,Helvetica,sans-serif;color:#15283a"><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;border-collapse:collapse"><tr><td style="background:#081b2a;padding:30px 32px;text-align:center;border-radius:16px 16px 0 0;border-top:4px solid #c49b4d"><img alt="OMNeXa" src="https://www.omnexagoc.com/omnexa-logo.png" width="120" style="display:block;margin:0 auto 14px;max-width:120px;height:auto;border:0"><div style="color:#e9c978;font-size:27px;font-weight:bold;letter-spacing:1px">OMNeXa</div><div style="color:#e1ebf2;font-size:13px;margin-top:5px">Where Consciousness Meets Intelligence</div></td></tr><tr><td style="background:#ffffff;padding:32px;border:1px solid #e1e8eb">${preview ? `<div style="background:#fff1d3;border:1px solid #d2a64b;padding:10px 12px;color:#735018;font-size:12px;font-weight:bold;line-height:1.5;margin-bottom:20px">TEST EMAIL — PRODUCTION TEMPLATE PREVIEW. No registration, access or benefit is activated by this test.</div>` : ""}<div style="color:#117a76;font-size:12px;font-weight:bold;letter-spacing:1.7px">${productionApproved ? "PILOT APPLICATION APPROVED" : "PILOT INTERESTS RECEIVED"}</div><h1 style="font-size:25px;line-height:1.3;margin:12px 0 16px;color:#102639">${productionApproved ? "Your OMNeXa pilot application has been approved" : "Your OMNeXa pilot selections have been received"}</h1><p style="font-size:16px;line-height:1.7">Dear ${htmlEscape(application.fullName)},</p><p style="font-size:15px;line-height:1.7">${productionApproved ? "Thank you for your interest in participating in the OMNeXa pilot programme. Your application has passed the initial registration checks for the selected product." : "Thank you for your interest in participating in OMNeXa product pilots. We have received your selected products for assessment against their individual pilot eligibility and availability criteria."}</p><p style="font-size:15px;line-height:1.6">The following consolidated summary lists your selected products by service category. Please use the individual links to learn more about each product. OMNeXa will communicate product-specific access arrangements separately. Selection alone does not activate any pilot or subscription.</p><table role="presentation" style="width:100%;background:#f2f8f7;border-collapse:collapse;margin:22px 0"><tr><td style="padding:15px 18px;font-size:13px;color:#536677">Application reference<br><strong style="color:#102639;font-size:15px;word-break:break-all">${htmlEscape(reference)}</strong></td></tr><tr><td style="padding:0 18px 17px;font-size:13px;color:#536677">Verified email<br><strong style="color:#102639;font-size:14px;word-break:break-all">${htmlEscape(application.email)}</strong></td></tr></table><h2 style="font-size:18px;color:#123345;margin:22px 0 10px">Your selected pilot products</h2>${productLinksHtml}<p style="font-size:13px;line-height:1.65;color:#586d7a;margin:20px 0">Each product is subject to its own participation requirements. Eligible B2C six-month benefits require actual pilot participation and agreed feedback. B2B pilots are subject to separately agreed organisational terms. A copy of your agreement is attached for your records.</p><p style="font-size:13px;line-height:1.6;color:#697a88">The product website is provided for information. Pilot access remains subject to eligibility and any applicable sign-in restrictions.</p><p style="font-size:14px;line-height:1.7;margin-top:20px">For questions, please contact <a href="mailto:support@omnexagoc.com" style="color:#086b70">support@omnexagoc.com</a>.</p><p style="font-size:14px;line-height:1.7">Kind regards,<br><strong>OMNeXa Pilot Coordination Team</strong><br>OMNeXa Pte. Ltd., Singapore</p></td></tr><tr><td style="background:#081b2a;border-radius:0 0 16px 16px;padding:20px 30px;text-align:center;color:#e0edf2;font-size:12px">OMNeXa Pte. Ltd. &nbsp;•&nbsp; <a href="mailto:support@omnexagoc.com" style="color:#e8cc7f">support@omnexagoc.com</a></td></tr></table></body></html>`;
   await sendPilotEmail({
     to: application.email,
     replyTo: PILOT_SUPPORT_EMAIL,
-    subject: `${prefix}${preview ? "OMNeXa Pilot Registration Received" : "Your OMNeXa Pilot Access Is Approved"} — ${product.name}`,
-    text: `Thank you for registering your interest in ${product.name}.\n\nYour reference: ${reference}\nVerified email: ${application.email}\n\n${preview ? "This is a preview test; no enrolment or access is activated." : "Your application has been approved after email verification and completion of the required pilot declarations and signed agreement."}\n\nProduct access link: ${appUrl}\n\nYour agreement copy is attached.\n\nOMNeXa support: ${PILOT_SUPPORT_EMAIL}`,
+    subject: `${prefix}${productionApproved ? "Your OMNeXa pilot application has been approved" : "Your OMNeXa pilot selections have been received"} — ${selectedProducts.length} product(s)`,
+    text: `Thank you for registering your interest in ${productNames}.\n\nYour reference: ${reference}\nVerified email: ${application.email}\n\n${preview ? "TEST EMAIL — PRODUCTION TEMPLATE PREVIEW. No pilot registration is stored or activated.\n\n" : ""}${productionApproved ? "Your application has passed the initial registration checks. Product access arrangements are communicated separately." : "Your selected interests have been received and are subject to product-specific eligibility and availability review."}\n\nProduct links:\n${appUrls.map((item) => `${item.category} / ${item.name} (${item.audience}): ${item.description} — ${item.url}`).join("\n")}\n\nYour agreement copy is attached.\n\nOMNeXa support: ${PILOT_SUPPORT_EMAIL}`,
     html: emailHtml,
     attachments
   }, `pilot-applicant-${reference}`);
-  return { ok: true, reference, preview, agreementCopy: copy, recordHash, appUrl };
+  return { ok: true, reference, preview, agreementCopy: copy, recordHash, appUrl, appUrls };
 }
