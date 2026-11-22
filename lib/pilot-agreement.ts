@@ -52,13 +52,13 @@ export const PILOT_TERMS = [
   }
 ];
 
-export function pilotAgreementText(productName: string, audience: "B2C" | "B2B") {
+export function pilotAgreementText(productName: string, audience: "B2C" | "B2B" | "MIXED") {
   return [
     "OMNeXa Pilot Participation and Non-Disclosure Agreement",
     `Version: ${PILOT_AGREEMENT_VERSION}`,
     `Selected product: ${productName}`,
-    `Pilot route: ${audience === "B2C" ? "Individual / B2C" : "Organisation / B2B"}`,
-    "Applicable benefit: " + (audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT),
+    `Pilot route: ${audience === "MIXED" ? "Individual / B2C and Organisation / B2B" : audience === "B2C" ? "Individual / B2C" : "Organisation / B2B"}`,
+    "Applicable benefit: " + (audience === "MIXED" ? B2C_BENEFIT + " " + B2B_BENEFIT : audience === "B2C" ? B2C_BENEFIT : B2B_BENEFIT),
     ...PILOT_TERMS.map((term) => `${term.title}\n${term.text}`)
   ].join("\n\n");
 }
