@@ -3,9 +3,6 @@ import { getConvergenceIssues } from "@/lib/publications";
 import styles from "./page.module.css";
 
 const siteUrl = "https://www.omnexagoc.com";
-const latestNewsletterUrl =
-  "https://www.linkedin.com/pulse/accountability-gap-when-ai-acts-who-answers-dhiraj-kumar-qqjve/";
-
 export const metadata: Metadata = {
   title: "The Convergence Brief | AI, Human Agency & Future of Work",
   description:
@@ -22,6 +19,11 @@ export const metadata: Metadata = {
 
 export default async function ConvergenceBriefPage() {
   const issues = await getConvergenceIssues();
+  const publishedIssues = issues.filter((issue) => Boolean(issue.linkedinUrl && issue.publishedAt));
+  const latestIssue = [...publishedIssues].sort((a, b) =>
+    (b.publishedAt || "").localeCompare(a.publishedAt || "") ||
+    Number(b.issue.match(/\\d+/)?.[0] || 0) - Number(a.issue.match(/\\d+/)?.[0] || 0)
+  )[0];
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -31,23 +33,19 @@ export default async function ConvergenceBriefPage() {
       "An evidence-led OMNeXa publication connecting AI, human agency, future of work, human capability, governance and responsible transformation.",
     url: `${siteUrl}/convergence-brief`,
     publisher: { "@id": `${siteUrl}/#organization` },
-    hasPart: [
-      ...issues.map((issue) => ({
+    hasPart: issues.map((issue) => ({
         "@type": "Article",
         "@id": `${siteUrl}/convergence-brief/${issue.slug}#article`,
         name: issue.title,
         url: `${siteUrl}/convergence-brief/${issue.slug}`
       })),
-      {
-        "@type": "Article",
-        name: "The Accountability Gap: When AI Acts, Who Answers?",
-        url: latestNewsletterUrl
-      }
-    ],
     inLanguage: "en-SG"
   };
 
-  const issueLinks = [...issues].reverse();
+  const issueLinks = [...issues].sort((a, b) =>
+    (b.publishedAt || "").localeCompare(a.publishedAt || "") ||
+    Number(b.issue.match(/\d+/)?.[0] || 0) - Number(a.issue.match(/\d+/)?.[0] || 0)
+  );
 
   return (
     <main className={styles.page}>
@@ -71,16 +69,16 @@ export default async function ConvergenceBriefPage() {
             </div>
           </div>
 
-          <article className={styles.spotlight} aria-labelledby="latest-newsletter-title">
-            <p className={styles.spotlightLabel}>Latest newsletter</p>
-            <h2 id="latest-newsletter-title">The Accountability Gap: When AI Acts, Who Answers?</h2>
-            <p>
-              A leadership question for the agentic era: how should accountability be understood when AI takes action?
-            </p>
-            <a className={styles.primaryLink} href={latestNewsletterUrl} target="_blank" rel="noopener noreferrer">
-              Read the newsletter on LinkedIn
-            </a>
-          </article>
+          {latestIssue ? (
+            <article className={styles.spotlight} aria-labelledby="latest-newsletter-title">
+              <p className={styles.spotlightLabel}>Latest newsletter · {latestIssue.issue}</p>
+              <h2 id="latest-newsletter-title">{latestIssue.title}</h2>
+              <p>{latestIssue.subtitle || latestIssue.summary}</p>
+              <a className={styles.primaryLink} href={latestIssue.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                Read the newsletter on LinkedIn
+              </a>
+            </article>
+          ) : null}
         </div>
       </header>
 
