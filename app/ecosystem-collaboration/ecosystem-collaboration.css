@@ -31,3 +31,102 @@
 @media(max-width:560px) {
   .ecosystem-page .ecosystem-step-grid { grid-template-columns:minmax(0,1fr); }
 }
+
+.ecosystem-partners {
+  padding-block: 2rem 3rem;
+}
+
+.ecosystem-partners-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ecosystem-partners-heading h2 {
+  margin: 0;
+}
+
+.ecosystem-partners-heading p {
+  margin: .4rem 0 0;
+  color: #47576b;
+}
+
+.ecosystem-partner-controls {
+  display: flex;
+  gap: .5rem;
+}
+
+.ecosystem-partner-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  padding-inline: .75rem;
+  border: 1px solid #bccbd9;
+  border-radius: 8px;
+  background: #fff;
+  color: #13263d;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ecosystem-partner-controls button:hover {
+  background: #e7eff6;
+}
+
+.ecosystem-partner-track {
+  display: flex;
+  gap: .9rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  list-style: none;
+  padding: 4px 4px 12px;
+  margin: 0;
+  direction: ltr;
+}
+
+.ecosystem-partner-track li {
+  flex: 0 0 clamp(175px, 24vw, 220px);
+}
+
+.ecosystem-partner-track a {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: .85rem;
+  min-height: 144px;
+  padding: .75rem;
+  border: 1px solid #d8e1eb;
+  border-radius: 12px;
+  background: #fff;
+  color: #13263d;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 650;
+}
+
+.ecosystem-partner-track a:hover {
+  border-color: #086b70;
+  text-decoration: underline;
+}
+
+.ecosystem-partner-track img {
+  width: 100%;
+  max-width: 168px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.ecosystem-partner-controls button:focus-visible,
+.ecosystem-partner-track a:focus-visible {
+  outline: 2px solid #086b70;
+  outline-offset: 2px;
+}
+
+.ecosystem-partner-status {
+  display: block;
+  color: #47576b;
+  font-size: .75rem;
+  font-weight: 500;
+}
