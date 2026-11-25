@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PartnerCarousel from "./partner-carousel";
 import "./ecosystem-collaboration.css";
 
 const partnerPortal = "https://omnexa-career.omnexagoc.com/partners";
@@ -81,6 +82,8 @@ export default function EcosystemCollaborationPage() {
         </div>
         <p className="ecosystem-qualification">This page describes OMNeXa&apos;s approach and invitation to collaborate; it does not imply that a particular partnership or programme has been agreed.</p>
       </section>
+
+      <PartnerCarousel />
 
       <section className="band ecosystem-belief-band">
         <div className="section-shell aligned-section">

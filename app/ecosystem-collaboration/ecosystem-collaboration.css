@@ -14,7 +14,8 @@
 .ecosystem-page .ecosystem-portal-actions { display:grid; justify-items:start; gap:16px; }
 .ecosystem-page .ecosystem-portal-actions .button.primary { background:#f2dca6; border-color:#f2dca6; color:#13263d; }
 .ecosystem-page .ecosystem-portal-actions .button.primary:hover { background:#ffe8b6; border-color:#ffe8b6; }
-.ecosystem-page .ecosystem-portal-actions .button.secondary { border-color:#8ea2b9; color:#fff; }
+.ecosystem-page .ecosystem-portal-actions .button.secondary { background:#fff; border-color:#8ea2b9; color:#13263d; }
+.ecosystem-page .ecosystem-portal-actions .button.secondary:hover,.ecosystem-page .ecosystem-portal-actions .button.secondary:focus-visible { background:#e7eff6; color:#13263d; }
 .ecosystem-page .ecosystem-work-link { color:#e5c572; font-size:.9rem; font-weight:750; }
 .ecosystem-promo-band { background:#f4f7f8; }
 .ecosystem-promo { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr); gap:32px; align-items:center; padding-block:50px; }
@@ -29,4 +30,114 @@
 }
 @media(max-width:560px) {
   .ecosystem-page .ecosystem-step-grid { grid-template-columns:minmax(0,1fr); }
+}
+
+.ecosystem-partners {
+  padding-block: clamp(2rem, 5vw, 4.5rem);
+}
+
+.ecosystem-partners-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.ecosystem-partners-heading h2 {
+  margin: 0;
+  color: #13263d;
+}
+
+.ecosystem-partner-motion {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f5f7;
+  color: #40556c;
+  cursor: pointer;
+}
+
+.ecosystem-partner-motion:hover {
+  background: #e7edf2;
+}
+
+.carousel-pause-icon {
+  width: 10px;
+  height: 12px;
+  border-inline: 2px solid currentColor;
+}
+
+.carousel-play-icon {
+  margin-left: 2px;
+  border-block: 6px solid transparent;
+  border-left: 9px solid currentColor;
+}
+
+.ecosystem-partner-track {
+  display: flex;
+  gap: clamp(14px, 2vw, 26px);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  list-style: none;
+  padding: 12px 4px 24px;
+  margin: 0;
+}
+
+.ecosystem-partner-track li {
+  flex: 0 0 clamp(166px, 48vw, 244px);
+}
+
+.ecosystem-partner-track a {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1.14;
+  padding: 14%;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 5px 18px #142a4412, 0 0 0 1px #142a4409;
+}
+
+.ecosystem-partner-track a[data-logo="aju-ed-solutions"],
+.ecosystem-partner-track a[data-logo="gripconnect"] {
+  background: #000;
+}
+
+.ecosystem-partner-track a[data-logo="viszapp"] {
+  background: #071422;
+}
+
+.ecosystem-partner-track a[data-logo="mystarpick"] {
+  background: #f3f5f7;
+}
+
+.ecosystem-partner-track img {
+  width: 100%;
+  height: auto;
+  max-height: 132px;
+  object-fit: contain;
+  transition: transform .2s ease;
+}
+
+.ecosystem-partner-track a:hover img {
+  transform: scale(1.035);
+}
+
+.ecosystem-partner-motion:focus-visible,
+.ecosystem-partner-track:focus-visible,
+.ecosystem-partner-track a:focus-visible {
+  outline: 2px solid #086b70;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecosystem-partner-track img {
+    transition: none;
+  }
 }

@@ -292,14 +292,28 @@ export default function WorkPage() {
           <p className="eyebrow">Questions answered clearly</p>
           <h2>OMNeXa product portfolio FAQ.</h2>
         </div>
-        <div className="faq-grid">
+        <div className="work-faq-accordion">
           {workFaqs.map((faq) => (
-            <article key={faq.question}>
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
-            </article>
+            <details key={faq.question} className="work-faq-item">
+              <summary><span>{faq.question}</span><span className="work-faq-toggle" aria-hidden="true" /></summary>
+              <div className="work-faq-answer"><p>{faq.answer}</p></div>
+            </details>
           ))}
         </div>
+        <style>{`
+          .work-faq-accordion{display:grid;gap:12px;max-width:1100px;margin:0 auto}
+          .work-faq-item{border:1px solid #d8e1eb;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 3px 12px #15233708}
+          .work-faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px;cursor:pointer;list-style:none;color:#152337;font-size:1.05rem;font-weight:650;line-height:1.5}
+          .work-faq-item summary::-webkit-details-marker{display:none}
+          .work-faq-item summary:hover,.work-faq-item[open] summary{background:#f4f8fa}
+          .work-faq-item summary:focus-visible{outline:3px solid #086b70;outline-offset:-4px}
+          .work-faq-toggle{flex:0 0 28px;height:28px;border-radius:50%;background:#e7f2f2;color:#086b70;display:grid;place-items:center;font-size:1.35rem}
+          .work-faq-toggle::before{content:"+"}
+          .work-faq-item[open] .work-faq-toggle::before{content:"−"}
+          .work-faq-answer{padding:18px 24px 22px;border-top:1px solid #e4ebef;color:#46566b;line-height:1.75}
+          .work-faq-answer p{margin:0}
+          @media(max-width:640px){.work-faq-item summary{padding:16px;font-size:1rem}.work-faq-answer{padding:16px}}
+        `}</style>
       </section>
     </main>
   );

@@ -677,6 +677,67 @@ export const canonicalIssues: ConvergenceIssue[] = [
       }
     ],
     "linkedinUrl": "https://www.linkedin.com/pulse/accountability-gap-when-ai-acts-who-answers-dhiraj-kumar-qqjve/"
+  },
+  {
+    "issue": "Issue 10",
+    "slug": "issue-10",
+    "title": "When AI Gets It Wrong, Can We Make It Right?",
+    "subtitle": "From accountability to correction, recovery and the human right to challenge.",
+    "publishedAt": "2026-11-23",
+    "summary": "When AI-assisted decisions cause harm, explaining the outcome and correcting the system may not be enough. Issue 10 distinguishes explanation, correction and remedy, examines the shift from programmed workflows and search to delegated AI actions, and proposes human authority designed in from the start.",
+    "themes": [
+      "Human-centric AI",
+      "AI accountability",
+      "Explanation, correction and remedy",
+      "Agentic AI governance",
+      "Human oversight by design",
+      "Kill Switch and recovery"
+    ],
+    "seoKeywords": [
+      "AI correction and remedy",
+      "human managed AI loop",
+      "AI oversight kill switch",
+      "AI decision contestability",
+      "human centric agentic AI",
+      "OMNeXa Convergence Brief Issue 10"
+    ],
+    "questions": [
+      {
+        "question": "How do explanation, correction and remedy differ for AI decisions?",
+        "answer": "Explanation establishes why an outcome occurred; correction repairs a record, process or system; remedy addresses the consequences for an affected person through appropriate review, restoration or escalation."
+      },
+      {
+        "question": "What changes as software moves from search and recommendations to AI agents?",
+        "answer": "The degree of delegated action increases. Human owners should define boundaries, evidence, intervention rights and recovery controls before an agent can act."
+      }
+    ],
+    "sections": [
+      {
+        "heading": "A decision made in seconds. A consequence that lasts.",
+        "body": "A hypothetical AI-assisted recruitment process rejects a qualified applicant because of incorrect data. Even after the error is corrected, the lost opportunity may remain. The example illustrates why correction and remedy are not interchangeable."
+      },
+      {
+        "heading": "Explanation is not correction. Correction is not remedy.",
+        "body": "Explanation tells us why an outcome occurred. Correction fixes the record, process or system behaviour. Remedy addresses the effects on the person affected. Not every harm can be fully reversed, so organisations should define practical routes to challenge and appropriate responses."
+      },
+      {
+        "heading": "What changed from programmed systems and search to AI agents?",
+        "body": "Traditional software has long required human-designed controls and can still fail. Search typically retrieves and ranks information; AI assistants generate context-sensitive responses; AI agents may use tools to act. Increasing delegation makes design-time authority and risk-proportionate oversight more important."
+      },
+      {
+        "heading": "Human authority belongs at design time",
+        "body": "Before deploying consequential AI, define purpose, prohibited actions, decision rights, evidence requirements, escalation thresholds and the ability to pause, override, revoke access and recover safely."
+      },
+      {
+        "heading": "The OMNeXa Human-Managed Loop",
+        "body": "Define → Amplify → Manage → Recover → Restart, with continuous oversight and accountability. Humans set boundaries, AI operates within approved limits, humans monitor and intervene, organisations correct and remedy outcomes, and restart requires human authorisation. This is an evolving OViA governance proposition, not a claim that every control is implemented or independently certified."
+      },
+      {
+        "heading": "The leadership question",
+        "body": "As AI becomes more capable of acting, can the accountable human actually stop, challenge and put right what the system has done? Effective oversight depends on enforceable authority, not simply a human approval label."
+      }
+    ],
+    "linkedinUrl": "https://www.linkedin.com/pulse/when-ai-gets-wrong-can-we-make-right-dhiraj-kumar-ixatf"
   }
 ];
 
