@@ -7,7 +7,7 @@ const partners = [
   { name: "AJU ED Solutions", logo: "aju-ed-solutions", href: "https://www.ajuedsolutions.com/" },
   { name: "FTS Robotics", logo: "fts-robotics", href: "https://www.ftsrobotics.com/" },
   { name: "Future Plus Education", logo: "future-plus-education", href: "https://futureplusedus.com/" },
-  { name: "GRIPConnect", logo: "gripconnect", href: "https://gripconnect.co/" },
+  { name: "GRIPConnect", logo: "gripconnect", href: "https://www.gripconnect.co/" },
   { name: "MyStarPick", logo: "mystarpick", href: "https://mystarpick.io/?locale=en" },
   { name: "ViSZAPP", logo: "viszapp", href: "https://www.viszapp.com/" },
   { name: "Avyakti Tech", logo: "avyakti-tech", href: "https://avyaktitech.com/", status: "Onboarding under review" }
