@@ -33,89 +33,93 @@
 }
 
 .ecosystem-partners {
-  padding-block: 2rem 3rem;
+  padding-block: clamp(2rem, 5vw, 4.5rem);
 }
 
 .ecosystem-partners-heading {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: .75rem;
+  margin-bottom: .75rem;
 }
 
 .ecosystem-partners-heading h2 {
   margin: 0;
-}
-
-.ecosystem-partners-heading p {
-  margin: .4rem 0 0;
-  color: #47576b;
+  color: #13263d;
 }
 
 .ecosystem-partner-controls {
   display: flex;
-  gap: .5rem;
+  gap: .25rem;
 }
 
 .ecosystem-partner-controls button {
   min-width: 44px;
   min-height: 44px;
-  padding-inline: .75rem;
-  border: 1px solid #bccbd9;
+  padding-inline: .5rem;
+  border: 0;
   border-radius: 8px;
-  background: #fff;
-  color: #13263d;
+  background: transparent;
+  color: #40556c;
   font: inherit;
+  font-size: .875rem;
   cursor: pointer;
 }
 
 .ecosystem-partner-controls button:hover {
-  background: #e7eff6;
+  background: #edf2f6;
 }
 
 .ecosystem-partner-track {
   display: flex;
-  gap: .9rem;
+  gap: clamp(14px, 2vw, 26px);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
+  scrollbar-width: none;
   list-style: none;
-  padding: 4px 4px 12px;
+  padding: 12px 4px 24px;
   margin: 0;
-  direction: ltr;
 }
 
 .ecosystem-partner-track li {
-  flex: 0 0 clamp(175px, 24vw, 220px);
+  flex: 0 0 clamp(166px, 48vw, 244px);
 }
 
 .ecosystem-partner-track a {
   display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: .85rem;
-  min-height: 144px;
-  padding: .75rem;
-  border: 1px solid #d8e1eb;
-  border-radius: 12px;
+  place-items: center;
+  aspect-ratio: 1.14;
+  padding: 14%;
+  border-radius: 20px;
   background: #fff;
-  color: #13263d;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 650;
+  box-shadow: 0 5px 18px #142a4412, 0 0 0 1px #142a4409;
 }
 
-.ecosystem-partner-track a:hover {
-  border-color: #086b70;
-  text-decoration: underline;
+.ecosystem-partner-track a[data-logo="aju-ed-solutions"],
+.ecosystem-partner-track a[data-logo="gripconnect"] {
+  background: #000;
+}
+
+.ecosystem-partner-track a[data-logo="viszapp"] {
+  background: #071422;
+}
+
+.ecosystem-partner-track a[data-logo="mystarpick"] {
+  background: #f3f5f7;
 }
 
 .ecosystem-partner-track img {
   width: 100%;
-  max-width: 168px;
-  height: 76px;
+  height: auto;
+  max-height: 132px;
   object-fit: contain;
+  transition: transform .2s ease;
+}
+
+.ecosystem-partner-track a:hover img {
+  transform: scale(1.035);
 }
 
 .ecosystem-partner-controls button:focus-visible,
@@ -124,9 +128,8 @@
   outline-offset: 2px;
 }
 
-.ecosystem-partner-status {
-  display: block;
-  color: #47576b;
-  font-size: .75rem;
-  font-weight: 500;
+@media (prefers-reduced-motion: reduce) {
+  .ecosystem-partner-track img {
+    transition: none;
+  }
 }

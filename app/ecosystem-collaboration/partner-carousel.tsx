@@ -10,7 +10,7 @@ const partners = [
   { name: "GRIPConnect", logo: "gripconnect", href: "https://www.gripconnect.co/" },
   { name: "MyStarPick", logo: "mystarpick", href: "https://mystarpick.io/?locale=en" },
   { name: "ViSZAPP", logo: "viszapp", href: "https://www.viszapp.com/" },
-  { name: "Avyakti Tech", logo: "avyakti-tech", href: "https://avyaktitech.com/", status: "Onboarding under review" }
+  { name: "Avyakti Tech", logo: "avyakti-tech", href: "https://avyaktitech.com/" }
 ];
 
 export default function PartnerCarousel() {
@@ -41,10 +41,11 @@ export default function PartnerCarousel() {
       if (!track.matches(":hover, :focus-within, :active")) {
         distance += elapsed * 0.045;
         if (distance >= 1) {
-          const end = track.scrollWidth - track.clientWidth;
-          if (end > 0) {
-            const next = track.scrollLeft + Math.floor(distance);
-            track.scrollLeft = next > end ? 0 : next;
+          const first = track.firstElementChild?.getBoundingClientRect().left ?? 0;
+          const repeat = track.children[partners.length]?.getBoundingClientRect().left ?? 0;
+          const cycle = repeat - first;
+          if (cycle > 0) {
+            track.scrollLeft = (track.scrollLeft + Math.floor(distance)) % cycle;
           }
           distance %= 1;
         }
@@ -63,23 +64,22 @@ export default function PartnerCarousel() {
     setPaused(true);
     const gap = parseFloat(getComputedStyle(track).columnGap);
     const cardWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
-    const end = track.scrollWidth - track.clientWidth;
+    const first = track.firstElementChild?.getBoundingClientRect().left ?? 0;
+    const repeat = track.children[partners.length]?.getBoundingClientRect().left ?? 0;
+    const end = repeat - first;
     const next = track.scrollLeft + (cardWidth + gap) * direction;
     const left = direction < 0 && track.scrollLeft < 1
-      ? end
+      ? Math.max(0, end - cardWidth - gap)
       : direction > 0 && track.scrollLeft >= end - 1
         ? 0
-        : next;
+        : Math.min(end, next);
     track.scrollTo({ left, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
 
   return (
     <section className="section-shell aligned-section ecosystem-partners" aria-labelledby="ecosystem-partners-heading">
       <div className="ecosystem-partners-heading">
-        <div>
-          <h2 id="ecosystem-partners-heading">Organisations in our ecosystem</h2>
-          <p>Relationship and programme status vary by organisation.</p>
-        </div>
+        <h2 id="ecosystem-partners-heading">Our ecosystem</h2>
         <div className="ecosystem-partner-controls">
           <button type="button" onClick={() => move(-1)} aria-label="Previous partner">←</button>
           <button type="button" onClick={() => move(1)} aria-label="Next partner">→</button>
@@ -87,17 +87,23 @@ export default function PartnerCarousel() {
         </div>
       </div>
       <ul ref={trackRef} className="ecosystem-partner-track" onPointerDown={() => setPaused(true)}>
-        {partners.map(({ name, logo, href, status }) => (
-          <li key={name}>
-            <a href={href} target="_blank" rel="noopener noreferrer">
-              <Image src={`/partner-logos/${logo}.webp`} alt="" width={168} height={76} unoptimized />
-              <span>
-                {name}
-                {status && <small className="ecosystem-partner-status">{status}</small>}
-              </span>
-            </a>
-          </li>
-        ))}
+        {[...partners, ...partners].map(({ name, logo, href }, index) => {
+          const duplicate = index >= partners.length;
+          return (
+            <li key={`${logo}-${index}`} aria-hidden={duplicate || undefined}>
+              <a
+                data-logo={logo}
+                href={href}
+                tabIndex={duplicate ? -1 : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={name}
+              >
+                <Image src={`/partner-logos/${logo}.webp`} alt="" width={240} height={170} unoptimized />
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
