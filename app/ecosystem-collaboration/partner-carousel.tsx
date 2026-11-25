@@ -58,35 +58,26 @@ export default function PartnerCarousel() {
     return () => cancelAnimationFrame(frame);
   }, [paused]);
 
-  function move(direction: number) {
-    const track = trackRef.current;
-    if (!track) return;
-    setPaused(true);
-    const gap = parseFloat(getComputedStyle(track).columnGap);
-    const cardWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
-    const first = track.firstElementChild?.getBoundingClientRect().left ?? 0;
-    const repeat = track.children[partners.length]?.getBoundingClientRect().left ?? 0;
-    const end = repeat - first;
-    const next = track.scrollLeft + (cardWidth + gap) * direction;
-    const left = direction < 0 && track.scrollLeft < 1
-      ? Math.max(0, end - cardWidth - gap)
-      : direction > 0 && track.scrollLeft >= end - 1
-        ? 0
-        : Math.min(end, next);
-    track.scrollTo({ left, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  }
-
   return (
     <section className="section-shell aligned-section ecosystem-partners" aria-labelledby="ecosystem-partners-heading">
       <div className="ecosystem-partners-heading">
         <h2 id="ecosystem-partners-heading">Our ecosystem</h2>
-        <div className="ecosystem-partner-controls">
-          <button type="button" onClick={() => move(-1)} aria-label="Previous partner">←</button>
-          <button type="button" onClick={() => move(1)} aria-label="Next partner">→</button>
-          <button type="button" onClick={() => setPaused(!paused)}>{paused ? "Play" : "Pause"}</button>
-        </div>
+        <button
+          className="ecosystem-partner-motion"
+          type="button"
+          onClick={() => setPaused((current) => !current)}
+          aria-label={paused ? "Play logo carousel" : "Pause logo carousel"}
+        >
+          <span className={paused ? "carousel-play-icon" : "carousel-pause-icon"} aria-hidden="true" />
+        </button>
       </div>
-      <ul ref={trackRef} className="ecosystem-partner-track" onPointerDown={() => setPaused(true)}>
+      <ul
+        ref={trackRef}
+        className="ecosystem-partner-track"
+        aria-label="Ecosystem organisations"
+        tabIndex={0}
+        onPointerDown={() => setPaused(true)}
+      >
         {[...partners, ...partners].map(({ name, logo, href }, index) => {
           const duplicate = index >= partners.length;
           return (

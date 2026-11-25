@@ -50,26 +50,33 @@
   color: #13263d;
 }
 
-.ecosystem-partner-controls {
-  display: flex;
-  gap: .25rem;
-}
-
-.ecosystem-partner-controls button {
-  min-width: 44px;
-  min-height: 44px;
-  padding-inline: .5rem;
+.ecosystem-partner-motion {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: 0;
-  border-radius: 8px;
-  background: transparent;
+  border-radius: 50%;
+  background: #f2f5f7;
   color: #40556c;
-  font: inherit;
-  font-size: .875rem;
   cursor: pointer;
 }
 
-.ecosystem-partner-controls button:hover {
-  background: #edf2f6;
+.ecosystem-partner-motion:hover {
+  background: #e7edf2;
+}
+
+.carousel-pause-icon {
+  width: 10px;
+  height: 12px;
+  border-inline: 2px solid currentColor;
+}
+
+.carousel-play-icon {
+  margin-left: 2px;
+  border-block: 6px solid transparent;
+  border-left: 9px solid currentColor;
 }
 
 .ecosystem-partner-track {
@@ -122,7 +129,8 @@
   transform: scale(1.035);
 }
 
-.ecosystem-partner-controls button:focus-visible,
+.ecosystem-partner-motion:focus-visible,
+.ecosystem-partner-track:focus-visible,
 .ecosystem-partner-track a:focus-visible {
   outline: 2px solid #086b70;
   outline-offset: 2px;
