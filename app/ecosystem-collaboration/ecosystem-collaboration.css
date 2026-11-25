@@ -14,7 +14,8 @@
 .ecosystem-page .ecosystem-portal-actions { display:grid; justify-items:start; gap:16px; }
 .ecosystem-page .ecosystem-portal-actions .button.primary { background:#f2dca6; border-color:#f2dca6; color:#13263d; }
 .ecosystem-page .ecosystem-portal-actions .button.primary:hover { background:#ffe8b6; border-color:#ffe8b6; }
-.ecosystem-page .ecosystem-portal-actions .button.secondary { border-color:#8ea2b9; color:#fff; }
+.ecosystem-page .ecosystem-portal-actions .button.secondary { background:#fff; border-color:#8ea2b9; color:#13263d; }
+.ecosystem-page .ecosystem-portal-actions .button.secondary:hover,.ecosystem-page .ecosystem-portal-actions .button.secondary:focus-visible { background:#e7eff6; color:#13263d; }
 .ecosystem-page .ecosystem-work-link { color:#e5c572; font-size:.9rem; font-weight:750; }
 .ecosystem-promo-band { background:#f4f7f8; }
 .ecosystem-promo { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr); gap:32px; align-items:center; padding-block:50px; }
