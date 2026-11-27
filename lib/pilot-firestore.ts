@@ -77,5 +77,5 @@ export async function queryPilotApplicationsByEmail(email:string, request:Reques
   const reference=String(data.reference||doc.name.split("/").pop()||"");
   if(reference)records.set(reference,{reference,data});
  }
- return [...records.values()];
+ return Array.from(records.values());
 }
