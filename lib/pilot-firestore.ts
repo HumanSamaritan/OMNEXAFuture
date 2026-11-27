@@ -58,3 +58,24 @@ export async function getPilotIntake(reference:string, request:Request):Promise<
   const doc=await r.json() as {fields:Record<string,Value>};
   return Object.fromEntries(Object.entries(doc.fields).map(([k,v])=>[k,decode(v)])) as PilotIntakeRecord;
 }
+
+
+export async function queryPilotApplicationsByEmail(email:string, request:Request):Promise<Array<{reference:string;data:Record<string,unknown>}>>{
+ const c=env();
+ const root=`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(c.project)}/databases/${encodeURIComponent(c.db)}/documents`;
+ const access=await token(request);
+ const rows:Array<{document?:{name?:string;fields?:Record<string,Value>}}>=[];
+ for(const fieldPath of ["email","application.email"]){
+  const response=await fetch(root+":runQuery",{method:"POST",headers:{Authorization:"Bearer "+access,"Content-Type":"application/json"},body:JSON.stringify({structuredQuery:{from:[{collectionId:"omnexa_pilot_applications"}],where:{fieldFilter:{field:{fieldPath},op:"EQUAL",value:{stringValue:email}}},limit:100}}),cache:"no-store"});
+  if(!response.ok)throw new Error("Pilot application lookup failed: "+response.status);
+  rows.push(...await response.json() as Array<{document?:{name?:string;fields?:Record<string,Value>}}>);
+ }
+ const records=new Map<string,{reference:string;data:Record<string,unknown>}>();
+ for(const row of rows){
+  const doc=row.document;if(!doc?.name||!doc.fields)continue;
+  const data=Object.fromEntries(Object.entries(doc.fields).map(([key,value])=>[key,decode(value)])) as Record<string,unknown>;
+  const reference=String(data.reference||doc.name.split("/").pop()||"");
+  if(reference)records.set(reference,{reference,data});
+ }
+ return [...records.values()];
+}
