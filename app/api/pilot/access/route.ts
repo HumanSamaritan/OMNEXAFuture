@@ -52,21 +52,13 @@ export async function POST(request: NextRequest) {
     const applications = await queryPilotApplicationsByEmail(email, request);
     let registered = false;
     let approved = false;
-    let availableAt: string | null = null;
     for (const item of applications) {
       const status = statusFor(item.data, productSlug);
       if (!status) continue;
       registered = true;
-      if (eligibleStatuses.has(status)) {
-        const createdAt = Date.parse(String(item.data.createdAt || ''));
-        if (!Number.isFinite(createdAt)) continue;
-        if (Date.now() < createdAt + 10 * 24 * 60 * 60 * 1000) {
-          const candidate = new Date(createdAt + 10 * 24 * 60 * 60 * 1000).toISOString();
-          if (!availableAt || Date.parse(candidate) < Date.parse(availableAt)) availableAt = candidate;
-        } else approved = true;
-      }
+      if (eligibleStatuses.has(status)) approved = true;
     }
-    return NextResponse.json(approved ? { state: "eligible" } : availableAt ? { state: "not_yet_available", availableAt } : { state: registered ? "under_review" : "not_registered" }, { headers: noStore });
+    return NextResponse.json({ state: approved ? "eligible" : registered ? "under_review" : "not_registered" }, { headers: noStore });
   } catch {
     return NextResponse.json({ state: "unavailable" }, { status: 503, headers: noStore });
   }
